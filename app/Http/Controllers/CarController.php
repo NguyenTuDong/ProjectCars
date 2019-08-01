@@ -57,7 +57,7 @@ class CarController extends Controller
                 $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
                 $extension = $request->file('hinhanh')->getClientOriginalExtension();
                 $fileNameToStore = $filename.'_'.time().'.'.$extension;
-                $path = $request->file('hinhanh')->storeAs('storage/img/userfiles/'. md5(Auth::user()->id) . '/images', $fileNameToStore);
+                $path = $request->file('hinhanh')->storeAs('img/userfiles/'. md5(Auth::user()->id) . '/images', $fileNameToStore);
                 $car->hinhanh = $fileNameToStore;
             }
 
@@ -103,7 +103,8 @@ class CarController extends Controller
             }
             Session::flash('flash_message', 'Đăng tin thành công');
         } catch (\Exception $th) {
-            Session::flash('flash_message', $th);
+            Session::flash('flash_message', 'Đăng tin thất bại');
+            dd($th);
         }
         return back();
     }
