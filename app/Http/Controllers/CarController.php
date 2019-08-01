@@ -103,7 +103,7 @@ class CarController extends Controller
             }
             Session::flash('flash_message', 'Đăng tin thành công');
         } catch (\Throwable $th) {
-            dd($th);
+            Session::flash('flash_message', $th);
         }
         return back();
     }
