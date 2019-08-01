@@ -57,7 +57,7 @@ class CarController extends Controller
                 $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
                 $extension = $request->file('hinhanh')->getClientOriginalExtension();
                 $fileNameToStore = $filename.'_'.time().'.'.$extension;
-                $path = $request->file('hinhanh')->storeAs('public/img/userfiles/'. md5(Auth::user()->id) . '/images', $fileNameToStore);
+                $path = $request->file('hinhanh')->storeAs('storage/img/userfiles/'. md5(Auth::user()->id) . '/images', $fileNameToStore);
                 $car->hinhanh = $fileNameToStore;
             }
 
