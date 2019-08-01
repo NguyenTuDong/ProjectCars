@@ -44,65 +44,67 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate([
-            'hinhanh' => 'image',
+        try {
+            request()->validate([
+                'hinhanh' => 'image',
 
-        ]);
+            ]);
 
-        $car = new Car();
+            $car = new Car();
 
-        if($request->hasFile('hinhanh')){
-            $fileNameWithExt = $request->file('hinhanh')->getClientOriginalName();
-            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-            $extension = $request->file('hinhanh')->getClientOriginalExtension();
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
-            $path = $request->file('hinhanh')->storeAs('public/img/userfiles/'. md5(Auth::user()->id) . '/images', $fileNameToStore);
-            $car->hinhanh = $fileNameToStore;
-        }
-
-        
-        $car->ten = $request->name;
-
-        $car->users_id = Auth::user()->id;
-
-        $car->gia = $request->gia;
-        $car->types_id = $request->type;
-        $car->origins_id = $request->origin;
-        $car->conditions_id = $request->condition;
-        $car->locations_id = $request->location;
-        $car->styles_id = $request->style;
-        $car->transmissions_id = $request->transmission;
-        $car->fuels_id = $request->fuel;
-        $car->colors_id = $request->color;
-        $car->furnitures_id = $request->furniture;
-
-        $car->doixe = $request->doixe;
-        $car->namsx = $request->namsx;
-        $car->socua = $request->socua;
-        $car->sochongoi = $request->sochongoi;
-        $car->kichthuoc = $request->kichthuoc;
-        $car->cannang = $request->cannang;
-        $car->dungtich = $request->dungtich;
-        $car->phanh = $request->phanh;
-        $car->giamxoc = $request->giamxoc;
-        $car->lopxe = $request->lopxe;
-        $car->mota = $request->mota;
-
-        $convenients = $request->convenient;
-
-        $car->save();
-
-        if ($convenients != null){
-            foreach($convenients as $convenient){
-            $convenientcar = new Convenientcar();
-            $convenientcar->cars_id = $car->id;
-            $convenientcar->convenients_id = $convenient;
-            $convenientcar->save();
+            if($request->hasFile('hinhanh')){
+                $fileNameWithExt = $request->file('hinhanh')->getClientOriginalName();
+                $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file('hinhanh')->getClientOriginalExtension();
+                $fileNameToStore = $filename.'_'.time().'.'.$extension;
+                $path = $request->file('hinhanh')->storeAs('public/img/userfiles/'. md5(Auth::user()->id) . '/images', $fileNameToStore);
+                $car->hinhanh = $fileNameToStore;
             }
+
+            
+            $car->ten = $request->name;
+
+            $car->users_id = Auth::user()->id;
+
+            $car->gia = $request->gia;
+            $car->types_id = $request->type;
+            $car->origins_id = $request->origin;
+            $car->conditions_id = $request->condition;
+            $car->locations_id = $request->location;
+            $car->styles_id = $request->style;
+            $car->transmissions_id = $request->transmission;
+            $car->fuels_id = $request->fuel;
+            $car->colors_id = $request->color;
+            $car->furnitures_id = $request->furniture;
+
+            $car->doixe = $request->doixe;
+            $car->namsx = $request->namsx;
+            $car->socua = $request->socua;
+            $car->sochongoi = $request->sochongoi;
+            $car->kichthuoc = $request->kichthuoc;
+            $car->cannang = $request->cannang;
+            $car->dungtich = $request->dungtich;
+            $car->phanh = $request->phanh;
+            $car->giamxoc = $request->giamxoc;
+            $car->lopxe = $request->lopxe;
+            $car->mota = $request->mota;
+
+            $convenients = $request->convenient;
+
+            $car->save();
+
+            if ($convenients != null){
+                foreach($convenients as $convenient){
+                $convenientcar = new Convenientcar();
+                $convenientcar->cars_id = $car->id;
+                $convenientcar->convenients_id = $convenient;
+                $convenientcar->save();
+                }
+            }
+            Session::flash('flash_message', 'Đăng tin thành công');
+        } catch (\Throwable $th) {
+            dd($th);
         }
-
-        Session::flash('flash_message', 'Đăng tin thành công');
-
         return back();
     }
 
