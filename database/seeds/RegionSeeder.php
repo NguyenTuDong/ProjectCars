@@ -13,12 +13,15 @@ class RegionSeeder extends Seeder
     {
         $regions = [
             [
+                'id' => 1,
                 'ten' => 'Miền Bắc',
             ],
             [
+                'id' => 2,
                 'ten' => 'Miền Trung',
             ],
             [
+                'id' => 3,
                 'ten' => 'Miền Nam',
             ],
         ];
