@@ -104,7 +104,6 @@ class CarController extends Controller
             Session::flash('flash_message', 'Đăng tin thành công');
         } catch (\Exception $th) {
             Session::flash('flash_message', 'Đăng tin thất bại');
-            dd($th);
         }
         return back();
     }
