@@ -13,13 +13,30 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,400i,500,500i,600,600i,700,700i&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/c04a2363e8.js"></script>
 
+    <script src="{{asset('js/app.js')}}"></script>
+    <script src="{{asset('js/ckeditor3/ckeditor.js')}}"></script>
+    
     <link rel="stylesheet" href="{{asset('js/jqwidgets/styles/jqx.base.css')}}" type="text/css" />
     <link rel="stylesheet" href="{{asset('js/jqwidgets/styles/jqx.material.css')}}" type="text/css" />
     <link rel="stylesheet" href="{{asset('js/jqwidgets/styles/jqx.light.css')}}" type="text/css" />
 
+    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxcore.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxbuttons.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxscrollbar.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxsplitter.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxlistbox.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxdata.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxcombobox.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxinput.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxpasswordinput.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxtooltip.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxexpander.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxvalidator.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxmaskedinput.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxdropdownlist.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxtextarea.js')}}"></script>
+
     <link rel="stylesheet" href="{{asset('css/app.css')}}" type="text/css">
-    <link rel="stylesheet" href="{{asset('css/style.css')}}" type="text/css">
-    <link rel="stylesheet" href="{{asset('css/style.scss')}}" type="text/plain">
 
 </head>
 
@@ -52,11 +69,11 @@
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{route('user.index')}}">Thông tin chi tiết</a>
                                 <a class="dropdown-item" href="{{route('user.edit', Auth::user())}}">Cập nhật thông tin</a>
-                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                <a class="dropdown-item" href="{{ route('user.logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     {{ __('Đăng xuất') }}
                                 </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                <form id="logout-form" action="{{ route('user.logout') }}" method="POST" style="display: none;">
                                     @csrf
                                 </form>
                             </div>
@@ -88,24 +105,6 @@
     @endif
 
     @yield('content')
-    <script src="{{asset('js/app.js')}}"></script>
-    <script src="{{asset('js/ckeditor3/ckeditor.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxcore.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxbuttons.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxscrollbar.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxsplitter.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxlistbox.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxdata.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxcombobox.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxinput.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxpasswordinput.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxtooltip.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxexpander.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxvalidator.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxmaskedinput.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxdropdownlist.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxtextarea.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/scripts/demos.js')}}"></script>
     <script>
        $(document).ready(function() {
             $("[data-toggle=popover]").popover();

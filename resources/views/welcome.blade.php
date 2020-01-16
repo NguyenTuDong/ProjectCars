@@ -150,6 +150,16 @@
 
             $("#name").jqxInput({placeHolder: "Tên", height: h, width: w, minLength: 1, theme: 'material'});
 
+            $("#locations").jqxComboBox(
+            {
+                searchMode: 'containsignorecase',
+                width: w,
+                height: h,
+                theme: 'material',
+                promptText: "Tỉnh/thành",
+                displayMember: 'ten',
+                valueMember: 'id',
+            });
             jQuery.ajax({
                 url : '/getlocations',
                 type : "GET",
@@ -160,19 +170,22 @@
                     var locationsAdapter = new $.jqx.dataAdapter(locationsSource);
                     $("#locations").jqxComboBox(
                     {
-                        searchMode: 'containsignorecase',
                         source: locationsAdapter,
                         selectedIndex: oldlocation,
-                        width: w,
-                        height: h,
-                        theme: 'material',
-                        promptText: "Tỉnh/thành",
-                        displayMember: 'ten',
-                        valueMember: 'id',
                     });
                 }
             });
 
+            $("#brands").jqxComboBox(
+            {
+                searchMode: 'containsignorecase',
+                width: w,
+                height: h,
+                theme: 'material',
+                promptText: "Hãng xe",
+                displayMember: 'ten',
+                valueMember: 'id',
+            });
             jQuery.ajax({
                 url : '/getbrands',
                 type : "GET",
@@ -183,15 +196,8 @@
                     brandsAdapter = new $.jqx.dataAdapter(brandsSource);
                     $("#brands").jqxComboBox(
                     {
-                        searchMode: 'containsignorecase',
                         source: brandsAdapter,
                         selectedIndex: oldbrand,
-                        width: w,
-                        height: h,
-                        theme: 'material',
-                        promptText: "Hãng xe",
-                        displayMember: 'ten',
-                        valueMember: 'id',
                         renderer: function (index, label, value) {
                             var datarecord = brandsSource[index];
                             var imgurl = 'img/logo/' + datarecord.logo;
@@ -203,6 +209,17 @@
                 }
             });
 
+            $("#types").jqxComboBox(
+            {
+                searchMode: 'containsignorecase',
+                width: w,
+                height: h,
+                theme: 'material',
+                disabled: true,
+                promptText: "Dòng xe",
+                displayMember: 'ten',
+                valueMember: 'id'
+            });
             jQuery.ajax({
                 url : '/gettypes',
                 type : "GET",
@@ -211,18 +228,6 @@
                 {
                     typesSource = data;
                     typesAdapter = new $.jqx.dataAdapter(typesSource);
-            
-                    $("#types").jqxComboBox(
-                    {
-                        searchMode: 'containsignorecase',
-                        width: w,
-                        height: h,
-                        theme: 'material',
-                        disabled: true,
-                        promptText: "Dòng xe",
-                        displayMember: 'ten',
-                        valueMember: 'id'
-                    });
 
                     if (oldbrand != null)
                     {

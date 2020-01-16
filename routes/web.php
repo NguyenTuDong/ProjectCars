@@ -14,6 +14,22 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/users/logout', 'Auth\LoginController@userLogout')->name('user.logout');
+
+Route::prefix('admin')->group(function() {
+  Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
+  Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+  Route::post('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
+
+  Route::get('/', 'AdminController@index')->name('admin.dashboard');
+
+  Route::post('/password/email', 'Auth\AdminForgotPasswordController@sendResetLinkEmail')->name('admin.password.email');
+  Route::get('/password/reset', 'Auth\AdminForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
+  Route::post('/password/reset', 'Auth\AdminResetPasswordController@reset')->name('admin.password.update');
+  Route::get('/password/reset/{token}', 'Auth\AdminResetPasswordController@showResetForm')->name('admin.password.reset');
+});
+
 Route::get('/getlocations','HomeController@getLocations');
 Route::get('/gettypes','HomeController@getTypes');
 Route::get('/getbrands','HomeController@getBrands');
@@ -31,4 +47,5 @@ Route::post('/user/updateavatar','UserController@updateAvatar')->name('update.av
 
 Route::resource('car','CarController');
 Route::resource('user','UserController');
+
 
