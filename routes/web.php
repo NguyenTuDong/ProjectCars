@@ -30,9 +30,11 @@ Route::prefix('admin')->group(function() {
   Route::get('/password/reset/{token}', 'Auth\AdminResetPasswordController@showResetForm')->name('admin.password.reset');
 });
 
+//Brand
+Route::get('/getbrands','BrandController@index');
+
 Route::get('/getlocations','HomeController@getLocations');
 Route::get('/gettypes','HomeController@getTypes');
-Route::get('/getbrands','HomeController@getBrands');
 Route::get('/getconditions','HomeController@getConditions');
 Route::get('/getorigins','HomeController@getOrigins');
 Route::get('/gettransmissions','HomeController@getTransmissions');

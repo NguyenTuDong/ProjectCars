@@ -25,15 +25,16 @@
 
 <body class="">
   <div id="app">
-    <dashboard routes={{
-      collect(\Route::getRoutes())
-    }}></dashboard>
+    <master routes={{
+      collect(\Route::getRoutes())->map(function ($route) {
+        $route->uri = URL::to($route->uri);;
+        return $route;
+      })
+    }}></master>
   </div>
   <script src="{{asset('js/app.js')}}"></script>
   <!--   Core JS Files   -->
   <script src="js/admin/plugins/perfect-scrollbar.jquery.min.js"></script>
-  <!--  Google Maps Plugin    -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
   <!-- Chart JS -->
   <script src="js/admin/plugins/chartjs.min.js"></script>
   <!--  Notifications Plugin    -->

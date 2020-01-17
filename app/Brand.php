@@ -11,7 +11,7 @@ class Brand extends Model
     ];
 
     public function getLogoPathAttribute(){
-        return public_path()."\\img\\logo\\".$this->attributes['logo'];
+        return \URL::to("/")."\\storage\\img\\logo\\".$this->attributes['logo'];
     }
 
     public function types(){

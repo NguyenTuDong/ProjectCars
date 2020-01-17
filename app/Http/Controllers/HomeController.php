@@ -46,10 +46,10 @@ class HomeController extends Controller
         $data = Location::get();
         return json_encode($data);
     }
-    public function getBrands() {
-        $data = Brand::get();
-        return json_encode($data);
-    }
+    // public function getBrands() {
+    //     $data = Brand::get();
+    //     return json_encode($data);
+    // }
     public function getTypes() {
         $data = Type::get();
         return json_encode($data);
