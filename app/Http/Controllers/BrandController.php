@@ -25,7 +25,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -36,7 +36,25 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        request()->validate([
+            'logo' => 'image',
+        ]);
+
+        $brand = new Brand();
+
+        if($request->hasFile('logo')){
+            $fileNameWithExt = $request->file('logo')->getClientOriginalName();
+            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('logo')->getClientOriginalExtension();
+            $fileNameToStore = 'logo'.strtolower($request->name).'.'.$extension;
+            $path = $request->file('logo')->storeAs('img/logo', $fileNameToStore);
+            $brand->logo = $fileNameToStore;
+        }
+        
+        $brand->ten = $request->name;
+
+        $brand->save();
+        return response($brand, 201);
     }
 
     /**
@@ -80,15 +98,15 @@ class BrandController extends Controller
             $fileNameWithExt = $request->file('logo')->getClientOriginalName();
             $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('logo')->getClientOriginalExtension();
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
-            $path = $request->file('logo')->storeAs('public/img/logo', $fileNameToStore);
+            $fileNameToStore = 'logo'.strtolower($request->name).'.'.$extension;
+            $path = $request->file('logo')->storeAs('img/logo', $fileNameToStore);
             $brand->logo = $fileNameToStore;
         }
-
         
         $brand->ten = $request->name;
 
         $brand->save();
+        return response($brand, 200);
     }
 
     /**

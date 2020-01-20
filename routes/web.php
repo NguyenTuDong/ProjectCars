@@ -31,7 +31,7 @@ Route::prefix('admin')->group(function() {
 });
 
 //Brand
-Route::get('/getbrands','BrandController@index');
+Route::resource('/brand', 'BrandController');
 
 Route::get('/getlocations','HomeController@getLocations');
 Route::get('/gettypes','HomeController@getTypes');

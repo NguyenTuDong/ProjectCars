@@ -6,11 +6,11 @@
     <td>
       <img :src="brand.logo_path" alt="">
       <div v-if="this.editing == this.id">
-        <h6 class="text-primary my-3">Ảnh cập nhật:</h6>
+        <h6 class="text-primary my-3">Logo:</h6>
         <div>
-          <img id="preview-logo" :src="preview" alt="">
-          <button id="preview-btn" @click="showForm" class="btn btn-primary btn-block">Chọn ảnh</button>
-          <input id="preview-file" @change="imagePreview" type="file" ref="logo" value="Chọn ảnh" style="display: none">
+          <img class="preview-logo" :src="preview" alt="">
+          <button @click="showForm" class="btn btn-primary btn-block preview-btn">Chọn ảnh</button>
+          <input @change="imagePreview" type="file" ref="logo" value="Chọn ảnh" style="display: none">
         </div>
       </div>
     </td>
@@ -63,13 +63,6 @@ export default {
       newName: this.brand.ten,
     }
   },
-  created() {
-    var self = this;
-    $("#preview-file").change(function () {
-      alert('change');
-      self.imagePreview(this);
-    });
-  },
   methods: {
     edit() {
       this.$emit('changeEditing', this.id);
@@ -83,7 +76,7 @@ export default {
       this.$emit('changeEditing', -1);
     },
     showForm() {
-      $('#preview-file').click();
+      this.$refs.logo.click();
     },
     imagePreview() 
     { 
@@ -104,11 +97,4 @@ export default {
 </script>
 
 <style>
-#preview-logo{
-  width: 100px;
-  height: auto;
-}
-#preview-btn{
-  width: 150px;
-}
 </style>
