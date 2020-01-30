@@ -2074,8 +2074,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       editing: -1,
       isAdd: false,
-      newName: null,
-      preview: null,
+      newName: "",
+      preview: "",
       logoError: "",
       nameError: ""
     };
@@ -2125,7 +2125,7 @@ __webpack_require__.r(__webpack_exports__);
         this.logoError = "";
       }
 
-      if (this.newName == null) {
+      if (this.newName == "") {
         this.nameError = "Vui lòng nhập tên thương hiệu!";
       } else {
         this.nameError = "";
@@ -2136,6 +2136,9 @@ __webpack_require__.r(__webpack_exports__);
         formData.append("logo", this.$refs.newLogo.files[0]);
         formData.append("name", this.newName);
         this.$store.dispatch('createBrand', formData);
+        this.newName = "";
+        this.preview = "";
+        this.isAdd = false;
       }
     }
   }
@@ -2152,6 +2155,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -2211,21 +2216,48 @@ __webpack_require__.r(__webpack_exports__);
       logo: this.brand.logo,
       logo_path: this.brand.logo_path,
       ten: this.brand.ten,
-      preview: null,
-      newName: this.brand.ten
+      preview: "",
+      newName: this.brand.ten,
+      logoError: "",
+      nameError: ""
     };
   },
   methods: {
     edit: function edit() {
       this.$emit('changeEditing', this.id);
-      this.preview = null;
-      this.newName = this.brand.ten;
+      this.preview = "";
+      this.newName = this.ten;
     },
     cancle: function cancle() {
       this.$emit('changeEditing', -1);
     },
     updateBrand: function updateBrand() {
-      this.$emit('changeEditing', -1);
+      if (this.newName == "") {
+        this.nameError = "Vui lòng nhập tên thương hiệu!";
+      } else {
+        this.nameError = "";
+      }
+
+      if (this.newName != "") {
+        var formData = new FormData();
+        formData.append("name", this.newName);
+        var image = this.$refs.logo.files[0];
+
+        if (image != null) {
+          formData.append("logo", image);
+          this.logo_path = this.preview;
+        }
+
+        var data = {
+          id: this.id,
+          formData: formData
+        };
+        this.$store.dispatch('updateBrand', data);
+        this.ten = this.newName;
+        this.newName = "";
+        this.preview = "";
+        this.$emit('changeEditing', -1);
+      }
     },
     showForm: function showForm() {
       this.$refs.logo.click();
@@ -6974,7 +7006,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.table-brands-id{\r\n  width: 5%;\n}\n.table-brands-logo{\r\n  width: 40%;\n}\n.table-brands-name{\r\n  width: 35%;\n}\n.table-brands-actions{\r\n  width: 20%;\n}\r\n/* .preview-logo{\r\n  width: 100px;\r\n  height: auto;\r\n} */\n.preview-btn{\r\n  width: 150px;\n}\r\n", ""]);
+exports.push([module.i, "\n.table-brands-id{\r\n  width: 5%;\n}\n.table-brands-logo{\r\n  width: 35%;\n}\n.table-brands-name{\r\n  width: 35%;\n}\n.table-brands-actions{\r\n  width: 25%;\n}\r\n/* .preview-logo{\r\n  width: 100px;\r\n  height: auto;\r\n} */\n.preview-btn{\r\n  width: 150px;\n}\r\n", ""]);
 
 // exports
 
@@ -39279,14 +39311,20 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("tr", [
-    _c("td", [_vm._v("\n    " + _vm._s(_vm.brand.id) + "\n  ")]),
+    _c("td", [_vm._v("\n    " + _vm._s(_vm.id) + "\n  ")]),
     _vm._v(" "),
     _c("td", [
-      _c("img", { attrs: { src: _vm.brand.logo_path, alt: "" } }),
+      _c("img", { attrs: { src: _vm.logo_path, alt: "" } }),
       _vm._v(" "),
-      this.editing == this.id
+      _vm.editing == _vm.id
         ? _c("div", [
             _c("h6", { staticClass: "text-primary my-3" }, [_vm._v("Logo:")]),
+            _vm._v(" "),
+            _vm.logoError != ""
+              ? _c("span", { staticClass: "text-danger" }, [
+                  _vm._v(_vm._s(_vm.logoError))
+                ])
+              : _vm._e(),
             _vm._v(" "),
             _c("div", [
               _c("img", {
@@ -39314,20 +39352,42 @@ var render = function() {
         : _vm._e()
     ]),
     _vm._v(" "),
-    this.editing != this.id
-      ? _c("td", [_vm._v("\n    " + _vm._s(_vm.brand.ten) + "\n  ")])
+    _vm.editing != _vm.id
+      ? _c("td", [_vm._v("\n    " + _vm._s(_vm.ten) + "\n  ")])
       : _c("td", [
           _c("div", { staticClass: "form-group" }, [
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.newName,
+                  expression: "newName"
+                }
+              ],
               staticClass: "form-control",
               attrs: { type: "text", placeholder: "Tên Thương Hiệu" },
-              domProps: { value: this.newName }
+              domProps: { value: _vm.newName },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.newName = $event.target.value
+                }
+              }
             })
-          ])
+          ]),
+          _vm._v(" "),
+          _vm.nameError != ""
+            ? _c("span", { staticClass: "text-danger" }, [
+                _vm._v(_vm._s(_vm.nameError))
+              ])
+            : _vm._e()
         ]),
     _vm._v(" "),
     _c("td", { staticClass: "td-actions text-right" }, [
-      this.editing != this.id
+      _vm.editing != _vm.id
         ? _c(
             "button",
             {
@@ -39345,7 +39405,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      this.editing != this.id
+      _vm.editing != _vm.id
         ? _c(
             "button",
             {
@@ -39362,7 +39422,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      this.editing == this.id
+      _vm.editing == _vm.id
         ? _c(
             "button",
             {
@@ -39380,7 +39440,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      this.editing == this.id
+      _vm.editing == _vm.id
         ? _c(
             "button",
             {
@@ -57003,6 +57063,13 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     createBrand: function createBrand(state, data) {
       state.brands.push(data);
       state.createBrandSuccess = true;
+    },
+    updateBrand: function updateBrand(state, data) {
+      state.brands.forEach(function (element, index) {
+        if (element.id === data.id) {
+          state.brands[index] = data;
+        }
+      });
     }
   },
   actions: {
@@ -57041,22 +57108,19 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
         }
       });
     },
-    updateBrand: function updateBrand(context, brand) {
-      var formData = new FormData();
-      formData.append("logo", brand.logo);
-      formData.append("name", brand.name);
+    updateBrand: function updateBrand(context, data) {
       $.ajax({
         headers: {
           'X-CSRF-TOKEN': context.state.csrf
         },
-        url: '/brand',
+        url: '/brand/' + data.id,
         type: "POST",
-        data: formData,
+        data: data.formData,
         processData: false,
         contentType: false,
         success: function success(data) {
           console.log(data);
-          context.commit('createBrand', data);
+          context.commit('updateBrand', data);
         },
         error: function error(data) {
           console.log(data);
@@ -57097,9 +57161,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\ProjectCars\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! D:\ProjectCars\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! D:\ProjectCars\resources\sass\admin\admin.scss */"./resources/sass/admin/admin.scss");
+__webpack_require__(/*! D:\Work\Web Developer\Projects\Car\ProjectCars\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! D:\Work\Web Developer\Projects\Car\ProjectCars\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! D:\Work\Web Developer\Projects\Car\ProjectCars\resources\sass\admin\admin.scss */"./resources/sass/admin/admin.scss");
 
 
 /***/ })

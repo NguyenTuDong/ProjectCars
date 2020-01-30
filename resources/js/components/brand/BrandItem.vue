@@ -1,12 +1,13 @@
 <template>
   <tr>
     <td>
-      {{brand.id}}
+      {{id}}
     </td>
     <td>
-      <img :src="brand.logo_path" alt="">
-      <div v-if="this.editing == this.id">
+      <img :src="logo_path" alt="">
+      <div v-if="editing == id">
         <h6 class="text-primary my-3">Logo:</h6>
+        <span class="text-danger" v-if="logoError != ''">{{logoError}}</span>
         <div>
           <img class="preview-logo" :src="preview" alt="">
           <button @click="showForm" class="btn btn-primary btn-block preview-btn">Chọn ảnh</button>
@@ -14,25 +15,26 @@
         </div>
       </div>
     </td>
-    <td v-if="this.editing != this.id">
-      {{brand.ten}}
+    <td v-if="editing != id">
+      {{ten}}
     </td>
     <td v-else>
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Tên Thương Hiệu" :value="this.newName">
+        <input type="text" class="form-control" placeholder="Tên Thương Hiệu" v-model="newName">
       </div>
+      <span class="text-danger" v-if="nameError != ''">{{nameError}}</span>
     </td>
     <td class="td-actions text-right">
-      <button v-if="this.editing != this.id" @click="edit" type="button" rel="tooltip" title="" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
+      <button v-if="editing != id" @click="edit" type="button" rel="tooltip" title="" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
         <i class="now-ui-icons ui-2_settings-90"></i>
       </button>
-      <button v-if="this.editing != this.id" type="button" rel="tooltip" title="" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
+      <button v-if="editing != id" type="button" rel="tooltip" title="" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
         <i class="now-ui-icons ui-1_simple-remove"></i>
       </button>
-      <button v-if="this.editing == this.id" @click="updateBrand" type="button" rel="tooltip" title="" class="btn btn-success btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
+      <button v-if="editing == id" @click="updateBrand" type="button" rel="tooltip" title="" class="btn btn-success btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
         <i class="now-ui-icons ui-1_check"></i>
       </button>
-      <button v-if="this.editing == this.id" @click="cancle" type="button" rel="tooltip" title="" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
+      <button v-if="editing == id" @click="cancle" type="button" rel="tooltip" title="" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
         <i class="now-ui-icons ui-1_simple-delete"></i>
       </button>
     </td>
@@ -59,21 +61,48 @@ export default {
       logo: this.brand.logo,
       logo_path: this.brand.logo_path,
       ten: this.brand.ten,
-      preview: null,
+      preview: "",
       newName: this.brand.ten,
+      logoError: "",
+      nameError: "",
     }
   },
   methods: {
     edit() {
       this.$emit('changeEditing', this.id);
-      this.preview = null;
-      this.newName = this.brand.ten;
+      this.preview = "";
+      this.newName = this.ten;
     },
     cancle() {
       this.$emit('changeEditing', -1);
     },
     updateBrand() {
-      this.$emit('changeEditing', -1);
+      if(this.newName == ""){
+        this.nameError = "Vui lòng nhập tên thương hiệu!";
+      } else {
+        this.nameError = "";
+      }
+      
+      if(this.newName != ""){
+        var formData = new FormData();
+        formData.append("name", this.newName);
+        var image = this.$refs.logo.files[0];
+        if(image != null){
+          formData.append("logo", image);
+          this.logo_path = this.preview;
+        }
+
+        var data = {
+          id: this.id,
+          formData: formData,
+        }
+
+        this.$store.dispatch('updateBrand', data);
+        this.ten = this.newName;
+        this.newName = "";
+        this.preview = "";
+        this.$emit('changeEditing', -1);
+      }
     },
     showForm() {
       this.$refs.logo.click();

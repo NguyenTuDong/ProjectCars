@@ -82,8 +82,8 @@ export default {
     return {
       editing: -1,
       isAdd: false,
-      newName: null,
-      preview: null,
+      newName: "",
+      preview: "",
       logoError: "",
       nameError: "",
     }
@@ -131,7 +131,7 @@ export default {
         this.logoError = "";
       }
 
-      if(this.newName == null){
+      if(this.newName == ""){
         this.nameError = "Vui lòng nhập tên thương hiệu!";
       } else {
         this.nameError = "";
@@ -143,6 +143,9 @@ export default {
         formData.append("name", this.newName);
 
         this.$store.dispatch('createBrand', formData);
+        this.newName = "";
+        this.preview = "";
+        this.isAdd = false;
       }
     }
   }
@@ -154,13 +157,13 @@ export default {
   width: 5%;
 }
 .table-brands-logo{
-  width: 40%;
+  width: 35%;
 }
 .table-brands-name{
   width: 35%;
 }
 .table-brands-actions{
-  width: 20%;
+  width: 25%;
 }
 /* .preview-logo{
   width: 100px;

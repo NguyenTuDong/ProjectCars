@@ -32,6 +32,13 @@ export const store = new Vuex.Store({
     createBrand(state, data) {
       state.brands.push(data);
       state.createBrandSuccess = true;
+    },
+    updateBrand(state, data) {
+      state.brands.forEach((element, index) => {
+        if(element.id === data.id) {
+            state.brands[index] = data;
+        }
+      });
     }
   },
   actions: {
@@ -72,25 +79,20 @@ export const store = new Vuex.Store({
         }
       })
     },
-    updateBrand(context, brand) {
-      var formData = new FormData();
-
-      formData.append("logo", brand.logo);
-      formData.append("name", brand.name);
-      
+    updateBrand(context, data) {
       $.ajax({
         headers: {
         'X-CSRF-TOKEN': context.state.csrf,
         },
-        url : '/brand',
+        url : '/brand/'+data.id,
         type : "POST",
-        data: formData,
+        data: data.formData,
         processData: false,
         contentType: false,
         success:function(data)
         {
           console.log(data);
-          context.commit('createBrand', data);
+          context.commit('updateBrand', data);
         },
         error: function (data) {
           console.log(data);

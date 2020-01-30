@@ -93,6 +93,7 @@ class BrandController extends Controller
         ]);
 
         $brand = Brand::findOrFail($id);
+        $brand->ten = $request->name;
 
         if($request->hasFile('logo')){
             $fileNameWithExt = $request->file('logo')->getClientOriginalName();
@@ -102,8 +103,6 @@ class BrandController extends Controller
             $path = $request->file('logo')->storeAs('img/logo', $fileNameToStore);
             $brand->logo = $fileNameToStore;
         }
-        
-        $brand->ten = $request->name;
 
         $brand->save();
         return response($brand, 200);
