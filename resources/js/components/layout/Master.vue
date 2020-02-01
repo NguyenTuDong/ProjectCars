@@ -23,91 +23,95 @@
           <router-link tag="li" to="/brand">
             <a href="">
               <i class="now-ui-icons design_app"></i>
-              <p>Brand</p>
+              <p>Thương hiệu</p>
+            </a>
+          </router-link>
+          <router-link tag="li" to="/type">
+            <a href="">
+              <i class="now-ui-icons design_app"></i>
+              <p>Dòng xe</p>
             </a>
           </router-link>
         </ul>
       </div>
     </div>
     <div class="main-panel" id="main-panel">
-      
-      <router-view>
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
-          <div class="container-fluid">
-            <div class="navbar-wrapper">
-              <div class="navbar-toggle">
-                <button type="button" class="navbar-toggler">
-                  <span class="navbar-toggler-bar bar1"></span>
-                  <span class="navbar-toggler-bar bar2"></span>
-                  <span class="navbar-toggler-bar bar3"></span>
-                </button>
-              </div>
-              
-              <!-- <a slot-scope="props" class="navbar-brand" href="#pablo">{{props.page}}</a>
-              <a class="navbar-brand" href="#pablo">sdfafd</a> -->
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            <div class="navbar-toggle">
+              <button type="button" class="navbar-toggler">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+              </button>
             </div>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-bar navbar-kebab"></span>
-              <span class="navbar-toggler-bar navbar-kebab"></span>
-              <span class="navbar-toggler-bar navbar-kebab"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navigation">
-              <form>
-                <div class="input-group no-border">
-                  <input type="text" value="" class="form-control" placeholder="Search...">
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <i class="now-ui-icons ui-1_zoom-bold"></i>
-                    </div>
+            
+            <!-- <a slot-scope="props" class="navbar-brand" href="#pablo">{{props.page}}</a>
+            <a class="navbar-brand" href="#pablo">sdfafd</a> -->
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navigation">
+            <form>
+              <div class="input-group no-border">
+                <input type="text" value="" class="form-control" placeholder="Search...">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <i class="now-ui-icons ui-1_zoom-bold"></i>
                   </div>
                 </div>
-              </form>
-              <ul class="navbar-nav">
-                <li class="nav-item">
-                  <a class="nav-link" href="#pablo">
-                    <i class="now-ui-icons media-2_sound-wave"></i>
-                    <p>
-                      <span class="d-lg-none d-md-block">Stats</span>
-                    </p>
+              </div>
+            </form>
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="#pablo">
+                  <i class="now-ui-icons media-2_sound-wave"></i>
+                  <p>
+                    <span class="d-lg-none d-md-block">Stats</span>
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="now-ui-icons location_world"></i>
+                  <p>
+                    <span class="d-lg-none d-md-block">Some Actions</span>
+                  </p>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="now-ui-icons users_single-02"></i>
+                  <p>
+                    <span class="d-lg-none d-md-block">Some Actions</span>
+                  </p>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" :href="route('admin.logout')"
+                      onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                      Đăng xuất
                   </a>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="now-ui-icons location_world"></i>
-                    <p>
-                      <span class="d-lg-none d-md-block">Some Actions</span>
-                    </p>
-                  </a>
-                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                  </div>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="now-ui-icons users_single-02"></i>
-                    <p>
-                      <span class="d-lg-none d-md-block">Some Actions</span>
-                    </p>
-                  </a>
-                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" :href="route('admin.logout')"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        Đăng xuất
-                    </a>
-                    <form id="logout-form" :action="route('admin.logout')" method="POST" style="display: none;">
-                        <input type="hidden" name="_token" :value="csrf">
-                    </form>
-                  </div>
-                </li>
-              </ul>
-            </div>
+                  <form id="logout-form" :action="route('admin.logout')" method="POST" style="display: none;">
+                      <input type="hidden" name="_token" :value="csrf">
+                  </form>
+                </div>
+              </li>
+            </ul>
           </div>
-        </nav>
-        <!-- End Navbar -->
-      </router-view>
+        </div>
+      </nav>
+      <!-- End Navbar -->
+      <router-view></router-view>
       <footer class="footer">
         <div class=" container-fluid ">
           <nav>
@@ -154,7 +158,6 @@ export default {
   },
   created() {
     this.$store.dispatch('setRoutes', JSON.parse(this.routes));
-    this.$store.dispatch('retrieveBrands');
   },
   computed: {
     csrf() {
@@ -174,5 +177,62 @@ export default {
 </script>
 
 <style>
-
+.card-select{
+  min-width: 200px;
+}
+.preview-btn{
+  width: 150px;
+}
+.pop-up{
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(39, 39, 39, 0.2);
+  display: none;
+  z-index: 9999;
+}
+.pop-up-inner{
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  width: 500px;
+  background-color: white;
+  box-shadow: 0 1px 15px 10px rgba(39, 39, 39, 0.1);
+  z-index: 1;
+}
+.pop-up-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+.pop-up-header .btn{
+  height: 20px;
+}
+.pop-up-title{
+  font-size: 1rem;
+  font-weight: bold;
+}
+.pop-up-body{
+  padding: 30px 20px;
+  text-align: center;
+}
+.pop-up-footer{
+  padding: 20px;
+}
+.pagination {
+  margin: 5px auto;
+}
+.pagination li.active a{
+  text-decoration: underline;
+  font-weight: bold;
+}
+.pagination li a{
+  display: block;
+  padding: 5px 15px;
+  margin: 0 -0.5px;
+}
 </style>

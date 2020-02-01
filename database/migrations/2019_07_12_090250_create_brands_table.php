@@ -17,6 +17,7 @@ class CreateBrandsTable extends Migration
             $table->bigIncrements('id');
             $table->string('ten');
             $table->string('logo');
+            $table->integer('trangthai')->default(0);
         });
     }
 

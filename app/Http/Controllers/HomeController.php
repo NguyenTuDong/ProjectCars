@@ -46,36 +46,36 @@ class HomeController extends Controller
         $data = Location::get();
         return json_encode($data);
     }
-    // public function getBrands() {
-    //     $data = Brand::get();
-    //     return json_encode($data);
-    // }
+    public function getBrands() {
+        $data = Brand::where('trangthai', 0)->get();
+        return json_encode($data);
+    }
     public function getTypes() {
-        $data = Type::get();
+        $data = Type::where('trangthai', 0)->get();
         return json_encode($data);
     }
     public function getConditions() {
-        $data = Condition::get();
+        $data = Condition::where('trangthai', 0)->get();
         return json_encode($data);
     }
     public function getOrigins() {
-        $data = Origin::get();
+        $data = Origin::where('trangthai', 0)->get();
         return json_encode($data);
     }
     public function getTransmissions() {
-        $data = Transmission::get();
+        $data = Transmission::where('trangthai', 0)->get();
         return json_encode($data);
     }
     public function getFuels() {
-        $data = Fuel::get();
+        $data = Fuel::where('trangthai', 0)->get();
         return json_encode($data);
     }
     public function getStyles() {
-        $data = Style::get();
+        $data = Style::where('trangthai', 0)->get();
         return json_encode($data);
     }
     public function getColors() {
-        $data = Color::get();
+        $data = Color::where('trangthai', 0)->get();
         return json_encode($data);
     }
 

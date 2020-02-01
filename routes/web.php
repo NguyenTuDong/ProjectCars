@@ -31,11 +31,18 @@ Route::prefix('admin')->group(function() {
 });
 
 //Brand
-// Route::resource('/brand', 'BrandController');
 Route::get('/brand', 'BrandController@index')->name('brand.index');
 Route::post('/brand', 'BrandController@store')->name('brand.store');
 Route::post('/brand/{brand}', 'BrandController@update')->name('brand.update');
+Route::post('/brand/delete/{brand}', 'BrandController@destroy')->name('brand.destroy');
 
+//Type
+Route::get('/type/{brands_id}', 'TypeController@index')->name('type.index');
+Route::post('/type', 'TypeController@store')->name('type.store');
+Route::post('/type/{type}', 'TypeController@update')->name('type.update');
+Route::post('/type/delete/{type}', 'TypeController@destroy')->name('type.destroy');
+
+Route::get('/getbrands','HomeController@getBrands');
 Route::get('/getlocations','HomeController@getLocations');
 Route::get('/gettypes','HomeController@getTypes');
 Route::get('/getconditions','HomeController@getConditions');

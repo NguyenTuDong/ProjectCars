@@ -17,6 +17,7 @@ class CreateTypesTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('brands_id')->unsigned();
             $table->string('ten');
+            $table->integer('trangthai')->default(0);
         });
 
         Schema::table('types', function($table){

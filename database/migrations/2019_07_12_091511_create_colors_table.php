@@ -17,6 +17,7 @@ class CreateColorsTable extends Migration
             $table->bigIncrements('id');
             $table->string('ten');
             $table->string('rgb');
+            $table->integer('trangthai')->default(0);
         });
     }
 

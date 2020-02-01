@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Type extends Model
 {
+    public $timestamps = false;
+    
     public function brands(){
         return $this->belongsTo(Brand::class, 'brands_id');
     }

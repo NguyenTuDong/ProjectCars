@@ -16,6 +16,7 @@ class CreateTransmissionsTable extends Migration
         Schema::create('transmissions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('ten');
+            $table->integer('trangthai')->default(0);
         });
     }
 

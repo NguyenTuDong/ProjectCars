@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Style extends Model
 {
+    public $timestamps = false;
+    
     protected $appends = [
         'hinhanh_path',
     ];

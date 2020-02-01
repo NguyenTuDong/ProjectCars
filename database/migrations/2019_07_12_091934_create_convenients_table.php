@@ -16,6 +16,7 @@ class CreateConvenientsTable extends Migration
         Schema::create('convenients', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('ten');
+            $table->integer('trangthai')->default(0);
         });
     }
 

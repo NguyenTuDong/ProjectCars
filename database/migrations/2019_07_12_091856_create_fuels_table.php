@@ -16,6 +16,7 @@ class CreateFuelsTable extends Migration
         Schema::create('fuels', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('ten');
+            $table->integer('trangthai')->default(0);
         });
     }
 

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Color extends Model
 {
+    public $timestamps = false;
+    
     protected $appends = [
         'rgb_path',
     ];

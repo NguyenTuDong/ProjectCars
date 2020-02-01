@@ -17,6 +17,7 @@ class CreateStylesTable extends Migration
             $table->bigIncrements('id');
             $table->string('ten');
             $table->string('hinhanh');
+            $table->integer('trangthai')->default(0);
         });
     }
 

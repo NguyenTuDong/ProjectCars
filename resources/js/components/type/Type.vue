@@ -7,69 +7,61 @@
         <div class="col-md-12">
           <div class="card">
             <div class="d-flex card-header">
-              <h4 class="card-title">Thương hiệu</h4>
-              <button class="btn btn-primary ml-auto" @click="addBrand">Thêm thương hiệu</button>
+              <h4 class="card-title">Dòng xe - 
+                <select v-model="selectBrand" @click="getItems(selectBrand, 1)" class="card-select">
+                  <option v-for="brand in brands" :key="brand.id" :value="brand.id">{{brand.ten}}</option>
+                </select>
+              </h4>
+              <button class="btn btn-primary ml-auto" @click="addType">Thêm dòng xe</button>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table">
                   <thead class=" text-primary">
-                    <th class="table-brands-id">
+                    <th class="table-types-id">
                       Id
                     </th>
-                    <th class="table-brands-logo text-center">
-                      Logo
+                    <th class="table-types-name">
+                      Tên dòng xe
                     </th>
-                    <th class="table-brands-name">
-                      Tên thương hiệu
-                    </th>
-                    <th class="table-brands-actions text-right">
+                    <th class="table-types-actions text-right">
                       Tác vụ
                     </th>
                   </thead>
                   <tbody>
-                    <brand-item 
-                      v-for="brand in brands" 
-                      :key="brand.id" 
-                      :brand="brand"
+                    <type-item 
+                      v-for="type in types" 
+                      :key="type.id" 
+                      :type="type"
                       :editing="editing"
                       @changeEditing="changeEditing"
                       @showPopup="showPopup"
-                    ></brand-item>
+                    ></type-item>
                     <tr v-if="isAdd">
                       <td>
                       </td>
                       <td>
-                        <h6 class="text-primary my-3">Logo:</h6>
-                        <span class="text-danger" v-if="logoError != ''">{{logoError}}</span>
-                        <div>
-                          <img class="preview-logo" :src="preview" alt="">
-                          <button @click="showForm" class="btn btn-primary btn-block preview-btn">Chọn ảnh</button>
-                          <input @change="imagePreview" type="file" ref="newLogo" value="Chọn ảnh" style="display: none">
-                        </div>
-                      </td>
-                      <td>
                         <div class="form-group">
-                          <input ref="newName" type="text" class="form-control" placeholder="Tên Thương Hiệu" v-model="newName">
+                          <input ref="newName" type="text" class="form-control" placeholder="Tên dòng xe" v-model="newName">
                         </div>
                         <span class="text-danger" v-if="nameError != ''">{{nameError}}</span>
                       </td>
                       <td class="td-actions text-right">
-                        <button @click="createBrand" class="btn btn-primary">Thêm thương hiệu</button>
+                        <button @click="createType" class="btn btn-primary">Thêm dòng xe</button>
                         <button @click="isAdd = false" class="btn btn-danger">Hủy</button>
                       </td>
                     </tr>
                   </tbody>
                 </table>
                 <div v-if="!isAdd" class="d-flex">
-                  <button class="btn btn-primary ml-auto" @click="addBrand">Thêm thương hiệu</button>
+                  <button class="btn btn-primary ml-auto" @click="addType">Thêm dòng xe</button>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div v-if="brands.length > 0" class="row">
+      <div v-if="types.length > 0" class="row">
         <div class="col-md-12">
           <div class="card">
             <!-- Pagination -->
@@ -77,27 +69,27 @@
               <ul class="mx-auto pagination">
                 <li v-if="pagination.last_page > (offset * 2 + 1)">
                   <a href="#" aria-label="Previous"
-                      @click.prevent="getItems(1)">
+                      @click.prevent="getItems(selectBrand, 1)">
                       <span aria-hidden="true">««</span>
                   </a>
                 </li>
                 <li v-if="pagination.last_page > (offset * 2 + 1)">
                   <a href="#" aria-label="Previous"
-                      @click.prevent="getItems(pagination.current_page - 1)">
+                      @click.prevent="getItems(selectBrand, pagination.current_page - 1)">
                       <span aria-hidden="true">«</span>
                   </a>
                 </li>
                 <li v-for="(page, id) in pagesNumber" :class="[ page == isActived ? 'active' : '']" :key="id">
                     <a v-if="page == '...'" href="#">{{ page }}</a>
-                    <a v-else href="#" @click.prevent="getItems(page)">{{ page }}</a>
+                    <a v-else href="#" @click.prevent="getItems(selectBrand, page)">{{ page }}</a>
                 </li>
                 <li v-if="pagination.last_page > (offset * 2 + 1)">
-                    <a href="#" aria-label="Next" @click.prevent="getItems(pagination.current_page + 1)">
+                    <a href="#" aria-label="Next" @click.prevent="getItems(selectBrand, pagination.current_page + 1)">
                         <span aria-hidden="true">»</span>
                     </a>
                 </li>
                 <li v-if="pagination.last_page > (offset * 2 + 1)">
-                    <a href="#" aria-label="Next" @click.prevent="getItems(pagination.last_page)">
+                    <a href="#" aria-label="Next" @click.prevent="getItems(selectBrand, pagination.last_page)">
                         <span aria-hidden="true">»»</span>
                     </a>
                 </li>
@@ -117,7 +109,6 @@
           </button>
         </div>
         <div class="pop-up-body">
-          Bạn có muốn xóa thương hiệu này không?
         </div>
         <div class="pop-up-footer">
           <div class="row">
@@ -139,40 +130,48 @@
 </template>
 
 <script>
-import BrandItem from './BrandItem'
+import TypeItem from './TypeItem'
 
 export default {
-  name: 'Brand',
+  name: 'Type',
   components: {
-    BrandItem,
+    TypeItem,
   },
   data() {
     return {
       editing: -1,
       deleting: -1,
       isAdd: false,
+      selectBrand: 1,
       newName: "",
-      preview: "",
-      logoError: "",
       nameError: "",
       offset: 3,
     }
   },
   created() {
-    this.$store.dispatch('retrieveBrands', 1);
+    this.$store.dispatch('allBrands');
+    var data = {
+      brands_id: 1,
+      page: 1,
+    }
+    this.$store.dispatch('retrieveTypes', data);
   },
   computed: {
     brands() {
-      return this.$store.getters.brands;
+      return this.$store.getters.allBrands;
+    },
+    types() {
+      var self = this;
+      return this.$store.getters.types;
     },
     pagination() {
-      return this.$store.getters.brandsPagination;
+      return this.$store.getters.typesPagination;
     },
     isActived() {
-        return this.$store.getters.brandsPagination.current_page;
+        return this.$store.getters.typesPagination.current_page;
     },
     pagesNumber() {
-      var pagination = this.$store.getters.brandsPagination;
+      var pagination = this.$store.getters.typesPagination;
       var offset = this.offset;
       if (!pagination.to) {
         return [];
@@ -206,18 +205,22 @@ export default {
     clickCallback(pageNum) {
       console.log(pageNum)
     },
-    getItems(page){
-      if(!this.isAdd && page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveBrands', page);
+    getItems(id, page){
+      var data = {
+        brands_id: id,
+        page: page,
+      }
+      if(!this.isAdd && page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveTypes', data);
     },
     changeEditing(id) {
       this.editing = id;
     },
     showPopup(id){
       $('.pop-up').fadeIn(300);
-      var deleting = this.brands.filter(obj => {
+      var deleting = this.types.filter(obj => {
         return obj.id === id
       });
-      var message = "Bạn có muốn xóa thương hiệu <b>"+deleting[0].ten+"</b> không?";
+      var message = "Bạn có muốn xóa dòng xe <b>"+deleting[0].ten+"</b> không?";
       $('.pop-up-body').html(message);
       this.deleting = id;
     },
@@ -225,56 +228,35 @@ export default {
       $('.pop-up').fadeOut(300);
       this.deleting = -1;
     },
-    addBrand() {
-      this.$store.dispatch('retrieveBrands', this.pagination.last_page);
+    addType() {
+      var data = {
+        brands_id: this.selectBrand,
+        page: this.pagination.last_page,
+      }
+      this.$store.dispatch('retrieveTypes', data);
       this.isAdd = true;
       this.$nextTick(() => {
         this.$refs.newName.focus();
       });
     },
-    showForm() {
-      this.$refs.newLogo.click();
-    },
-    imagePreview() 
-    { 
-      var input = this.$refs.newLogo;
-      var self = this;
-
-      if (input.files && input.files[0]) 
-      {
-          var reader = new FileReader(); 
-          reader.onload = function(e) { 
-              self.preview = e.target.result;
-          } 
-          reader.readAsDataURL(input.files[0]); 
-      } 
-    },
-    createBrand() {
-      if(this.$refs.newLogo.files[0] == null){
-        this.logoError = "Vui lòng chọn logo!";
-      } else {
-        this.logoError = "";
-      }
-
+    createType() {
       if(this.newName == ""){
-        this.nameError = "Vui lòng nhập tên thương hiệu!";
+        this.nameError = "Vui lòng nhập tên dòng xe!";
       } else {
         this.nameError = "";
       }
-      
-      if(this.$refs.newLogo.files[0] != null && this.newName != null){
+      if(this.newName != null){
         var formData = new FormData();
-        formData.append("logo", this.$refs.newLogo.files[0]);
+        formData.append("brands_id", this.selectBrand);
         formData.append("name", this.newName);
 
-        this.$store.dispatch('createBrand', formData);
+        this.$store.dispatch('createType', formData);
         this.newName = "";
-        this.preview = "";
         this.isAdd = false;
       }
     },
     deleteBrand() {
-      this.$store.dispatch('deleteBrand', this.deleting);
+      this.$store.dispatch('deleteType', this.deleting);
       $('.pop-up').fadeOut(300);
       this.deleting = -1;
     }
@@ -283,16 +265,13 @@ export default {
 </script>
 
 <style>
-.table-brands-id{
+.table-types-id{
   width: 5%;
 }
-.table-brands-logo{
-  width: 15%;
+.table-types-name{
+  width: 70%;
 }
-.table-brands-name{
-  width: 55%;
-}
-.table-brands-actions{
+.table-types-actions{
   width: 25%;
 }
 </style>

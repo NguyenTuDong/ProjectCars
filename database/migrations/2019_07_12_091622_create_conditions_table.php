@@ -16,6 +16,7 @@ class CreateConditionsTable extends Migration
         Schema::create('conditions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('ten');
+            $table->integer('trangthai')->default(0);
         });
     }
 

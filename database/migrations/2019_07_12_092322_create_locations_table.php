@@ -17,6 +17,7 @@ class CreateLocationsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('regions_id')->unsigned();
             $table->string('ten');
+            $table->integer('trangthai')->default(0);
         });
 
         Schema::table('locations', function ($table) {
