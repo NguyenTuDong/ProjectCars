@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Brand;
+use App\Color;
 
-class BrandController extends Controller
+class ColorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $items = Brand::where('trangthai', 0)->paginate(10);
+        $items = Color::where('trangthai', 0)->paginate(10);
         return response()->json($items);
     }
 
@@ -27,18 +27,18 @@ class BrandController extends Controller
     public function store(Request $request)
     {
         request()->validate([
-            'logo' => 'image',
+            'img' => 'image',
         ]);
 
-        $items = new Brand();
+        $items = new Color();
 
-        if($request->hasFile('logo')){
-            $fileNameWithExt = $request->file('logo')->getClientOriginalName();
+        if($request->hasFile('img')){
+            $fileNameWithExt = $request->file('img')->getClientOriginalName();
             $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-            $extension = $request->file('logo')->getClientOriginalExtension();
-            $fileNameToStore = 'logo_'.date('YmdHi').'.'.$extension;
-            $path = $request->file('logo')->storeAs('img/logo', $fileNameToStore);
-            $items->logo = $fileNameToStore;
+            $extension = $request->file('img')->getClientOriginalExtension();
+            $fileNameToStore = 'color_'.date('YmdHi').'.'.$extension;
+            $path = $request->file('img')->storeAs('img/color', $fileNameToStore);
+            $items->rgb = $fileNameToStore;
         }
         $items->ten = $request->name;
 
@@ -56,19 +56,19 @@ class BrandController extends Controller
     public function update(Request $request, $id)
     {
         request()->validate([
-            'logo' => 'image',
+            'img' => 'image',
         ]);
 
-        $items = Brand::findOrFail($id);
+        $items = Color::findOrFail($id);
         $items->ten = $request->name;
 
-        if($request->hasFile('logo')){
-            $fileNameWithExt = $request->file('logo')->getClientOriginalName();
+        if($request->hasFile('img')){
+            $fileNameWithExt = $request->file('img')->getClientOriginalName();
             $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-            $extension = $request->file('logo')->getClientOriginalExtension();
-            $fileNameToStore = 'logo_'.date('YmdHi').'.'.$extension;
-            $path = $request->file('logo')->storeAs('img/logo', $fileNameToStore);
-            $items->logo = $fileNameToStore;
+            $extension = $request->file('img')->getClientOriginalExtension();
+            $fileNameToStore = 'color_'.date('YmdHi').'.'.$extension;
+            $path = $request->file('img')->storeAs('img/color', $fileNameToStore);
+            $items->rgb = $fileNameToStore;
         }
 
         $items->save();
@@ -83,7 +83,7 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
-        $items = Brand::findOrFail($id);
+        $items = Color::findOrFail($id);
         $items->trangthai = 1;
         $items->save();
         return response($items, 200);

@@ -10,6 +10,8 @@ export const store = new Vuex.Store({
     allBrands: [],
     brands: {},
     types: {},
+    colors: {},
+    conditions: {},
   },
   getters: {
     route(state) {
@@ -33,7 +35,19 @@ export const store = new Vuex.Store({
     },
     typesPagination(state) {
       return state.types;
-    }
+    },
+    colors(state) {
+      return state.colors.data;
+    },
+    colorsPagination(state) {
+      return state.colors;
+    },
+    conditions(state) {
+      return state.conditions.data;
+    },
+    conditionsPagination(state) {
+      return state.conditions;
+    },
   },
   mutations: {
     setRoutes(state, routes) {
@@ -81,7 +95,47 @@ export const store = new Vuex.Store({
         return obj.id == data.id;
       });
       state.types.data.splice(index, 1);
-    }
+    },
+    //Color =======================================================
+    retrieveColors(state, data) {
+      state.colors = data;
+    },
+    createColor(state, data) {
+      state.colors.data.push(data);
+    },
+    updateColor(state, data) {
+      state.colors.data.forEach((element, index) => {
+        if(element.id === data.id) {
+            state.colors.data[index] = data;
+        }
+      });
+    },
+    deleteColor(state, data) {
+      var index = state.colors.data.findIndex((obj) => {
+        return obj.id == data.id;
+      });
+      state.colors.data.splice(index, 1);
+    },
+    //Condition =======================================================
+    retrieveConditions(state, data) {
+      state.conditions = data;
+    },
+    createCondition(state, data) {
+      state.conditions.data.push(data);
+    },
+    updateCondition(state, data) {
+      state.conditions.data.forEach((element, index) => {
+        if(element.id === data.id) {
+            state.conditions.data[index] = data;
+        }
+      });
+    },
+    deleteCondition(state, data) {
+      var index = state.conditions.data.findIndex((obj) => {
+        return obj.id == data.id;
+      });
+      state.conditions.data.splice(index, 1);
+    },
   },
   actions: {
     setRoutes(context, routes) {
@@ -384,6 +438,290 @@ export const store = new Vuex.Store({
           });
         }
       })
-    }
+    },
+    //Color =======================================================
+    retrieveColors(context, page) {
+      $.ajax({
+        url : '/color?page='+page,
+        type : "GET",
+        dataType : "json",
+        success:function(data)
+        {
+          context.commit('retrieveColors', data);
+        },
+        error: function (errors) {
+          console.log(errors);
+        }
+      });
+    },
+    createColor(context, formData) {
+      $.ajax({
+        headers: {
+        'X-CSRF-TOKEN': context.state.csrf,
+        },
+        url : '/color',
+        type : "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success:function(data)
+        {
+          context.commit('createColor', data);
+          $.notify({
+            icon: "now-ui-icons ui-1_bell-53",
+            message: "Thêm màu xe thành công."
+
+          }, {
+            type: 'success',
+            timer: 3000,
+            placement: {
+            from: 'top',
+            align: 'right'
+            }
+          });
+        },
+        error: function (errors) {
+          console.log(errors);
+          $.notify({
+            icon: "now-ui-icons ui-1_bell-53",
+            message: "Thêm màu xe thất bại!"
+
+          }, {
+            type: 'danger',
+            timer: 3000,
+            placement: {
+            from: 'top',
+            align: 'right'
+            }
+          });
+        }
+      })
+    },
+    updateColor(context, data) {
+      $.ajax({
+        headers: {
+        'X-CSRF-TOKEN': context.state.csrf,
+        },
+        url : '/color/'+data.id,
+        type : "POST",
+        data: data.formData,
+        processData: false,
+        contentType: false,
+        success:function(data)
+        {
+          context.commit('updateColor', data);
+
+          $.notify({
+            icon: "now-ui-icons ui-1_bell-53",
+            message: "Cập nhật màu xe <b>#"+data.id+"</b> thành công."
+
+          }, {
+            type: 'success',
+            timer: 3000,
+            placement: {
+            from: 'top',
+            align: 'right'
+            }
+          });
+        },
+        error: function (errors) {
+          $.notify({
+            icon: "now-ui-icons ui-1_bell-53",
+            message: "Cập nhật màu xe <b>#"+data.id+"</b> thất bại."
+
+          }, {
+            type: 'danger',
+            timer: 3000,
+            placement: {
+            from: 'top',
+            align: 'right'
+            }
+          });
+        }
+      })
+    },
+    deleteColor(context, id) {
+      $.ajax({
+        headers: {
+        'X-CSRF-TOKEN': context.state.csrf,
+        },
+        url : '/color/delete/'+id,
+        type : "POST",
+        processData: false,
+        contentType: false,
+        success:function(data)
+        {
+          context.commit('deleteColor', data);
+
+          $.notify({
+            icon: "now-ui-icons ui-1_bell-53",
+            message: "Xóa màu xe <b>#"+data.id+"</b> thành công."
+
+          }, {
+            type: 'success',
+            timer: 3000,
+            placement: {
+            from: 'top',
+            align: 'right'
+            }
+          });
+        },
+        error: function (errors) {
+          $.notify({
+            icon: "now-ui-icons ui-1_bell-53",
+            message: "Xóa màu xe <b>#"+data.id+"</b> thất bại."
+          }, {
+            type: 'danger',
+            timer: 3000,
+            placement: {
+            from: 'top',
+            align: 'right'
+            }
+          });
+        }
+      })
+    },
+    //Condition =======================================================
+    retrieveConditions(context, page) {
+      $.ajax({
+        url : '/condition?page='+page,
+        type : "GET",
+        dataType : "json",
+        success:function(data)
+        {
+          context.commit('retrieveConditions', data);
+        },
+        error: function (errors) {
+          console.log(errors);
+        }
+      });
+    },
+    createCondition(context, formData) {
+      $.ajax({
+        headers: {
+        'X-CSRF-TOKEN': context.state.csrf,
+        },
+        url : '/condition',
+        type : "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success:function(data)
+        {
+          context.commit('createCondition', data);
+          $.notify({
+            icon: "now-ui-icons ui-1_bell-53",
+            message: "Thêm tình trạng thành công."
+
+          }, {
+            type: 'success',
+            timer: 3000,
+            placement: {
+            from: 'top',
+            align: 'right'
+            }
+          });
+        },
+        error: function (errors) {
+          console.log(errors);
+          $.notify({
+            icon: "now-ui-icons ui-1_bell-53",
+            message: "Thêm tình trạng thất bại!"
+
+          }, {
+            type: 'danger',
+            timer: 3000,
+            placement: {
+            from: 'top',
+            align: 'right'
+            }
+          });
+        }
+      })
+    },
+    updateCondition(context, data) {
+      $.ajax({
+        headers: {
+        'X-CSRF-TOKEN': context.state.csrf,
+        },
+        url : '/condition/'+data.id,
+        type : "POST",
+        data: data.formData,
+        processData: false,
+        contentType: false,
+        success:function(data)
+        {
+          context.commit('updateCondition', data);
+
+          $.notify({
+            icon: "now-ui-icons ui-1_bell-53",
+            message: "Cập nhật tình trạng <b>#"+data.id+"</b> thành công."
+
+          }, {
+            type: 'success',
+            timer: 3000,
+            placement: {
+            from: 'top',
+            align: 'right'
+            }
+          });
+        },
+        error: function (errors) {
+          $.notify({
+            icon: "now-ui-icons ui-1_bell-53",
+            message: "Cập nhật tình trạng <b>#"+data.id+"</b> thất bại."
+
+          }, {
+            type: 'danger',
+            timer: 3000,
+            placement: {
+            from: 'top',
+            align: 'right'
+            }
+          });
+        }
+      })
+    },
+    deleteCondition(context, id) {
+      $.ajax({
+        headers: {
+        'X-CSRF-TOKEN': context.state.csrf,
+        },
+        url : '/condition/delete/'+id,
+        type : "POST",
+        processData: false,
+        contentType: false,
+        success:function(data)
+        {
+          context.commit('deleteCondition', data);
+
+          $.notify({
+            icon: "now-ui-icons ui-1_bell-53",
+            message: "Xóa tình trạng <b>#"+data.id+"</b> thành công."
+
+          }, {
+            type: 'success',
+            timer: 3000,
+            placement: {
+            from: 'top',
+            align: 'right'
+            }
+          });
+        },
+        error: function (errors) {
+          $.notify({
+            icon: "now-ui-icons ui-1_bell-53",
+            message: "Xóa tình trạng <b>#"+data.id+"</b> thất bại."
+          }, {
+            type: 'danger',
+            timer: 3000,
+            placement: {
+            from: 'top',
+            align: 'right'
+            }
+          });
+        }
+      })
+    },
   }
 })

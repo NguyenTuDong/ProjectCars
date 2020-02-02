@@ -7,61 +7,69 @@
         <div class="col-md-12">
           <div class="card">
             <div class="d-flex card-header">
-              <h4 class="card-title">Dòng xe - 
-                <select v-model="selectBrand" @click="getItems(selectBrand, 1)" class="card-select">
-                  <option v-for="brand in brands" :key="brand.id" :value="brand.id">{{brand.ten}}</option>
-                </select>
-              </h4>
-              <button class="btn btn-primary ml-auto" @click="addType">Thêm dòng xe</button>
+              <h4 class="card-title">Màu xe</h4>
+              <button class="btn btn-primary ml-auto" @click="addColor">Thêm màu xe</button>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table">
                   <thead class=" text-primary">
-                    <th class="table-types-id">
+                    <th class="table-colors-id">
                       Id
                     </th>
-                    <th class="table-types-name">
-                      Tên dòng xe
+                    <th class="table-colors-img text-center">
+                      Màu xe
                     </th>
-                    <th class="table-types-actions text-right">
+                    <th class="table-colors-name">
+                      Tên màu xe
+                    </th>
+                    <th class="table-colors-actions text-right">
                       Tác vụ
                     </th>
                   </thead>
                   <tbody>
-                    <type-item 
-                      v-for="type in types" 
-                      :key="type.id" 
-                      :type="type"
+                    <color-item 
+                      v-for="color in colors" 
+                      :key="color.id" 
+                      :color="color"
                       :editing="editing"
                       @changeEditing="changeEditing"
                       @showPopup="showPopup"
-                    ></type-item>
+                    ></color-item>
                     <tr v-if="isAdd">
                       <td>
                       </td>
                       <td>
+                        <h6 class="text-primary my-3">Hình:</h6>
+                        <span class="text-danger" v-if="imgError != ''">{{imgError}}</span>
+                        <div>
+                          <img class="preview-logo" :src="preview" alt="">
+                          <button @click="showForm" class="btn btn-primary btn-block preview-btn">Chọn ảnh</button>
+                          <input @change="imagePreview" type="file" ref="newImg" value="Chọn ảnh" style="display: none">
+                        </div>
+                      </td>
+                      <td>
                         <div class="form-group">
-                          <input ref="newName" type="text" class="form-control" placeholder="Tên dòng xe" v-model="newName">
+                          <input ref="newName" type="text" class="form-control" placeholder="Tên màu xe" v-model="newName">
                         </div>
                         <span class="text-danger" v-if="nameError != ''">{{nameError}}</span>
                       </td>
                       <td class="td-actions text-right">
-                        <button @click="createType" class="btn btn-primary">Thêm dòng xe</button>
+                        <button @click="createColor" class="btn btn-primary">Thêm màu xe</button>
                         <button @click="isAdd = false" class="btn btn-danger">Hủy</button>
                       </td>
                     </tr>
                   </tbody>
                 </table>
                 <div v-if="!isAdd" class="d-flex">
-                  <button class="btn btn-primary ml-auto" @click="addType">Thêm dòng xe</button>
+                  <button class="btn btn-primary ml-auto" @click="addColor">Thêm màu xe</button>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div v-if="types.length > 0" class="row">
+      <div v-if="colors.length > 0" class="row">
         <div class="col-md-12">
           <div class="card">
             <!-- Pagination -->
@@ -69,27 +77,27 @@
               <ul class="mx-auto pagination">
                 <li v-if="pagination.last_page > (offset * 2 + 1)">
                   <a href="#" aria-label="Previous"
-                      @click.prevent="getItems(selectBrand, 1)">
+                      @click.prevent="getItems(1)">
                       <span aria-hidden="true">««</span>
                   </a>
                 </li>
                 <li v-if="pagination.last_page > (offset * 2 + 1)">
                   <a href="#" aria-label="Previous"
-                      @click.prevent="getItems(selectBrand, pagination.current_page - 1)">
+                      @click.prevent="getItems(pagination.current_page - 1)">
                       <span aria-hidden="true">«</span>
                   </a>
                 </li>
                 <li v-for="(page, id) in pagesNumber" :class="[ page == isActived ? 'active' : '']" :key="id">
                     <a v-if="page == '...'" href="#">{{ page }}</a>
-                    <a v-else href="#" @click.prevent="getItems(selectBrand, page)">{{ page }}</a>
+                    <a v-else href="#" @click.prevent="getItems(page)">{{ page }}</a>
                 </li>
                 <li v-if="pagination.last_page > (offset * 2 + 1)">
-                    <a href="#" aria-label="Next" @click.prevent="getItems(selectBrand, pagination.current_page + 1)">
+                    <a href="#" aria-label="Next" @click.prevent="getItems(pagination.current_page + 1)">
                         <span aria-hidden="true">»</span>
                     </a>
                 </li>
                 <li v-if="pagination.last_page > (offset * 2 + 1)">
-                    <a href="#" aria-label="Next" @click.prevent="getItems(selectBrand, pagination.last_page)">
+                    <a href="#" aria-label="Next" @click.prevent="getItems(pagination.last_page)">
                         <span aria-hidden="true">»»</span>
                     </a>
                 </li>
@@ -115,7 +123,7 @@
               <div class="col-lg-8 ml-auto mr-auto">
                   <div class="row">
                       <div class="col-md-6">
-                          <button @click="deleteBrand" class="btn btn-danger btn-block">Xóa</button>
+                          <button @click="deleteColor" class="btn btn-danger btn-block">Xóa</button>
                       </div>
                       <div class="col-md-6">
                           <button @click="closePopup" class="btn btn-info btn-block">Hủy</button>
@@ -130,47 +138,40 @@
 </template>
 
 <script>
-import TypeItem from './TypeItem'
+import ColorItem from './ColorItem'
 
 export default {
-  name: 'Type',
+  name: 'Color',
   components: {
-    TypeItem,
+    ColorItem,
   },
   data() {
     return {
       editing: -1,
       deleting: -1,
       isAdd: false,
-      selectBrand: 1,
       newName: "",
+      preview: "",
+      imgError: "",
       nameError: "",
       offset: 3,
     }
   },
   created() {
-    this.$store.dispatch('allBrands');
-    var data = {
-      brands_id: 1,
-      page: 1,
-    }
-    this.$store.dispatch('retrieveTypes', data);
+    this.$store.dispatch('retrieveColors', 1);
   },
   computed: {
-    brands() {
-      return this.$store.getters.allBrands;
-    },
-    types() {
-      return this.$store.getters.types;
+    colors() {
+      return this.$store.getters.colors;
     },
     pagination() {
-      return this.$store.getters.typesPagination;
+      return this.$store.getters.colorsPagination;
     },
     isActived() {
-        return this.$store.getters.typesPagination.current_page;
+        return this.$store.getters.colorsPagination.current_page;
     },
     pagesNumber() {
-      var pagination = this.$store.getters.typesPagination;
+      var pagination = this.$store.getters.colorsPagination;
       var offset = this.offset;
       if (!pagination.to) {
         return [];
@@ -201,25 +202,18 @@ export default {
     }
   },
   methods: {
-    clickCallback(pageNum) {
-      console.log(pageNum)
-    },
-    getItems(id, page){
-      var data = {
-        brands_id: id,
-        page: page,
-      }
-      if(!this.isAdd && page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveTypes', data);
+    getItems(page){
+      if(!this.isAdd && page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveColors', page);
     },
     changeEditing(id) {
       this.editing = id;
     },
     showPopup(id){
       $('.pop-up').fadeIn(300);
-      var deleting = this.types.filter(obj => {
+      var deleting = this.colors.filter(obj => {
         return obj.id === id
       });
-      var message = "Bạn có muốn xóa dòng xe <b>"+deleting[0].ten+"</b> không?";
+      var message = "Bạn có muốn xóa màu <b>"+deleting[0].ten+"</b> không?";
       $('.pop-up-body').html(message);
       this.deleting = id;
     },
@@ -227,35 +221,56 @@ export default {
       $('.pop-up').fadeOut(300);
       this.deleting = -1;
     },
-    addType() {
-      var data = {
-        brands_id: this.selectBrand,
-        page: this.pagination.last_page,
-      }
-      this.$store.dispatch('retrieveTypes', data);
+    addColor() {
+      this.$store.dispatch('retrieveColors', this.pagination.last_page);
       this.isAdd = true;
       this.$nextTick(() => {
         this.$refs.newName.focus();
       });
     },
-    createType() {
+    showForm() {
+      this.$refs.newImg.click();
+    },
+    imagePreview() 
+    { 
+      var input = this.$refs.newImg;
+      var self = this;
+
+      if (input.files && input.files[0]) 
+      {
+          var reader = new FileReader(); 
+          reader.onload = function(e) { 
+              self.preview = e.target.result;
+          } 
+          reader.readAsDataURL(input.files[0]); 
+      } 
+    },
+    createColor() {
+      if(this.$refs.newImg.files[0] == null){
+        this.imgError = "Vui lòng chọn hình!";
+      } else {
+        this.imgError = "";
+      }
+
       if(this.newName == ""){
-        this.nameError = "Vui lòng nhập tên dòng xe!";
+        this.nameError = "Vui lòng nhập tên màu xe!";
       } else {
         this.nameError = "";
       }
-      if(this.newName != null){
+      
+      if(this.$refs.newImg.files[0] != null && this.newName != null){
         var formData = new FormData();
-        formData.append("brands_id", this.selectBrand);
+        formData.append("img", this.$refs.newImg.files[0]);
         formData.append("name", this.newName);
 
-        this.$store.dispatch('createType', formData);
+        this.$store.dispatch('createColor', formData);
         this.newName = "";
+        this.preview = "";
         this.isAdd = false;
       }
     },
-    deleteBrand() {
-      this.$store.dispatch('deleteType', this.deleting);
+    deleteColor() {
+      this.$store.dispatch('deleteColor', this.deleting);
       $('.pop-up').fadeOut(300);
       this.deleting = -1;
     }
@@ -264,13 +279,16 @@ export default {
 </script>
 
 <style>
-.table-types-id{
+.table-colors-id{
   width: 5%;
 }
-.table-types-name{
-  width: 70%;
+.table-colors-img{
+  width: 15%;
 }
-.table-types-actions{
+.table-colors-name{
+  width: 55%;
+}
+.table-colors-actions{
   width: 25%;
 }
 </style>

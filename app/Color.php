@@ -13,7 +13,7 @@ class Color extends Model
     ];
 
     public function getRgbPathAttribute(){
-        return public_path()."/img/color/".$this->attributes['rgb'];
+        return \URL::to("/")."\\storage\\img\\color\\".$this->attributes['rgb'];
     }
 
     public function cars(){

@@ -14,22 +14,34 @@
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
-           <router-link tag="li" to="/">
-            <a href="">
+           <router-link tag="li" :to="{name: 'dashboard'}">
+            <a href="#">
               <i class="now-ui-icons design_app"></i>
               <p>Dashboard</p>
             </a>
           </router-link>
-          <router-link tag="li" to="/brand">
-            <a href="">
+          <router-link tag="li" :to="{name: 'brand'}">
+            <a href="#">
               <i class="now-ui-icons design_app"></i>
               <p>Thương hiệu</p>
             </a>
           </router-link>
-          <router-link tag="li" to="/type">
-            <a href="">
+          <router-link tag="li" :to="{name: 'type'}">
+            <a href="#">
               <i class="now-ui-icons design_app"></i>
               <p>Dòng xe</p>
+            </a>
+          </router-link>
+          <router-link tag="li" :to="{name: 'color'}">
+            <a href="#">
+              <i class="now-ui-icons design_app"></i>
+              <p>Màu xe</p>
+            </a>
+          </router-link>
+          <router-link tag="li" :to="{name: 'condition'}">
+            <a href="#">
+              <i class="now-ui-icons design_app"></i>
+              <p>Tình trạng</p>
             </a>
           </router-link>
         </ul>

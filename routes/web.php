@@ -42,6 +42,18 @@ Route::post('/type', 'TypeController@store')->name('type.store');
 Route::post('/type/{type}', 'TypeController@update')->name('type.update');
 Route::post('/type/delete/{type}', 'TypeController@destroy')->name('type.destroy');
 
+//Color
+Route::get('/color', 'ColorController@index')->name('color.index');
+Route::post('/color', 'ColorController@store')->name('color.store');
+Route::post('/color/{color}', 'ColorController@update')->name('color.update');
+Route::post('/color/delete/{color}', 'ColorController@destroy')->name('color.destroy');
+
+//Condition
+Route::get('/condition', 'ConditionController@index')->name('condition.index');
+Route::post('/condition', 'ConditionController@store')->name('condition.store');
+Route::post('/condition/{condition}', 'ConditionController@update')->name('condition.update');
+Route::post('/condition/delete/{condition}', 'ConditionController@destroy')->name('condition.destroy');
+
 Route::get('/getbrands','HomeController@getBrands');
 Route::get('/getlocations','HomeController@getLocations');
 Route::get('/gettypes','HomeController@getTypes');
@@ -60,4 +72,7 @@ Route::post('/user/updateavatar','UserController@updateAvatar')->name('update.av
 Route::resource('car','CarController');
 Route::resource('user','UserController');
 
+Route::get('/{vue_capture?}', function () {
+    return view('admin.dashboard');
+})->where('vue_capture', '[\/\w\.-]*');
 
