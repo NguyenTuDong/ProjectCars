@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Condition;
+use App\Origin;
 
-class ConditionController extends Controller
+class OriginController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,7 @@ class ConditionController extends Controller
      */
     public function index()
     {
-        $items = Condition::where('trangthai', 0)->paginate(10);
+        $items = Origin::where('trangthai', 0)->paginate(10);
         return response()->json($items);
     }
 
@@ -26,7 +27,7 @@ class ConditionController extends Controller
      */
     public function store(Request $request)
     {
-        $item = new Condition();
+        $item = new Origin();
         $item->ten = $request->name;
         $item->save();
         return response($item, 201);
@@ -41,7 +42,7 @@ class ConditionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $item = Condition::findOrFail($id);
+        $item = Origin::findOrFail($id);
         $item->ten = $request->name;
         $item->save();
         return response($item, 200);
@@ -55,7 +56,7 @@ class ConditionController extends Controller
      */
     public function destroy($id)
     {
-        $item = Condition::findOrFail($id);
+        $item = Origin::findOrFail($id);
         $item->trangthai = 1;
         $item->save();
         return response($item, 200);

@@ -5,6 +5,11 @@ import Brand from './components/brand/Brand'
 import Type from './components/type/Type'
 import Color from './components/color/Color'
 import Condition from './components/condition/Condition'
+import Origin from './components/origin/Origin'
+import Fuel from './components/fuel/Fuel'
+import Transmission from './components/transmission/Transmission'
+import Style from './components/style/Style'
+import Convenient from './components/convenient/Convenient'
 
 Vue.use(VueRouter);
 
@@ -47,6 +52,46 @@ const routes = [
     component: Condition,
     meta: {
       title: 'Admin | Tình trạng'
+    }
+  },
+  { 
+    path: '/admin/origin', 
+    name: 'origin',
+    component: Origin,
+    meta: {
+      title: 'Admin | Nguồn gốc'
+    }
+  },
+  { 
+    path: '/admin/fuel', 
+    name: 'fuel',
+    component: Fuel,
+    meta: {
+      title: 'Admin | Nhiên liệu'
+    }
+  },
+  { 
+    path: '/admin/transmission', 
+    name: 'transmission',
+    component: Transmission,
+    meta: {
+      title: 'Admin | Hộp số'
+    }
+  },
+  { 
+    path: '/admin/style', 
+    name: 'style',
+    component: Style,
+    meta: {
+      title: 'Admin | Kiểu dáng'
+    }
+  },
+  { 
+    path: '/admin/convenient', 
+    name: 'convenient',
+    component: Convenient,
+    meta: {
+      title: 'Admin | Tiện nghi'
     }
   },
 ]

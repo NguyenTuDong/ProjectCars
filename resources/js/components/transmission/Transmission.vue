@@ -7,57 +7,57 @@
         <div class="col-md-12">
           <div class="card">
             <div class="d-flex card-header">
-              <h4 class="card-title">Tình trạng</h4>
-              <button class="btn btn-primary ml-auto" @click="addCondition">Thêm tình trạng</button>
+              <h4 class="card-title">Hộp số</h4>
+              <button class="btn btn-primary ml-auto" @click="addTransmission">Thêm hộp số</button>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table">
                   <thead class=" text-primary">
-                    <th class="table-conditions-id">
+                    <th class="table-transmissions-id">
                       Id
                     </th>
-                    <th class="table-conditions-name">
-                      Tình trạng
+                    <th class="table-transmissions-name">
+                      Hộp số
                     </th>
-                    <th class="table-conditions-actions text-right">
+                    <th class="table-transmissions-actions text-right">
                       Tác vụ
                     </th>
                   </thead>
                   <tbody>
-                    <condition-item 
-                      v-for="condition in conditions" 
-                      :key="condition.id" 
-                      :condition="condition"
+                    <transmission-item 
+                      v-for="transmission in transmissions" 
+                      :key="transmission.id" 
+                      :transmission="transmission"
                       :editing="editing"
                       @changeEditing="changeEditing"
                       @showPopup="showPopup"
-                    ></condition-item>
+                    ></transmission-item>
                     <tr v-if="isAdd">
                       <td>
                       </td>
                       <td>
                         <div class="form-group">
-                          <input ref="newName" type="text" class="form-control" placeholder="Tình trạng" v-model="newName">
+                          <input ref="newName" type="text" class="form-control" placeholder="Nhiên liệu" v-model="newName">
                         </div>
                         <span class="text-danger" v-if="nameError != ''">{{nameError}}</span>
                       </td>
                       <td class="td-actions text-right">
-                        <button @click="createCondition" class="btn btn-primary">Thêm tình trạng</button>
+                        <button @click="createTransmission" class="btn btn-primary">Thêm hộp số</button>
                         <button @click="isAdd = false" class="btn btn-danger">Hủy</button>
                       </td>
                     </tr>
                   </tbody>
                 </table>
                 <div v-if="!isAdd" class="d-flex">
-                  <button class="btn btn-primary ml-auto" @click="addCondition">Thêm tình trạng</button>
+                  <button class="btn btn-primary ml-auto" @click="addTransmission">Thêm hộp số</button>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div v-if="conditions.length > 0" class="row">
+      <div v-if="transmissions.length > 0" class="row">
         <div class="col-md-12">
           <div class="card">
             <!-- Pagination -->
@@ -111,7 +111,7 @@
               <div class="col-lg-8 ml-auto mr-auto">
                   <div class="row">
                       <div class="col-md-6">
-                          <button @click="deleteCondition" class="btn btn-danger btn-block">Xóa</button>
+                          <button @click="deleteTransmission" class="btn btn-danger btn-block">Xóa</button>
                       </div>
                       <div class="col-md-6">
                           <button @click="closePopup" class="btn btn-info btn-block">Hủy</button>
@@ -126,12 +126,12 @@
 </template>
 
 <script>
-import ConditionItem from './ConditionItem'
+import TransmissionItem from './TransmissionItem'
 
 export default {
-  name: 'Condition',
+  name: 'Transmission',
   components: {
-    ConditionItem,
+    TransmissionItem,
   },
   data() {
     return {
@@ -144,20 +144,20 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('retrieveConditions', 1);
+    this.$store.dispatch('retrieveTransmissions', 1);
   },
   computed: {
-    conditions() {
-      return this.$store.getters.conditions;
+    transmissions() {
+      return this.$store.getters.transmissions;
     },
     pagination() {
-      return this.$store.getters.conditionsPagination;
+      return this.$store.getters.transmissionsPagination;
     },
     isActived() {
-        return this.$store.getters.conditionsPagination.current_page;
+        return this.$store.getters.transmissionsPagination.current_page;
     },
     pagesNumber() {
-      var pagination = this.$store.getters.conditionsPagination;
+      var pagination = this.$store.getters.transmissionsPagination;
       var offset = this.offset;
       if (!pagination.to) {
         return [];
@@ -189,17 +189,17 @@ export default {
   },
   methods: {
     getItems(page){
-      if(!this.isAdd && page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveConditions', page);
+      if(!this.isAdd && page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveTransmissions', page);
     },
     changeEditing(id) {
       this.editing = id;
     },
     showPopup(id){
       $('.pop-up').fadeIn(300);
-      var deleting = this.conditions.filter(obj => {
+      var deleting = this.transmissions.filter(obj => {
         return obj.id === id
       });
-      var message = "Bạn có muốn xóa tình trạng <b>"+deleting[0].ten+"</b> không?";
+      var message = "Bạn có muốn xóa hộp số <b>"+deleting[0].ten+"</b> không?";
       $('.pop-up-body').html(message);
       this.deleting = id;
     },
@@ -207,16 +207,16 @@ export default {
       $('.pop-up').fadeOut(300);
       this.deleting = -1;
     },
-    addCondition() {
-      this.$store.dispatch('retrieveConditions', this.pagination.last_page);
+    addTransmission() {
+      this.$store.dispatch('retrieveTransmissions', this.pagination.last_page);
       this.isAdd = true;
       this.$nextTick(() => {
         this.$refs.newName.focus();
       });
     },
-    createCondition() {
+    createTransmission() {
       if(this.newName == ""){
-        this.nameError = "Vui lòng nhập tình trạng!";
+        this.nameError = "Vui lòng nhập hộp số!";
       } else {
         this.nameError = "";
       }
@@ -225,13 +225,13 @@ export default {
         var formData = new FormData();
         formData.append("name", this.newName);
 
-        this.$store.dispatch('createCondition', formData);
+        this.$store.dispatch('createTransmission', formData);
         this.newName = "";
         this.isAdd = false;
       }
     },
-    deleteCondition() {
-      this.$store.dispatch('deleteCondition', this.deleting);
+    deleteTransmission() {
+      this.$store.dispatch('deleteTransmission', this.deleting);
       $('.pop-up').fadeOut(300);
       this.deleting = -1;
     }
@@ -240,13 +240,13 @@ export default {
 </script>
 
 <style>
-.table-conditions-id{
+.table-transmissions-id{
   width: 5%;
 }
-.table-conditions-name{
+.table-transmissions-name{
   width: 70%;
 }
-.table-conditions-actions{
+.table-transmissions-actions{
   width: 25%;
 }
 </style>

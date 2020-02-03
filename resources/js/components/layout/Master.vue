@@ -20,6 +20,7 @@
               <p>Dashboard</p>
             </a>
           </router-link>
+          <hr class="nav-seq">
           <router-link tag="li" :to="{name: 'brand'}">
             <a href="#">
               <i class="now-ui-icons design_app"></i>
@@ -30,6 +31,12 @@
             <a href="#">
               <i class="now-ui-icons design_app"></i>
               <p>Dòng xe</p>
+            </a>
+          </router-link>
+          <router-link tag="li" :to="{name: 'style'}">
+            <a href="#">
+              <i class="now-ui-icons design_app"></i>
+              <p>Kiểu dáng</p>
             </a>
           </router-link>
           <router-link tag="li" :to="{name: 'color'}">
@@ -44,6 +51,31 @@
               <p>Tình trạng</p>
             </a>
           </router-link>
+          <router-link tag="li" :to="{name: 'origin'}">
+            <a href="#">
+              <i class="now-ui-icons design_app"></i>
+              <p>Nguồn gốc</p>
+            </a>
+          </router-link>
+          <router-link tag="li" :to="{name: 'fuel'}">
+            <a href="#">
+              <i class="now-ui-icons design_app"></i>
+              <p>Nhiên liệu</p>
+            </a>
+          </router-link>
+          <router-link tag="li" :to="{name: 'transmission'}">
+            <a href="#">
+              <i class="now-ui-icons design_app"></i>
+              <p>Hộp số</p>
+            </a>
+          </router-link>
+          <router-link tag="li" :to="{name: 'convenient'}">
+            <a href="#">
+              <i class="now-ui-icons design_app"></i>
+              <p>Tiện nghi</p>
+            </a>
+          </router-link>
+          <hr class="nav-seq">
         </ul>
       </div>
     </div>
@@ -189,6 +221,12 @@ export default {
 </script>
 
 <style>
+.nav-seq{
+  width: calc(100% - 30px);
+  margin-left: auto;
+  margin-right: auto;
+  border-color: rgba(255, 255, 255, 0.5);;
+}
 .card-select{
   min-width: 200px;
 }

@@ -7,57 +7,57 @@
         <div class="col-md-12">
           <div class="card">
             <div class="d-flex card-header">
-              <h4 class="card-title">Tình trạng</h4>
-              <button class="btn btn-primary ml-auto" @click="addCondition">Thêm tình trạng</button>
+              <h4 class="card-title">Nguồn gốc</h4>
+              <button class="btn btn-primary ml-auto" @click="addOrigin">Thêm nguồn gốc</button>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table">
                   <thead class=" text-primary">
-                    <th class="table-conditions-id">
+                    <th class="table-origins-id">
                       Id
                     </th>
-                    <th class="table-conditions-name">
-                      Tình trạng
+                    <th class="table-origins-name">
+                      Nguồn gốc
                     </th>
-                    <th class="table-conditions-actions text-right">
+                    <th class="table-origins-actions text-right">
                       Tác vụ
                     </th>
                   </thead>
                   <tbody>
-                    <condition-item 
-                      v-for="condition in conditions" 
-                      :key="condition.id" 
-                      :condition="condition"
+                    <origin-item 
+                      v-for="origin in origins" 
+                      :key="origin.id" 
+                      :origin="origin"
                       :editing="editing"
                       @changeEditing="changeEditing"
                       @showPopup="showPopup"
-                    ></condition-item>
+                    ></origin-item>
                     <tr v-if="isAdd">
                       <td>
                       </td>
                       <td>
                         <div class="form-group">
-                          <input ref="newName" type="text" class="form-control" placeholder="Tình trạng" v-model="newName">
+                          <input ref="newName" type="text" class="form-control" placeholder="Nguồn gốc" v-model="newName">
                         </div>
                         <span class="text-danger" v-if="nameError != ''">{{nameError}}</span>
                       </td>
                       <td class="td-actions text-right">
-                        <button @click="createCondition" class="btn btn-primary">Thêm tình trạng</button>
+                        <button @click="createOrigin" class="btn btn-primary">Thêm nguồn gốc</button>
                         <button @click="isAdd = false" class="btn btn-danger">Hủy</button>
                       </td>
                     </tr>
                   </tbody>
                 </table>
                 <div v-if="!isAdd" class="d-flex">
-                  <button class="btn btn-primary ml-auto" @click="addCondition">Thêm tình trạng</button>
+                  <button class="btn btn-primary ml-auto" @click="addOrigin">Thêm nguồn gốc</button>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div v-if="conditions.length > 0" class="row">
+      <div v-if="origins.length > 0" class="row">
         <div class="col-md-12">
           <div class="card">
             <!-- Pagination -->
@@ -111,7 +111,7 @@
               <div class="col-lg-8 ml-auto mr-auto">
                   <div class="row">
                       <div class="col-md-6">
-                          <button @click="deleteCondition" class="btn btn-danger btn-block">Xóa</button>
+                          <button @click="deleteOrigin" class="btn btn-danger btn-block">Xóa</button>
                       </div>
                       <div class="col-md-6">
                           <button @click="closePopup" class="btn btn-info btn-block">Hủy</button>
@@ -126,12 +126,12 @@
 </template>
 
 <script>
-import ConditionItem from './ConditionItem'
+import OriginItem from './OriginItem'
 
 export default {
-  name: 'Condition',
+  name: 'Origin',
   components: {
-    ConditionItem,
+    OriginItem,
   },
   data() {
     return {
@@ -144,20 +144,20 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('retrieveConditions', 1);
+    this.$store.dispatch('retrieveOrigins', 1);
   },
   computed: {
-    conditions() {
-      return this.$store.getters.conditions;
+    origins() {
+      return this.$store.getters.origins;
     },
     pagination() {
-      return this.$store.getters.conditionsPagination;
+      return this.$store.getters.originsPagination;
     },
     isActived() {
-        return this.$store.getters.conditionsPagination.current_page;
+        return this.$store.getters.originsPagination.current_page;
     },
     pagesNumber() {
-      var pagination = this.$store.getters.conditionsPagination;
+      var pagination = this.$store.getters.originsPagination;
       var offset = this.offset;
       if (!pagination.to) {
         return [];
@@ -189,17 +189,17 @@ export default {
   },
   methods: {
     getItems(page){
-      if(!this.isAdd && page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveConditions', page);
+      if(!this.isAdd && page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveOrigins', page);
     },
     changeEditing(id) {
       this.editing = id;
     },
     showPopup(id){
       $('.pop-up').fadeIn(300);
-      var deleting = this.conditions.filter(obj => {
+      var deleting = this.origins.filter(obj => {
         return obj.id === id
       });
-      var message = "Bạn có muốn xóa tình trạng <b>"+deleting[0].ten+"</b> không?";
+      var message = "Bạn có muốn xóa nguồn gốc <b>"+deleting[0].ten+"</b> không?";
       $('.pop-up-body').html(message);
       this.deleting = id;
     },
@@ -207,16 +207,16 @@ export default {
       $('.pop-up').fadeOut(300);
       this.deleting = -1;
     },
-    addCondition() {
-      this.$store.dispatch('retrieveConditions', this.pagination.last_page);
+    addOrigin() {
+      this.$store.dispatch('retrieveOrigins', this.pagination.last_page);
       this.isAdd = true;
       this.$nextTick(() => {
         this.$refs.newName.focus();
       });
     },
-    createCondition() {
+    createOrigin() {
       if(this.newName == ""){
-        this.nameError = "Vui lòng nhập tình trạng!";
+        this.nameError = "Vui lòng nhập nguồn gốc!";
       } else {
         this.nameError = "";
       }
@@ -225,13 +225,13 @@ export default {
         var formData = new FormData();
         formData.append("name", this.newName);
 
-        this.$store.dispatch('createCondition', formData);
+        this.$store.dispatch('createOrigin', formData);
         this.newName = "";
         this.isAdd = false;
       }
     },
-    deleteCondition() {
-      this.$store.dispatch('deleteCondition', this.deleting);
+    deleteOrigin() {
+      this.$store.dispatch('deleteOrigin', this.deleting);
       $('.pop-up').fadeOut(300);
       this.deleting = -1;
     }
@@ -240,13 +240,13 @@ export default {
 </script>
 
 <style>
-.table-conditions-id{
+.table-origins-id{
   width: 5%;
 }
-.table-conditions-name{
+.table-origins-name{
   width: 70%;
 }
-.table-conditions-actions{
+.table-origins-actions{
   width: 25%;
 }
 </style>

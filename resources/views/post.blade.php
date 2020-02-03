@@ -322,7 +322,7 @@
             $("#gia").jqxInput({placeHolder: "(*) Giá tiền", height: h, width: w, minLength: 1, theme: 'material'});
 
             jQuery.ajax({
-                url : '/brand',
+                url : '/getbrands',
                 type : "GET",
                 dataType : "json",
                 success:function(data)

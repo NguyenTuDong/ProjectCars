@@ -22,37 +22,70 @@ Route::prefix('admin')->group(function() {
   Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
   Route::post('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
 
-  Route::get('/', 'AdminController@index')->name('admin.dashboard');
+  Route::get('/', 'Admin\AdminController@index')->name('admin.dashboard');
 
   Route::post('/password/email', 'Auth\AdminForgotPasswordController@sendResetLinkEmail')->name('admin.password.email');
   Route::get('/password/reset', 'Auth\AdminForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
   Route::post('/password/reset', 'Auth\AdminResetPasswordController@reset')->name('admin.password.update');
   Route::get('/password/reset/{token}', 'Auth\AdminResetPasswordController@showResetForm')->name('admin.password.reset');
+
+
+  Route::prefix('api')->group(function() {
+    //Brand
+    Route::get('/brand', 'Admin\BrandController@index')->name('brand.index');
+    Route::post('/brand', 'Admin\BrandController@store')->name('brand.store');
+    Route::post('/brand/{brand}', 'Admin\BrandController@update')->name('brand.update');
+    Route::post('/brand/delete/{brand}', 'Admin\BrandController@destroy')->name('brand.destroy');
+    
+    //Type
+    Route::get('/type/{brands_id}', 'Admin\TypeController@index')->name('type.index');
+    Route::post('/type', 'Admin\TypeController@store')->name('type.store');
+    Route::post('/type/{type}', 'Admin\TypeController@update')->name('type.update');
+    Route::post('/type/delete/{type}', 'Admin\TypeController@destroy')->name('type.destroy');
+
+    //Color
+    Route::get('/color', 'Admin\ColorController@index')->name('color.index');
+    Route::post('/color', 'Admin\ColorController@store')->name('color.store');
+    Route::post('/color/{color}', 'Admin\ColorController@update')->name('color.update');
+    Route::post('/color/delete/{color}', 'Admin\ColorController@destroy')->name('color.destroy');
+    
+    //Condition
+    Route::get('/condition', 'Admin\ConditionController@index')->name('condition.index');
+    Route::post('/condition', 'Admin\ConditionController@store')->name('condition.store');
+    Route::post('/condition/{condition}', 'Admin\ConditionController@update')->name('condition.update');
+    Route::post('/condition/delete/{condition}', 'Admin\ConditionController@destroy')->name('condition.destroy');
+
+    //Origin
+    Route::get('/origin', 'Admin\OriginController@index')->name('origin.index');
+    Route::post('/origin', 'Admin\OriginController@store')->name('origin.store');
+    Route::post('/origin/{origin}', 'Admin\OriginController@update')->name('origin.update');
+    Route::post('/origin/delete/{origin}', 'Admin\OriginController@destroy')->name('origin.destroy');
+
+    //Fuel
+    Route::get('/fuel', 'Admin\FuelController@index')->name('fuel.index');
+    Route::post('/fuel', 'Admin\FuelController@store')->name('fuel.store');
+    Route::post('/fuel/{fuel}', 'Admin\FuelController@update')->name('fuel.update');
+    Route::post('/fuel/delete/{fuel}', 'Admin\FuelController@destroy')->name('fuel.destroy');
+
+    //Transmission
+    Route::get('/transmission', 'Admin\TransmissionController@index')->name('transmission.index');
+    Route::post('/transmission', 'Admin\TransmissionController@store')->name('transmission.store');
+    Route::post('/transmission/{transmission}', 'Admin\TransmissionController@update')->name('transmission.update');
+    Route::post('/transmission/delete/{transmission}', 'Admin\TransmissionController@destroy')->name('transmission.destroy');
+    
+    //Style
+    Route::get('/style', 'Admin\StyleController@index')->name('style.index');
+    Route::post('/style', 'Admin\StyleController@store')->name('style.store');
+    Route::post('/style/{style}', 'Admin\StyleController@update')->name('style.update');
+    Route::post('/style/delete/{style}', 'Admin\StyleController@destroy')->name('style.destroy');
+    
+    //Convenient
+    Route::get('/convenient', 'Admin\ConvenientController@index')->name('convenient.index');
+    Route::post('/convenient', 'Admin\ConvenientController@store')->name('convenient.store');
+    Route::post('/convenient/{convenient}', 'Admin\ConvenientController@update')->name('convenient.update');
+    Route::post('/convenient/delete/{convenient}', 'Admin\ConvenientController@destroy')->name('convenient.destroy');
+  });
 });
-
-//Brand
-Route::get('/brand', 'BrandController@index')->name('brand.index');
-Route::post('/brand', 'BrandController@store')->name('brand.store');
-Route::post('/brand/{brand}', 'BrandController@update')->name('brand.update');
-Route::post('/brand/delete/{brand}', 'BrandController@destroy')->name('brand.destroy');
-
-//Type
-Route::get('/type/{brands_id}', 'TypeController@index')->name('type.index');
-Route::post('/type', 'TypeController@store')->name('type.store');
-Route::post('/type/{type}', 'TypeController@update')->name('type.update');
-Route::post('/type/delete/{type}', 'TypeController@destroy')->name('type.destroy');
-
-//Color
-Route::get('/color', 'ColorController@index')->name('color.index');
-Route::post('/color', 'ColorController@store')->name('color.store');
-Route::post('/color/{color}', 'ColorController@update')->name('color.update');
-Route::post('/color/delete/{color}', 'ColorController@destroy')->name('color.destroy');
-
-//Condition
-Route::get('/condition', 'ConditionController@index')->name('condition.index');
-Route::post('/condition', 'ConditionController@store')->name('condition.store');
-Route::post('/condition/{condition}', 'ConditionController@update')->name('condition.update');
-Route::post('/condition/delete/{condition}', 'ConditionController@destroy')->name('condition.destroy');
 
 Route::get('/getbrands','HomeController@getBrands');
 Route::get('/getlocations','HomeController@getLocations');

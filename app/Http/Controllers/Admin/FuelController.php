@@ -1,28 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Type;
-use App\Brand;
+use App\Fuel;
 
-class TypeController extends Controller
+class FuelController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($brands_id)
+    public function index()
     {
-        $brand = Brand::find($brands_id);
-        $id = null;
-        if($brand === null) {
-            $id = Brand::first()->id;
-        } else {
-            $id = $brands_id;
-        }
-        $items = Type::where('brands_id', $id)->where('trangthai', 0)->paginate(10);
+        $items = Fuel::where('trangthai', 0)->paginate(10);
         return response()->json($items);
     }
 
@@ -34,8 +27,7 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        $item = new Type();
-        $item->brands_id = $request->brands_id;
+        $item = new Fuel();
         $item->ten = $request->name;
         $item->save();
         return response($item, 201);
@@ -50,7 +42,7 @@ class TypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $item = Type::findOrFail($id);
+        $item = Fuel::findOrFail($id);
         $item->ten = $request->name;
         $item->save();
         return response($item, 200);
@@ -64,7 +56,7 @@ class TypeController extends Controller
      */
     public function destroy($id)
     {
-        $item = Type::findOrFail($id);
+        $item = Fuel::findOrFail($id);
         $item->trangthai = 1;
         $item->save();
         return response($item, 200);

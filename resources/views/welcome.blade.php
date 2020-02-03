@@ -187,7 +187,7 @@
                 valueMember: 'id',
             });
             jQuery.ajax({
-                url : '/brand',
+                url : '/getbrands',
                 type : "GET",
                 dataType : "json",
                 success:function(data)

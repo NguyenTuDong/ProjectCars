@@ -13,7 +13,7 @@ class Style extends Model
     ];
 
     public function getHinhanhPathAttribute(){
-        return public_path()."\\img\\logo\\".$this->attributes['hinhanh'];
+        return \URL::to("/")."\\storage\\img\\style\\".$this->attributes['hinhanh'];
     }
 
     public function cars(){
