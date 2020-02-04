@@ -341,8 +341,7 @@
                         valueMember: 'id',
                         renderer: function (index, label, value) {
                             var datarecord = brandsSource[index];
-                            var imgurl = '/img/logo/' + datarecord.logo;
-                            var img = '<img src="' + imgurl + '" />';
+                            var img = '<img src="' + datarecord.logo_path + '" />';
                             var table = '<table style="min-width: 150px;"><tr><td style="width: 55px;">' + img + '</td><td>' + datarecord.ten + '</td></tr></table>';
                             return table;
                             }

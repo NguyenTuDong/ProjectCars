@@ -21,6 +21,13 @@
             </a>
           </router-link>
           <hr class="nav-seq">
+           <router-link tag="li" :to="{name: 'car'}">
+            <a href="#">
+              <i class="now-ui-icons design_app"></i>
+              <p>Mẫu tin</p>
+            </a>
+          </router-link>
+          <hr class="nav-seq">
           <router-link tag="li" :to="{name: 'brand'}">
             <a href="#">
               <i class="now-ui-icons design_app"></i>

@@ -10,6 +10,7 @@ import Fuel from './components/fuel/Fuel'
 import Transmission from './components/transmission/Transmission'
 import Style from './components/style/Style'
 import Convenient from './components/convenient/Convenient'
+import Car from './components/car/Car'
 
 Vue.use(VueRouter);
 
@@ -92,6 +93,14 @@ const routes = [
     component: Convenient,
     meta: {
       title: 'Admin | Tiện nghi'
+    }
+  },
+  { 
+    path: '/admin/car', 
+    name: 'car',
+    component: Car,
+    meta: {
+      title: 'Admin | Mẫu tin'
     }
   },
 ]
