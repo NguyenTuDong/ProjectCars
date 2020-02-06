@@ -34,6 +34,7 @@ Route::prefix('admin')->group(function() {
 
     //Car
     Route::get('/car', 'Admin\CarController@index');
+    Route::get('/car/{id}', 'Admin\CarController@show');
     Route::post('/car/approve/{car}', 'Admin\CarController@approve');
     Route::post('/car/deny/{car}', 'Admin\CarController@deny');
     Route::post('/car/delete/{car}', 'Admin\CarController@destroy');

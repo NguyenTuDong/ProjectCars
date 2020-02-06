@@ -69,40 +69,42 @@
           </div>
         </div>
       </div>
-      <div v-if="brands.length > 0" class="row">
-        <div class="col-md-12">
-          <div class="card">
-            <!-- Pagination -->
-            <nav class="d-flex">
-              <ul class="mx-auto pagination">
-                <li v-if="pagination.last_page > (offset * 2 + 1)">
-                  <a href="#" aria-label="Previous"
-                      @click.prevent="getItems(1)">
-                      <span aria-hidden="true">««</span>
-                  </a>
-                </li>
-                <li v-if="pagination.last_page > (offset * 2 + 1)">
-                  <a href="#" aria-label="Previous"
-                      @click.prevent="getItems(pagination.current_page - 1)">
-                      <span aria-hidden="true">«</span>
-                  </a>
-                </li>
-                <li v-for="(page, id) in pagesNumber" :class="[ page == isActived ? 'active' : '']" :key="id">
-                    <a v-if="page == '...'" href="#">{{ page }}</a>
-                    <a v-else href="#" @click.prevent="getItems(page)">{{ page }}</a>
-                </li>
-                <li v-if="pagination.last_page > (offset * 2 + 1)">
-                    <a href="#" aria-label="Next" @click.prevent="getItems(pagination.current_page + 1)">
-                        <span aria-hidden="true">»</span>
+      <div v-if="brands !== undefined">
+        <div v-if="brands.length > 0" class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <!-- Pagination -->
+              <nav class="d-flex">
+                <ul class="mx-auto pagination">
+                  <li v-if="pagination.last_page > (offset * 2 + 1)">
+                    <a href="#" aria-label="Previous"
+                        @click.prevent="getItems(1)">
+                        <span aria-hidden="true">««</span>
                     </a>
-                </li>
-                <li v-if="pagination.last_page > (offset * 2 + 1)">
-                    <a href="#" aria-label="Next" @click.prevent="getItems(pagination.last_page)">
-                        <span aria-hidden="true">»»</span>
+                  </li>
+                  <li v-if="pagination.last_page > (offset * 2 + 1)">
+                    <a href="#" aria-label="Previous"
+                        @click.prevent="getItems(pagination.current_page - 1)">
+                        <span aria-hidden="true">«</span>
                     </a>
-                </li>
-              </ul>
-            </nav>
+                  </li>
+                  <li v-for="(page, id) in pagesNumber" :class="[ page == isActived ? 'active' : '']" :key="id">
+                      <a v-if="page == '...'" href="#">{{ page }}</a>
+                      <a v-else href="#" @click.prevent="getItems(page)">{{ page }}</a>
+                  </li>
+                  <li v-if="pagination.last_page > (offset * 2 + 1)">
+                      <a href="#" aria-label="Next" @click.prevent="getItems(pagination.current_page + 1)">
+                          <span aria-hidden="true">»</span>
+                      </a>
+                  </li>
+                  <li v-if="pagination.last_page > (offset * 2 + 1)">
+                      <a href="#" aria-label="Next" @click.prevent="getItems(pagination.last_page)">
+                          <span aria-hidden="true">»»</span>
+                      </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
           </div>
         </div>
       </div>
@@ -117,7 +119,6 @@
           </button>
         </div>
         <div class="pop-up-body">
-          Bạn có muốn xóa thương hiệu này không?
         </div>
         <div class="pop-up-footer">
           <div class="row">
@@ -140,6 +141,7 @@
 
 <script>
 import BrandItem from './BrandItem'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Brand',
@@ -162,12 +164,10 @@ export default {
     this.$store.dispatch('retrieveBrands', 1);
   },
   computed: {
-    brands() {
-      return this.$store.getters.brands;
-    },
-    pagination() {
-      return this.$store.getters.brandsPagination;
-    },
+    ...mapGetters({
+      brands: 'brands',
+      pagination: 'brandsPagination',
+    }),
     isActived() {
         return this.$store.getters.brandsPagination.current_page;
     },

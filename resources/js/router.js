@@ -11,6 +11,7 @@ import Transmission from './components/transmission/Transmission'
 import Style from './components/style/Style'
 import Convenient from './components/convenient/Convenient'
 import Car from './components/car/Car'
+import CarDetail from './components/car/CarDetail'
 
 Vue.use(VueRouter);
 
@@ -103,6 +104,14 @@ const routes = [
       title: 'Admin | Mẫu tin'
     }
   },
+  {
+    path: '/admin/car/:id',
+    name: 'car-detail',
+    component: CarDetail,
+    meta: {
+      title: 'Admin | Car Detail'
+    }
+  }
 ]
 
 export const router = new VueRouter({

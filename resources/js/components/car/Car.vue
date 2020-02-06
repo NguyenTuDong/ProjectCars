@@ -38,7 +38,8 @@
                       :key="car.id" 
                       :car="car"
                       @showPopup="showPopup"
-                    ></car-item>
+                    >
+                    </car-item>
                   </tbody>
                 </table>
               </div>
@@ -118,6 +119,7 @@
 
 <script>
 import CarItem from './CarItem'
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Car',
@@ -133,21 +135,11 @@ export default {
   created() {
     this.$store.dispatch('retrieveCars', 1);
   },
-  watch: { 
-    cars: {
-      handler: function(val, oldVal) {
-        console.log('Prop changed: ', val, ' | was: ', oldVal)
-      },
-      deep: true
-    }
-  },
   computed: {
-    cars() {
-      return this.$store.getters.cars;
-    },
-    pagination() {
-      return this.$store.getters.carsPagination;
-    },
+    ...mapGetters({
+      cars: 'cars',
+      pagination: 'carsPagination',
+    }),
     isActived() {
         return this.$store.getters.carsPagination.current_page;
     },

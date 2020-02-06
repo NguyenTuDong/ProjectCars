@@ -9,7 +9,7 @@ require('./demo');
 
 window.Vue = require('vue');
 
-import {store} from './store';
+import {store} from './store/store';
 import {router} from './router';
 
 

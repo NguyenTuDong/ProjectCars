@@ -61,40 +61,42 @@
           </div>
         </div>
       </div>
-      <div v-if="types.length > 0" class="row">
-        <div class="col-md-12">
-          <div class="card">
-            <!-- Pagination -->
-            <nav class="d-flex">
-              <ul class="mx-auto pagination">
-                <li v-if="pagination.last_page > (offset * 2 + 1)">
-                  <a href="#" aria-label="Previous"
-                      @click.prevent="getItems(selectBrand, 1)">
-                      <span aria-hidden="true">««</span>
-                  </a>
-                </li>
-                <li v-if="pagination.last_page > (offset * 2 + 1)">
-                  <a href="#" aria-label="Previous"
-                      @click.prevent="getItems(selectBrand, pagination.current_page - 1)">
-                      <span aria-hidden="true">«</span>
-                  </a>
-                </li>
-                <li v-for="(page, id) in pagesNumber" :class="[ page == isActived ? 'active' : '']" :key="id">
-                    <a v-if="page == '...'" href="#">{{ page }}</a>
-                    <a v-else href="#" @click.prevent="getItems(selectBrand, page)">{{ page }}</a>
-                </li>
-                <li v-if="pagination.last_page > (offset * 2 + 1)">
-                    <a href="#" aria-label="Next" @click.prevent="getItems(selectBrand, pagination.current_page + 1)">
-                        <span aria-hidden="true">»</span>
+      <div v-if="types !== undefined">
+        <div v-if="types.length > 0" class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <!-- Pagination -->
+              <nav class="d-flex">
+                <ul class="mx-auto pagination">
+                  <li v-if="pagination.last_page > (offset * 2 + 1)">
+                    <a href="#" aria-label="Previous"
+                        @click.prevent="getItems(selectBrand, 1)">
+                        <span aria-hidden="true">««</span>
                     </a>
-                </li>
-                <li v-if="pagination.last_page > (offset * 2 + 1)">
-                    <a href="#" aria-label="Next" @click.prevent="getItems(selectBrand, pagination.last_page)">
-                        <span aria-hidden="true">»»</span>
+                  </li>
+                  <li v-if="pagination.last_page > (offset * 2 + 1)">
+                    <a href="#" aria-label="Previous"
+                        @click.prevent="getItems(selectBrand, pagination.current_page - 1)">
+                        <span aria-hidden="true">«</span>
                     </a>
-                </li>
-              </ul>
-            </nav>
+                  </li>
+                  <li v-for="(page, id) in pagesNumber" :class="[ page == isActived ? 'active' : '']" :key="id">
+                      <a v-if="page == '...'" href="#">{{ page }}</a>
+                      <a v-else href="#" @click.prevent="getItems(selectBrand, page)">{{ page }}</a>
+                  </li>
+                  <li v-if="pagination.last_page > (offset * 2 + 1)">
+                      <a href="#" aria-label="Next" @click.prevent="getItems(selectBrand, pagination.current_page + 1)">
+                          <span aria-hidden="true">»</span>
+                      </a>
+                  </li>
+                  <li v-if="pagination.last_page > (offset * 2 + 1)">
+                      <a href="#" aria-label="Next" @click.prevent="getItems(selectBrand, pagination.last_page)">
+                          <span aria-hidden="true">»»</span>
+                      </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
           </div>
         </div>
       </div>
@@ -201,9 +203,6 @@ export default {
     }
   },
   methods: {
-    clickCallback(pageNum) {
-      console.log(pageNum)
-    },
     getItems(id, page){
       var data = {
         brands_id: id,

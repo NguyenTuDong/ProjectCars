@@ -1,10 +1,10 @@
 <template>
   <tr>
     <td>
-      {{id}}
+      {{fuel.id}}
     </td>
-    <td v-if="editing != id">
-      {{ten}}
+    <td v-if="editing != fuel.id">
+      {{fuel.ten}}
     </td>
     <td v-else>
       <div class="form-group">
@@ -13,16 +13,16 @@
       <span class="text-danger" v-if="nameError != ''">{{nameError}}</span>
     </td>
     <td class="td-actions text-right">
-      <button v-if="editing != id" @click="edit" type="button" rel="tooltip" title="" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
+      <button v-if="editing != fuel.id" @click="edit" type="button" rel="tooltip" title="Chỉnh sửa" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
         <i class="now-ui-icons design-2_ruler-pencil"></i>
       </button>
-      <button v-if="editing != id" @click="showPopup" type="button" rel="tooltip" title="" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
+      <button v-if="editing != fuel.id" @click="showPopup" type="button" rel="tooltip" title="Xóa" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
         <i class="now-ui-icons ui-1_simple-remove"></i>
       </button>
-      <button v-if="editing == id" @click="updateFuel" type="button" rel="tooltip" title="" class="btn btn-success btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
+      <button v-if="editing == fuel.id" @click="updateFuel" type="button" rel="tooltip" title="Xác nhận" class="btn btn-success btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
         <i class="now-ui-icons ui-1_check"></i>
       </button>
-      <button v-if="editing == id" @click="cancle" type="button" rel="tooltip" title="" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
+      <button v-if="editing == fuel.id" @click="cancle" type="button" rel="tooltip" title="Hủy" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
         <i class="now-ui-icons ui-1_simple-delete"></i>
       </button>
     </td>
@@ -45,19 +45,17 @@ export default {
   },
   data() {
     return {
-      id: this.fuel.id,
-      ten: this.fuel.ten,
       newName: this.fuel.ten,
       nameError: "",
     }
   },
   methods: {
     edit() {
-      this.$emit('changeEditing', this.id);
-      this.newName = this.ten;
+      this.$emit('changeEditing', this.fuel.id);
+      this.newName = this.fuel.ten;
     },
     showPopup() {
-      this.$emit('showPopup', this.id);
+      this.$emit('showPopup', this.fuel.id);
     },
     cancle() {
       this.$emit('changeEditing', -1);
@@ -74,12 +72,11 @@ export default {
         formData.append("name", this.newName);
 
         var data = {
-          id: this.id,
+          id: this.fuel.id,
           formData: formData,
         }
 
         this.$store.dispatch('updateFuel', data);
-        this.ten = this.newName;
         this.newName = "";
         this.$emit('changeEditing', -1);
       }

@@ -1991,6 +1991,14 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _BrandItem__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BrandItem */ "./resources/js/components/brand/BrandItem.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
 //
 //
 //
@@ -2132,6 +2140,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Brand',
   components: {
@@ -2152,13 +2161,10 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.$store.dispatch('retrieveBrands', 1);
   },
-  computed: {
-    brands: function brands() {
-      return this.$store.getters.brands;
-    },
-    pagination: function pagination() {
-      return this.$store.getters.brandsPagination;
-    },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
+    brands: 'brands',
+    pagination: 'brandsPagination'
+  }), {
     isActived: function isActived() {
       return this.$store.getters.brandsPagination.current_page;
     },
@@ -2200,7 +2206,7 @@ __webpack_require__.r(__webpack_exports__);
 
       return pagesArray;
     }
-  },
+  }),
   methods: {
     clickCallback: function clickCallback(pageNum) {
       console.log(pageNum);
@@ -2349,10 +2355,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      id: this.brand.id,
-      logo: this.brand.logo,
-      logo_path: this.brand.logo_path,
-      ten: this.brand.ten,
       preview: "",
       newName: this.brand.ten,
       logoError: "",
@@ -2361,12 +2363,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     edit: function edit() {
-      this.$emit('changeEditing', this.id);
+      this.$emit('changeEditing', this.brand.id);
       this.preview = "";
-      this.newName = this.ten;
+      this.newName = this.brand.ten;
     },
     showPopup: function showPopup() {
-      this.$emit('showPopup', this.id);
+      this.$emit('showPopup', this.brand.id);
     },
     cancle: function cancle() {
       this.$emit('changeEditing', -1);
@@ -2385,15 +2387,13 @@ __webpack_require__.r(__webpack_exports__);
 
         if (image != null) {
           formData.append("logo", image);
-          this.logo_path = this.preview;
         }
 
         var data = {
-          id: this.id,
+          id: this.brand.id,
           formData: formData
         };
         this.$store.dispatch('updateBrand', data);
-        this.ten = this.newName;
         this.newName = "";
         this.preview = "";
         this.$emit('changeEditing', -1);
@@ -2431,6 +2431,14 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _CarItem__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CarItem */ "./resources/js/components/car/CarItem.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
 //
 //
 //
@@ -2550,6 +2558,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Car',
   components: {
@@ -2564,21 +2573,10 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.$store.dispatch('retrieveCars', 1);
   },
-  watch: {
-    cars: {
-      handler: function handler(val, oldVal) {
-        console.log('Prop changed: ', val, ' | was: ', oldVal);
-      },
-      deep: true
-    }
-  },
-  computed: {
-    cars: function cars() {
-      return this.$store.getters.cars;
-    },
-    pagination: function pagination() {
-      return this.$store.getters.carsPagination;
-    },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
+    cars: 'cars',
+    pagination: 'carsPagination'
+  }), {
     isActived: function isActived() {
       return this.$store.getters.carsPagination.current_page;
     },
@@ -2620,11 +2618,188 @@ __webpack_require__.r(__webpack_exports__);
 
       return pagesArray;
     }
-  },
+  }),
   methods: {
     getItems: function getItems(page) {
       if (page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveCars', page);
     },
+    showPopup: function showPopup(id) {
+      $('.pop-up').fadeIn(300);
+      var deleting = this.cars.filter(function (obj) {
+        return obj.id === id;
+      });
+      var message = "Bạn có muốn xóa mẫu tin <b>" + deleting[0].ten + "</b> không?";
+      $('.pop-up-body').html(message);
+      this.deleting = id;
+    },
+    closePopup: function closePopup() {
+      $('.pop-up').fadeOut(300);
+      this.deleting = -1;
+    },
+    deleteCar: function deleteCar() {
+      this.$store.dispatch('deleteCar', this.deleting);
+      $('.pop-up').fadeOut(300);
+      this.deleting = -1;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/car/CarDetail.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/car/CarDetail.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'CarDetail',
+  data: function data() {
+    return {
+      id: this.$route.params.id
+    };
+  },
+  created: function created() {
+    this.$store.dispatch('getCar', this.id);
+  },
+  computed: {
+    car: function car() {
+      console.log(this.$store.getters.car);
+      return this.$store.getters.car;
+    },
+    price: function price() {
+      if (this.$store.getters.car.gia === undefined) return;
+      return this.$store.getters.car.gia.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+  },
+  methods: {
     showPopup: function showPopup(id) {
       $('.pop-up').fadeIn(300);
       var deleting = this.cars.filter(function (obj) {
@@ -2719,45 +2894,23 @@ __webpack_require__.r(__webpack_exports__);
       required: true
     }
   },
-  data: function data() {
-    return {
-      id: this.car.id,
-      hinhanh: this.car.hinhanh,
-      hinhanh_path: this.car.hinhanh_path,
-      ten: this.car.ten,
-      gia: this.car.gia,
-      author: this.car.users.ten,
-      type: this.car.types.ten,
-      brand: this.car.types.brands.ten,
-      color: this.car.colors.ten,
-      condition: this.car.conditions.ten,
-      fuel: this.car.fuels.ten,
-      location: this.car.locations.ten,
-      origin: this.car.origins.ten,
-      style: this.car.styles.ten,
-      transmission: this.car.transmissions.ten,
-      trangthai: this.car.trangthai
-    };
-  },
   computed: {
     price: function price() {
-      return this.gia.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return this.car.gia.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
   },
   methods: {
     showPopup: function showPopup() {
-      this.$emit('showPopup', this.id);
+      this.$emit('showPopup', this.car.id);
     },
     cancle: function cancle() {
       this.$emit('changeEditing', -1);
     },
     approveCar: function approveCar() {
-      this.$store.dispatch('approveCar', this.id);
-      this.trangthai = 2;
+      this.$store.dispatch('approveCar', this.car.id);
     },
     denyCar: function denyCar() {
-      this.$store.dispatch('denyCar', this.id);
-      this.trangthai = 3;
+      this.$store.dispatch('denyCar', this.car.id);
     }
   }
 });
@@ -2774,6 +2927,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ColorItem__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ColorItem */ "./resources/js/components/color/ColorItem.vue");
+//
+//
 //
 //
 //
@@ -3128,10 +3283,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      id: this.color.id,
-      rgb: this.color.rgb,
-      rgb_path: this.color.rgb_path,
-      ten: this.color.ten,
       preview: "",
       newName: this.color.ten,
       imgError: "",
@@ -3140,12 +3291,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     edit: function edit() {
-      this.$emit('changeEditing', this.id);
+      this.$emit('changeEditing', this.color.id);
       this.preview = "";
-      this.newName = this.ten;
+      this.newName = this.color.ten;
     },
     showPopup: function showPopup() {
-      this.$emit('showPopup', this.id);
+      this.$emit('showPopup', this.color.id);
     },
     cancle: function cancle() {
       this.$emit('changeEditing', -1);
@@ -3164,15 +3315,13 @@ __webpack_require__.r(__webpack_exports__);
 
         if (image != null) {
           formData.append("img", image);
-          this.rgb_path = this.preview;
         }
 
         var data = {
-          id: this.id,
+          id: this.color.id,
           formData: formData
         };
         this.$store.dispatch('updateColor', data);
-        this.ten = this.newName;
         this.newName = "";
         this.preview = "";
         this.$emit('changeEditing', -1);
@@ -3210,6 +3359,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ConditionItem__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ConditionItem */ "./resources/js/components/condition/ConditionItem.vue");
+//
+//
 //
 //
 //
@@ -3513,19 +3664,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      id: this.condition.id,
-      ten: this.condition.ten,
       newName: this.condition.ten,
       nameError: ""
     };
   },
   methods: {
     edit: function edit() {
-      this.$emit('changeEditing', this.id);
-      this.newName = this.ten;
+      this.$emit('changeEditing', this.condition.id);
+      this.newName = this.condition.ten;
     },
     showPopup: function showPopup() {
-      this.$emit('showPopup', this.id);
+      this.$emit('showPopup', this.condition.id);
     },
     cancle: function cancle() {
       this.$emit('changeEditing', -1);
@@ -3541,11 +3690,10 @@ __webpack_require__.r(__webpack_exports__);
         var formData = new FormData();
         formData.append("name", this.newName);
         var data = {
-          id: this.id,
+          id: this.condition.id,
           formData: formData
         };
         this.$store.dispatch('updateCondition', data);
-        this.ten = this.newName;
         this.newName = "";
         this.$emit('changeEditing', -1);
       }
@@ -3565,6 +3713,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ConvenientItem__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ConvenientItem */ "./resources/js/components/convenient/ConvenientItem.vue");
+//
+//
 //
 //
 //
@@ -3868,19 +4018,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      id: this.convenient.id,
-      ten: this.convenient.ten,
       newName: this.convenient.ten,
       nameError: ""
     };
   },
   methods: {
     edit: function edit() {
-      this.$emit('changeEditing', this.id);
-      this.newName = this.ten;
+      this.$emit('changeEditing', this.convenient.id);
+      this.newName = this.convenient.ten;
     },
     showPopup: function showPopup() {
-      this.$emit('showPopup', this.id);
+      this.$emit('showPopup', this.convenient.id);
     },
     cancle: function cancle() {
       this.$emit('changeEditing', -1);
@@ -3896,11 +4044,10 @@ __webpack_require__.r(__webpack_exports__);
         var formData = new FormData();
         formData.append("name", this.newName);
         var data = {
-          id: this.id,
+          id: this.convenient.id,
           formData: formData
         };
         this.$store.dispatch('updateConvenient', data);
-        this.ten = this.newName;
         this.newName = "";
         this.$emit('changeEditing', -1);
       }
@@ -3920,6 +4067,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _FuelItem__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FuelItem */ "./resources/js/components/fuel/FuelItem.vue");
+//
+//
 //
 //
 //
@@ -4223,19 +4372,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      id: this.fuel.id,
-      ten: this.fuel.ten,
       newName: this.fuel.ten,
       nameError: ""
     };
   },
   methods: {
     edit: function edit() {
-      this.$emit('changeEditing', this.id);
-      this.newName = this.ten;
+      this.$emit('changeEditing', this.fuel.id);
+      this.newName = this.fuel.ten;
     },
     showPopup: function showPopup() {
-      this.$emit('showPopup', this.id);
+      this.$emit('showPopup', this.fuel.id);
     },
     cancle: function cancle() {
       this.$emit('changeEditing', -1);
@@ -4251,11 +4398,10 @@ __webpack_require__.r(__webpack_exports__);
         var formData = new FormData();
         formData.append("name", this.newName);
         var data = {
-          id: this.id,
+          id: this.fuel.id,
           formData: formData
         };
         this.$store.dispatch('updateFuel', data);
-        this.ten = this.newName;
         this.newName = "";
         this.$emit('changeEditing', -1);
       }
@@ -4274,6 +4420,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -4638,6 +4786,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Origin',
@@ -4814,19 +4964,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      id: this.origin.id,
-      ten: this.origin.ten,
       newName: this.origin.ten,
       nameError: ""
     };
   },
   methods: {
     edit: function edit() {
-      this.$emit('changeEditing', this.id);
-      this.newName = this.ten;
+      this.$emit('changeEditing', this.origin.id);
+      this.newName = this.origin.ten;
     },
     showPopup: function showPopup() {
-      this.$emit('showPopup', this.id);
+      this.$emit('showPopup', this.origin.id);
     },
     cancle: function cancle() {
       this.$emit('changeEditing', -1);
@@ -4842,11 +4990,10 @@ __webpack_require__.r(__webpack_exports__);
         var formData = new FormData();
         formData.append("name", this.newName);
         var data = {
-          id: this.id,
+          id: this.origin.id,
           formData: formData
         };
         this.$store.dispatch('updateOrigin', data);
-        this.ten = this.newName;
         this.newName = "";
         this.$emit('changeEditing', -1);
       }
@@ -4866,6 +5013,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _StyleItem__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StyleItem */ "./resources/js/components/style/StyleItem.vue");
+//
+//
 //
 //
 //
@@ -5221,10 +5370,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      id: this.styleItem.id,
-      hinhanh: this.styleItem.hinhanh,
-      hinhanh_path: this.styleItem.hinhanh_path,
-      ten: this.styleItem.ten,
       preview: "",
       newName: this.styleItem.ten,
       imgError: "",
@@ -5233,12 +5378,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     edit: function edit() {
-      this.$emit('changeEditing', this.id);
+      this.$emit('changeEditing', this.styleItem.id);
       this.preview = "";
-      this.newName = this.ten;
+      this.newName = this.styleItem.ten;
     },
     showPopup: function showPopup() {
-      this.$emit('showPopup', this.id);
+      this.$emit('showPopup', this.styleItem.id);
     },
     cancle: function cancle() {
       this.$emit('changeEditing', -1);
@@ -5257,15 +5402,13 @@ __webpack_require__.r(__webpack_exports__);
 
         if (image != null) {
           formData.append("img", image);
-          this.hinhanh_path = this.preview;
         }
 
         var data = {
-          id: this.id,
+          id: this.styleItem.id,
           formData: formData
         };
         this.$store.dispatch('updateStyle', data);
-        this.ten = this.newName;
         this.newName = "";
         this.preview = "";
         this.$emit('changeEditing', -1);
@@ -5303,6 +5446,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TransmissionItem__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TransmissionItem */ "./resources/js/components/transmission/TransmissionItem.vue");
+//
+//
 //
 //
 //
@@ -5606,19 +5751,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      id: this.transmission.id,
-      ten: this.transmission.ten,
       newName: this.transmission.ten,
       nameError: ""
     };
   },
   methods: {
     edit: function edit() {
-      this.$emit('changeEditing', this.id);
-      this.newName = this.ten;
+      this.$emit('changeEditing', this.transmission.id);
+      this.newName = this.transmission.ten;
     },
     showPopup: function showPopup() {
-      this.$emit('showPopup', this.id);
+      this.$emit('showPopup', this.transmission.id);
     },
     cancle: function cancle() {
       this.$emit('changeEditing', -1);
@@ -5634,11 +5777,10 @@ __webpack_require__.r(__webpack_exports__);
         var formData = new FormData();
         formData.append("name", this.newName);
         var data = {
-          id: this.id,
+          id: this.transmission.id,
           formData: formData
         };
         this.$store.dispatch('updateTransmission', data);
-        this.ten = this.newName;
         this.newName = "";
         this.$emit('changeEditing', -1);
       }
@@ -5658,6 +5800,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TypeItem__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TypeItem */ "./resources/js/components/type/TypeItem.vue");
+//
+//
 //
 //
 //
@@ -5867,9 +6011,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    clickCallback: function clickCallback(pageNum) {
-      console.log(pageNum);
-    },
     getItems: function getItems(id, page) {
       var data = {
         brands_id: id,
@@ -5986,10 +6127,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      id: this.type.id,
-      logo: this.type.logo,
-      logo_path: this.type.logo_path,
-      ten: this.type.ten,
       preview: "",
       newName: this.type.ten,
       logoError: "",
@@ -5998,12 +6135,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     edit: function edit() {
-      this.$emit('changeEditing', this.id);
+      this.$emit('changeEditing', this.type.id);
       this.preview = "";
-      this.newName = this.ten;
+      this.newName = this.type.ten;
     },
     showPopup: function showPopup() {
-      this.$emit('showPopup', this.id);
+      this.$emit('showPopup', this.type.id);
     },
     cancle: function cancle() {
       this.$emit('changeEditing', -1);
@@ -6019,11 +6156,10 @@ __webpack_require__.r(__webpack_exports__);
         var formData = new FormData();
         formData.append("name", this.newName);
         var data = {
-          id: this.id,
+          id: this.type.id,
           formData: formData
         };
         this.$store.dispatch('updateType', data);
-        this.ten = this.newName;
         this.newName = "";
         this.$emit('changeEditing', -1);
       }
@@ -10602,6 +10738,25 @@ exports.push([module.i, "\n.table-cars-id{\r\n  width: 5%;\n}\n.table-cars-img{\
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&lang=css&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&lang=css& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.btn-back{\r\n  position: absolute;\r\n  top: 40px;\r\n  left: 30px;\r\n  background-color: transparent;\r\n  padding: 0;\r\n  color: white;\r\n  border: 0;\r\n  cursor: pointer;\r\n  z-index: 1100;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/car/CarItem.vue?vue&type=style&index=0&lang=css&":
 /*!*****************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/car/CarItem.vue?vue&type=style&index=0&lang=css& ***!
@@ -10709,7 +10864,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.nav-seq{\r\n  width: calc(100% - 30px);\r\n  margin-left: auto;\r\n  margin-right: auto;\r\n  border-color: rgba(255, 255, 255, 0.5);\n}\n.card-select{\r\n  min-width: 200px;\n}\n.preview-btn{\r\n  width: 150px;\n}\n.pop-up{\r\n  position: fixed;\r\n  top: 0;\r\n  right: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: rgba(39, 39, 39, 0.2);\r\n  display: none;\r\n  z-index: 9999;\n}\n.pop-up-inner{\r\n  position: absolute;\r\n  top: 50%;\r\n  right: 50%;\r\n  -webkit-transform: translate(50%, -50%);\r\n          transform: translate(50%, -50%);\r\n  width: 500px;\r\n  background-color: white;\r\n  box-shadow: 0 1px 15px 10px rgba(39, 39, 39, 0.1);\r\n  z-index: 1;\n}\n.pop-up-header{\r\n  display: -webkit-box;\r\n  display: flex;\r\n  -webkit-box-pack: justify;\r\n          justify-content: space-between;\r\n  -webkit-box-align: center;\r\n          align-items: center;\r\n  padding: 10px 20px;\n}\n.pop-up-header .btn{\r\n  height: 20px;\n}\n.pop-up-title{\r\n  font-size: 1rem;\r\n  font-weight: bold;\n}\n.pop-up-body{\r\n  padding: 30px 20px;\r\n  text-align: center;\n}\n.pop-up-footer{\r\n  padding: 20px;\n}\n.pagination {\r\n  margin: 5px auto;\n}\n.pagination li.active a{\r\n  text-decoration: underline;\r\n  font-weight: bold;\n}\n.pagination li a{\r\n  display: block;\r\n  padding: 5px 15px;\r\n  margin: 0 -0.5px;\n}\r\n", ""]);
+exports.push([module.i, "\n.fade-enter-active,\r\n.fade-leave-active {\r\n  -webkit-transition-duration: 0.3s;\r\n          transition-duration: 0.3s;\r\n  -webkit-transition-property: opacity;\r\n  transition-property: opacity;\r\n  -webkit-transition-timing-function: ease;\r\n          transition-timing-function: ease;\n}\n.fade-enter,\r\n.fade-leave-active {\r\n  opacity: 0\n}\n.nav-seq{\r\n  width: calc(100% - 30px);\r\n  margin-left: auto;\r\n  margin-right: auto;\r\n  border-color: rgba(255, 255, 255, 0.5);\n}\n.card-select{\r\n  min-width: 200px;\n}\n.preview-btn{\r\n  width: 150px;\n}\n.pop-up{\r\n  position: fixed;\r\n  top: 0;\r\n  right: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: rgba(39, 39, 39, 0.2);\r\n  display: none;\r\n  z-index: 9999;\n}\n.pop-up-inner{\r\n  position: absolute;\r\n  top: 50%;\r\n  right: 50%;\r\n  -webkit-transform: translate(50%, -50%);\r\n          transform: translate(50%, -50%);\r\n  width: 500px;\r\n  background-color: white;\r\n  box-shadow: 0 1px 15px 10px rgba(39, 39, 39, 0.1);\r\n  z-index: 1;\n}\n.pop-up-header{\r\n  display: -webkit-box;\r\n  display: flex;\r\n  -webkit-box-pack: justify;\r\n          justify-content: space-between;\r\n  -webkit-box-align: center;\r\n          align-items: center;\r\n  padding: 10px 20px;\n}\n.pop-up-header .btn{\r\n  height: 20px;\n}\n.pop-up-title{\r\n  font-size: 1rem;\r\n  font-weight: bold;\n}\n.pop-up-body{\r\n  padding: 30px 20px;\r\n  text-align: center;\n}\n.pop-up-footer{\r\n  padding: 20px;\n}\n.pagination {\r\n  margin: 5px auto;\n}\n.pagination li.active a{\r\n  text-decoration: underline;\r\n  font-weight: bold;\n}\n.pagination li a{\r\n  display: block;\r\n  padding: 5px 15px;\r\n  margin: 0 -0.5px;\n}\r\n", ""]);
 
 // exports
 
@@ -41710,6 +41865,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&lang=css&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&lang=css& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--7-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--7-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./CarDetail.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/car/CarItem.vue?vue&type=style&index=0&lang=css&":
 /*!*********************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/car/CarItem.vue?vue&type=style&index=0&lang=css& ***!
@@ -43378,151 +43563,167 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm.brands.length > 0
-        ? _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-12" }, [
-              _c("div", { staticClass: "card" }, [
-                _c("nav", { staticClass: "d-flex" }, [
-                  _c(
-                    "ul",
-                    { staticClass: "mx-auto pagination" },
-                    [
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Previous" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(1)
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("««")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Previous" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.pagination.current_page - 1
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("«")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm._l(_vm.pagesNumber, function(page, id) {
-                        return _c(
-                          "li",
-                          {
-                            key: id,
-                            class: [page == _vm.isActived ? "active" : ""]
-                          },
+      _vm.brands !== undefined
+        ? _c("div", [
+            _vm.brands.length > 0
+              ? _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("div", { staticClass: "card" }, [
+                      _c("nav", { staticClass: "d-flex" }, [
+                        _c(
+                          "ul",
+                          { staticClass: "mx-auto pagination" },
                           [
-                            page == "..."
-                              ? _c("a", { attrs: { href: "#" } }, [
-                                  _vm._v(_vm._s(page))
-                                ])
-                              : _c(
-                                  "a",
-                                  {
-                                    attrs: { href: "#" },
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        return _vm.getItems(page)
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Previous"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(1)
+                                        }
                                       }
-                                    }
-                                  },
-                                  [_vm._v(_vm._s(page))]
-                                )
-                          ]
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("««")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Previous"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.pagination.current_page - 1
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("«")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm._l(_vm.pagesNumber, function(page, id) {
+                              return _c(
+                                "li",
+                                {
+                                  key: id,
+                                  class: [page == _vm.isActived ? "active" : ""]
+                                },
+                                [
+                                  page == "..."
+                                    ? _c("a", { attrs: { href: "#" } }, [
+                                        _vm._v(_vm._s(page))
+                                      ])
+                                    : _c(
+                                        "a",
+                                        {
+                                          attrs: { href: "#" },
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              return _vm.getItems(page)
+                                            }
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(page))]
+                                      )
+                                ]
+                              )
+                            }),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Next"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.pagination.current_page + 1
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("»")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Next"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.pagination.last_page
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("»»")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e()
+                          ],
+                          2
                         )
-                      }),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Next" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.pagination.current_page + 1
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("»")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Next" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.pagination.last_page
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("»»")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e()
-                    ],
-                    2
-                  )
+                      ])
+                    ])
+                  ])
                 ])
-              ])
-            ])
+              : _vm._e()
           ])
         : _vm._e()
     ]),
@@ -43549,9 +43750,7 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "pop-up-body" }, [
-          _vm._v("\n        Bạn có muốn xóa thương hiệu này không?\n      ")
-        ]),
+        _c("div", { staticClass: "pop-up-body" }),
         _vm._v(" "),
         _c("div", { staticClass: "pop-up-footer" }, [
           _c("div", { staticClass: "row" }, [
@@ -43632,12 +43831,12 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("tr", [
-    _c("td", [_vm._v("\n    " + _vm._s(_vm.id) + "\n  ")]),
+    _c("td", [_vm._v("\n    " + _vm._s(_vm.brand.id) + "\n  ")]),
     _vm._v(" "),
     _c("td", { staticClass: "text-center" }, [
-      _c("img", { attrs: { src: _vm.logo_path, alt: "" } }),
+      _c("img", { attrs: { src: _vm.brand.logo_path, alt: "" } }),
       _vm._v(" "),
-      _vm.editing == _vm.id
+      _vm.editing == _vm.brand.id
         ? _c("div", [
             _c("h6", { staticClass: "text-primary my-3" }, [_vm._v("Logo:")]),
             _vm._v(" "),
@@ -43673,8 +43872,8 @@ var render = function() {
         : _vm._e()
     ]),
     _vm._v(" "),
-    _vm.editing != _vm.id
-      ? _c("td", [_vm._v("\n    " + _vm._s(_vm.ten) + "\n  ")])
+    _vm.editing != _vm.brand.id
+      ? _c("td", [_vm._v("\n    " + _vm._s(_vm.brand.ten) + "\n  ")])
       : _c("td", [
           _c("div", { staticClass: "form-group" }, [
             _c("input", {
@@ -43708,7 +43907,7 @@ var render = function() {
         ]),
     _vm._v(" "),
     _c("td", { staticClass: "td-actions text-right" }, [
-      _vm.editing != _vm.id
+      _vm.editing != _vm.brand.id
         ? _c(
             "button",
             {
@@ -43717,7 +43916,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Chỉnh sửa",
                 "data-original-title": "Edit Task"
               },
               on: { click: _vm.edit }
@@ -43726,7 +43925,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing != _vm.id
+      _vm.editing != _vm.brand.id
         ? _c(
             "button",
             {
@@ -43735,7 +43934,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Xóa",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.showPopup }
@@ -43744,7 +43943,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing == _vm.id
+      _vm.editing == _vm.brand.id
         ? _c(
             "button",
             {
@@ -43753,7 +43952,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Xác nhận",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.updateBrand }
@@ -43762,7 +43961,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing == _vm.id
+      _vm.editing == _vm.brand.id
         ? _c(
             "button",
             {
@@ -43771,7 +43970,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Hủy",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.cancle }
@@ -44104,6 +44303,322 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/car/CarDetail.vue?vue&type=template&id=08c8776f&":
+/*!****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/car/CarDetail.vue?vue&type=template&id=08c8776f& ***!
+  \****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "panel-header panel-header-sm" }),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn-back",
+        on: {
+          click: function($event) {
+            return _vm.$router.go(-1)
+          }
+        }
+      },
+      [
+        _c("i", { staticClass: "now-ui-icons arrows-1_minimal-left" }),
+        _vm._v(" Trở lại")
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "content" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "car-image" }, [
+              _c("img", { attrs: { src: _vm.car.hinhanh_path, alt: "" } })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _c(
+                "h5",
+                { staticClass: "title text-primary text-center car-price" },
+                [
+                  _vm._v(
+                    "\n              " +
+                      _vm._s(_vm.price) +
+                      " VND\n            "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _vm.car.types !== undefined
+                ? _c("p", { staticClass: "text-center" }, [
+                    _vm._v(
+                      "\n              " +
+                        _vm._s(_vm.car.types.ten) +
+                        " | " +
+                        _vm._s(_vm.car.types.brands.ten) +
+                        "\n            "
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("p", [
+                _vm.car.styles !== undefined
+                  ? _c("span", [
+                      _c("b", [_vm._v("Kiểu dáng: ")]),
+                      _vm._v(_vm._s(_vm.car.styles.ten)),
+                      _c("br")
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.car.origins !== undefined
+                  ? _c("span", [
+                      _c("b", [_vm._v("Nguồn gốc: ")]),
+                      _vm._v(_vm._s(_vm.car.origins.ten)),
+                      _c("br")
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.car.conditions !== undefined
+                  ? _c("span", [
+                      _c("b", [_vm._v("Tình trạng: ")]),
+                      _vm._v(_vm._s(_vm.car.conditions.ten)),
+                      _c("br")
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.car.doixe != null
+                  ? _c("span", [
+                      _c("b", [_vm._v("Đời xe: ")]),
+                      _vm._v(_vm._s(_vm.car.doixe)),
+                      _c("br")
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.car.namsx != null
+                  ? _c("span", [
+                      _c("b", [_vm._v("Năm sản xuất: ")]),
+                      _vm._v(_vm._s(_vm.car.namsx)),
+                      _c("br")
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.car.locations !== undefined
+                  ? _c("span", [
+                      _c("b", [_vm._v("Nơi bán: ")]),
+                      _vm._v(_vm._s(_vm.car.locations.ten)),
+                      _c("br")
+                    ])
+                  : _vm._e()
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-8" }, [
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "d-flex card-header" }, [
+              _c("h5", { staticClass: "title" }, [_vm._v(_vm._s(_vm.car.ten))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _vm.car.users !== undefined
+                ? _c("p", [
+                    _c("b", [_vm._v("Người đăng: ")]),
+                    _c("a", { attrs: { href: "#" } }, [
+                      _vm._v(_vm._s(_vm.car.users.ten))
+                    ])
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", { domProps: { innerHTML: _vm._s(_vm.car.mota) } }),
+              _vm._v(" "),
+              _c("h5", [_vm._v("Thông tin cơ bản")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row mb-4" }, [
+                _vm.car.fuels !== undefined
+                  ? _c("div", { staticClass: "col-md-6" }, [
+                      _c("b", [_vm._v("Nhiên liệu: ")]),
+                      _vm._v(_vm._s(_vm.car.fuels.ten) + "\n              ")
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.car.transmissions !== undefined
+                  ? _c("div", { staticClass: "col-md-6" }, [
+                      _c("b", [_vm._v("Hộp số: ")]),
+                      _vm._v(
+                        _vm._s(_vm.car.transmissions.ten) + "\n              "
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.car.colors !== undefined
+                  ? _c("div", { staticClass: "col-md-6" }, [
+                      _c("b", [_vm._v("Màu xe: ")]),
+                      _vm._v(_vm._s(_vm.car.colors.ten) + "\n              ")
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.car.furnitures !== undefined
+                  ? _c("div", { staticClass: "col-md-6" }, [
+                      _c("b", [_vm._v("Màu nội thất: ")]),
+                      _vm._v(
+                        _vm._s(_vm.car.furnitures.ten) + "\n              "
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.car.socua != null
+                  ? _c("div", { staticClass: "col-md-6" }, [
+                      _c("b", [_vm._v("Số cửa: ")]),
+                      _vm._v(_vm._s(_vm.car.socua) + "\n              ")
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.car.sochongoi != null
+                  ? _c("div", { staticClass: "col-md-6" }, [
+                      _c("b", [_vm._v("Số chổ ngồi: ")]),
+                      _vm._v(_vm._s(_vm.car.sochongoi) + "\n              ")
+                    ])
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("h5", [_vm._v("Thông tin kỹ thuật")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row mb-4" }, [
+                _vm.car.kichthuoc != null
+                  ? _c("div", { staticClass: "col-md-6" }, [
+                      _c("b", [_vm._v("Dài x Rộng x Cao (mm): ")]),
+                      _vm._v(_vm._s(_vm.car.kichthuoc) + "\n              ")
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.car.phanh != null
+                  ? _c("div", { staticClass: "col-md-6" }, [
+                      _c("b", [_vm._v("Phanh: ")]),
+                      _vm._v(_vm._s(_vm.car.phanh) + "\n              ")
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.car.cannang != null
+                  ? _c("div", { staticClass: "col-md-6" }, [
+                      _c("b", [_vm._v("Trọng lượng không tải (kg): ")]),
+                      _vm._v(_vm._s(_vm.car.cannang) + "\n              ")
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.car.giamxoc != null
+                  ? _c("div", { staticClass: "col-md-6" }, [
+                      _c("b", [_vm._v("Giảm xóc: ")]),
+                      _vm._v(_vm._s(_vm.car.giamxoc) + "\n              ")
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.car.dungtich != null
+                  ? _c("div", { staticClass: "col-md-6" }, [
+                      _c("b", [_vm._v("Dung tích động cơ: ")]),
+                      _vm._v(_vm._s(_vm.car.dungtich) + "\n              ")
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.car.lopxe != null
+                  ? _c("div", { staticClass: "col-md-6" }, [
+                      _c("b", [_vm._v("Lốp xe: ")]),
+                      _vm._v(_vm._s(_vm.car.lopxe) + "\n              ")
+                    ])
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("h5", [_vm._v("Tiện nghi")]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "row mb-4" },
+                _vm._l(_vm.car.convenientcars, function(item) {
+                  return _c("div", { key: item.id, staticClass: "col-md-6" }, [
+                    _c("b", [_vm._v(_vm._s(item.convenients.ten))])
+                  ])
+                }),
+                0
+              )
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "pop-up" }, [
+      _c("div", { staticClass: "pop-up-inner" }, [
+        _c("div", { staticClass: "pop-up-header" }, [
+          _c("div", { staticClass: "pop-up-title" }, [_vm._v("Thông báo")]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass:
+                "btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral",
+              attrs: {
+                type: "button",
+                rel: "tooltip",
+                title: "",
+                "data-original-title": "Remove"
+              },
+              on: { click: _vm.closePopup }
+            },
+            [_c("i", { staticClass: "now-ui-icons ui-1_simple-remove" })]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "pop-up-body" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "pop-up-footer" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-8 ml-auto mr-auto" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-6" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger btn-block",
+                      on: { click: _vm.deleteCar }
+                    },
+                    [_vm._v("Xóa")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-6" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-info btn-block",
+                      on: { click: _vm.closePopup }
+                    },
+                    [_vm._v("Hủy")]
+                  )
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/car/CarItem.vue?vue&type=template&id=19d79a9e&":
 /*!**************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/car/CarItem.vue?vue&type=template&id=19d79a9e& ***!
@@ -44120,64 +44635,72 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("tr", [
-    _c("td", [_vm._v("\n    " + _vm._s(_vm.id) + "\n  ")]),
+    _c("td", [_vm._v("\n    " + _vm._s(_vm.car.id) + "\n  ")]),
     _vm._v(" "),
     _c("td", { staticClass: "text-center" }, [
-      _c("img", { attrs: { src: _vm.hinhanh_path, alt: "" } })
+      _c("img", { attrs: { src: _vm.car.hinhanh_path, alt: "" } })
     ]),
     _vm._v(" "),
-    _c("td", [
-      _c("a", { staticClass: "text-primary", attrs: { href: "#" } }, [
-        _c("h6", [_vm._v(_vm._s(_vm.ten))])
-      ]),
-      _vm._v(" "),
-      _c("div", [_c("h6", [_vm._v(_vm._s(_vm.price) + " VND")])]),
-      _vm._v(" "),
-      _c("div", { staticClass: "blocks" }, [
-        _c("span", { attrs: { title: "Thương hiệu" } }, [
-          _vm._v(_vm._s(_vm.brand))
-        ]),
+    _c(
+      "td",
+      [
+        _c(
+          "router-link",
+          { attrs: { to: { name: "car-detail", params: { id: _vm.car.id } } } },
+          [_c("h6", [_vm._v(_vm._s(_vm.car.ten))])]
+        ),
         _vm._v(" "),
-        _c("span", { attrs: { title: "Dòng xe" } }, [_vm._v(_vm._s(_vm.type))]),
+        _c("div", [_c("h6", [_vm._v(_vm._s(_vm.price) + " VND")])]),
         _vm._v(" "),
-        _c("span", { attrs: { title: "Kiểu dáng" } }, [
-          _vm._v(_vm._s(_vm.style))
-        ]),
-        _vm._v(" "),
-        _c("span", { attrs: { title: "Tình trạng" } }, [
-          _vm._v(_vm._s(_vm.condition))
-        ]),
-        _vm._v(" "),
-        _c("span", { attrs: { title: "Nguồn gốc" } }, [
-          _vm._v(_vm._s(_vm.origin))
-        ]),
-        _vm._v(" "),
-        _c("span", { attrs: { title: "Nơi bán" } }, [
-          _vm._v(_vm._s(_vm.location))
+        _c("div", { staticClass: "blocks" }, [
+          _c("span", { attrs: { title: "Thương hiệu" } }, [
+            _vm._v(_vm._s(_vm.car.types.brands.ten))
+          ]),
+          _vm._v(" "),
+          _c("span", { attrs: { title: "Dòng xe" } }, [
+            _vm._v(_vm._s(_vm.car.types.ten))
+          ]),
+          _vm._v(" "),
+          _c("span", { attrs: { title: "Kiểu dáng" } }, [
+            _vm._v(_vm._s(_vm.car.styles.ten))
+          ]),
+          _vm._v(" "),
+          _c("span", { attrs: { title: "Tình trạng" } }, [
+            _vm._v(_vm._s(_vm.car.conditions.ten))
+          ]),
+          _vm._v(" "),
+          _c("span", { attrs: { title: "Nguồn gốc" } }, [
+            _vm._v(_vm._s(_vm.car.origins.ten))
+          ]),
+          _vm._v(" "),
+          _c("span", { attrs: { title: "Nơi bán" } }, [
+            _vm._v(_vm._s(_vm.car.locations.ten))
+          ])
         ])
-      ])
-    ]),
+      ],
+      1
+    ),
     _vm._v(" "),
     _c("td", [
       _c("a", { attrs: { href: "#" } }, [
-        _vm._v("\n      " + _vm._s(_vm.author) + "\n    ")
+        _vm._v("\n      " + _vm._s(_vm.car.users.ten) + "\n    ")
       ])
     ]),
     _vm._v(" "),
     _c("td", [
-      _vm.trangthai == 0
+      _vm.car.trangthai == 0
         ? _c("span", { staticClass: "text-warning" }, [
             _vm._v("\n      Chờ duyệt\n    ")
           ])
         : _vm._e(),
       _vm._v(" "),
-      _vm.trangthai == 2
+      _vm.car.trangthai == 2
         ? _c("span", { staticClass: "text-success" }, [
             _vm._v("\n      Đã duyệt\n    ")
           ])
         : _vm._e(),
       _vm._v(" "),
-      _vm.trangthai == 3
+      _vm.car.trangthai == 3
         ? _c("span", { staticClass: "text-danger" }, [
             _vm._v("\n      Đã từ chối\n    ")
           ])
@@ -44185,7 +44708,7 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("td", { staticClass: "td-actions text-right" }, [
-      _vm.trangthai != 2
+      _vm.car.trangthai == 0
         ? _c(
             "button",
             {
@@ -44203,7 +44726,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.trangthai != 3
+      _vm.car.trangthai == 0
         ? _c(
             "button",
             {
@@ -44424,151 +44947,167 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm.colors.length > 0
-        ? _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-12" }, [
-              _c("div", { staticClass: "card" }, [
-                _c("nav", { staticClass: "d-flex" }, [
-                  _c(
-                    "ul",
-                    { staticClass: "mx-auto pagination" },
-                    [
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Previous" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(1)
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("««")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Previous" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.pagination.current_page - 1
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("«")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm._l(_vm.pagesNumber, function(page, id) {
-                        return _c(
-                          "li",
-                          {
-                            key: id,
-                            class: [page == _vm.isActived ? "active" : ""]
-                          },
+      _vm.colors !== undefined
+        ? _c("div", [
+            _vm.colors.length > 0
+              ? _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("div", { staticClass: "card" }, [
+                      _c("nav", { staticClass: "d-flex" }, [
+                        _c(
+                          "ul",
+                          { staticClass: "mx-auto pagination" },
                           [
-                            page == "..."
-                              ? _c("a", { attrs: { href: "#" } }, [
-                                  _vm._v(_vm._s(page))
-                                ])
-                              : _c(
-                                  "a",
-                                  {
-                                    attrs: { href: "#" },
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        return _vm.getItems(page)
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Previous"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(1)
+                                        }
                                       }
-                                    }
-                                  },
-                                  [_vm._v(_vm._s(page))]
-                                )
-                          ]
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("««")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Previous"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.pagination.current_page - 1
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("«")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm._l(_vm.pagesNumber, function(page, id) {
+                              return _c(
+                                "li",
+                                {
+                                  key: id,
+                                  class: [page == _vm.isActived ? "active" : ""]
+                                },
+                                [
+                                  page == "..."
+                                    ? _c("a", { attrs: { href: "#" } }, [
+                                        _vm._v(_vm._s(page))
+                                      ])
+                                    : _c(
+                                        "a",
+                                        {
+                                          attrs: { href: "#" },
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              return _vm.getItems(page)
+                                            }
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(page))]
+                                      )
+                                ]
+                              )
+                            }),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Next"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.pagination.current_page + 1
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("»")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Next"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.pagination.last_page
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("»»")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e()
+                          ],
+                          2
                         )
-                      }),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Next" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.pagination.current_page + 1
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("»")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Next" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.pagination.last_page
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("»»")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e()
-                    ],
-                    2
-                  )
+                      ])
+                    ])
+                  ])
                 ])
-              ])
-            ])
+              : _vm._e()
           ])
         : _vm._e()
     ]),
@@ -44676,12 +45215,12 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("tr", [
-    _c("td", [_vm._v("\n    " + _vm._s(_vm.id) + "\n  ")]),
+    _c("td", [_vm._v("\n    " + _vm._s(_vm.color.id) + "\n  ")]),
     _vm._v(" "),
     _c("td", { staticClass: "text-center" }, [
-      _c("img", { attrs: { src: _vm.rgb_path, alt: "" } }),
+      _c("img", { attrs: { src: _vm.color.rgb_path, alt: "" } }),
       _vm._v(" "),
-      _vm.editing == _vm.id
+      _vm.editing == _vm.color.id
         ? _c("div", [
             _c("h6", { staticClass: "text-primary my-3" }, [_vm._v("Hình:")]),
             _vm._v(" "),
@@ -44717,8 +45256,8 @@ var render = function() {
         : _vm._e()
     ]),
     _vm._v(" "),
-    _vm.editing != _vm.id
-      ? _c("td", [_vm._v("\n    " + _vm._s(_vm.ten) + "\n  ")])
+    _vm.editing != _vm.color.id
+      ? _c("td", [_vm._v("\n    " + _vm._s(_vm.color.ten) + "\n  ")])
       : _c("td", [
           _c("div", { staticClass: "form-group" }, [
             _c("input", {
@@ -44752,7 +45291,7 @@ var render = function() {
         ]),
     _vm._v(" "),
     _c("td", { staticClass: "td-actions text-right" }, [
-      _vm.editing != _vm.id
+      _vm.editing != _vm.color.id
         ? _c(
             "button",
             {
@@ -44761,7 +45300,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Chỉnh sửa",
                 "data-original-title": "Edit Task"
               },
               on: { click: _vm.edit }
@@ -44770,7 +45309,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing != _vm.id
+      _vm.editing != _vm.color.id
         ? _c(
             "button",
             {
@@ -44779,7 +45318,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Xóa",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.showPopup }
@@ -44788,7 +45327,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing == _vm.id
+      _vm.editing == _vm.color.id
         ? _c(
             "button",
             {
@@ -44797,7 +45336,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Xác nhận",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.updateColor }
@@ -44806,7 +45345,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing == _vm.id
+      _vm.editing == _vm.color.id
         ? _c(
             "button",
             {
@@ -44815,7 +45354,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Hủy",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.cancle }
@@ -44975,151 +45514,167 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm.conditions.length > 0
-        ? _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-12" }, [
-              _c("div", { staticClass: "card" }, [
-                _c("nav", { staticClass: "d-flex" }, [
-                  _c(
-                    "ul",
-                    { staticClass: "mx-auto pagination" },
-                    [
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Previous" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(1)
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("««")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Previous" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.pagination.current_page - 1
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("«")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm._l(_vm.pagesNumber, function(page, id) {
-                        return _c(
-                          "li",
-                          {
-                            key: id,
-                            class: [page == _vm.isActived ? "active" : ""]
-                          },
+      _vm.conditions !== undefined
+        ? _c("div", [
+            _vm.conditions.length > 0
+              ? _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("div", { staticClass: "card" }, [
+                      _c("nav", { staticClass: "d-flex" }, [
+                        _c(
+                          "ul",
+                          { staticClass: "mx-auto pagination" },
                           [
-                            page == "..."
-                              ? _c("a", { attrs: { href: "#" } }, [
-                                  _vm._v(_vm._s(page))
-                                ])
-                              : _c(
-                                  "a",
-                                  {
-                                    attrs: { href: "#" },
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        return _vm.getItems(page)
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Previous"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(1)
+                                        }
                                       }
-                                    }
-                                  },
-                                  [_vm._v(_vm._s(page))]
-                                )
-                          ]
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("««")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Previous"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.pagination.current_page - 1
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("«")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm._l(_vm.pagesNumber, function(page, id) {
+                              return _c(
+                                "li",
+                                {
+                                  key: id,
+                                  class: [page == _vm.isActived ? "active" : ""]
+                                },
+                                [
+                                  page == "..."
+                                    ? _c("a", { attrs: { href: "#" } }, [
+                                        _vm._v(_vm._s(page))
+                                      ])
+                                    : _c(
+                                        "a",
+                                        {
+                                          attrs: { href: "#" },
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              return _vm.getItems(page)
+                                            }
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(page))]
+                                      )
+                                ]
+                              )
+                            }),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Next"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.pagination.current_page + 1
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("»")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Next"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.pagination.last_page
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("»»")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e()
+                          ],
+                          2
                         )
-                      }),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Next" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.pagination.current_page + 1
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("»")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Next" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.pagination.last_page
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("»»")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e()
-                    ],
-                    2
-                  )
+                      ])
+                    ])
+                  ])
                 ])
-              ])
-            ])
+              : _vm._e()
           ])
         : _vm._e()
     ]),
@@ -45223,10 +45778,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("tr", [
-    _c("td", [_vm._v("\n    " + _vm._s(_vm.id) + "\n  ")]),
+    _c("td", [_vm._v("\n    " + _vm._s(_vm.condition.id) + "\n  ")]),
     _vm._v(" "),
-    _vm.editing != _vm.id
-      ? _c("td", [_vm._v("\n    " + _vm._s(_vm.ten) + "\n  ")])
+    _vm.editing != _vm.condition.id
+      ? _c("td", [_vm._v("\n    " + _vm._s(_vm.condition.ten) + "\n  ")])
       : _c("td", [
           _c("div", { staticClass: "form-group" }, [
             _c("input", {
@@ -45260,7 +45815,7 @@ var render = function() {
         ]),
     _vm._v(" "),
     _c("td", { staticClass: "td-actions text-right" }, [
-      _vm.editing != _vm.id
+      _vm.editing != _vm.condition.id
         ? _c(
             "button",
             {
@@ -45269,7 +45824,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Chỉnh sửa",
                 "data-original-title": "Edit Task"
               },
               on: { click: _vm.edit }
@@ -45278,7 +45833,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing != _vm.id
+      _vm.editing != _vm.condition.id
         ? _c(
             "button",
             {
@@ -45287,7 +45842,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Xóa",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.showPopup }
@@ -45296,7 +45851,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing == _vm.id
+      _vm.editing == _vm.condition.id
         ? _c(
             "button",
             {
@@ -45305,7 +45860,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Xác nhận",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.updateCondition }
@@ -45314,7 +45869,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing == _vm.id
+      _vm.editing == _vm.condition.id
         ? _c(
             "button",
             {
@@ -45323,7 +45878,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Hủy",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.cancle }
@@ -45486,151 +46041,167 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm.convenients.length > 0
-        ? _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-12" }, [
-              _c("div", { staticClass: "card" }, [
-                _c("nav", { staticClass: "d-flex" }, [
-                  _c(
-                    "ul",
-                    { staticClass: "mx-auto pagination" },
-                    [
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Previous" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(1)
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("««")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Previous" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.pagination.current_page - 1
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("«")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm._l(_vm.pagesNumber, function(page, id) {
-                        return _c(
-                          "li",
-                          {
-                            key: id,
-                            class: [page == _vm.isActived ? "active" : ""]
-                          },
+      _vm.convenients !== undefined
+        ? _c("div", [
+            _vm.convenients.length > 0
+              ? _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("div", { staticClass: "card" }, [
+                      _c("nav", { staticClass: "d-flex" }, [
+                        _c(
+                          "ul",
+                          { staticClass: "mx-auto pagination" },
                           [
-                            page == "..."
-                              ? _c("a", { attrs: { href: "#" } }, [
-                                  _vm._v(_vm._s(page))
-                                ])
-                              : _c(
-                                  "a",
-                                  {
-                                    attrs: { href: "#" },
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        return _vm.getItems(page)
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Previous"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(1)
+                                        }
                                       }
-                                    }
-                                  },
-                                  [_vm._v(_vm._s(page))]
-                                )
-                          ]
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("««")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Previous"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.pagination.current_page - 1
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("«")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm._l(_vm.pagesNumber, function(page, id) {
+                              return _c(
+                                "li",
+                                {
+                                  key: id,
+                                  class: [page == _vm.isActived ? "active" : ""]
+                                },
+                                [
+                                  page == "..."
+                                    ? _c("a", { attrs: { href: "#" } }, [
+                                        _vm._v(_vm._s(page))
+                                      ])
+                                    : _c(
+                                        "a",
+                                        {
+                                          attrs: { href: "#" },
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              return _vm.getItems(page)
+                                            }
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(page))]
+                                      )
+                                ]
+                              )
+                            }),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Next"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.pagination.current_page + 1
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("»")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Next"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.pagination.last_page
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("»»")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e()
+                          ],
+                          2
                         )
-                      }),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Next" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.pagination.current_page + 1
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("»")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Next" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.pagination.last_page
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("»»")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e()
-                    ],
-                    2
-                  )
+                      ])
+                    ])
+                  ])
                 ])
-              ])
-            ])
+              : _vm._e()
           ])
         : _vm._e()
     ]),
@@ -45734,10 +46305,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("tr", [
-    _c("td", [_vm._v("\n    " + _vm._s(_vm.id) + "\n  ")]),
+    _c("td", [_vm._v("\n    " + _vm._s(_vm.convenient.id) + "\n  ")]),
     _vm._v(" "),
-    _vm.editing != _vm.id
-      ? _c("td", [_vm._v("\n    " + _vm._s(_vm.ten) + "\n  ")])
+    _vm.editing != _vm.convenient.id
+      ? _c("td", [_vm._v("\n    " + _vm._s(_vm.convenient.ten) + "\n  ")])
       : _c("td", [
           _c("div", { staticClass: "form-group" }, [
             _c("input", {
@@ -45771,7 +46342,7 @@ var render = function() {
         ]),
     _vm._v(" "),
     _c("td", { staticClass: "td-actions text-right" }, [
-      _vm.editing != _vm.id
+      _vm.editing != _vm.convenient.id
         ? _c(
             "button",
             {
@@ -45780,7 +46351,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Chỉnh sửa",
                 "data-original-title": "Edit Task"
               },
               on: { click: _vm.edit }
@@ -45789,7 +46360,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing != _vm.id
+      _vm.editing != _vm.convenient.id
         ? _c(
             "button",
             {
@@ -45798,7 +46369,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Xóa",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.showPopup }
@@ -45807,7 +46378,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing == _vm.id
+      _vm.editing == _vm.convenient.id
         ? _c(
             "button",
             {
@@ -45816,7 +46387,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Xác nhận",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.updateConvenient }
@@ -45825,7 +46396,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing == _vm.id
+      _vm.editing == _vm.convenient.id
         ? _c(
             "button",
             {
@@ -45834,7 +46405,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Hủy",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.cancle }
@@ -45994,151 +46565,167 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm.fuels.length > 0
-        ? _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-12" }, [
-              _c("div", { staticClass: "card" }, [
-                _c("nav", { staticClass: "d-flex" }, [
-                  _c(
-                    "ul",
-                    { staticClass: "mx-auto pagination" },
-                    [
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Previous" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(1)
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("««")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Previous" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.pagination.current_page - 1
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("«")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm._l(_vm.pagesNumber, function(page, id) {
-                        return _c(
-                          "li",
-                          {
-                            key: id,
-                            class: [page == _vm.isActived ? "active" : ""]
-                          },
+      _vm.fuels !== undefined
+        ? _c("div", [
+            _vm.fuels.length > 0
+              ? _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("div", { staticClass: "card" }, [
+                      _c("nav", { staticClass: "d-flex" }, [
+                        _c(
+                          "ul",
+                          { staticClass: "mx-auto pagination" },
                           [
-                            page == "..."
-                              ? _c("a", { attrs: { href: "#" } }, [
-                                  _vm._v(_vm._s(page))
-                                ])
-                              : _c(
-                                  "a",
-                                  {
-                                    attrs: { href: "#" },
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        return _vm.getItems(page)
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Previous"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(1)
+                                        }
                                       }
-                                    }
-                                  },
-                                  [_vm._v(_vm._s(page))]
-                                )
-                          ]
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("««")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Previous"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.pagination.current_page - 1
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("«")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm._l(_vm.pagesNumber, function(page, id) {
+                              return _c(
+                                "li",
+                                {
+                                  key: id,
+                                  class: [page == _vm.isActived ? "active" : ""]
+                                },
+                                [
+                                  page == "..."
+                                    ? _c("a", { attrs: { href: "#" } }, [
+                                        _vm._v(_vm._s(page))
+                                      ])
+                                    : _c(
+                                        "a",
+                                        {
+                                          attrs: { href: "#" },
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              return _vm.getItems(page)
+                                            }
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(page))]
+                                      )
+                                ]
+                              )
+                            }),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Next"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.pagination.current_page + 1
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("»")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Next"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.pagination.last_page
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("»»")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e()
+                          ],
+                          2
                         )
-                      }),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Next" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.pagination.current_page + 1
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("»")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Next" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.pagination.last_page
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("»»")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e()
-                    ],
-                    2
-                  )
+                      ])
+                    ])
+                  ])
                 ])
-              ])
-            ])
+              : _vm._e()
           ])
         : _vm._e()
     ]),
@@ -46242,10 +46829,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("tr", [
-    _c("td", [_vm._v("\n    " + _vm._s(_vm.id) + "\n  ")]),
+    _c("td", [_vm._v("\n    " + _vm._s(_vm.fuel.id) + "\n  ")]),
     _vm._v(" "),
-    _vm.editing != _vm.id
-      ? _c("td", [_vm._v("\n    " + _vm._s(_vm.ten) + "\n  ")])
+    _vm.editing != _vm.fuel.id
+      ? _c("td", [_vm._v("\n    " + _vm._s(_vm.fuel.ten) + "\n  ")])
       : _c("td", [
           _c("div", { staticClass: "form-group" }, [
             _c("input", {
@@ -46279,7 +46866,7 @@ var render = function() {
         ]),
     _vm._v(" "),
     _c("td", { staticClass: "td-actions text-right" }, [
-      _vm.editing != _vm.id
+      _vm.editing != _vm.fuel.id
         ? _c(
             "button",
             {
@@ -46288,7 +46875,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Chỉnh sửa",
                 "data-original-title": "Edit Task"
               },
               on: { click: _vm.edit }
@@ -46297,7 +46884,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing != _vm.id
+      _vm.editing != _vm.fuel.id
         ? _c(
             "button",
             {
@@ -46306,7 +46893,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Xóa",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.showPopup }
@@ -46315,7 +46902,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing == _vm.id
+      _vm.editing == _vm.fuel.id
         ? _c(
             "button",
             {
@@ -46324,7 +46911,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Xác nhận",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.updateFuel }
@@ -46333,7 +46920,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing == _vm.id
+      _vm.editing == _vm.fuel.id
         ? _c(
             "button",
             {
@@ -46342,7 +46929,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Hủy",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.cancle }
@@ -46996,151 +47583,167 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm.origins.length > 0
-        ? _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-12" }, [
-              _c("div", { staticClass: "card" }, [
-                _c("nav", { staticClass: "d-flex" }, [
-                  _c(
-                    "ul",
-                    { staticClass: "mx-auto pagination" },
-                    [
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Previous" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(1)
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("««")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Previous" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.pagination.current_page - 1
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("«")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm._l(_vm.pagesNumber, function(page, id) {
-                        return _c(
-                          "li",
-                          {
-                            key: id,
-                            class: [page == _vm.isActived ? "active" : ""]
-                          },
+      _vm.origins !== undefined
+        ? _c("div", [
+            _vm.origins.length > 0
+              ? _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("div", { staticClass: "card" }, [
+                      _c("nav", { staticClass: "d-flex" }, [
+                        _c(
+                          "ul",
+                          { staticClass: "mx-auto pagination" },
                           [
-                            page == "..."
-                              ? _c("a", { attrs: { href: "#" } }, [
-                                  _vm._v(_vm._s(page))
-                                ])
-                              : _c(
-                                  "a",
-                                  {
-                                    attrs: { href: "#" },
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        return _vm.getItems(page)
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Previous"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(1)
+                                        }
                                       }
-                                    }
-                                  },
-                                  [_vm._v(_vm._s(page))]
-                                )
-                          ]
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("««")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Previous"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.pagination.current_page - 1
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("«")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm._l(_vm.pagesNumber, function(page, id) {
+                              return _c(
+                                "li",
+                                {
+                                  key: id,
+                                  class: [page == _vm.isActived ? "active" : ""]
+                                },
+                                [
+                                  page == "..."
+                                    ? _c("a", { attrs: { href: "#" } }, [
+                                        _vm._v(_vm._s(page))
+                                      ])
+                                    : _c(
+                                        "a",
+                                        {
+                                          attrs: { href: "#" },
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              return _vm.getItems(page)
+                                            }
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(page))]
+                                      )
+                                ]
+                              )
+                            }),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Next"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.pagination.current_page + 1
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("»")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Next"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.pagination.last_page
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("»»")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e()
+                          ],
+                          2
                         )
-                      }),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Next" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.pagination.current_page + 1
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("»")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Next" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.pagination.last_page
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("»»")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e()
-                    ],
-                    2
-                  )
+                      ])
+                    ])
+                  ])
                 ])
-              ])
-            ])
+              : _vm._e()
           ])
         : _vm._e()
     ]),
@@ -47244,10 +47847,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("tr", [
-    _c("td", [_vm._v("\n    " + _vm._s(_vm.id) + "\n  ")]),
+    _c("td", [_vm._v("\n    " + _vm._s(_vm.origin.id) + "\n  ")]),
     _vm._v(" "),
-    _vm.editing != _vm.id
-      ? _c("td", [_vm._v("\n    " + _vm._s(_vm.ten) + "\n  ")])
+    _vm.editing != _vm.origin.id
+      ? _c("td", [_vm._v("\n    " + _vm._s(_vm.origin.ten) + "\n  ")])
       : _c("td", [
           _c("div", { staticClass: "form-group" }, [
             _c("input", {
@@ -47281,7 +47884,7 @@ var render = function() {
         ]),
     _vm._v(" "),
     _c("td", { staticClass: "td-actions text-right" }, [
-      _vm.editing != _vm.id
+      _vm.editing != _vm.origin.id
         ? _c(
             "button",
             {
@@ -47290,7 +47893,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Chỉnh sửa",
                 "data-original-title": "Edit Task"
               },
               on: { click: _vm.edit }
@@ -47299,7 +47902,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing != _vm.id
+      _vm.editing != _vm.origin.id
         ? _c(
             "button",
             {
@@ -47308,7 +47911,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Xóa",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.showPopup }
@@ -47317,7 +47920,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing == _vm.id
+      _vm.editing == _vm.origin.id
         ? _c(
             "button",
             {
@@ -47326,7 +47929,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Xác nhận",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.updateOrigin }
@@ -47335,7 +47938,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing == _vm.id
+      _vm.editing == _vm.origin.id
         ? _c(
             "button",
             {
@@ -47344,7 +47947,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Hủy",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.cancle }
@@ -47540,151 +48143,167 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm.styles.length > 0
-        ? _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-12" }, [
-              _c("div", { staticClass: "card" }, [
-                _c("nav", { staticClass: "d-flex" }, [
-                  _c(
-                    "ul",
-                    { staticClass: "mx-auto pagination" },
-                    [
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Previous" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(1)
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("««")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Previous" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.pagination.current_page - 1
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("«")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm._l(_vm.pagesNumber, function(page, id) {
-                        return _c(
-                          "li",
-                          {
-                            key: id,
-                            class: [page == _vm.isActived ? "active" : ""]
-                          },
+      _vm.styles !== undefined
+        ? _c("div", [
+            _vm.styles.length > 0
+              ? _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("div", { staticClass: "card" }, [
+                      _c("nav", { staticClass: "d-flex" }, [
+                        _c(
+                          "ul",
+                          { staticClass: "mx-auto pagination" },
                           [
-                            page == "..."
-                              ? _c("a", { attrs: { href: "#" } }, [
-                                  _vm._v(_vm._s(page))
-                                ])
-                              : _c(
-                                  "a",
-                                  {
-                                    attrs: { href: "#" },
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        return _vm.getItems(page)
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Previous"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(1)
+                                        }
                                       }
-                                    }
-                                  },
-                                  [_vm._v(_vm._s(page))]
-                                )
-                          ]
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("««")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Previous"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.pagination.current_page - 1
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("«")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm._l(_vm.pagesNumber, function(page, id) {
+                              return _c(
+                                "li",
+                                {
+                                  key: id,
+                                  class: [page == _vm.isActived ? "active" : ""]
+                                },
+                                [
+                                  page == "..."
+                                    ? _c("a", { attrs: { href: "#" } }, [
+                                        _vm._v(_vm._s(page))
+                                      ])
+                                    : _c(
+                                        "a",
+                                        {
+                                          attrs: { href: "#" },
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              return _vm.getItems(page)
+                                            }
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(page))]
+                                      )
+                                ]
+                              )
+                            }),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Next"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.pagination.current_page + 1
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("»")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Next"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.pagination.last_page
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("»»")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e()
+                          ],
+                          2
                         )
-                      }),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Next" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.pagination.current_page + 1
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("»")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Next" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.pagination.last_page
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("»»")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e()
-                    ],
-                    2
-                  )
+                      ])
+                    ])
+                  ])
                 ])
-              ])
-            ])
+              : _vm._e()
           ])
         : _vm._e()
     ]),
@@ -47794,12 +48413,12 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("tr", [
-    _c("td", [_vm._v("\n    " + _vm._s(_vm.id) + "\n  ")]),
+    _c("td", [_vm._v("\n    " + _vm._s(_vm.styleItem.id) + "\n  ")]),
     _vm._v(" "),
     _c("td", { staticClass: "text-center" }, [
-      _c("img", { attrs: { src: _vm.hinhanh_path, alt: "" } }),
+      _c("img", { attrs: { src: _vm.styleItem.hinhanh_path, alt: "" } }),
       _vm._v(" "),
-      _vm.editing == _vm.id
+      _vm.editing == _vm.styleItem.id
         ? _c("div", [
             _c("h6", { staticClass: "text-primary my-3" }, [_vm._v("Hình:")]),
             _vm._v(" "),
@@ -47835,8 +48454,8 @@ var render = function() {
         : _vm._e()
     ]),
     _vm._v(" "),
-    _vm.editing != _vm.id
-      ? _c("td", [_vm._v("\n    " + _vm._s(_vm.ten) + "\n  ")])
+    _vm.editing != _vm.styleItem.id
+      ? _c("td", [_vm._v("\n    " + _vm._s(_vm.styleItem.ten) + "\n  ")])
       : _c("td", [
           _c("div", { staticClass: "form-group" }, [
             _c("input", {
@@ -47870,7 +48489,7 @@ var render = function() {
         ]),
     _vm._v(" "),
     _c("td", { staticClass: "td-actions text-right" }, [
-      _vm.editing != _vm.id
+      _vm.editing != _vm.styleItem.id
         ? _c(
             "button",
             {
@@ -47879,7 +48498,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Chỉnh sửa",
                 "data-original-title": "Edit Task"
               },
               on: { click: _vm.edit }
@@ -47888,7 +48507,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing != _vm.id
+      _vm.editing != _vm.styleItem.id
         ? _c(
             "button",
             {
@@ -47897,7 +48516,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Xóa",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.showPopup }
@@ -47906,7 +48525,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing == _vm.id
+      _vm.editing == _vm.styleItem.id
         ? _c(
             "button",
             {
@@ -47915,7 +48534,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Xác nhận",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.updateStyle }
@@ -47924,7 +48543,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing == _vm.id
+      _vm.editing == _vm.styleItem.id
         ? _c(
             "button",
             {
@@ -47933,7 +48552,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Hủy",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.cancle }
@@ -48096,151 +48715,167 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm.transmissions.length > 0
-        ? _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-12" }, [
-              _c("div", { staticClass: "card" }, [
-                _c("nav", { staticClass: "d-flex" }, [
-                  _c(
-                    "ul",
-                    { staticClass: "mx-auto pagination" },
-                    [
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Previous" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(1)
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("««")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Previous" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.pagination.current_page - 1
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("«")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm._l(_vm.pagesNumber, function(page, id) {
-                        return _c(
-                          "li",
-                          {
-                            key: id,
-                            class: [page == _vm.isActived ? "active" : ""]
-                          },
+      _vm.transmissions !== undefined
+        ? _c("div", [
+            _vm.transmissions.length > 0
+              ? _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("div", { staticClass: "card" }, [
+                      _c("nav", { staticClass: "d-flex" }, [
+                        _c(
+                          "ul",
+                          { staticClass: "mx-auto pagination" },
                           [
-                            page == "..."
-                              ? _c("a", { attrs: { href: "#" } }, [
-                                  _vm._v(_vm._s(page))
-                                ])
-                              : _c(
-                                  "a",
-                                  {
-                                    attrs: { href: "#" },
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        return _vm.getItems(page)
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Previous"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(1)
+                                        }
                                       }
-                                    }
-                                  },
-                                  [_vm._v(_vm._s(page))]
-                                )
-                          ]
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("««")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Previous"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.pagination.current_page - 1
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("«")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm._l(_vm.pagesNumber, function(page, id) {
+                              return _c(
+                                "li",
+                                {
+                                  key: id,
+                                  class: [page == _vm.isActived ? "active" : ""]
+                                },
+                                [
+                                  page == "..."
+                                    ? _c("a", { attrs: { href: "#" } }, [
+                                        _vm._v(_vm._s(page))
+                                      ])
+                                    : _c(
+                                        "a",
+                                        {
+                                          attrs: { href: "#" },
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              return _vm.getItems(page)
+                                            }
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(page))]
+                                      )
+                                ]
+                              )
+                            }),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Next"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.pagination.current_page + 1
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("»")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Next"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.pagination.last_page
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("»»")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e()
+                          ],
+                          2
                         )
-                      }),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Next" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.pagination.current_page + 1
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("»")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Next" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.pagination.last_page
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("»»")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e()
-                    ],
-                    2
-                  )
+                      ])
+                    ])
+                  ])
                 ])
-              ])
-            ])
+              : _vm._e()
           ])
         : _vm._e()
     ]),
@@ -48344,10 +48979,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("tr", [
-    _c("td", [_vm._v("\n    " + _vm._s(_vm.id) + "\n  ")]),
+    _c("td", [_vm._v("\n    " + _vm._s(_vm.transmission.id) + "\n  ")]),
     _vm._v(" "),
-    _vm.editing != _vm.id
-      ? _c("td", [_vm._v("\n    " + _vm._s(_vm.ten) + "\n  ")])
+    _vm.editing != _vm.transmission.id
+      ? _c("td", [_vm._v("\n    " + _vm._s(_vm.transmission.ten) + "\n  ")])
       : _c("td", [
           _c("div", { staticClass: "form-group" }, [
             _c("input", {
@@ -48381,7 +49016,7 @@ var render = function() {
         ]),
     _vm._v(" "),
     _c("td", { staticClass: "td-actions text-right" }, [
-      _vm.editing != _vm.id
+      _vm.editing != _vm.transmission.id
         ? _c(
             "button",
             {
@@ -48390,7 +49025,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Chỉnh sửa",
                 "data-original-title": "Edit Task"
               },
               on: { click: _vm.edit }
@@ -48399,7 +49034,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing != _vm.id
+      _vm.editing != _vm.transmission.id
         ? _c(
             "button",
             {
@@ -48408,7 +49043,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Xóa",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.showPopup }
@@ -48417,7 +49052,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing == _vm.id
+      _vm.editing == _vm.transmission.id
         ? _c(
             "button",
             {
@@ -48426,7 +49061,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Xác nhận",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.updateTransmission }
@@ -48435,7 +49070,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing == _vm.id
+      _vm.editing == _vm.transmission.id
         ? _c(
             "button",
             {
@@ -48444,7 +49079,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Hủy",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.cancle }
@@ -48646,157 +49281,176 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm.types.length > 0
-        ? _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-12" }, [
-              _c("div", { staticClass: "card" }, [
-                _c("nav", { staticClass: "d-flex" }, [
-                  _c(
-                    "ul",
-                    { staticClass: "mx-auto pagination" },
-                    [
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Previous" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(_vm.selectBrand, 1)
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("««")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Previous" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.selectBrand,
-                                      _vm.pagination.current_page - 1
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("«")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm._l(_vm.pagesNumber, function(page, id) {
-                        return _c(
-                          "li",
-                          {
-                            key: id,
-                            class: [page == _vm.isActived ? "active" : ""]
-                          },
+      _vm.types !== undefined
+        ? _c("div", [
+            _vm.types.length > 0
+              ? _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("div", { staticClass: "card" }, [
+                      _c("nav", { staticClass: "d-flex" }, [
+                        _c(
+                          "ul",
+                          { staticClass: "mx-auto pagination" },
                           [
-                            page == "..."
-                              ? _c("a", { attrs: { href: "#" } }, [
-                                  _vm._v(_vm._s(page))
-                                ])
-                              : _c(
-                                  "a",
-                                  {
-                                    attrs: { href: "#" },
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        return _vm.getItems(
-                                          _vm.selectBrand,
-                                          page
-                                        )
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Previous"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.selectBrand,
+                                            1
+                                          )
+                                        }
                                       }
-                                    }
-                                  },
-                                  [_vm._v(_vm._s(page))]
-                                )
-                          ]
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("««")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Previous"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.selectBrand,
+                                            _vm.pagination.current_page - 1
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("«")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm._l(_vm.pagesNumber, function(page, id) {
+                              return _c(
+                                "li",
+                                {
+                                  key: id,
+                                  class: [page == _vm.isActived ? "active" : ""]
+                                },
+                                [
+                                  page == "..."
+                                    ? _c("a", { attrs: { href: "#" } }, [
+                                        _vm._v(_vm._s(page))
+                                      ])
+                                    : _c(
+                                        "a",
+                                        {
+                                          attrs: { href: "#" },
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              return _vm.getItems(
+                                                _vm.selectBrand,
+                                                page
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(page))]
+                                      )
+                                ]
+                              )
+                            }),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Next"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.selectBrand,
+                                            _vm.pagination.current_page + 1
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("»")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.pagination.last_page > _vm.offset * 2 + 1
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#",
+                                        "aria-label": "Next"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getItems(
+                                            _vm.selectBrand,
+                                            _vm.pagination.last_page
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("»»")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e()
+                          ],
+                          2
                         )
-                      }),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Next" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.selectBrand,
-                                      _vm.pagination.current_page + 1
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("»")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.pagination.last_page > _vm.offset * 2 + 1
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#", "aria-label": "Next" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.getItems(
-                                      _vm.selectBrand,
-                                      _vm.pagination.last_page
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("»»")]
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e()
-                    ],
-                    2
-                  )
+                      ])
+                    ])
+                  ])
                 ])
-              ])
-            ])
+              : _vm._e()
           ])
         : _vm._e()
     ]),
@@ -48900,10 +49554,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("tr", [
-    _c("td", [_vm._v("\n    " + _vm._s(_vm.id) + "\n  ")]),
+    _c("td", [_vm._v("\n    " + _vm._s(_vm.type.id) + "\n  ")]),
     _vm._v(" "),
-    _vm.editing != _vm.id
-      ? _c("td", [_vm._v("\n    " + _vm._s(_vm.ten) + "\n  ")])
+    _vm.editing != _vm.type.id
+      ? _c("td", [_vm._v("\n    " + _vm._s(_vm.type.ten) + "\n  ")])
       : _c("td", [
           _c("div", { staticClass: "form-group" }, [
             _c("input", {
@@ -48937,7 +49591,7 @@ var render = function() {
         ]),
     _vm._v(" "),
     _c("td", { staticClass: "td-actions text-right" }, [
-      _vm.editing != _vm.id
+      _vm.editing != _vm.type.id
         ? _c(
             "button",
             {
@@ -48946,7 +49600,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Chỉnh sửa",
                 "data-original-title": "Edit Task"
               },
               on: { click: _vm.edit }
@@ -48955,7 +49609,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing != _vm.id
+      _vm.editing != _vm.type.id
         ? _c(
             "button",
             {
@@ -48964,7 +49618,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Xóa",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.showPopup }
@@ -48973,7 +49627,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing == _vm.id
+      _vm.editing == _vm.type.id
         ? _c(
             "button",
             {
@@ -48982,7 +49636,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Xác nhận",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.updateType }
@@ -48991,7 +49645,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editing == _vm.id
+      _vm.editing == _vm.type.id
         ? _c(
             "button",
             {
@@ -49000,7 +49654,7 @@ var render = function() {
               attrs: {
                 type: "button",
                 rel: "tooltip",
-                title: "",
+                title: "Hủy",
                 "data-original-title": "Remove"
               },
               on: { click: _vm.cancle }
@@ -65181,7 +65835,7 @@ module.exports = function(module) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./store */ "./resources/js/store.js");
+/* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./store/store */ "./resources/js/store/store.js");
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./router */ "./resources/js/router.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -65222,7 +65876,7 @@ Vue.mixin({
 });
 var app = new Vue({
   el: '#app',
-  store: _store__WEBPACK_IMPORTED_MODULE_0__["store"],
+  store: _store_store__WEBPACK_IMPORTED_MODULE_0__["store"],
   router: _router__WEBPACK_IMPORTED_MODULE_1__["router"]
 });
 
@@ -65593,6 +66247,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Car_vue_vue_type_template_id_355f37fe___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Car_vue_vue_type_template_id_355f37fe___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/car/CarDetail.vue":
+/*!***************************************************!*\
+  !*** ./resources/js/components/car/CarDetail.vue ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CarDetail_vue_vue_type_template_id_08c8776f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CarDetail.vue?vue&type=template&id=08c8776f& */ "./resources/js/components/car/CarDetail.vue?vue&type=template&id=08c8776f&");
+/* harmony import */ var _CarDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CarDetail.vue?vue&type=script&lang=js& */ "./resources/js/components/car/CarDetail.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _CarDetail_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CarDetail.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _CarDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CarDetail_vue_vue_type_template_id_08c8776f___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CarDetail_vue_vue_type_template_id_08c8776f___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/car/CarDetail.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/car/CarDetail.vue?vue&type=script&lang=js&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/car/CarDetail.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./CarDetail.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/car/CarDetail.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&lang=css&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&lang=css& ***!
+  \************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--7-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--7-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./CarDetail.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/car/CarDetail.vue?vue&type=template&id=08c8776f&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/car/CarDetail.vue?vue&type=template&id=08c8776f& ***!
+  \**********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_template_id_08c8776f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./CarDetail.vue?vue&type=template&id=08c8776f& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/car/CarDetail.vue?vue&type=template&id=08c8776f&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_template_id_08c8776f___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_template_id_08c8776f___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -67598,6 +68339,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_style_Style__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/style/Style */ "./resources/js/components/style/Style.vue");
 /* harmony import */ var _components_convenient_Convenient__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/convenient/Convenient */ "./resources/js/components/convenient/Convenient.vue");
 /* harmony import */ var _components_car_Car__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/car/Car */ "./resources/js/components/car/Car.vue");
+/* harmony import */ var _components_car_CarDetail__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/car/CarDetail */ "./resources/js/components/car/CarDetail.vue");
+
 
 
 
@@ -67689,6 +68432,13 @@ var routes = [{
   meta: {
     title: 'Admin | Mẫu tin'
   }
+}, {
+  path: '/admin/car/:id',
+  name: 'car-detail',
+  component: _components_car_CarDetail__WEBPACK_IMPORTED_MODULE_13__["default"],
+  meta: {
+    title: 'Admin | Car Detail'
+  }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
@@ -67698,10 +68448,1979 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 
 /***/ }),
 
-/***/ "./resources/js/store.js":
-/*!*******************************!*\
-  !*** ./resources/js/store.js ***!
-  \*******************************/
+/***/ "./resources/js/store/modules/brands.js":
+/*!**********************************************!*\
+  !*** ./resources/js/store/modules/brands.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var state = {
+  allBrands: [],
+  brands: {}
+};
+var getters = {
+  allBrands: function allBrands(state) {
+    return state.allBrands;
+  },
+  brands: function brands(state) {
+    return state.brands.data;
+  },
+  brandsPagination: function brandsPagination(state) {
+    return state.brands;
+  }
+};
+var mutations = {
+  allBrands: function allBrands(state, data) {
+    state.allBrands = data;
+  },
+  retrieveBrands: function retrieveBrands(state, data) {
+    state.brands = data;
+  },
+  createBrand: function createBrand(state, data) {
+    state.brands.data.push(data);
+  },
+  updateBrand: function updateBrand(state, data) {
+    state.brands.data.forEach(function (element, index) {
+      if (element.id === data.id) {
+        state.brands.data[index] = data;
+      }
+    });
+    var temp = state.brands.data;
+    state.brands.data = [];
+    state.brands.data = temp;
+  },
+  deleteBrand: function deleteBrand(state, data) {
+    var index = state.brands.data.findIndex(function (obj) {
+      return obj.id == data.id;
+    });
+    state.brands.data.splice(index, 1);
+  }
+};
+var actions = {
+  allBrands: function allBrands(_ref) {
+    var commit = _ref.commit;
+    $.ajax({
+      url: '/getbrands',
+      type: "GET",
+      dataType: "json",
+      success: function success(data) {
+        commit('allBrands', data);
+      },
+      error: function error(errors) {
+        console.log(errors);
+      }
+    });
+  },
+  retrieveBrands: function retrieveBrands(_ref2, page) {
+    var commit = _ref2.commit;
+    $.ajax({
+      url: '/admin/api/brand?page=' + page,
+      type: "GET",
+      dataType: "json",
+      success: function success(data) {
+        commit('retrieveBrands', data);
+      },
+      error: function error(errors) {
+        console.log(errors);
+      }
+    });
+  },
+  createBrand: function createBrand(_ref3, formData) {
+    var commit = _ref3.commit,
+        rootGetters = _ref3.rootGetters;
+    console.log(rootGetters.csrf);
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/brand',
+      type: "POST",
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('createBrand', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Thêm thương hiệu thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        console.log(errors);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Thêm thương hiệu thất bại!"
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  },
+  updateBrand: function updateBrand(_ref4, data) {
+    var commit = _ref4.commit,
+        rootGetters = _ref4.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/brand/' + data.id,
+      type: "POST",
+      data: data.formData,
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('updateBrand', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Cập nhật thương hiệu <b>#" + data.id + "</b> thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Cập nhật thương hiệu <b>#" + data.id + "</b> thất bại."
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  },
+  deleteBrand: function deleteBrand(_ref5, id) {
+    var commit = _ref5.commit,
+        rootGetters = _ref5.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/brand/delete/' + id,
+      type: "POST",
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('deleteBrand', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Xóa thương hiệu <b>#" + data.id + "</b> thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Xóa thương hiệu <b>#" + data.id + "</b> thất bại."
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespace: true,
+  state: state,
+  getters: getters,
+  mutations: mutations,
+  actions: actions
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/cars.js":
+/*!********************************************!*\
+  !*** ./resources/js/store/modules/cars.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var state = {
+  cars: {},
+  car: {}
+};
+var getters = {
+  cars: function cars(state) {
+    return state.cars.data;
+  },
+  car: function car(state) {
+    return state.car;
+  },
+  carsPagination: function carsPagination(state) {
+    return state.cars;
+  }
+};
+var mutations = {
+  retrieveCars: function retrieveCars(state, data) {
+    state.cars = data;
+  },
+  getCar: function getCar(state, data) {
+    state.car = data;
+  },
+  updateCar: function updateCar(state, data) {
+    state.cars.data.forEach(function (element, index) {
+      if (element.id === data.id) {
+        state.cars.data[index] = data;
+      }
+    });
+    var temp = state.cars.data;
+    state.cars.data = [];
+    state.cars.data = temp;
+  },
+  deleteCar: function deleteCar(state, data) {
+    var index = state.cars.data.findIndex(function (obj) {
+      return obj.id == data.id;
+    });
+    state.cars.data.splice(index, 1);
+  }
+};
+var actions = {
+  retrieveCars: function retrieveCars(_ref, page) {
+    var commit = _ref.commit;
+    $.ajax({
+      url: '/admin/api/car?page=' + page,
+      type: "GET",
+      dataType: "json",
+      success: function success(data) {
+        commit('retrieveCars', data);
+      },
+      error: function error(errors) {
+        console.log(errors);
+      }
+    });
+  },
+  getCar: function getCar(_ref2, id) {
+    var commit = _ref2.commit;
+    $.ajax({
+      url: '/admin/api/car/' + id,
+      type: "GET",
+      dataType: "json",
+      success: function success(data) {
+        commit('getCar', data);
+      },
+      error: function error(errors) {
+        console.log(errors);
+      }
+    });
+  },
+  approveCar: function approveCar(_ref3, id) {
+    var commit = _ref3.commit,
+        rootGetters = _ref3.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/car/approve/' + id,
+      type: "POST",
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('updateCar', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Duyệt mẫu tin <b>#" + data.id + "</b> thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        console.log(errors);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Duyệt mẫu tin <b>#" + data.id + "</b> thất bại."
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  },
+  denyCar: function denyCar(_ref4, id) {
+    var commit = _ref4.commit,
+        rootGetters = _ref4.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/car/deny/' + id,
+      type: "POST",
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('updateCar', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Từ chối mẫu tin <b>#" + data.id + "</b> thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        console.log(errors);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Từ chối mẫu tin <b>#" + data.id + "</b> thất bại."
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  },
+  deleteCar: function deleteCar(_ref5, id) {
+    var commit = _ref5.commit,
+        rootGetters = _ref5.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/car/delete/' + id,
+      type: "POST",
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('deleteCar', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Xóa tiện nghi <b>#" + data.id + "</b> thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Xóa tiện nghi <b>#" + data.id + "</b> thất bại."
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespace: true,
+  state: state,
+  getters: getters,
+  mutations: mutations,
+  actions: actions
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/colors.js":
+/*!**********************************************!*\
+  !*** ./resources/js/store/modules/colors.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var state = {
+  colors: {}
+};
+var getters = {
+  colors: function colors(state) {
+    return state.colors.data;
+  },
+  colorsPagination: function colorsPagination(state) {
+    return state.colors;
+  }
+};
+var mutations = {
+  retrieveColors: function retrieveColors(state, data) {
+    state.colors = data;
+  },
+  createColor: function createColor(state, data) {
+    state.colors.data.push(data);
+  },
+  updateColor: function updateColor(state, data) {
+    state.colors.data.forEach(function (element, index) {
+      if (element.id === data.id) {
+        state.colors.data[index] = data;
+      }
+    });
+    var temp = state.colors.data;
+    state.colors.data = [];
+    state.colors.data = temp;
+  },
+  deleteColor: function deleteColor(state, data) {
+    var index = state.colors.data.findIndex(function (obj) {
+      return obj.id == data.id;
+    });
+    state.colors.data.splice(index, 1);
+  }
+};
+var actions = {
+  retrieveColors: function retrieveColors(_ref, page) {
+    var commit = _ref.commit;
+    $.ajax({
+      url: '/admin/api/color?page=' + page,
+      type: "GET",
+      dataType: "json",
+      success: function success(data) {
+        commit('retrieveColors', data);
+      },
+      error: function error(errors) {
+        console.log(errors);
+      }
+    });
+  },
+  createColor: function createColor(_ref2, formData) {
+    var commit = _ref2.commit,
+        rootGetters = _ref2.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/color',
+      type: "POST",
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('createColor', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Thêm màu xe thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        console.log(errors);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Thêm màu xe thất bại!"
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  },
+  updateColor: function updateColor(_ref3, data) {
+    var commit = _ref3.commit,
+        rootGetters = _ref3.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/color/' + data.id,
+      type: "POST",
+      data: data.formData,
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('updateColor', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Cập nhật màu xe <b>#" + data.id + "</b> thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Cập nhật màu xe <b>#" + data.id + "</b> thất bại."
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  },
+  deleteColor: function deleteColor(_ref4, id) {
+    var commit = _ref4.commit,
+        rootGetters = _ref4.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/color/delete/' + id,
+      type: "POST",
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('deleteColor', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Xóa màu xe <b>#" + data.id + "</b> thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Xóa màu xe <b>#" + data.id + "</b> thất bại."
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespace: true,
+  state: state,
+  getters: getters,
+  mutations: mutations,
+  actions: actions
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/conditions.js":
+/*!**************************************************!*\
+  !*** ./resources/js/store/modules/conditions.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var state = {
+  conditions: {}
+};
+var getters = {
+  conditions: function conditions(state) {
+    return state.conditions.data;
+  },
+  conditionsPagination: function conditionsPagination(state) {
+    return state.conditions;
+  }
+};
+var mutations = {
+  retrieveConditions: function retrieveConditions(state, data) {
+    state.conditions = data;
+  },
+  createCondition: function createCondition(state, data) {
+    state.conditions.data.push(data);
+  },
+  updateCondition: function updateCondition(state, data) {
+    state.conditions.data.forEach(function (element, index) {
+      if (element.id === data.id) {
+        state.conditions.data[index] = data;
+      }
+    });
+    var temp = state.conditions.data;
+    state.conditions.data = [];
+    state.conditions.data = temp;
+  },
+  deleteCondition: function deleteCondition(state, data) {
+    var index = state.conditions.data.findIndex(function (obj) {
+      return obj.id == data.id;
+    });
+    state.conditions.data.splice(index, 1);
+  }
+};
+var actions = {
+  retrieveConditions: function retrieveConditions(_ref, page) {
+    var commit = _ref.commit;
+    $.ajax({
+      url: '/admin/api/condition?page=' + page,
+      type: "GET",
+      dataType: "json",
+      success: function success(data) {
+        commit('retrieveConditions', data);
+      },
+      error: function error(errors) {
+        console.log(errors);
+      }
+    });
+  },
+  createCondition: function createCondition(_ref2, formData) {
+    var commit = _ref2.commit,
+        rootGetters = _ref2.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/condition',
+      type: "POST",
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('createCondition', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Thêm tình trạng thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        console.log(errors);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Thêm tình trạng thất bại!"
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  },
+  updateCondition: function updateCondition(_ref3, data) {
+    var commit = _ref3.commit,
+        rootGetters = _ref3.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/condition/' + data.id,
+      type: "POST",
+      data: data.formData,
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('updateCondition', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Cập nhật tình trạng <b>#" + data.id + "</b> thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Cập nhật tình trạng <b>#" + data.id + "</b> thất bại."
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  },
+  deleteCondition: function deleteCondition(_ref4, id) {
+    var commit = _ref4.commit,
+        rootGetters = _ref4.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/condition/delete/' + id,
+      type: "POST",
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('deleteCondition', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Xóa tình trạng <b>#" + data.id + "</b> thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Xóa tình trạng <b>#" + data.id + "</b> thất bại."
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespace: true,
+  state: state,
+  getters: getters,
+  mutations: mutations,
+  actions: actions
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/convenients.js":
+/*!***************************************************!*\
+  !*** ./resources/js/store/modules/convenients.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var state = {
+  convenients: {}
+};
+var getters = {
+  convenients: function convenients(state) {
+    return state.convenients.data;
+  },
+  convenientsPagination: function convenientsPagination(state) {
+    return state.convenients;
+  }
+};
+var mutations = {
+  retrieveConvenients: function retrieveConvenients(state, data) {
+    state.convenients = data;
+  },
+  createConvenient: function createConvenient(state, data) {
+    state.convenients.data.push(data);
+  },
+  updateConvenient: function updateConvenient(state, data) {
+    state.convenients.data.forEach(function (element, index) {
+      if (element.id === data.id) {
+        state.convenients.data[index] = data;
+      }
+    });
+    var temp = state.convenients.data;
+    state.convenients.data = [];
+    state.convenients.data = temp;
+  },
+  deleteConvenient: function deleteConvenient(state, data) {
+    var index = state.convenients.data.findIndex(function (obj) {
+      return obj.id == data.id;
+    });
+    state.convenients.data.splice(index, 1);
+  }
+};
+var actions = {
+  retrieveConvenients: function retrieveConvenients(_ref, page) {
+    var commit = _ref.commit;
+    $.ajax({
+      url: '/admin/api/convenient?page=' + page,
+      type: "GET",
+      dataType: "json",
+      success: function success(data) {
+        commit('retrieveConvenients', data);
+      },
+      error: function error(errors) {
+        console.log(errors);
+      }
+    });
+  },
+  createConvenient: function createConvenient(_ref2, formData) {
+    var commit = _ref2.commit,
+        rootGetters = _ref2.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/convenient',
+      type: "POST",
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('createConvenient', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Thêm tiện nghi thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        console.log(errors);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Thêm tiện nghi thất bại!"
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  },
+  updateConvenient: function updateConvenient(_ref3, data) {
+    var commit = _ref3.commit,
+        rootGetters = _ref3.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/convenient/' + data.id,
+      type: "POST",
+      data: data.formData,
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('updateConvenient', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Cập nhật tiện nghi <b>#" + data.id + "</b> thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Cập nhật tiện nghi <b>#" + data.id + "</b> thất bại."
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  },
+  deleteConvenient: function deleteConvenient(_ref4, id) {
+    var commit = _ref4.commit,
+        rootGetters = _ref4.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/convenient/delete/' + id,
+      type: "POST",
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('deleteConvenient', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Xóa tiện nghi <b>#" + data.id + "</b> thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Xóa tiện nghi <b>#" + data.id + "</b> thất bại."
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespace: true,
+  state: state,
+  getters: getters,
+  mutations: mutations,
+  actions: actions
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/fuels.js":
+/*!*********************************************!*\
+  !*** ./resources/js/store/modules/fuels.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var state = {
+  fuels: {}
+};
+var getters = {
+  fuels: function fuels(state) {
+    return state.fuels.data;
+  },
+  fuelsPagination: function fuelsPagination(state) {
+    return state.fuels;
+  }
+};
+var mutations = {
+  retrieveFuels: function retrieveFuels(state, data) {
+    state.fuels = data;
+  },
+  createFuel: function createFuel(state, data) {
+    state.fuels.data.push(data);
+  },
+  updateFuel: function updateFuel(state, data) {
+    state.fuels.data.forEach(function (element, index) {
+      if (element.id === data.id) {
+        state.fuels.data[index] = data;
+      }
+    });
+    var temp = state.fuels.data;
+    state.fuels.data = [];
+    state.fuels.data = temp;
+  },
+  deleteFuel: function deleteFuel(state, data) {
+    var index = state.fuels.data.findIndex(function (obj) {
+      return obj.id == data.id;
+    });
+    state.fuels.data.splice(index, 1);
+  }
+};
+var actions = {
+  retrieveFuels: function retrieveFuels(_ref, page) {
+    var commit = _ref.commit;
+    $.ajax({
+      url: '/admin/api/fuel?page=' + page,
+      type: "GET",
+      dataType: "json",
+      success: function success(data) {
+        commit('retrieveFuels', data);
+      },
+      error: function error(errors) {
+        console.log(errors);
+      }
+    });
+  },
+  createFuel: function createFuel(_ref2, formData) {
+    var commit = _ref2.commit,
+        rootGetters = _ref2.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/fuel',
+      type: "POST",
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('createFuel', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Thêm nhiên liệu thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        console.log(errors);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Thêm nhiên liệu thất bại!"
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  },
+  updateFuel: function updateFuel(_ref3, data) {
+    var commit = _ref3.commit,
+        rootGetters = _ref3.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/fuel/' + data.id,
+      type: "POST",
+      data: data.formData,
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('updateFuel', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Cập nhật nhiên liệu <b>#" + data.id + "</b> thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Cập nhật nhiên liệu <b>#" + data.id + "</b> thất bại."
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  },
+  deleteFuel: function deleteFuel(_ref4, id) {
+    var commit = _ref4.commit,
+        rootGetters = _ref4.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/fuel/delete/' + id,
+      type: "POST",
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('deleteFuel', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Xóa nhiên liệu <b>#" + data.id + "</b> thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Xóa nhiên liệu <b>#" + data.id + "</b> thất bại."
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespace: true,
+  state: state,
+  getters: getters,
+  mutations: mutations,
+  actions: actions
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/origins.js":
+/*!***********************************************!*\
+  !*** ./resources/js/store/modules/origins.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var state = {
+  origins: {}
+};
+var getters = {
+  origins: function origins(state) {
+    return state.origins.data;
+  },
+  originsPagination: function originsPagination(state) {
+    return state.origins;
+  }
+};
+var mutations = {
+  retrieveOrigins: function retrieveOrigins(state, data) {
+    state.origins = data;
+  },
+  createOrigin: function createOrigin(state, data) {
+    state.origins.data.push(data);
+  },
+  updateOrigin: function updateOrigin(state, data) {
+    state.origins.data.forEach(function (element, index) {
+      if (element.id === data.id) {
+        state.origins.data[index] = data;
+      }
+    });
+    var temp = state.origins.data;
+    state.origins.data = [];
+    state.origins.data = temp;
+  },
+  deleteOrigin: function deleteOrigin(state, data) {
+    var index = state.origins.data.findIndex(function (obj) {
+      return obj.id == data.id;
+    });
+    state.origins.data.splice(index, 1);
+  }
+};
+var actions = {
+  retrieveOrigins: function retrieveOrigins(_ref, page) {
+    var commit = _ref.commit;
+    $.ajax({
+      url: '/admin/api/origin?page=' + page,
+      type: "GET",
+      dataType: "json",
+      success: function success(data) {
+        commit('retrieveOrigins', data);
+      },
+      error: function error(errors) {
+        console.log(errors);
+      }
+    });
+  },
+  createOrigin: function createOrigin(_ref2, formData) {
+    var commit = _ref2.commit,
+        rootGetters = _ref2.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/origin',
+      type: "POST",
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('createOrigin', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Thêm nguồn gốc thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        console.log(errors);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Thêm nguồn gốc thất bại!"
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  },
+  updateOrigin: function updateOrigin(_ref3, data) {
+    var commit = _ref3.commit,
+        rootGetters = _ref3.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/origin/' + data.id,
+      type: "POST",
+      data: data.formData,
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('updateOrigin', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Cập nhật nguồn gốc <b>#" + data.id + "</b> thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Cập nhật nguồn gốc <b>#" + data.id + "</b> thất bại."
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  },
+  deleteOrigin: function deleteOrigin(_ref4, id) {
+    var commit = _ref4.commit,
+        rootGetters = _ref4.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/origin/delete/' + id,
+      type: "POST",
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('deleteOrigin', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Xóa nguồn gốc <b>#" + data.id + "</b> thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Xóa nguồn gốc <b>#" + data.id + "</b> thất bại."
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespace: true,
+  state: state,
+  getters: getters,
+  mutations: mutations,
+  actions: actions
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/styles.js":
+/*!**********************************************!*\
+  !*** ./resources/js/store/modules/styles.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var state = {
+  styles: {}
+};
+var getters = {
+  styles: function styles(state) {
+    return state.styles.data;
+  },
+  stylesPagination: function stylesPagination(state) {
+    return state.styles;
+  }
+};
+var mutations = {
+  retrieveStyles: function retrieveStyles(state, data) {
+    state.styles = data;
+  },
+  createStyle: function createStyle(state, data) {
+    state.styles.data.push(data);
+  },
+  updateStyle: function updateStyle(state, data) {
+    state.styles.data.forEach(function (element, index) {
+      if (element.id === data.id) {
+        state.styles.data[index] = data;
+      }
+    });
+    var temp = state.styles.data;
+    state.styles.data = [];
+    state.styles.data = temp;
+  },
+  deleteStyle: function deleteStyle(state, data) {
+    var index = state.styles.data.findIndex(function (obj) {
+      return obj.id == data.id;
+    });
+    state.styles.data.splice(index, 1);
+  }
+};
+var actions = {
+  retrieveStyles: function retrieveStyles(_ref, page) {
+    var commit = _ref.commit;
+    $.ajax({
+      url: '/admin/api/style?page=' + page,
+      type: "GET",
+      dataType: "json",
+      success: function success(data) {
+        commit('retrieveStyles', data);
+      },
+      error: function error(errors) {
+        console.log(errors);
+      }
+    });
+  },
+  createStyle: function createStyle(_ref2, formData) {
+    var commit = _ref2.commit,
+        rootGetters = _ref2.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/style',
+      type: "POST",
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('createStyle', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Thêm kiểu dáng thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Thêm kiểu dáng thất bại!"
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  },
+  updateStyle: function updateStyle(_ref3, data) {
+    var commit = _ref3.commit,
+        rootGetters = _ref3.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/style/' + data.id,
+      type: "POST",
+      data: data.formData,
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('updateStyle', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Cập nhật kiểu dáng <b>#" + data.id + "</b> thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Cập nhật kiểu dáng <b>#" + data.id + "</b> thất bại."
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  },
+  deleteStyle: function deleteStyle(_ref4, id) {
+    var commit = _ref4.commit,
+        rootGetters = _ref4.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/style/delete/' + id,
+      type: "POST",
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('deleteStyle', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Xóa kiểu dáng <b>#" + data.id + "</b> thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Xóa kiểu dáng <b>#" + data.id + "</b> thất bại."
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespace: true,
+  state: state,
+  getters: getters,
+  mutations: mutations,
+  actions: actions
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/transmissions.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/store/modules/transmissions.js ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var state = {
+  transmissions: {}
+};
+var getters = {
+  transmissions: function transmissions(state) {
+    return state.transmissions.data;
+  },
+  transmissionsPagination: function transmissionsPagination(state) {
+    return state.transmissions;
+  }
+};
+var mutations = {
+  retrieveTransmissions: function retrieveTransmissions(state, data) {
+    state.transmissions = data;
+  },
+  createTransmission: function createTransmission(state, data) {
+    state.transmissions.data.push(data);
+  },
+  updateTransmission: function updateTransmission(state, data) {
+    state.transmissions.data.forEach(function (element, index) {
+      if (element.id === data.id) {
+        state.transmissions.data[index] = data;
+      }
+    });
+    var temp = state.transmissions.data;
+    state.transmissions.data = [];
+    state.transmissions.data = temp;
+  },
+  deleteTransmission: function deleteTransmission(state, data) {
+    var index = state.transmissions.data.findIndex(function (obj) {
+      return obj.id == data.id;
+    });
+    state.transmissions.data.splice(index, 1);
+  }
+};
+var actions = {
+  retrieveTransmissions: function retrieveTransmissions(_ref, page) {
+    var commit = _ref.commit;
+    $.ajax({
+      url: '/admin/api/transmission?page=' + page,
+      type: "GET",
+      dataType: "json",
+      success: function success(data) {
+        commit('retrieveTransmissions', data);
+      },
+      error: function error(errors) {
+        console.log(errors);
+      }
+    });
+  },
+  createTransmission: function createTransmission(_ref2, formData) {
+    var commit = _ref2.commit,
+        rootGetters = _ref2.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/transmission',
+      type: "POST",
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('createTransmission', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Thêm hộp số thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        console.log(errors);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Thêm hộp số thất bại!"
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  },
+  updateTransmission: function updateTransmission(_ref3, data) {
+    var commit = _ref3.commit,
+        rootGetters = _ref3.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/transmission/' + data.id,
+      type: "POST",
+      data: data.formData,
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('updateTransmission', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Cập nhật hộp số <b>#" + data.id + "</b> thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Cập nhật hộp số <b>#" + data.id + "</b> thất bại."
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  },
+  deleteTransmission: function deleteTransmission(_ref4, id) {
+    var commit = _ref4.commit,
+        rootGetters = _ref4.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/transmission/delete/' + id,
+      type: "POST",
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('deleteTransmission', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Xóa hộp số <b>#" + data.id + "</b> thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Xóa hộp số <b>#" + data.id + "</b> thất bại."
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespace: true,
+  state: state,
+  getters: getters,
+  mutations: mutations,
+  actions: actions
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/types.js":
+/*!*********************************************!*\
+  !*** ./resources/js/store/modules/types.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var state = {
+  types: {}
+};
+var getters = {
+  types: function types(state) {
+    return state.types.data;
+  },
+  typesPagination: function typesPagination(state) {
+    return state.types;
+  }
+};
+var mutations = {
+  retrieveTypes: function retrieveTypes(state, data) {
+    state.types = data;
+  },
+  createType: function createType(state, data) {
+    state.types.data.push(data);
+  },
+  updateType: function updateType(state, data) {
+    state.types.data.forEach(function (element, index) {
+      if (element.id === data.id) {
+        state.types.data[index] = data;
+      }
+    });
+    var temp = state.types.data;
+    state.types.data = [];
+    state.types.data = temp;
+  },
+  deleteType: function deleteType(state, data) {
+    var index = state.types.data.findIndex(function (obj) {
+      return obj.id == data.id;
+    });
+    state.types.data.splice(index, 1);
+  }
+};
+var actions = {
+  retrieveTypes: function retrieveTypes(_ref, data) {
+    var commit = _ref.commit;
+    $.ajax({
+      url: '/admin/api/type/' + data.brands_id + '/?page=' + data.page,
+      type: "GET",
+      dataType: "json",
+      success: function success(data) {
+        commit('retrieveTypes', data);
+      },
+      error: function error(errors) {
+        console.log(errors);
+      }
+    });
+  },
+  createType: function createType(_ref2, formData) {
+    var commit = _ref2.commit,
+        rootGetters = _ref2.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/type',
+      type: "POST",
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('createType', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Thêm dòng xe thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        console.log(errors);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Thêm dòng xe thất bại!"
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  },
+  updateType: function updateType(_ref3, data) {
+    var commit = _ref3.commit,
+        rootGetters = _ref3.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/type/' + data.id,
+      type: "POST",
+      data: data.formData,
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('updateType', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Cập nhật dòng xe <b>#" + data.id + "</b> thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        console.log(errors);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Cập nhật dòng xe <b>#" + data.id + "</b> thất bại."
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  },
+  deleteType: function deleteType(_ref4, id) {
+    var commit = _ref4.commit,
+        rootGetters = _ref4.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/type/delete/' + id,
+      type: "POST",
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('deleteType', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Xóa dòng xe <b>#" + data.id + "</b> thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Xóa dòng xe <b>#" + data.id + "</b> thất bại."
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespace: true,
+  state: state,
+  getters: getters,
+  mutations: mutations,
+  actions: actions
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/store.js":
+/*!*************************************!*\
+  !*** ./resources/js/store/store.js ***!
+  \*************************************/
 /*! exports provided: store */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -67711,1631 +70430,66 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _modules_brands__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/brands */ "./resources/js/store/modules/brands.js");
+/* harmony import */ var _modules_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/types */ "./resources/js/store/modules/types.js");
+/* harmony import */ var _modules_colors__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/colors */ "./resources/js/store/modules/colors.js");
+/* harmony import */ var _modules_conditions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/conditions */ "./resources/js/store/modules/conditions.js");
+/* harmony import */ var _modules_origins__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/origins */ "./resources/js/store/modules/origins.js");
+/* harmony import */ var _modules_fuels__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/fuels */ "./resources/js/store/modules/fuels.js");
+/* harmony import */ var _modules_transmissions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/transmissions */ "./resources/js/store/modules/transmissions.js");
+/* harmony import */ var _modules_styles__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/styles */ "./resources/js/store/modules/styles.js");
+/* harmony import */ var _modules_convenients__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/convenients */ "./resources/js/store/modules/convenients.js");
+/* harmony import */ var _modules_cars__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/cars */ "./resources/js/store/modules/cars.js");
+
+
+
+
+
+
+
+
+
+
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
+  modules: {
+    brands: _modules_brands__WEBPACK_IMPORTED_MODULE_2__["default"],
+    types: _modules_types__WEBPACK_IMPORTED_MODULE_3__["default"],
+    colors: _modules_colors__WEBPACK_IMPORTED_MODULE_4__["default"],
+    conditions: _modules_conditions__WEBPACK_IMPORTED_MODULE_5__["default"],
+    origins: _modules_origins__WEBPACK_IMPORTED_MODULE_6__["default"],
+    fuels: _modules_fuels__WEBPACK_IMPORTED_MODULE_7__["default"],
+    transmissions: _modules_transmissions__WEBPACK_IMPORTED_MODULE_8__["default"],
+    styles: _modules_styles__WEBPACK_IMPORTED_MODULE_9__["default"],
+    convenients: _modules_convenients__WEBPACK_IMPORTED_MODULE_10__["default"],
+    cars: _modules_cars__WEBPACK_IMPORTED_MODULE_11__["default"]
+  },
   state: {
     csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-    routes: [],
-    allBrands: [],
-    brands: {},
-    types: {},
-    colors: {},
-    conditions: {},
-    origins: {},
-    fuels: {},
-    transmissions: {},
-    styles: {},
-    convenients: {},
-    cars: {}
+    routes: []
   },
   getters: {
+    csrf: function csrf(state) {
+      return state.csrf;
+    },
     route: function route(state) {
       return function (name) {
         return state.routes.filter(function (item) {
           return item.action.as == name;
         })[0].uri;
       };
-    },
-    allBrands: function allBrands(state) {
-      return state.allBrands;
-    },
-    brands: function brands(state) {
-      return state.brands.data;
-    },
-    brandsPagination: function brandsPagination(state) {
-      return state.brands;
-    },
-    types: function types(state) {
-      return state.types.data;
-    },
-    typesPagination: function typesPagination(state) {
-      return state.types;
-    },
-    colors: function colors(state) {
-      return state.colors.data;
-    },
-    colorsPagination: function colorsPagination(state) {
-      return state.colors;
-    },
-    conditions: function conditions(state) {
-      return state.conditions.data;
-    },
-    conditionsPagination: function conditionsPagination(state) {
-      return state.conditions;
-    },
-    origins: function origins(state) {
-      return state.origins.data;
-    },
-    originsPagination: function originsPagination(state) {
-      return state.origins;
-    },
-    fuels: function fuels(state) {
-      return state.fuels.data;
-    },
-    fuelsPagination: function fuelsPagination(state) {
-      return state.fuels;
-    },
-    transmissions: function transmissions(state) {
-      return state.transmissions.data;
-    },
-    transmissionsPagination: function transmissionsPagination(state) {
-      return state.transmissions;
-    },
-    styles: function styles(state) {
-      return state.styles.data;
-    },
-    stylesPagination: function stylesPagination(state) {
-      return state.styles;
-    },
-    convenients: function convenients(state) {
-      return state.convenients.data;
-    },
-    convenientsPagination: function convenientsPagination(state) {
-      return state.convenients;
-    },
-    cars: function cars(state) {
-      return state.cars.data;
-    },
-    carsPagination: function carsPagination(state) {
-      return state.cars;
     }
   },
   mutations: {
     setRoutes: function setRoutes(state, routes) {
       state.routes = routes;
-    },
-    //Brand =======================================================
-    allBrands: function allBrands(state, data) {
-      state.allBrands = data;
-    },
-    retrieveBrands: function retrieveBrands(state, data) {
-      state.brands = data;
-    },
-    createBrand: function createBrand(state, data) {
-      state.brands.data.push(data);
-    },
-    updateBrand: function updateBrand(state, data) {
-      state.brands.data.forEach(function (element, index) {
-        if (element.id === data.id) {
-          state.brands.data[index] = data;
-        }
-      });
-    },
-    deleteBrand: function deleteBrand(state, data) {
-      var index = state.brands.data.findIndex(function (obj) {
-        return obj.id == data.id;
-      });
-      state.brands.data.splice(index, 1);
-    },
-    //Type =======================================================
-    retrieveTypes: function retrieveTypes(state, data) {
-      state.types = data;
-    },
-    createType: function createType(state, data) {
-      state.types.data.push(data);
-    },
-    updateType: function updateType(state, data) {
-      state.types.data.forEach(function (element, index) {
-        if (element.id === data.id) {
-          state.types.data[index] = data;
-        }
-      });
-    },
-    deleteType: function deleteType(state, data) {
-      var index = state.types.data.findIndex(function (obj) {
-        return obj.id == data.id;
-      });
-      state.types.data.splice(index, 1);
-    },
-    //Color =======================================================
-    retrieveColors: function retrieveColors(state, data) {
-      state.colors = data;
-    },
-    createColor: function createColor(state, data) {
-      state.colors.data.push(data);
-    },
-    updateColor: function updateColor(state, data) {
-      state.colors.data.forEach(function (element, index) {
-        if (element.id === data.id) {
-          state.colors.data[index] = data;
-        }
-      });
-    },
-    deleteColor: function deleteColor(state, data) {
-      var index = state.colors.data.findIndex(function (obj) {
-        return obj.id == data.id;
-      });
-      state.colors.data.splice(index, 1);
-    },
-    //Condition =======================================================
-    retrieveConditions: function retrieveConditions(state, data) {
-      state.conditions = data;
-    },
-    createCondition: function createCondition(state, data) {
-      state.conditions.data.push(data);
-    },
-    updateCondition: function updateCondition(state, data) {
-      state.conditions.data.forEach(function (element, index) {
-        if (element.id === data.id) {
-          state.conditions.data[index] = data;
-        }
-      });
-    },
-    deleteCondition: function deleteCondition(state, data) {
-      var index = state.conditions.data.findIndex(function (obj) {
-        return obj.id == data.id;
-      });
-      state.conditions.data.splice(index, 1);
-    },
-    //Origin =======================================================
-    retrieveOrigins: function retrieveOrigins(state, data) {
-      state.origins = data;
-    },
-    createOrigin: function createOrigin(state, data) {
-      state.origins.data.push(data);
-    },
-    updateOrigin: function updateOrigin(state, data) {
-      state.origins.data.forEach(function (element, index) {
-        if (element.id === data.id) {
-          state.origins.data[index] = data;
-        }
-      });
-    },
-    deleteOrigin: function deleteOrigin(state, data) {
-      var index = state.origins.data.findIndex(function (obj) {
-        return obj.id == data.id;
-      });
-      state.origins.data.splice(index, 1);
-    },
-    //Fuel =======================================================
-    retrieveFuels: function retrieveFuels(state, data) {
-      state.fuels = data;
-    },
-    createFuel: function createFuel(state, data) {
-      state.fuels.data.push(data);
-    },
-    updateFuel: function updateFuel(state, data) {
-      state.fuels.data.forEach(function (element, index) {
-        if (element.id === data.id) {
-          state.fuels.data[index] = data;
-        }
-      });
-    },
-    deleteFuel: function deleteFuel(state, data) {
-      var index = state.fuels.data.findIndex(function (obj) {
-        return obj.id == data.id;
-      });
-      state.fuels.data.splice(index, 1);
-    },
-    //Transmission =======================================================
-    retrieveTransmissions: function retrieveTransmissions(state, data) {
-      state.transmissions = data;
-    },
-    createTransmission: function createTransmission(state, data) {
-      state.transmissions.data.push(data);
-    },
-    updateTransmission: function updateTransmission(state, data) {
-      state.transmissions.data.forEach(function (element, index) {
-        if (element.id === data.id) {
-          state.transmissions.data[index] = data;
-        }
-      });
-    },
-    deleteTransmission: function deleteTransmission(state, data) {
-      var index = state.transmissions.data.findIndex(function (obj) {
-        return obj.id == data.id;
-      });
-      state.transmissions.data.splice(index, 1);
-    },
-    //Style =======================================================
-    retrieveStyles: function retrieveStyles(state, data) {
-      state.styles = data;
-    },
-    createStyle: function createStyle(state, data) {
-      state.styles.data.push(data);
-    },
-    updateStyle: function updateStyle(state, data) {
-      state.styles.data.forEach(function (element, index) {
-        if (element.id === data.id) {
-          state.styles.data[index] = data;
-        }
-      });
-    },
-    deleteStyle: function deleteStyle(state, data) {
-      var index = state.styles.data.findIndex(function (obj) {
-        return obj.id == data.id;
-      });
-      state.styles.data.splice(index, 1);
-    },
-    //Convenient =======================================================
-    retrieveConvenients: function retrieveConvenients(state, data) {
-      state.convenients = data;
-    },
-    createConvenient: function createConvenient(state, data) {
-      state.convenients.data.push(data);
-    },
-    updateConvenient: function updateConvenient(state, data) {
-      state.convenients.data.forEach(function (element, index) {
-        if (element.id === data.id) {
-          state.convenients.data[index] = data;
-        }
-      });
-    },
-    deleteConvenient: function deleteConvenient(state, data) {
-      var index = state.convenients.data.findIndex(function (obj) {
-        return obj.id == data.id;
-      });
-      state.convenients.data.splice(index, 1);
-    },
-    //Car =======================================================
-    retrieveCars: function retrieveCars(state, data) {
-      state.cars = data;
-    },
-    approveCar: function approveCar(state, data) {
-      state.cars.data.forEach(function (element, index) {
-        if (element.id === data.id) {
-          state.cars.data[index] = data;
-        }
-      });
-    },
-    denyCar: function denyCar(state, data) {
-      state.cars.data.forEach(function (element, index) {
-        if (element.id === data.id) {
-          state.cars.data[index] = data;
-        }
-      });
-    },
-    deleteCar: function deleteCar(state, data) {
-      var index = state.cars.data.findIndex(function (obj) {
-        return obj.id == data.id;
-      });
-      state.cars.data.splice(index, 1);
     }
   },
   actions: {
     setRoutes: function setRoutes(context, routes) {
       context.commit('setRoutes', routes);
-    },
-    //Brand =======================================================
-    allBrands: function allBrands(context) {
-      $.ajax({
-        url: '/getbrands',
-        type: "GET",
-        dataType: "json",
-        success: function success(data) {
-          context.commit('allBrands', data);
-        },
-        error: function error(errors) {
-          console.log(errors);
-        }
-      });
-    },
-    retrieveBrands: function retrieveBrands(context, page) {
-      $.ajax({
-        url: '/admin/api/brand?page=' + page,
-        type: "GET",
-        dataType: "json",
-        success: function success(data) {
-          context.commit('retrieveBrands', data);
-        },
-        error: function error(errors) {
-          console.log(errors);
-        }
-      });
-    },
-    createBrand: function createBrand(context, formData) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/brand',
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('createBrand', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Thêm thương hiệu thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Thêm thương hiệu thất bại!"
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    updateBrand: function updateBrand(context, data) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/brand/' + data.id,
-        type: "POST",
-        data: data.formData,
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('updateBrand', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Cập nhật thương hiệu <b>#" + data.id + "</b> thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Cập nhật thương hiệu <b>#" + data.id + "</b> thất bại."
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    deleteBrand: function deleteBrand(context, id) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/brand/delete/' + id,
-        type: "POST",
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('deleteBrand', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Xóa thương hiệu <b>#" + data.id + "</b> thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Xóa thương hiệu <b>#" + data.id + "</b> thất bại."
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    //Type =======================================================
-    retrieveTypes: function retrieveTypes(context, data) {
-      $.ajax({
-        url: '/admin/api/type/' + data.brands_id + '/?page=' + data.page,
-        type: "GET",
-        dataType: "json",
-        success: function success(data) {
-          context.commit('retrieveTypes', data);
-        },
-        error: function error(errors) {
-          console.log(errors);
-        }
-      });
-    },
-    createType: function createType(context, formData) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/type',
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('createType', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Thêm dòng xe thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          console.log(errors);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Thêm dòng xe thất bại!"
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    updateType: function updateType(context, data) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/type/' + data.id,
-        type: "POST",
-        data: data.formData,
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('updateType', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Cập nhật dòng xe <b>#" + data.id + "</b> thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          console.log(errors);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Cập nhật dòng xe <b>#" + data.id + "</b> thất bại."
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    deleteType: function deleteType(context, id) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/type/delete/' + id,
-        type: "POST",
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('deleteType', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Xóa dòng xe <b>#" + data.id + "</b> thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Xóa dòng xe <b>#" + data.id + "</b> thất bại."
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    //Color =======================================================
-    retrieveColors: function retrieveColors(context, page) {
-      $.ajax({
-        url: '/admin/api/color?page=' + page,
-        type: "GET",
-        dataType: "json",
-        success: function success(data) {
-          context.commit('retrieveColors', data);
-        },
-        error: function error(errors) {
-          console.log(errors);
-        }
-      });
-    },
-    createColor: function createColor(context, formData) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/color',
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('createColor', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Thêm màu xe thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          console.log(errors);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Thêm màu xe thất bại!"
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    updateColor: function updateColor(context, data) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/color/' + data.id,
-        type: "POST",
-        data: data.formData,
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('updateColor', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Cập nhật màu xe <b>#" + data.id + "</b> thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Cập nhật màu xe <b>#" + data.id + "</b> thất bại."
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    deleteColor: function deleteColor(context, id) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/color/delete/' + id,
-        type: "POST",
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('deleteColor', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Xóa màu xe <b>#" + data.id + "</b> thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Xóa màu xe <b>#" + data.id + "</b> thất bại."
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    //Condition =======================================================
-    retrieveConditions: function retrieveConditions(context, page) {
-      $.ajax({
-        url: '/admin/api/condition?page=' + page,
-        type: "GET",
-        dataType: "json",
-        success: function success(data) {
-          context.commit('retrieveConditions', data);
-        },
-        error: function error(errors) {
-          console.log(errors);
-        }
-      });
-    },
-    createCondition: function createCondition(context, formData) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/condition',
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('createCondition', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Thêm tình trạng thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          console.log(errors);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Thêm tình trạng thất bại!"
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    updateCondition: function updateCondition(context, data) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/condition/' + data.id,
-        type: "POST",
-        data: data.formData,
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('updateCondition', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Cập nhật tình trạng <b>#" + data.id + "</b> thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Cập nhật tình trạng <b>#" + data.id + "</b> thất bại."
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    deleteCondition: function deleteCondition(context, id) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/condition/delete/' + id,
-        type: "POST",
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('deleteCondition', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Xóa tình trạng <b>#" + data.id + "</b> thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Xóa tình trạng <b>#" + data.id + "</b> thất bại."
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    //Origin =======================================================
-    retrieveOrigins: function retrieveOrigins(context, page) {
-      $.ajax({
-        url: '/admin/api/origin?page=' + page,
-        type: "GET",
-        dataType: "json",
-        success: function success(data) {
-          context.commit('retrieveOrigins', data);
-        },
-        error: function error(errors) {
-          console.log(errors);
-        }
-      });
-    },
-    createOrigin: function createOrigin(context, formData) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/origin',
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('createOrigin', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Thêm nguồn gốc thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          console.log(errors);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Thêm nguồn gốc thất bại!"
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    updateOrigin: function updateOrigin(context, data) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/origin/' + data.id,
-        type: "POST",
-        data: data.formData,
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('updateOrigin', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Cập nhật nguồn gốc <b>#" + data.id + "</b> thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Cập nhật nguồn gốc <b>#" + data.id + "</b> thất bại."
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    deleteOrigin: function deleteOrigin(context, id) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/origin/delete/' + id,
-        type: "POST",
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('deleteOrigin', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Xóa nguồn gốc <b>#" + data.id + "</b> thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Xóa nguồn gốc <b>#" + data.id + "</b> thất bại."
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    //Fuel =======================================================
-    retrieveFuels: function retrieveFuels(context, page) {
-      $.ajax({
-        url: '/admin/api/fuel?page=' + page,
-        type: "GET",
-        dataType: "json",
-        success: function success(data) {
-          context.commit('retrieveFuels', data);
-        },
-        error: function error(errors) {
-          console.log(errors);
-        }
-      });
-    },
-    createFuel: function createFuel(context, formData) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/fuel',
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('createFuel', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Thêm nhiên liệu thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          console.log(errors);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Thêm nhiên liệu thất bại!"
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    updateFuel: function updateFuel(context, data) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/fuel/' + data.id,
-        type: "POST",
-        data: data.formData,
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('updateFuel', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Cập nhật nhiên liệu <b>#" + data.id + "</b> thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Cập nhật nhiên liệu <b>#" + data.id + "</b> thất bại."
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    deleteFuel: function deleteFuel(context, id) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/fuel/delete/' + id,
-        type: "POST",
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('deleteFuel', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Xóa nhiên liệu <b>#" + data.id + "</b> thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Xóa nhiên liệu <b>#" + data.id + "</b> thất bại."
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    //Transmission =======================================================
-    retrieveTransmissions: function retrieveTransmissions(context, page) {
-      $.ajax({
-        url: '/admin/api/transmission?page=' + page,
-        type: "GET",
-        dataType: "json",
-        success: function success(data) {
-          context.commit('retrieveTransmissions', data);
-        },
-        error: function error(errors) {
-          console.log(errors);
-        }
-      });
-    },
-    createTransmission: function createTransmission(context, formData) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/transmission',
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('createTransmission', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Thêm hộp số thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          console.log(errors);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Thêm hộp số thất bại!"
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    updateTransmission: function updateTransmission(context, data) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/transmission/' + data.id,
-        type: "POST",
-        data: data.formData,
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('updateTransmission', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Cập nhật hộp số <b>#" + data.id + "</b> thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Cập nhật hộp số <b>#" + data.id + "</b> thất bại."
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    deleteTransmission: function deleteTransmission(context, id) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/transmission/delete/' + id,
-        type: "POST",
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('deleteTransmission', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Xóa hộp số <b>#" + data.id + "</b> thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Xóa hộp số <b>#" + data.id + "</b> thất bại."
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    //Style =======================================================
-    retrieveStyles: function retrieveStyles(context, page) {
-      $.ajax({
-        url: '/admin/api/style?page=' + page,
-        type: "GET",
-        dataType: "json",
-        success: function success(data) {
-          context.commit('retrieveStyles', data);
-        },
-        error: function error(errors) {
-          console.log(errors);
-        }
-      });
-    },
-    createStyle: function createStyle(context, formData) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/style',
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('createStyle', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Thêm kiểu dáng thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Thêm kiểu dáng thất bại!"
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    updateStyle: function updateStyle(context, data) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/style/' + data.id,
-        type: "POST",
-        data: data.formData,
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('updateStyle', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Cập nhật kiểu dáng <b>#" + data.id + "</b> thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Cập nhật kiểu dáng <b>#" + data.id + "</b> thất bại."
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    deleteStyle: function deleteStyle(context, id) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/style/delete/' + id,
-        type: "POST",
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('deleteStyle', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Xóa kiểu dáng <b>#" + data.id + "</b> thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Xóa kiểu dáng <b>#" + data.id + "</b> thất bại."
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    //Convenient =======================================================
-    retrieveConvenients: function retrieveConvenients(context, page) {
-      $.ajax({
-        url: '/admin/api/convenient?page=' + page,
-        type: "GET",
-        dataType: "json",
-        success: function success(data) {
-          context.commit('retrieveConvenients', data);
-        },
-        error: function error(errors) {
-          console.log(errors);
-        }
-      });
-    },
-    createConvenient: function createConvenient(context, formData) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/convenient',
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('createConvenient', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Thêm tiện nghi thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          console.log(errors);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Thêm tiện nghi thất bại!"
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    updateConvenient: function updateConvenient(context, data) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/convenient/' + data.id,
-        type: "POST",
-        data: data.formData,
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('updateConvenient', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Cập nhật tiện nghi <b>#" + data.id + "</b> thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Cập nhật tiện nghi <b>#" + data.id + "</b> thất bại."
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    deleteConvenient: function deleteConvenient(context, id) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/convenient/delete/' + id,
-        type: "POST",
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('deleteConvenient', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Xóa tiện nghi <b>#" + data.id + "</b> thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Xóa tiện nghi <b>#" + data.id + "</b> thất bại."
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    //Car =======================================================
-    retrieveCars: function retrieveCars(context, page) {
-      $.ajax({
-        url: '/admin/api/car?page=' + page,
-        type: "GET",
-        dataType: "json",
-        success: function success(data) {
-          context.commit('retrieveCars', data);
-        },
-        error: function error(errors) {
-          console.log(errors);
-        }
-      });
-    },
-    approveCar: function approveCar(context, id) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/car/approve/' + id,
-        type: "POST",
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('approveCar', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Duyệt mẫu tin <b>#" + data.id + "</b> thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Duyệt mẫu tin <b>#" + data.id + "</b> thất bại."
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    denyCar: function denyCar(context, id) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/car/deny/' + id,
-        type: "POST",
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('denyCar', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Từ chối mẫu tin <b>#" + data.id + "</b> thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Từ chối mẫu tin <b>#" + data.id + "</b> thất bại."
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
-    },
-    deleteCar: function deleteCar(context, id) {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': context.state.csrf
-        },
-        url: '/admin/api/car/delete/' + id,
-        type: "POST",
-        processData: false,
-        contentType: false,
-        success: function success(data) {
-          context.commit('deleteCar', data);
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Xóa tiện nghi <b>#" + data.id + "</b> thành công."
-          }, {
-            type: 'success',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        },
-        error: function error(errors) {
-          $.notify({
-            icon: "now-ui-icons ui-1_bell-53",
-            message: "Xóa tiện nghi <b>#" + data.id + "</b> thất bại."
-          }, {
-            type: 'danger',
-            timer: 3000,
-            placement: {
-              from: 'top',
-              align: 'right'
-            }
-          });
-        }
-      });
     }
   }
 });

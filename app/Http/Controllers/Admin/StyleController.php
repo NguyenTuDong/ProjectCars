@@ -37,7 +37,7 @@ class StyleController extends Controller
             $fileNameWithExt = $request->file('img')->getClientOriginalName();
             $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('img')->getClientOriginalExtension();
-            $fileNameToStore = 'style_'.date('YmdHi').'.'.$extension;
+            $fileNameToStore = 'style_'.time().'.'.$extension;
             $path = $request->file('img')->storeAs('img/style', $fileNameToStore);
             $items->hinhanh = $fileNameToStore;
         }
@@ -67,7 +67,7 @@ class StyleController extends Controller
             $fileNameWithExt = $request->file('img')->getClientOriginalName();
             $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('img')->getClientOriginalExtension();
-            $fileNameToStore = 'style_'.date('YmdHi').'.'.$extension;
+            $fileNameToStore = 'style_'.time().'.'.$extension;
             $path = $request->file('img')->storeAs('img/style', $fileNameToStore);
             $items->hinhanh = $fileNameToStore;
         }

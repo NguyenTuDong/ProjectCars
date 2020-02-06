@@ -36,7 +36,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $cars = Car::where('trangthai', 0)->orderBy('created_at', 'DESC')->get();
+        $cars = Car::where('trangthai', 2)->orderBy('created_at', 'DESC')->get();
         $conditions = Condition::get();
 
         return view('welcome', compact('cars', 'conditions'));
@@ -80,7 +80,7 @@ class HomeController extends Controller
     }
 
     public function search(Request $request) {
-        $search = Car::where('trangthai', 0)->orderBy('created_at', 'DESC');
+        $search = Car::where('trangthai', 2)->orderBy('created_at', 'DESC');
         if (!empty($request->name)) {
             $search->where('ten', 'LIKE', '%' . $request->name . '%');
         }

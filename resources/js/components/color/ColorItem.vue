@@ -1,11 +1,11 @@
 <template>
   <tr>
     <td>
-      {{id}}
+      {{color.id}}
     </td>
     <td class="text-center">
-      <img :src="rgb_path" alt="">
-      <div v-if="editing == id">
+      <img :src="color.rgb_path" alt="">
+      <div v-if="editing == color.id">
         <h6 class="text-primary my-3">Hình:</h6>
         <span class="text-danger" v-if="imgError != ''">{{imgError}}</span>
         <div>
@@ -15,8 +15,8 @@
         </div>
       </div>
     </td>
-    <td v-if="editing != id">
-      {{ten}}
+    <td v-if="editing != color.id">
+      {{color.ten}}
     </td>
     <td v-else>
       <div class="form-group">
@@ -25,16 +25,16 @@
       <span class="text-danger" v-if="nameError != ''">{{nameError}}</span>
     </td>
     <td class="td-actions text-right">
-      <button v-if="editing != id" @click="edit" type="button" rel="tooltip" title="" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
+      <button v-if="editing != color.id" @click="edit" type="button" rel="tooltip" title="Chỉnh sửa" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
         <i class="now-ui-icons design-2_ruler-pencil"></i>
       </button>
-      <button v-if="editing != id" @click="showPopup" type="button" rel="tooltip" title="" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
+      <button v-if="editing != color.id" @click="showPopup" type="button" rel="tooltip" title="Xóa" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
         <i class="now-ui-icons ui-1_simple-remove"></i>
       </button>
-      <button v-if="editing == id" @click="updateColor" type="button" rel="tooltip" title="" class="btn btn-success btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
+      <button v-if="editing == color.id" @click="updateColor" type="button" rel="tooltip" title="Xác nhận" class="btn btn-success btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
         <i class="now-ui-icons ui-1_check"></i>
       </button>
-      <button v-if="editing == id" @click="cancle" type="button" rel="tooltip" title="" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
+      <button v-if="editing == color.id" @click="cancle" type="button" rel="tooltip" title="Hủy" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
         <i class="now-ui-icons ui-1_simple-delete"></i>
       </button>
     </td>
@@ -57,10 +57,6 @@ export default {
   },
   data() {
     return {
-      id: this.color.id,
-      rgb: this.color.rgb,
-      rgb_path: this.color.rgb_path,
-      ten: this.color.ten,
       preview: "",
       newName: this.color.ten,
       imgError: "",
@@ -69,12 +65,12 @@ export default {
   },
   methods: {
     edit() {
-      this.$emit('changeEditing', this.id);
+      this.$emit('changeEditing', this.color.id);
       this.preview = "";
-      this.newName = this.ten;
+      this.newName = this.color.ten;
     },
     showPopup() {
-      this.$emit('showPopup', this.id);
+      this.$emit('showPopup', this.color.id);
     },
     cancle() {
       this.$emit('changeEditing', -1);
@@ -92,16 +88,14 @@ export default {
         var image = this.$refs.img.files[0];
         if(image != null){
           formData.append("img", image);
-          this.rgb_path = this.preview;
         }
 
         var data = {
-          id: this.id,
+          id: this.color.id,
           formData: formData,
         }
 
         this.$store.dispatch('updateColor', data);
-        this.ten = this.newName;
         this.newName = "";
         this.preview = "";
         this.$emit('changeEditing', -1);

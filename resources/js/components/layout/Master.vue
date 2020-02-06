@@ -162,7 +162,9 @@
         </div>
       </nav>
       <!-- End Navbar -->
-      <router-view></router-view>
+      <!-- <transition name="fade" mode="out-in"> -->
+        <router-view></router-view>
+      <!-- </transition> -->
       <footer class="footer">
         <div class=" container-fluid ">
           <nav>
@@ -228,6 +230,17 @@ export default {
 </script>
 
 <style>
+.fade-enter-active,
+.fade-leave-active {
+  transition-duration: 0.3s;
+  transition-property: opacity;
+  transition-timing-function: ease;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0
+}
 .nav-seq{
   width: calc(100% - 30px);
   margin-left: auto;

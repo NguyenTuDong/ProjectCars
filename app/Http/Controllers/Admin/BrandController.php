@@ -37,7 +37,7 @@ class BrandController extends Controller
             $fileNameWithExt = $request->file('logo')->getClientOriginalName();
             $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('logo')->getClientOriginalExtension();
-            $fileNameToStore = 'logo_'.date('YmdHi').'.'.$extension;
+            $fileNameToStore = 'logo_'.time().'.'.$extension;
             $path = $request->file('logo')->storeAs('img/logo', $fileNameToStore);
             $items->logo = $fileNameToStore;
         }
@@ -67,7 +67,7 @@ class BrandController extends Controller
             $fileNameWithExt = $request->file('logo')->getClientOriginalName();
             $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('logo')->getClientOriginalExtension();
-            $fileNameToStore = 'logo_'.date('YmdHi').'.'.$extension;
+            $fileNameToStore = 'logo_'.time().'.'.$extension;
             $path = $request->file('logo')->storeAs('img/logo', $fileNameToStore);
             $items->logo = $fileNameToStore;
         }

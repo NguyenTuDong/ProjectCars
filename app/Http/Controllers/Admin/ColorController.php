@@ -37,7 +37,7 @@ class ColorController extends Controller
             $fileNameWithExt = $request->file('img')->getClientOriginalName();
             $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('img')->getClientOriginalExtension();
-            $fileNameToStore = 'color_'.date('YmdHi').'.'.$extension;
+            $fileNameToStore = 'color_'.time().'.'.$extension;
             $path = $request->file('img')->storeAs('img/color', $fileNameToStore);
             $items->rgb = $fileNameToStore;
         }
@@ -67,7 +67,7 @@ class ColorController extends Controller
             $fileNameWithExt = $request->file('img')->getClientOriginalName();
             $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('img')->getClientOriginalExtension();
-            $fileNameToStore = 'color_'.date('YmdHi').'.'.$extension;
+            $fileNameToStore = 'color_'.time().'.'.$extension;
             $path = $request->file('img')->storeAs('img/color', $fileNameToStore);
             $items->rgb = $fileNameToStore;
         }

@@ -29,6 +29,24 @@ class CarController extends Controller
         return response()->json($items);
     }
 
+    public function show($id)
+    {
+        $items = Car::findOrFail($id)->with([
+            'users', 
+            'types.brands', 
+            'colors', 
+            'furnitures', 
+            'conditions', 
+            'fuels', 
+            'locations', 
+            'origins', 
+            'styles', 
+            'transmissions',
+            'convenientcars.convenients',
+            ])->first();
+        return response()->json($items);
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -41,14 +59,36 @@ class CarController extends Controller
         $items = Car::findOrFail($id);
         $items->trangthai = 2;
         $items->save();
-        return response($items, 200);
+
+        return response()->json($items->with([
+            'users', 
+            'types.brands', 
+            'colors', 
+            'conditions', 
+            'fuels', 
+            'locations', 
+            'origins', 
+            'styles', 
+            'transmissions'
+            ])->first());
     }
     public function deny($id)
     {
         $items = Car::findOrFail($id);
         $items->trangthai = 3;
         $items->save();
-        return response($items, 200);
+
+        return response()->json($items->with([
+            'users', 
+            'types.brands', 
+            'colors', 
+            'conditions', 
+            'fuels', 
+            'locations', 
+            'origins', 
+            'styles', 
+            'transmissions'
+            ])->first());
     }
 
     /**
@@ -62,6 +102,7 @@ class CarController extends Controller
         $items = Car::findOrFail($id);
         $items->trangthai = 1;
         $items->save();
+
         return response($items, 200);
     }
 }
