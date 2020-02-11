@@ -39,6 +39,14 @@ Route::prefix('admin')->group(function() {
     Route::post('/car/deny/{car}', 'Admin\CarController@deny');
     Route::post('/car/delete/{car}', 'Admin\CarController@destroy');
 
+    //User
+    Route::get('/user', 'Admin\UserController@index');
+    Route::get('/user/{id}', 'Admin\UserController@show');
+
+    //Contact
+    Route::get('/contact', 'Admin\ContactController@index');
+    Route::get('/contact/{id}', 'Admin\ContactController@show');
+
     //Brand
     Route::get('/brand', 'Admin\BrandController@index');
     Route::post('/brand', 'Admin\BrandController@store');

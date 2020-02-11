@@ -1,3 +1,5 @@
+import {router} from '../../router'
+
 const state = {
   cars: {},
   car: {},
@@ -23,20 +25,31 @@ const mutations = {
     state.car = data;
   },
   updateCar(state, data) {
-    state.cars.data.forEach((element, index) => {
-      if(element.id === data.id) {
-          state.cars.data[index] = data;
-      }
-    });
-    var temp = state.cars.data;
-    state.cars.data = [];
-    state.cars.data = temp;
+    if(!$.isEmptyObject(state.cars)){
+      state.cars.data.forEach((element, index) => {
+        if(element.id === data.id) {
+            state.cars.data[index] = data;
+        }
+      });
+      var temp = state.cars.data;
+      state.cars.data = [];
+      state.cars.data = temp;
+    }
+    if(!$.isEmptyObject(state.car)){
+      state.car = data;
+    }
   },
   deleteCar(state, data) {
-    var index = state.cars.data.findIndex((obj) => {
-      return obj.id == data.id;
-    });
-    state.cars.data.splice(index, 1);
+    if(!$.isEmptyObject(state.cars)){
+      var index = state.cars.data.findIndex((obj) => {
+        return obj.id == data.id;
+      });
+      state.cars.data.splice(index, 1);
+    }
+    if(!$.isEmptyObject(state.car)){
+      router.go(-1);
+    }
+    
   },
 };
 
@@ -155,7 +168,7 @@ const actions = {
       }
     })
   },
-  deleteCar({commit, rootGetters}, id) {
+  deleteCar({state, commit, rootGetters}, id) {
     $.ajax({
       headers: {
       'X-CSRF-TOKEN': rootGetters.csrf,

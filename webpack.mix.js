@@ -1,6 +1,20 @@
 const mix = require('laravel-mix');
 
 mix.webpackConfig({
+    module: {
+        rules: [
+            {
+                test: /\.jsx?$/,
+                exclude: /node_modules(?!\/foundation-sites)|bower_components/,
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: Config.babel()
+                    }
+                ]
+            }
+        ]
+    },
     resolve: {
       extensions: ['.js', '.vue'],
       alias: {

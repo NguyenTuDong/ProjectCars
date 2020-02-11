@@ -63,7 +63,7 @@ class UserController extends Controller
             }
         }
         $user = User::findOrFail($id);
-        $cars = Car::where('users_id', $id)->where('trangthai', 0)->orderBy('created_at', 'DESC')->get();
+        $cars = Car::where('users_id', $id)->where('trangthai', 2)->orderBy('created_at', 'DESC')->get();
         return view('user', compact('user', 'cars'));
     }
 
@@ -125,7 +125,7 @@ class UserController extends Controller
             $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('cover')->getClientOriginalExtension();
             $fileNameToStore = $filename.'_'.time().'.'.$extension;
-            $path = $request->file('cover')->storeAs('public/img/userfiles/'. md5(Auth::user()->id) . '/images/Cover', $fileNameToStore);
+            $path = $request->file('cover')->storeAs('img/userfiles/'. md5(Auth::user()->id) . '/images/Cover', $fileNameToStore);
 
             $user = User::find(Auth::user()->id);
 
@@ -149,7 +149,7 @@ class UserController extends Controller
             $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('avatar')->getClientOriginalExtension();
             $fileNameToStore = $filename.'_'.time().'.'.$extension;
-            $path = $request->file('avatar')->storeAs('public/img/userfiles/'. md5(Auth::user()->id) . '/images/Avatar', $fileNameToStore);
+            $path = $request->file('avatar')->storeAs('img/userfiles/'. md5(Auth::user()->id) . '/images/Avatar', $fileNameToStore);
 
             $user = User::find(Auth::user()->id);
 

@@ -27,6 +27,18 @@
               <p>Mẫu tin</p>
             </a>
           </router-link>
+           <router-link tag="li" :to="{name: 'user'}">
+            <a href="#">
+              <i class="now-ui-icons design_app"></i>
+              <p>Người dùng</p>
+            </a>
+          </router-link>
+           <router-link tag="li" :to="{name: 'contact'}">
+            <a href="#">
+              <i class="now-ui-icons design_app"></i>
+              <p>Liên hệ</p>
+            </a>
+          </router-link>
           <hr class="nav-seq">
           <router-link tag="li" :to="{name: 'brand'}">
             <a href="#">
@@ -229,7 +241,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .fade-enter-active,
 .fade-leave-active {
   transition-duration: 0.3s;
@@ -240,6 +252,52 @@ export default {
 .fade-enter,
 .fade-leave-active {
   opacity: 0
+}
+.sidebar-wrapper{
+  /* width */
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: transparent; 
+    transition: 300ms ease;
+  }
+  
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: rgba($color: #000, $alpha: .2);
+    transition: 300ms ease;
+    border-radius: 5px;
+
+    &:hover{
+    background: rgba($color: #000, $alpha: .4);
+    }
+  }
+}
+body{
+  /* width */
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: transparent; 
+    transition: 300ms ease;
+  }
+  
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: rgba($color: #000, $alpha: .2);
+    transition: 300ms ease;
+    border-radius: 5px;
+
+    &:hover{
+    background: rgba($color: #000, $alpha: .4);
+    }
+  }
 }
 .nav-seq{
   width: calc(100% - 30px);
@@ -269,8 +327,9 @@ export default {
   right: 50%;
   transform: translate(50%, -50%);
   width: 500px;
-  background-color: white;
-  box-shadow: 0 1px 15px 10px rgba(39, 39, 39, 0.1);
+  background-color: #f96332;
+  color: #fff;
+  box-shadow: 0 10px 50px 0 rgba(0,0,0,.5);
   z-index: 1;
 }
 .pop-up-header{
@@ -278,9 +337,6 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-}
-.pop-up-header .btn{
-  height: 20px;
 }
 .pop-up-title{
   font-size: 1rem;
@@ -291,18 +347,55 @@ export default {
   text-align: center;
 }
 .pop-up-footer{
-  padding: 20px;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-around;
+
+  button{
+    margin: 0;
+  }
+
+  button:first-child{
+    opacity: .5;
+  }
 }
 .pagination {
-  margin: 5px auto;
-}
-.pagination li.active a{
-  text-decoration: underline;
-  font-weight: bold;
+  margin: 10px auto;
 }
 .pagination li a{
   display: block;
-  padding: 5px 15px;
-  margin: 0 -0.5px;
+  border: 0;
+  border-radius: 30px;
+  transition: all .3s;
+  padding: 0 11px;
+  margin: 0 3px;
+  min-width: 30px;
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+  color: #2c2c2c;
+  cursor: pointer;
+  font-size: 14px;
+  text-transform: uppercase;
+  background: transparent;
+  outline: none;
+}
+.pagination li a:hover{
+  text-decoration: none;
+  background-color: hsla(0,0%,87%,.3);
+}
+.pagination li.active a{
+  box-shadow: 0 1px 15px 1px rgba(39,39,39,.1);
+  background-color: #f96332;
+  border-color: #f96332;
+  color: #fff;
+}
+.search-form{
+  display: flex;
+  margin-bottom: 10px;
+  input{
+    width: 200px;
+    margin-left: auto;
+  }
 }
 </style>

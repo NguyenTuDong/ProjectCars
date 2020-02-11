@@ -55,7 +55,7 @@ export default {
       this.newName = this.condition.ten;
     },
     showPopup() {
-      this.$emit('showPopup', this.condition.id);
+      this.$emit('showPopup', this.condition);
     },
     cancle() {
       this.$emit('changeEditing', -1);

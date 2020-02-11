@@ -55,7 +55,7 @@ export default {
       this.newName = this.fuel.ten;
     },
     showPopup() {
-      this.$emit('showPopup', this.fuel.id);
+      this.$emit('showPopup', this.fuel);
     },
     cancle() {
       this.$emit('changeEditing', -1);

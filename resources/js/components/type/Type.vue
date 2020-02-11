@@ -12,6 +12,7 @@
                   <option v-for="brand in brands" :key="brand.id" :value="brand.id">{{brand.ten}}</option>
                 </select>
               </h4>
+              
               <button class="btn btn-primary ml-auto" @click="addType">Thêm dòng xe</button>
             </div>
             <div class="card-body">
@@ -70,28 +71,28 @@
                 <ul class="mx-auto pagination">
                   <li v-if="pagination.last_page > (offset * 2 + 1)">
                     <a href="#" aria-label="Previous"
-                        @click.prevent="getItems(selectBrand, 1)">
-                        <span aria-hidden="true">««</span>
+                        @click.prevent="getItems(1)">
+                        <span aria-hidden="true"><i class="fa fa-angle-double-left" aria-hidden="true"></i></span>
                     </a>
                   </li>
                   <li v-if="pagination.last_page > (offset * 2 + 1)">
                     <a href="#" aria-label="Previous"
-                        @click.prevent="getItems(selectBrand, pagination.current_page - 1)">
-                        <span aria-hidden="true">«</span>
+                        @click.prevent="getItems(pagination.current_page - 1)">
+                        <span aria-hidden="true"><i class="fa fa-angle-left" aria-hidden="true"></i></span>
                     </a>
                   </li>
                   <li v-for="(page, id) in pagesNumber" :class="[ page == isActived ? 'active' : '']" :key="id">
                       <a v-if="page == '...'" href="#">{{ page }}</a>
-                      <a v-else href="#" @click.prevent="getItems(selectBrand, page)">{{ page }}</a>
+                      <a v-else href="#" @click.prevent="getItems(page)">{{ page }}</a>
                   </li>
                   <li v-if="pagination.last_page > (offset * 2 + 1)">
-                      <a href="#" aria-label="Next" @click.prevent="getItems(selectBrand, pagination.current_page + 1)">
-                          <span aria-hidden="true">»</span>
+                      <a href="#" aria-label="Next" @click.prevent="getItems(pagination.current_page + 1)">
+                          <span aria-hidden="true"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
                       </a>
                   </li>
                   <li v-if="pagination.last_page > (offset * 2 + 1)">
-                      <a href="#" aria-label="Next" @click.prevent="getItems(selectBrand, pagination.last_page)">
-                          <span aria-hidden="true">»»</span>
+                      <a href="#" aria-label="Next" @click.prevent="getItems(pagination.last_page)">
+                          <span aria-hidden="true"><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>
                       </a>
                   </li>
                 </ul>
@@ -102,52 +103,33 @@
       </div>
     </div>
     
-    <div class="pop-up">
-      <div class="pop-up-inner">
-        <div class="pop-up-header">
-          <div class="pop-up-title">Thông báo</div>
-          <button @click="closePopup" type="button" rel="tooltip" title="" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
-            <i class="now-ui-icons ui-1_simple-remove"></i>
-          </button>
-        </div>
-        <div class="pop-up-body">
-        </div>
-        <div class="pop-up-footer">
-          <div class="row">
-              <div class="col-lg-8 ml-auto mr-auto">
-                  <div class="row">
-                      <div class="col-md-6">
-                          <button @click="deleteBrand" class="btn btn-danger btn-block">Xóa</button>
-                      </div>
-                      <div class="col-md-6">
-                          <button @click="closePopup" class="btn btn-info btn-block">Hủy</button>
-                      </div>
-                  </div>
-              </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <modal
+      ref="modal"
+      :message="message"
+      @submit="submit"
+    ></modal>
   </div>
 </template>
 
 <script>
 import TypeItem from './TypeItem'
+import Modal from '../Modal';
 
 export default {
   name: 'Type',
   components: {
     TypeItem,
+    Modal
   },
   data() {
     return {
       editing: -1,
-      deleting: -1,
       isAdd: false,
       selectBrand: 1,
       newName: "",
       nameError: "",
       offset: 3,
+      message: '',
     }
   },
   created() {
@@ -213,18 +195,9 @@ export default {
     changeEditing(id) {
       this.editing = id;
     },
-    showPopup(id){
-      $('.pop-up').fadeIn(300);
-      var deleting = this.types.filter(obj => {
-        return obj.id === id
-      });
-      var message = "Bạn có muốn xóa dòng xe <b>"+deleting[0].ten+"</b> không?";
-      $('.pop-up-body').html(message);
-      this.deleting = id;
-    },
-    closePopup(){
-      $('.pop-up').fadeOut(300);
-      this.deleting = -1;
+    showPopup(data){
+      this.message = "Bạn có muốn xóa dòng xe <b>"+data.ten+"</b> không?";
+      this.$refs.modal.show(data);
     },
     addType() {
       var data = {
@@ -253,10 +226,8 @@ export default {
         this.isAdd = false;
       }
     },
-    deleteBrand() {
-      this.$store.dispatch('deleteType', this.deleting);
-      $('.pop-up').fadeOut(300);
-      this.deleting = -1;
+    submit(data) {
+      this.$store.dispatch('deleteType', data.id);
     }
   }
 }

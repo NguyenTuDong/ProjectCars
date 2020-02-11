@@ -10,6 +10,8 @@ import transmissions from './modules/transmissions';
 import styles from './modules/styles';
 import convenients from './modules/convenients';
 import cars from './modules/cars';
+import users from './modules/users';
+import contacts from './modules/contacts';
 
 Vue.use(Vuex);
 
@@ -25,6 +27,8 @@ export const store = new Vuex.Store({
     styles,
     convenients,
     cars,
+    users,
+    contacts,
   },
   state: {
     csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),

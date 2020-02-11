@@ -10,6 +10,9 @@
               <h4 class="card-title">Mẫu tin</h4>
             </div>
             <div class="card-body">
+              <div class="search-form">
+                <input v-model="search" type="text" class="form-control" placeholder="Tìm kiếm">
+              </div>
               <div class="table-responsive">
                 <table class="table">
                   <thead class=" text-primary">
@@ -57,13 +60,13 @@
                   <li v-if="pagination.last_page > (offset * 2 + 1)">
                     <a href="#" aria-label="Previous"
                         @click.prevent="getItems(1)">
-                        <span aria-hidden="true">««</span>
+                        <span aria-hidden="true"><i class="fa fa-angle-double-left" aria-hidden="true"></i></span>
                     </a>
                   </li>
                   <li v-if="pagination.last_page > (offset * 2 + 1)">
                     <a href="#" aria-label="Previous"
                         @click.prevent="getItems(pagination.current_page - 1)">
-                        <span aria-hidden="true">«</span>
+                        <span aria-hidden="true"><i class="fa fa-angle-left" aria-hidden="true"></i></span>
                     </a>
                   </li>
                   <li v-for="(page, id) in pagesNumber" :class="[ page == isActived ? 'active' : '']" :key="id">
@@ -72,12 +75,12 @@
                   </li>
                   <li v-if="pagination.last_page > (offset * 2 + 1)">
                       <a href="#" aria-label="Next" @click.prevent="getItems(pagination.current_page + 1)">
-                          <span aria-hidden="true">»</span>
+                          <span aria-hidden="true"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
                       </a>
                   </li>
                   <li v-if="pagination.last_page > (offset * 2 + 1)">
                       <a href="#" aria-label="Next" @click.prevent="getItems(pagination.last_page)">
-                          <span aria-hidden="true">»»</span>
+                          <span aria-hidden="true"><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>
                       </a>
                   </li>
                 </ul>
@@ -87,49 +90,31 @@
         </div>
       </div>
     </div>
-    
-    <div class="pop-up">
-      <div class="pop-up-inner">
-        <div class="pop-up-header">
-          <div class="pop-up-title">Thông báo</div>
-          <button @click="closePopup" type="button" rel="tooltip" title="" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
-            <i class="now-ui-icons ui-1_simple-remove"></i>
-          </button>
-        </div>
-        <div class="pop-up-body">
-        </div>
-        <div class="pop-up-footer">
-          <div class="row">
-              <div class="col-lg-8 ml-auto mr-auto">
-                  <div class="row">
-                      <div class="col-md-6">
-                          <button @click="deleteCar" class="btn btn-danger btn-block">Xóa</button>
-                      </div>
-                      <div class="col-md-6">
-                          <button @click="closePopup" class="btn btn-info btn-block">Hủy</button>
-                      </div>
-                  </div>
-              </div>
-          </div>
-        </div>
-      </div>
-    </div>
+
+    <modal
+      ref="modal"
+      :message="message"
+      @submit="submit"
+    ></modal>
   </div>
 </template>
 
 <script>
-import CarItem from './CarItem'
+import CarItem from './CarItem';
+import Modal from '../Modal';
 import { mapGetters } from 'vuex';
 
 export default {
   name: 'Car',
   components: {
     CarItem,
+    Modal,
   },
   data() {
     return {
-      deleting: -1,
       offset: 3,
+      search: '',
+      message: '',
     }
   },
   created() {
@@ -178,23 +163,12 @@ export default {
     getItems(page){
       if(page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveCars', page);
     },
-    showPopup(id){
-      $('.pop-up').fadeIn(300);
-      var deleting = this.cars.filter(obj => {
-        return obj.id === id
-      });
-      var message = "Bạn có muốn xóa mẫu tin <b>"+deleting[0].ten+"</b> không?";
-      $('.pop-up-body').html(message);
-      this.deleting = id;
+    showPopup(data){
+      this.message = "Bạn có muốn xóa mẫu tin <b>"+data.ten+"</b> không?";
+      this.$refs.modal.show(data);
     },
-    closePopup(){
-      $('.pop-up').fadeOut(300);
-      this.deleting = -1;
-    },
-    deleteCar() {
-      this.$store.dispatch('deleteCar', this.deleting);
-      $('.pop-up').fadeOut(300);
-      this.deleting = -1;
+    submit(data) {
+      this.$store.dispatch('deleteCar', data.id);
     }
   }
 }

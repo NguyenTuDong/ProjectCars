@@ -23,9 +23,9 @@
       </div>
     </td>
     <td>
-      <a href="#">
+      <router-link :to="{ name: 'user-detail', params: { id: car.users_id }}">
         {{car.users.ten}}
-      </a>
+      </router-link>
     </td>
     <td>
       <span v-if="car.trangthai == 0" class="text-warning">
@@ -69,10 +69,7 @@ export default {
   },
   methods: {
     showPopup() {
-      this.$emit('showPopup', this.car.id);
-    },
-    cancle() {
-      this.$emit('changeEditing', -1);
+      this.$emit('showPopup', this.car);
     },
     approveCar() {
       this.$store.dispatch('approveCar', this.car.id);

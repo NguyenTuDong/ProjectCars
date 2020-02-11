@@ -7,58 +7,47 @@
         <div class="col-md-12">
           <div class="card">
             <div class="d-flex card-header">
-              <h4 class="card-title">Nguồn gốc</h4>
-              <button class="btn btn-primary ml-auto" @click="addOrigin">Thêm nguồn gốc</button>
+              <h4 class="card-title">Liên hệ</h4>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table">
                   <thead class=" text-primary">
-                    <th class="table-origins-id">
+                    <th class="table-contacts-id">
                       Id
                     </th>
-                    <th class="table-origins-name">
-                      Nguồn gốc
+                    <th class="table-contacts-receive">
+                      Người nhận
                     </th>
-                    <th class="table-origins-actions text-right">
-                      Tác vụ
+                    <th class="table-contacts-send">
+                      Người gửi
+                    </th>
+                    <th class="table-contacts-email">
+                      Email
+                    </th>
+                    <th class="table-contacts-phone">
+                      Số điện thoại
+                    </th>
+                    <th class="table-contacts-content">
+                      Nội dung
                     </th>
                   </thead>
                   <tbody>
-                    <origin-item 
-                      v-for="origin in origins" 
-                      :key="origin.id" 
-                      :origin="origin"
-                      :editing="editing"
-                      @changeEditing="changeEditing"
-                      @showPopup="showPopup"
-                    ></origin-item>
-                    <tr v-if="isAdd">
-                      <td>
-                      </td>
-                      <td>
-                        <div class="form-group">
-                          <input ref="newName" type="text" class="form-control" placeholder="Nguồn gốc" v-model="newName">
-                        </div>
-                        <span class="text-danger" v-if="nameError != ''">{{nameError}}</span>
-                      </td>
-                      <td class="td-actions text-right">
-                        <button @click="createOrigin" class="btn btn-primary">Thêm nguồn gốc</button>
-                        <button @click="isAdd = false" class="btn btn-danger">Hủy</button>
-                      </td>
-                    </tr>
+                    <contact-item 
+                      v-for="contact in contacts" 
+                      :key="contact.id" 
+                      :contact="contact"
+                    >
+                    </contact-item>
                   </tbody>
                 </table>
-                <div v-if="!isAdd" class="d-flex">
-                  <button class="btn btn-primary ml-auto" @click="addOrigin">Thêm nguồn gốc</button>
-                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div v-if="origins !== undefined">
-        <div v-if="origins.length > 0" class="row">
+      <div v-if="contacts !== undefined">
+        <div v-if="contacts.length > 0" class="row">
           <div class="col-md-12">
             <div class="card">
               <!-- Pagination -->
@@ -97,50 +86,37 @@
         </div>
       </div>
     </div>
-    
-    <modal
-      ref="modal"
-      :message="message"
-      @submit="submit"
-    ></modal>
   </div>
 </template>
 
 <script>
-import OriginItem from './OriginItem'
-import Modal from '../Modal';
+import ContactItem from './ContactItem'
+import { mapGetters } from 'vuex';
 
 export default {
-  name: 'Origin',
+  name: 'Contact',
   components: {
-    OriginItem,
-    Modal
+    ContactItem,
   },
   data() {
     return {
-      editing: -1,
-      isAdd: false,
-      newName: "",
-      nameError: "",
+      deleting: -1,
       offset: 3,
-      message: '',
     }
   },
   created() {
-    this.$store.dispatch('retrieveOrigins', 1);
+    this.$store.dispatch('retrieveContacts', 1);
   },
   computed: {
-    origins() {
-      return this.$store.getters.origins;
-    },
-    pagination() {
-      return this.$store.getters.originsPagination;
-    },
+    ...mapGetters({
+      contacts: 'contacts',
+      pagination: 'contactsPagination',
+    }),
     isActived() {
-        return this.$store.getters.originsPagination.current_page;
+        return this.$store.getters.contactsPagination.current_page;
     },
     pagesNumber() {
-      var pagination = this.$store.getters.originsPagination;
+      var pagination = this.$store.getters.contactsPagination;
       var offset = this.offset;
       if (!pagination.to) {
         return [];
@@ -172,57 +148,29 @@ export default {
   },
   methods: {
     getItems(page){
-      if(!this.isAdd && page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveOrigins', page);
+      if(page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveContacts', page);
     },
-    changeEditing(id) {
-      this.editing = id;
-    },
-    showPopup(data){
-      this.message = "Bạn có muốn xóa nguồn gốc <b>"+data.ten+"</b> không?";
-      this.$refs.modal.show(data);
-    },
-    closePopup(){
-      $('.pop-up').fadeOut(300);
-      this.deleting = -1;
-    },
-    addOrigin() {
-      this.$store.dispatch('retrieveOrigins', this.pagination.last_page);
-      this.isAdd = true;
-      this.$nextTick(() => {
-        this.$refs.newName.focus();
-      });
-    },
-    createOrigin() {
-      if(this.newName == ""){
-        this.nameError = "Vui lòng nhập nguồn gốc!";
-      } else {
-        this.nameError = "";
-      }
-      
-      if(this.newName != ""){
-        var formData = new FormData();
-        formData.append("name", this.newName);
-
-        this.$store.dispatch('createOrigin', formData);
-        this.newName = "";
-        this.isAdd = false;
-      }
-    },
-    submit(data) {
-      this.$store.dispatch('deleteOrigin', data.id);
-    }
   }
 }
 </script>
 
 <style>
-.table-origins-id{
+.table-contacts-id{
   width: 5%;
 }
-.table-origins-name{
-  width: 70%;
+.table-contacts-receive{
+  width: 20%;
 }
-.table-origins-actions{
+.table-contacts-name{
+  width: 20%;
+}
+.table-contacts-email{
+  width: 15%;
+}
+.table-contacts-phone{
+  width: 15%;
+}
+.table-contacts-content{
   width: 25%;
 }
 </style>

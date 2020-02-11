@@ -12,6 +12,9 @@ import Style from './components/style/Style'
 import Convenient from './components/convenient/Convenient'
 import Car from './components/car/Car'
 import CarDetail from './components/car/CarDetail'
+import User from './components/user/User'
+import UserDetail from './components/user/UserDetail'
+import Contact from './components/contact/Contact'
 
 Vue.use(VueRouter);
 
@@ -109,7 +112,31 @@ const routes = [
     name: 'car-detail',
     component: CarDetail,
     meta: {
-      title: 'Admin | Car Detail'
+      title: 'Admin | Chi tiết mâu tin'
+    }
+  },
+  { 
+    path: '/admin/user', 
+    name: 'user',
+    component: User,
+    meta: {
+      title: 'Admin | Người dùng'
+    }
+  },
+  {
+    path: '/admin/user/:id',
+    name: 'user-detail',
+    component: UserDetail,
+    meta: {
+      title: 'Admin | Chi tiết người dùng'
+    }
+  },
+  { 
+    path: '/admin/contact', 
+    name: 'contact',
+    component: Contact,
+    meta: {
+      title: 'Admin | Liên hệ'
     }
   }
 ]

@@ -93,7 +93,7 @@
                 <h4>THÔNG TIN LIÊN HỆ</h4>
                 <form id="form-create" class="form-contact" action="{{route('contact')}}" method="post">
                     @csrf
-                    <input type="text" name="user" style="display:none" value="{{$car->users_id}}">
+                    <input type="text" name="user" style="display:none" value="{{$user->id}}">
                     <div class="my-4">
                         <input type="text" id="name" class="form-control @error('name') is-invalid @enderror" name="name"
                             value="{{ old('name') }}" />

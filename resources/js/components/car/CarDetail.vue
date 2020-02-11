@@ -24,7 +24,25 @@
                 <span v-if="car.doixe != null"><b>Đời xe: </b>{{ car.doixe }}<br></span>
                 <span v-if="car.namsx != null"><b>Năm sản xuất: </b>{{ car.namsx }}<br></span>
                 <span v-if="car.locations !== undefined"><b>Nơi bán: </b>{{ car.locations.ten }}<br></span>
+                <span v-if="car.created_at != null"><b>Ngày tạo: </b>{{ car.created_at }}<br></span>
               </p>
+              <div class="row justify-content-center text-center">
+                <div v-if="car.trangthai == 0" class="col-md-4">
+                  <button @click="approveCar" type="button" rel="tooltip" title="Duyệt" class="btn btn-success btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
+                    <i class="now-ui-icons ui-1_check"></i>
+                  </button>
+                </div>
+                <div v-if="car.trangthai == 0" class="col-md-4">
+                  <button @click="denyCar" type="button" rel="tooltip" title="Từ chối" class="btn btn-warning btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
+                    <i class="now-ui-icons ui-1_simple-delete"></i>
+                  </button>
+                </div>
+                <div class="col-md-4">
+                  <button @click="showPopup" type="button" rel="tooltip" title="Xóa" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
+                    <i class="now-ui-icons ui-1_simple-remove"></i>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -35,7 +53,10 @@
             </div>
             <div class="card-body">
               <p v-if="car.users !== undefined">
-                <b>Người đăng: </b><a href="#">{{ car.users.ten }}</a>
+                <b>Người đăng: </b>
+                <router-link :to="{ name: 'user-detail', params: { id: car.users_id }}">
+                  {{car.users.ten}}
+                </router-link>
               </p>
               <div v-html="car.mota"></div>
               <h5>Thông tin cơ bản</h5>
@@ -97,25 +118,15 @@
       <div class="pop-up-inner">
         <div class="pop-up-header">
           <div class="pop-up-title">Thông báo</div>
-          <button @click="closePopup" type="button" rel="tooltip" title="" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
+          <button @click="closePopup" type="button" rel="tooltip" title="" class="btn btn-link btn-neutral" data-original-title="Remove">
             <i class="now-ui-icons ui-1_simple-remove"></i>
           </button>
         </div>
         <div class="pop-up-body">
         </div>
         <div class="pop-up-footer">
-          <div class="row">
-              <div class="col-lg-8 ml-auto mr-auto">
-                  <div class="row">
-                      <div class="col-md-6">
-                          <button @click="deleteCar" class="btn btn-danger btn-block">Xóa</button>
-                      </div>
-                      <div class="col-md-6">
-                          <button @click="closePopup" class="btn btn-info btn-block">Hủy</button>
-                      </div>
-                  </div>
-              </div>
-          </div>
+          <button @click="deleteCar" class="btn btn-link btn-neutral">Xóa</button>
+          <button @click="closePopup" class="btn btn-link btn-neutral">Hủy</button>
         </div>
       </div>
     </div>
@@ -136,7 +147,6 @@ export default {
   },
   computed: {
     car() {
-      console.log(this.$store.getters.car);
       return this.$store.getters.car;
     },
     price() {
@@ -147,22 +157,22 @@ export default {
   methods: {
     showPopup(id){
       $('.pop-up').fadeIn(300);
-      var deleting = this.cars.filter(obj => {
-        return obj.id === id
-      });
-      var message = "Bạn có muốn xóa mẫu tin <b>"+deleting[0].ten+"</b> không?";
+      var message = "Bạn có muốn xóa mẫu tin <b>"+this.car.ten+"</b> không?";
       $('.pop-up-body').html(message);
-      this.deleting = id;
     },
     closePopup(){
       $('.pop-up').fadeOut(300);
-      this.deleting = -1;
     },
     deleteCar() {
-      this.$store.dispatch('deleteCar', this.deleting);
+      this.$store.dispatch('deleteCar', this.car.id);
       $('.pop-up').fadeOut(300);
-      this.deleting = -1;
-    }
+    },
+    approveCar() {
+      this.$store.dispatch('approveCar', this.car.id);
+    },
+    denyCar() {
+      this.$store.dispatch('denyCar', this.car.id);
+    },
   }
 }
 </script>

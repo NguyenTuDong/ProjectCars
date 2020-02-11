@@ -70,7 +70,7 @@ export default {
       this.newName = this.styleItem.ten;
     },
     showPopup() {
-      this.$emit('showPopup', this.styleItem.id);
+      this.$emit('showPopup', this.styleItem);
     },
     cancle() {
       this.$emit('changeEditing', -1);
