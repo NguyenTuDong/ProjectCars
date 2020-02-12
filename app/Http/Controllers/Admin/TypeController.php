@@ -14,8 +14,10 @@ class TypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($brands_id)
+    public function index(Request $request)
     {
+        $brands_id = $request->brands_id;
+        $query = $request->q;
         $brand = Brand::find($brands_id);
         $id = null;
         if($brand === null) {
@@ -23,7 +25,7 @@ class TypeController extends Controller
         } else {
             $id = $brands_id;
         }
-        $items = Type::where('brands_id', $id)->where('trangthai', 0)->paginate(10);
+        $items = Type::where('brands_id', $id)->where('trangthai', 0)->where('ten', 'LIKE', '%'.$query.'%')->paginate(10);
         return response()->json($items);
     }
 

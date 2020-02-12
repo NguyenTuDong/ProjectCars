@@ -1,9 +1,7 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-use App\User;
-use App\Location;
-use Illuminate\Support\Str;
+use App\Contact;
 use Faker\Generator as Faker;
 
 /*
@@ -17,20 +15,13 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(User::class, function (Faker $faker) {
+$factory->define(Contact::class, function (Faker $faker) {
     return [
+        'users_id' => App\User::all()->random()->id,
         'ten' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        'diachi' => $faker->address,
         'sdt' => $faker->e164PhoneNumber,
-        'cmnd' => $faker->numberBetween($min = 100000000, $max = 999999999),
-        'gioithieu' => $faker->realText($maxNbChars = 250, $indexSize = 2),
-        'sodkkd' => $faker->numberBetween($min = 100000000, $max = 999999999),
-        'mst' => $faker->numberBetween($min = 100000000, $max = 999999999),
-        'locations_id' => Location::all()->random()->id,
-        'remember_token' => Str::random(10),
+        'noidung' => $faker->realText($maxNbChars = 250, $indexSize = 2),
         'created_at' => $faker->dateTimeBetween($startDate = '-30 days', $endDate = 'now', $timezone = null),
     ];
 });

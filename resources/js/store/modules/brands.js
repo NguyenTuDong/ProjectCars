@@ -58,9 +58,9 @@ const actions = {
       }
     });
   },
-  retrieveBrands({commit}, page) {
+  retrieveBrands({commit}, data) {
     $.ajax({
-      url : '/admin/api/brand?page='+page,
+      url : '/admin/api/brand?page='+data.page+'&q='+data.q,
       type : "GET",
       dataType : "json",
       success:function(data)

@@ -13,9 +13,18 @@ class ContactController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $items = Contact::with('users')->paginate(10);
+        $query = $request->q;
+        $items = Contact::whereHas('users', function ($q) use ($request) {
+            $q->where('ten', 'LIKE', "%{$request->q}%");
+        })
+        ->orWhere('ten', 'LIKE', '%'.$query.'%')
+        ->orWhere('email', 'LIKE', '%'.$query.'%')
+        ->orWhere('sdt', 'LIKE', '%'.$query.'%')
+        ->orWhere('noidung', 'LIKE', '%'.$query.'%')
+        ->with('users')
+        ->paginate(10);
         return response()->json($items);
     }
 

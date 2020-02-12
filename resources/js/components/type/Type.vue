@@ -16,6 +16,9 @@
               <button class="btn btn-primary ml-auto" @click="addType">Thêm dòng xe</button>
             </div>
             <div class="card-body">
+              <div class="search-form">
+                <input @keyup="search" v-model="q" type="text" class="form-control" placeholder="Tìm kiếm">
+              </div>
               <div class="table-responsive">
                 <table class="table">
                   <thead class=" text-primary">
@@ -130,6 +133,7 @@ export default {
       nameError: "",
       offset: 3,
       message: '',
+      q: '',
     }
   },
   created() {
@@ -137,6 +141,7 @@ export default {
     var data = {
       brands_id: 1,
       page: 1,
+      q: '',
     }
     this.$store.dispatch('retrieveTypes', data);
   },
@@ -186,11 +191,14 @@ export default {
   },
   methods: {
     getItems(id, page){
-      var data = {
-        brands_id: id,
-        page: page,
+      if(!this.isAdd && page <= this.pagination.last_page && page >= 1) {
+        var data = {
+          brands_id: id,
+          page: page,
+          q: this.q,
+        }
+        this.$store.dispatch('retrieveTypes', data);
       }
-      if(!this.isAdd && page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveTypes', data);
     },
     changeEditing(id) {
       this.editing = id;
@@ -203,6 +211,7 @@ export default {
       var data = {
         brands_id: this.selectBrand,
         page: this.pagination.last_page,
+        q: this.q,
       }
       this.$store.dispatch('retrieveTypes', data);
       this.isAdd = true;
@@ -228,6 +237,14 @@ export default {
     },
     submit(data) {
       this.$store.dispatch('deleteType', data.id);
+    },
+    search() {
+      var data = {
+        brands_id: this.selectBrand,
+        page: 1,
+        q: this.q,
+      }
+      this.$store.dispatch('retrieveTypes', data);
     }
   }
 }

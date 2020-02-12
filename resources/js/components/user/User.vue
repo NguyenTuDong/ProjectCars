@@ -10,6 +10,9 @@
               <h4 class="card-title">Người dùng</h4>
             </div>
             <div class="card-body">
+              <div class="search-form">
+                <input @keyup="search" v-model="q" type="text" class="form-control" placeholder="Tìm kiếm">
+              </div>
               <div class="table-responsive">
                 <table class="table">
                   <thead class=" text-primary">
@@ -99,10 +102,15 @@ export default {
     return {
       deleting: -1,
       offset: 3,
+      q: '',
     }
   },
   created() {
-    this.$store.dispatch('retrieveUsers', 1);
+    var data = {
+      page: 1,
+      q: '',
+    }
+    this.$store.dispatch('retrieveUsers', data);
   },
   computed: {
     ...mapGetters({
@@ -145,8 +153,21 @@ export default {
   },
   methods: {
     getItems(page){
-      if(page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveUsers', page);
+      if(!this.isAdd && page <= this.pagination.last_page && page >= 1) {
+        var data = {
+          page: page,
+          q: this.q,
+        }
+        this.$store.dispatch('retrieveUsers', data);
+      }
     },
+    search() {
+      var data = {
+        page: 1,
+        q: this.q,
+      }
+      this.$store.dispatch('retrieveUsers', data);
+    }
   }
 }
 </script>

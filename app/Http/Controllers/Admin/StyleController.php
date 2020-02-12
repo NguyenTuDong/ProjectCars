@@ -13,9 +13,10 @@ class StyleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $items = Style::where('trangthai', 0)->paginate(10);
+        $query = $request->q;
+        $items = Style::where('trangthai', 0)->where('ten', 'LIKE', '%'.$query.'%')->paginate(10);
         return response()->json($items);
     }
 

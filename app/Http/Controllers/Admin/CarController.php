@@ -13,9 +13,61 @@ class CarController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $items = Car::where('trangthai', '!=', 1)->with([
+        $query = $request->q;
+        $state = [
+            0 => 'Chờ duyệt',
+            2 => 'Đã duyệt',
+            3 => 'Đã từ chối',
+        ];
+
+        $state_filter = [];
+
+        if($query != ''){
+            foreach ($state as $key => $value) {
+                if (strpos($value, $query) !== false) {
+                    array_push($state_filter, $key);
+                }
+            }
+        }
+
+        $items = Car::
+        whereHas('users', function ($q) use ($request) {
+            $q->where('ten', 'LIKE', "%{$request->q}%");
+        })
+        ->orWhereHas('types', function ($q) use ($request) {
+            $q->where('ten', 'LIKE', "%{$request->q}%");
+        })
+        ->orWhereHas('types.brands', function ($q) use ($request) {
+            $q->where('ten', 'LIKE', "%{$request->q}%");
+        })
+        ->orWhereHas('styles', function ($q) use ($request) {
+            $q->where('ten', 'LIKE', "%{$request->q}%");
+        })
+        ->orWhereHas('colors', function ($q) use ($request) {
+            $q->where('ten', 'LIKE', "%{$request->q}%");
+        })
+        ->orWhereHas('origins', function ($q) use ($request) {
+            $q->where('ten', 'LIKE', "%{$request->q}%");
+        })
+        ->orWhereHas('conditions', function ($q) use ($request) {
+            $q->where('ten', 'LIKE', "%{$request->q}%");
+        })
+        ->orWhereHas('fuels', function ($q) use ($request) {
+            $q->where('ten', 'LIKE', "%{$request->q}%");
+        })
+        ->orWhereHas('locations', function ($q) use ($request) {
+            $q->where('ten', 'LIKE', "%{$request->q}%");
+        })
+        ->orWhereHas('transmissions', function ($q) use ($request) {
+            $q->where('ten', 'LIKE', "%{$request->q}%");
+        })
+        ->orWhere('ten', 'LIKE', '%'.$query.'%')
+        ->orWhere('gia', 'LIKE', '%'.$query.'%')
+        ->orWhereIn('trangthai', $state_filter)
+        ->where('trangthai', '!=', 1)
+        ->with([
             'users', 
             'types.brands', 
             'colors', 
@@ -27,11 +79,12 @@ class CarController extends Controller
             'transmissions'
             ])->paginate(10);
         return response()->json($items);
+        // return $query;
     }
 
     public function show($id)
     {
-        $items = Car::findOrFail($id)->with([
+        $items = Car::with([
             'users', 
             'types.brands', 
             'colors', 
@@ -43,8 +96,9 @@ class CarController extends Controller
             'styles', 
             'transmissions',
             'convenientcars.convenients',
-            ])->first();
+            ])->where('id', $id)->first();
         return response()->json($items);
+        // return $id;
     }
 
     /**
@@ -70,7 +124,7 @@ class CarController extends Controller
             'origins', 
             'styles', 
             'transmissions'
-            ])->first());
+            ])->where('id', $id)->first());
     }
     public function deny($id)
     {
@@ -88,7 +142,7 @@ class CarController extends Controller
             'origins', 
             'styles', 
             'transmissions'
-            ])->first());
+            ])->where('id', $id)->first());
     }
 
     /**

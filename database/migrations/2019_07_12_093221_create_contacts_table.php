@@ -19,7 +19,7 @@ class CreateContactsTable extends Migration
             $table->string('ten');
             $table->string('email');
             $table->string('sdt');
-            $table->string('noidung');
+            $table->longText('noidung');
             $table->timestamps();
         });
 

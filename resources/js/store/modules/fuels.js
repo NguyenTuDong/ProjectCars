@@ -37,9 +37,9 @@ const mutations = {
 };
 
 const actions = {
-  retrieveFuels({commit}, page) {
+  retrieveFuels({commit}, data) {
     $.ajax({
-      url : '/admin/api/fuel?page='+page,
+      url : '/admin/api/fuel?page='+data.page+'&q='+data.q,
       type : "GET",
       dataType : "json",
       success:function(data)

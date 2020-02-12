@@ -13,9 +13,10 @@ class BrandController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $items = Brand::where('trangthai', 0)->paginate(10);
+        $query = $request->q;
+        $items = Brand::where('trangthai', 0)->where('ten', 'LIKE', '%'.$query.'%')->paginate(10);
         return response()->json($items);
     }
 

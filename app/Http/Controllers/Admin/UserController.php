@@ -13,15 +13,19 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $items = User::paginate(10);
+        $query = $request->q;
+        $items = User::where('ten', 'LIKE', '%'.$query.'%')
+        ->orWhere('email', 'LIKE', '%'.$query.'%')
+        ->orWhere('sdt', 'LIKE', '%'.$query.'%')
+        ->paginate(10);
         return response()->json($items);
     }
 
     public function show($id)
     {
-        $items = User::findOrFail($id)->first();
+        $items = User::findOrFail($id);
         return response()->json($items);
     }
 }

@@ -11,6 +11,9 @@
               <button class="btn btn-primary ml-auto" @click="addTransmission">Thêm hộp số</button>
             </div>
             <div class="card-body">
+              <div class="search-form">
+                <input @keyup="search" v-model="q" type="text" class="form-control" placeholder="Tìm kiếm">
+              </div>
               <div class="table-responsive">
                 <table class="table">
                   <thead class=" text-primary">
@@ -124,10 +127,15 @@ export default {
       nameError: "",
       offset: 3,
       message: '',
+      q: '',
     }
   },
   created() {
-    this.$store.dispatch('retrieveTransmissions', 1);
+    var data = {
+      page: 1,
+      q: '',
+    }
+    this.$store.dispatch('retrieveTransmissions', data);
   },
   computed: {
     transmissions() {
@@ -172,7 +180,13 @@ export default {
   },
   methods: {
     getItems(page){
-      if(!this.isAdd && page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveTransmissions', page);
+      if(!this.isAdd && page <= this.pagination.last_page && page >= 1) {
+        var data = {
+          page: page,
+          q: this.q,
+        }
+        this.$store.dispatch('retrieveTransmissions', data);
+      }
     },
     changeEditing(id) {
       this.editing = id;
@@ -182,7 +196,11 @@ export default {
       this.$refs.modal.show(data);
     },
     addTransmission() {
-      this.$store.dispatch('retrieveTransmissions', this.pagination.last_page);
+      var data = {
+        page: this.pagination.last_pag,
+        q: this.q,
+      }
+      this.$store.dispatch('retrieveTransmissions', data);
       this.isAdd = true;
       this.$nextTick(() => {
         this.$refs.newName.focus();
@@ -206,6 +224,13 @@ export default {
     },
     submit(data) {
       this.$store.dispatch('deleteTransmission', data.id);
+    },
+    search() {
+      var data = {
+        page: 1,
+        q: this.q,
+      }
+      this.$store.dispatch('retrieveTransmissions', data);
     }
   }
 }

@@ -11509,6 +11509,12 @@ a:hover {
           flex: 0 0 300px;
 }
 
+.search-menu .block {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 90px;
+}
+
 .thumbnail {
   -webkit-box-flex: 0;
           flex: 0 0 250px;

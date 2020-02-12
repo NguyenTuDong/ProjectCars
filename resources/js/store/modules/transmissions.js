@@ -37,9 +37,9 @@ const mutations = {
 };
 
 const actions = {
-  retrieveTransmissions({commit}, page) {
+  retrieveTransmissions({commit}, data) {
     $.ajax({
-      url : '/admin/api/transmission?page='+page,
+      url : '/admin/api/transmission?page='+data.page+'&q='+data.q,
       type : "GET",
       dataType : "json",
       success:function(data)

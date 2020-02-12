@@ -11,6 +11,9 @@
               <button class="btn btn-primary ml-auto" @click="addCondition">Thêm tình trạng</button>
             </div>
             <div class="card-body">
+              <div class="search-form">
+                <input @keyup="search" v-model="q" type="text" class="form-control" placeholder="Tìm kiếm">
+              </div>
               <div class="table-responsive">
                 <table class="table">
                   <thead class=" text-primary">
@@ -124,10 +127,15 @@ export default {
       nameError: "",
       offset: 3,
       message: '',
+      q: '',
     }
   },
   created() {
-    this.$store.dispatch('retrieveConditions', 1);
+    var data = {
+      page: 1,
+      q: '',
+    }
+    this.$store.dispatch('retrieveConditions', data);
   },
   computed: {
     conditions() {
@@ -172,7 +180,13 @@ export default {
   },
   methods: {
     getItems(page){
-      if(!this.isAdd && page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveConditions', page);
+      if(!this.isAdd && page <= this.pagination.last_page && page >= 1) {
+        var data = {
+          page: page,
+          q: this.q,
+        }
+        this.$store.dispatch('retrieveConditions', data);
+      }
     },
     changeEditing(id) {
       this.editing = id;
@@ -182,7 +196,11 @@ export default {
       this.$refs.modal.show(data);
     },
     addCondition() {
-      this.$store.dispatch('retrieveConditions', this.pagination.last_page);
+      var data = {
+        page: this.pagination.last_pag,
+        q: this.q,
+      }
+      this.$store.dispatch('retrieveConditions', data);
       this.isAdd = true;
       this.$nextTick(() => {
         this.$refs.newName.focus();
@@ -206,6 +224,13 @@ export default {
     },
     submit(data) {
       this.$store.dispatch('deleteCondition', data.id);
+    },
+    search() {
+      var data = {
+        page: 1,
+        q: this.q,
+      }
+      this.$store.dispatch('retrieveConditions', data);
     }
   }
 }

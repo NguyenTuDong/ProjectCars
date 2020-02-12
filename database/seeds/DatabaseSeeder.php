@@ -33,5 +33,15 @@ class DatabaseSeeder extends Seeder
             StyleSeeder::class,
             ConvenientSeeder::class,
         ]);
+
+        factory(App\User::class, 50)->create();
+        factory(App\Car::class, 100)->create()->each(function ($car) {
+                $car->convenientcars()->createMany(
+                    factory(App\Convenientcar::class, 5)->make([
+                        'cars_id' => $car->id,
+                    ])->toArray()
+                );
+            });
+        factory(App\Contact::class, 200)->create();
     }
 }

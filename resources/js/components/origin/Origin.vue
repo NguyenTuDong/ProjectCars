@@ -11,6 +11,9 @@
               <button class="btn btn-primary ml-auto" @click="addOrigin">Thêm nguồn gốc</button>
             </div>
             <div class="card-body">
+              <div class="search-form">
+                <input @keyup="search" v-model="q" type="text" class="form-control" placeholder="Tìm kiếm">
+              </div>
               <div class="table-responsive">
                 <table class="table">
                   <thead class=" text-primary">
@@ -124,10 +127,15 @@ export default {
       nameError: "",
       offset: 3,
       message: '',
+      q: '',
     }
   },
   created() {
-    this.$store.dispatch('retrieveOrigins', 1);
+    var data = {
+      page: 1,
+      q: '',
+    }
+    this.$store.dispatch('retrieveOrigins', data);
   },
   computed: {
     origins() {
@@ -172,7 +180,13 @@ export default {
   },
   methods: {
     getItems(page){
-      if(!this.isAdd && page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveOrigins', page);
+      if(!this.isAdd && page <= this.pagination.last_page && page >= 1) {
+        var data = {
+          page: page,
+          q: this.q,
+        }
+        this.$store.dispatch('retrieveOrigins', data);
+      }
     },
     changeEditing(id) {
       this.editing = id;
@@ -181,12 +195,12 @@ export default {
       this.message = "Bạn có muốn xóa nguồn gốc <b>"+data.ten+"</b> không?";
       this.$refs.modal.show(data);
     },
-    closePopup(){
-      $('.pop-up').fadeOut(300);
-      this.deleting = -1;
-    },
     addOrigin() {
-      this.$store.dispatch('retrieveOrigins', this.pagination.last_page);
+      var data = {
+        page: this.pagination.last_pag,
+        q: this.q,
+      }
+      this.$store.dispatch('retrieveOrigins', data);
       this.isAdd = true;
       this.$nextTick(() => {
         this.$refs.newName.focus();
@@ -210,6 +224,13 @@ export default {
     },
     submit(data) {
       this.$store.dispatch('deleteOrigin', data.id);
+    },
+    search() {
+      var data = {
+        page: 1,
+        q: this.q,
+      }
+      this.$store.dispatch('retrieveOrigins', data);
     }
   }
 }

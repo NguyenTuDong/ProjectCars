@@ -18,9 +18,9 @@ const mutations = {
 };
 
 const actions = {
-  retrieveContacts({commit}, page) {
+  retrieveContacts({commit}, data) {
     $.ajax({
-      url : '/admin/api/contact?page='+page,
+      url : '/admin/api/contact?page='+data.page+'&q='+data.q,
       type : "GET",
       dataType : "json",
       success:function(data)

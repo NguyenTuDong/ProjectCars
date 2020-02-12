@@ -37,9 +37,9 @@ const mutations = {
 };
 
 const actions = {
-  retrieveColors({commit}, page) {
+  retrieveColors({commit}, data) {
     $.ajax({
-      url : '/admin/api/color?page='+page,
+      url : '/admin/api/color?page='+data.page+'&q='+data.q,
       type : "GET",
       dataType : "json",
       success:function(data)

@@ -13,9 +13,10 @@ class ConditionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $items = Condition::where('trangthai', 0)->paginate(10);
+        $query = $request->q;
+        $items = Condition::where('trangthai', 0)->where('ten', 'LIKE', '%'.$query.'%')->paginate(10);
         return response()->json($items);
     }
 

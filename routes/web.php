@@ -54,7 +54,7 @@ Route::prefix('admin')->group(function() {
     Route::post('/brand/delete/{brand}', 'Admin\BrandController@destroy');
     
     //Type
-    Route::get('/type/{brands_id}', 'Admin\TypeController@index');
+    Route::get('/type', 'Admin\TypeController@index');
     Route::post('/type', 'Admin\TypeController@store');
     Route::post('/type/{type}', 'Admin\TypeController@update');
     Route::post('/type/delete/{type}', 'Admin\TypeController@destroy');

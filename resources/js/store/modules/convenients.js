@@ -37,9 +37,9 @@ const mutations = {
 };
 
 const actions = {
-  retrieveConvenients({commit}, page) {
+  retrieveConvenients({commit}, data) {
     $.ajax({
-      url : '/admin/api/convenient?page='+page,
+      url : '/admin/api/convenient?page='+data.page+'&q='+data.q,
       type : "GET",
       dataType : "json",
       success:function(data)

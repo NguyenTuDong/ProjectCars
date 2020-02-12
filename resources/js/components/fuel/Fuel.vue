@@ -11,6 +11,9 @@
               <button class="btn btn-primary ml-auto" @click="addFuel">Thêm nhiên liệu</button>
             </div>
             <div class="card-body">
+              <div class="search-form">
+                <input @keyup="search" v-model="q" type="text" class="form-control" placeholder="Tìm kiếm">
+              </div>
               <div class="table-responsive">
                 <table class="table">
                   <thead class=" text-primary">
@@ -124,10 +127,15 @@ export default {
       nameError: "",
       offset: 3,
       message: '',
+      q: '',
     }
   },
   created() {
-    this.$store.dispatch('retrieveFuels', 1);
+    var data = {
+      page: 1,
+      q: '',
+    }
+    this.$store.dispatch('retrieveFuels', data);
   },
   computed: {
     fuels() {
@@ -172,7 +180,13 @@ export default {
   },
   methods: {
     getItems(page){
-      if(!this.isAdd && page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveFuels', page);
+      if(!this.isAdd && page <= this.pagination.last_page && page >= 1) {
+        var data = {
+          page: page,
+          q: this.q,
+        }
+        this.$store.dispatch('retrieveFuels', data);
+      }
     },
     changeEditing(id) {
       this.editing = id;
@@ -182,7 +196,11 @@ export default {
       this.$refs.modal.show(data);
     },
     addFuel() {
-      this.$store.dispatch('retrieveFuels', this.pagination.last_page);
+      var data = {
+        page: this.pagination.last_pag,
+        q: this.q,
+      }
+      this.$store.dispatch('retrieveFuels', data);
       this.isAdd = true;
       this.$nextTick(() => {
         this.$refs.newName.focus();
@@ -206,6 +224,13 @@ export default {
     },
     submit(data) {
       this.$store.dispatch('deleteFuel', data.id);
+    },
+    search() {
+      var data = {
+        page: 1,
+        q: this.q,
+      }
+      this.$store.dispatch('retrieveFuels', data);
     }
   }
 }

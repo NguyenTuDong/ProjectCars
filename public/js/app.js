@@ -2218,6 +2218,9 @@ function _defineProperty(obj, key, value) {
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2238,11 +2241,16 @@ function _defineProperty(obj, key, value) {
       logoError: "",
       nameError: "",
       offset: 3,
-      message: ''
+      message: '',
+      q: ''
     };
   },
   created: function created() {
-    this.$store.dispatch('retrieveBrands', 1);
+    var data = {
+      page: 1,
+      q: ''
+    };
+    this.$store.dispatch('retrieveBrands', data);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])({
     brands: 'brands',
@@ -2292,7 +2300,13 @@ function _defineProperty(obj, key, value) {
   }),
   methods: {
     getItems: function getItems(page) {
-      if (!this.isAdd && page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveBrands', page);
+      if (!this.isAdd && page <= this.pagination.last_page && page >= 1) {
+        var data = {
+          page: page,
+          q: this.q
+        };
+        this.$store.dispatch('retrieveBrands', data);
+      }
     },
     changeEditing: function changeEditing(id) {
       this.editing = id;
@@ -2304,7 +2318,11 @@ function _defineProperty(obj, key, value) {
     addBrand: function addBrand() {
       var _this = this;
 
-      this.$store.dispatch('retrieveBrands', this.pagination.last_page);
+      var data = {
+        page: this.pagination.last_pag,
+        q: this.q
+      };
+      this.$store.dispatch('retrieveBrands', data);
       this.isAdd = true;
       this.$nextTick(function () {
         _this.$refs.newName.focus();
@@ -2352,6 +2370,13 @@ function _defineProperty(obj, key, value) {
     },
     submit: function submit(data) {
       this.$store.dispatch('deleteBrand', data.id);
+    },
+    search: function search() {
+      var data = {
+        page: 1,
+        q: this.q
+      };
+      this.$store.dispatch('retrieveBrands', data);
     }
   }
 });
@@ -2664,12 +2689,16 @@ function _defineProperty(obj, key, value) {
   data: function data() {
     return {
       offset: 3,
-      search: '',
+      q: '',
       message: ''
     };
   },
   created: function created() {
-    this.$store.dispatch('retrieveCars', 1);
+    var data = {
+      page: 1,
+      q: ''
+    };
+    this.$store.dispatch('retrieveCars', data);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])({
     cars: 'cars',
@@ -2719,7 +2748,13 @@ function _defineProperty(obj, key, value) {
   }),
   methods: {
     getItems: function getItems(page) {
-      if (page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveCars', page);
+      if (page <= this.pagination.last_page && page >= 1) {
+        var data = {
+          page: page,
+          q: this.q
+        };
+        this.$store.dispatch('retrieveCars', data);
+      }
     },
     showPopup: function showPopup(data) {
       this.message = "Bạn có muốn xóa mẫu tin <b>" + data.ten + "</b> không?";
@@ -2727,6 +2762,13 @@ function _defineProperty(obj, key, value) {
     },
     submit: function submit(data) {
       this.$store.dispatch('deleteCar', data.id);
+    },
+    search: function search() {
+      var data = {
+        page: 1,
+        q: this.q
+      };
+      this.$store.dispatch('retrieveCars', data);
     }
   }
 });
@@ -3142,6 +3184,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3159,11 +3204,16 @@ __webpack_require__.r(__webpack_exports__);
       imgError: "",
       nameError: "",
       offset: 3,
-      message: ''
+      message: '',
+      q: ''
     };
   },
   created: function created() {
-    this.$store.dispatch('retrieveColors', 1);
+    var data = {
+      page: 1,
+      q: ''
+    };
+    this.$store.dispatch('retrieveColors', data);
   },
   computed: {
     colors: function colors() {
@@ -3216,7 +3266,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getItems: function getItems(page) {
-      if (!this.isAdd && page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveColors', page);
+      if (!this.isAdd && page <= this.pagination.last_page && page >= 1) {
+        var data = {
+          page: page,
+          q: this.q
+        };
+        this.$store.dispatch('retrieveColors', data);
+      }
     },
     changeEditing: function changeEditing(id) {
       this.editing = id;
@@ -3228,7 +3284,11 @@ __webpack_require__.r(__webpack_exports__);
     addColor: function addColor() {
       var _this = this;
 
-      this.$store.dispatch('retrieveColors', this.pagination.last_page);
+      var data = {
+        page: this.pagination.last_pag,
+        q: this.q
+      };
+      this.$store.dispatch('retrieveColors', data);
       this.isAdd = true;
       this.$nextTick(function () {
         _this.$refs.newName.focus();
@@ -3276,6 +3336,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     submit: function submit(data) {
       this.$store.dispatch('deleteColor', data.id);
+    },
+    search: function search() {
+      var data = {
+        page: 1,
+        q: this.q
+      };
+      this.$store.dispatch('retrieveColors', data);
     }
   }
 });
@@ -3533,6 +3600,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3548,11 +3618,16 @@ __webpack_require__.r(__webpack_exports__);
       newName: "",
       nameError: "",
       offset: 3,
-      message: ''
+      message: '',
+      q: ''
     };
   },
   created: function created() {
-    this.$store.dispatch('retrieveConditions', 1);
+    var data = {
+      page: 1,
+      q: ''
+    };
+    this.$store.dispatch('retrieveConditions', data);
   },
   computed: {
     conditions: function conditions() {
@@ -3605,7 +3680,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getItems: function getItems(page) {
-      if (!this.isAdd && page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveConditions', page);
+      if (!this.isAdd && page <= this.pagination.last_page && page >= 1) {
+        var data = {
+          page: page,
+          q: this.q
+        };
+        this.$store.dispatch('retrieveConditions', data);
+      }
     },
     changeEditing: function changeEditing(id) {
       this.editing = id;
@@ -3617,7 +3698,11 @@ __webpack_require__.r(__webpack_exports__);
     addCondition: function addCondition() {
       var _this = this;
 
-      this.$store.dispatch('retrieveConditions', this.pagination.last_page);
+      var data = {
+        page: this.pagination.last_pag,
+        q: this.q
+      };
+      this.$store.dispatch('retrieveConditions', data);
       this.isAdd = true;
       this.$nextTick(function () {
         _this.$refs.newName.focus();
@@ -3640,6 +3725,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     submit: function submit(data) {
       this.$store.dispatch('deleteCondition', data.id);
+    },
+    search: function search() {
+      var data = {
+        page: 1,
+        q: this.q
+      };
+      this.$store.dispatch('retrieveConditions', data);
     }
   }
 });
@@ -3888,6 +3980,9 @@ function _defineProperty(obj, key, value) {
 //
 //
 //
+//
+//
+//
 
 
 
@@ -3900,11 +3995,16 @@ function _defineProperty(obj, key, value) {
   data: function data() {
     return {
       deleting: -1,
-      offset: 3
+      offset: 3,
+      q: ''
     };
   },
   created: function created() {
-    this.$store.dispatch('retrieveContacts', 1);
+    var data = {
+      page: 1,
+      q: ''
+    };
+    this.$store.dispatch('retrieveContacts', data);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
     contacts: 'contacts',
@@ -3954,7 +4054,20 @@ function _defineProperty(obj, key, value) {
   }),
   methods: {
     getItems: function getItems(page) {
-      if (page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveContacts', page);
+      if (!this.isAdd && page <= this.pagination.last_page && page >= 1) {
+        var data = {
+          page: page,
+          q: this.q
+        };
+        this.$store.dispatch('retrieveContacts', data);
+      }
+    },
+    search: function search() {
+      var data = {
+        page: 1,
+        q: this.q
+      };
+      this.$store.dispatch('retrieveContacts', data);
     }
   }
 });
@@ -4132,6 +4245,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4147,11 +4263,16 @@ __webpack_require__.r(__webpack_exports__);
       newName: "",
       nameError: "",
       offset: 3,
-      message: ''
+      message: '',
+      q: ''
     };
   },
   created: function created() {
-    this.$store.dispatch('retrieveConvenients', 1);
+    var data = {
+      page: 1,
+      q: ''
+    };
+    this.$store.dispatch('retrieveConvenients', data);
   },
   computed: {
     convenients: function convenients() {
@@ -4204,7 +4325,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getItems: function getItems(page) {
-      if (!this.isAdd && page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveConvenients', page);
+      if (!this.isAdd && page <= this.pagination.last_page && page >= 1) {
+        var data = {
+          page: page,
+          q: this.q
+        };
+        this.$store.dispatch('retrieveConvenients', data);
+      }
     },
     changeEditing: function changeEditing(id) {
       this.editing = id;
@@ -4216,7 +4343,11 @@ __webpack_require__.r(__webpack_exports__);
     addConvenient: function addConvenient() {
       var _this = this;
 
-      this.$store.dispatch('retrieveConvenients', this.pagination.last_page);
+      var data = {
+        page: this.pagination.last_pag,
+        q: this.q
+      };
+      this.$store.dispatch('retrieveConvenients', data);
       this.isAdd = true;
       this.$nextTick(function () {
         _this.$refs.newName.focus();
@@ -4239,6 +4370,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     submit: function submit(data) {
       this.$store.dispatch('deleteConvenient', data.id);
+    },
+    search: function search() {
+      var data = {
+        page: 1,
+        q: this.q
+      };
+      this.$store.dispatch('retrieveConvenients', data);
     }
   }
 });
@@ -4457,6 +4595,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4472,11 +4613,16 @@ __webpack_require__.r(__webpack_exports__);
       newName: "",
       nameError: "",
       offset: 3,
-      message: ''
+      message: '',
+      q: ''
     };
   },
   created: function created() {
-    this.$store.dispatch('retrieveFuels', 1);
+    var data = {
+      page: 1,
+      q: ''
+    };
+    this.$store.dispatch('retrieveFuels', data);
   },
   computed: {
     fuels: function fuels() {
@@ -4529,7 +4675,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getItems: function getItems(page) {
-      if (!this.isAdd && page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveFuels', page);
+      if (!this.isAdd && page <= this.pagination.last_page && page >= 1) {
+        var data = {
+          page: page,
+          q: this.q
+        };
+        this.$store.dispatch('retrieveFuels', data);
+      }
     },
     changeEditing: function changeEditing(id) {
       this.editing = id;
@@ -4541,7 +4693,11 @@ __webpack_require__.r(__webpack_exports__);
     addFuel: function addFuel() {
       var _this = this;
 
-      this.$store.dispatch('retrieveFuels', this.pagination.last_page);
+      var data = {
+        page: this.pagination.last_pag,
+        q: this.q
+      };
+      this.$store.dispatch('retrieveFuels', data);
       this.isAdd = true;
       this.$nextTick(function () {
         _this.$refs.newName.focus();
@@ -4564,6 +4720,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     submit: function submit(data) {
       this.$store.dispatch('deleteFuel', data.id);
+    },
+    search: function search() {
+      var data = {
+        page: 1,
+        q: this.q
+      };
+      this.$store.dispatch('retrieveFuels', data);
     }
   }
 });
@@ -5032,6 +5195,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5047,11 +5213,16 @@ __webpack_require__.r(__webpack_exports__);
       newName: "",
       nameError: "",
       offset: 3,
-      message: ''
+      message: '',
+      q: ''
     };
   },
   created: function created() {
-    this.$store.dispatch('retrieveOrigins', 1);
+    var data = {
+      page: 1,
+      q: ''
+    };
+    this.$store.dispatch('retrieveOrigins', data);
   },
   computed: {
     origins: function origins() {
@@ -5104,7 +5275,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getItems: function getItems(page) {
-      if (!this.isAdd && page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveOrigins', page);
+      if (!this.isAdd && page <= this.pagination.last_page && page >= 1) {
+        var data = {
+          page: page,
+          q: this.q
+        };
+        this.$store.dispatch('retrieveOrigins', data);
+      }
     },
     changeEditing: function changeEditing(id) {
       this.editing = id;
@@ -5113,14 +5290,14 @@ __webpack_require__.r(__webpack_exports__);
       this.message = "Bạn có muốn xóa nguồn gốc <b>" + data.ten + "</b> không?";
       this.$refs.modal.show(data);
     },
-    closePopup: function closePopup() {
-      $('.pop-up').fadeOut(300);
-      this.deleting = -1;
-    },
     addOrigin: function addOrigin() {
       var _this = this;
 
-      this.$store.dispatch('retrieveOrigins', this.pagination.last_page);
+      var data = {
+        page: this.pagination.last_pag,
+        q: this.q
+      };
+      this.$store.dispatch('retrieveOrigins', data);
       this.isAdd = true;
       this.$nextTick(function () {
         _this.$refs.newName.focus();
@@ -5143,6 +5320,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     submit: function submit(data) {
       this.$store.dispatch('deleteOrigin', data.id);
+    },
+    search: function search() {
+      var data = {
+        page: 1,
+        q: this.q
+      };
+      this.$store.dispatch('retrieveOrigins', data);
     }
   }
 });
@@ -5373,6 +5557,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5390,11 +5577,16 @@ __webpack_require__.r(__webpack_exports__);
       imgError: "",
       nameError: "",
       offset: 3,
-      message: ''
+      message: '',
+      q: ''
     };
   },
   created: function created() {
-    this.$store.dispatch('retrieveStyles', 1);
+    var data = {
+      page: 1,
+      q: ''
+    };
+    this.$store.dispatch('retrieveStyles', data);
   },
   computed: {
     styles: function styles() {
@@ -5447,7 +5639,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getItems: function getItems(page) {
-      if (!this.isAdd && page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveStyles', page);
+      if (!this.isAdd && page <= this.pagination.last_page && page >= 1) {
+        var data = {
+          page: page,
+          q: this.q
+        };
+        this.$store.dispatch('retrieveStyles', data);
+      }
     },
     changeEditing: function changeEditing(id) {
       this.editing = id;
@@ -5459,7 +5657,11 @@ __webpack_require__.r(__webpack_exports__);
     addStyle: function addStyle() {
       var _this = this;
 
-      this.$store.dispatch('retrieveStyles', this.pagination.last_page);
+      var data = {
+        page: this.pagination.last_pag,
+        q: this.q
+      };
+      this.$store.dispatch('retrieveStyles', data);
       this.isAdd = true;
       this.$nextTick(function () {
         _this.$refs.newName.focus();
@@ -5507,6 +5709,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     submit: function submit(data) {
       this.$store.dispatch('deleteStyle', data.id);
+    },
+    search: function search() {
+      var data = {
+        page: 1,
+        q: this.q
+      };
+      this.$store.dispatch('retrieveStyles', data);
     }
   }
 });
@@ -5764,6 +5973,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5779,11 +5991,16 @@ __webpack_require__.r(__webpack_exports__);
       newName: "",
       nameError: "",
       offset: 3,
-      message: ''
+      message: '',
+      q: ''
     };
   },
   created: function created() {
-    this.$store.dispatch('retrieveTransmissions', 1);
+    var data = {
+      page: 1,
+      q: ''
+    };
+    this.$store.dispatch('retrieveTransmissions', data);
   },
   computed: {
     transmissions: function transmissions() {
@@ -5836,7 +6053,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getItems: function getItems(page) {
-      if (!this.isAdd && page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveTransmissions', page);
+      if (!this.isAdd && page <= this.pagination.last_page && page >= 1) {
+        var data = {
+          page: page,
+          q: this.q
+        };
+        this.$store.dispatch('retrieveTransmissions', data);
+      }
     },
     changeEditing: function changeEditing(id) {
       this.editing = id;
@@ -5848,7 +6071,11 @@ __webpack_require__.r(__webpack_exports__);
     addTransmission: function addTransmission() {
       var _this = this;
 
-      this.$store.dispatch('retrieveTransmissions', this.pagination.last_page);
+      var data = {
+        page: this.pagination.last_pag,
+        q: this.q
+      };
+      this.$store.dispatch('retrieveTransmissions', data);
       this.isAdd = true;
       this.$nextTick(function () {
         _this.$refs.newName.focus();
@@ -5871,6 +6098,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     submit: function submit(data) {
       this.$store.dispatch('deleteTransmission', data.id);
+    },
+    search: function search() {
+      var data = {
+        page: 1,
+        q: this.q
+      };
+      this.$store.dispatch('retrieveTransmissions', data);
     }
   }
 });
@@ -6094,6 +6328,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -6110,14 +6347,16 @@ __webpack_require__.r(__webpack_exports__);
       newName: "",
       nameError: "",
       offset: 3,
-      message: ''
+      message: '',
+      q: ''
     };
   },
   created: function created() {
     this.$store.dispatch('allBrands');
     var data = {
       brands_id: 1,
-      page: 1
+      page: 1,
+      q: ''
     };
     this.$store.dispatch('retrieveTypes', data);
   },
@@ -6175,11 +6414,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getItems: function getItems(id, page) {
-      var data = {
-        brands_id: id,
-        page: page
-      };
-      if (!this.isAdd && page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveTypes', data);
+      if (!this.isAdd && page <= this.pagination.last_page && page >= 1) {
+        var data = {
+          brands_id: id,
+          page: page,
+          q: this.q
+        };
+        this.$store.dispatch('retrieveTypes', data);
+      }
     },
     changeEditing: function changeEditing(id) {
       this.editing = id;
@@ -6193,7 +6435,8 @@ __webpack_require__.r(__webpack_exports__);
 
       var data = {
         brands_id: this.selectBrand,
-        page: this.pagination.last_page
+        page: this.pagination.last_page,
+        q: this.q
       };
       this.$store.dispatch('retrieveTypes', data);
       this.isAdd = true;
@@ -6219,6 +6462,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     submit: function submit(data) {
       this.$store.dispatch('deleteType', data.id);
+    },
+    search: function search() {
+      var data = {
+        brands_id: this.selectBrand,
+        page: 1,
+        q: this.q
+      };
+      this.$store.dispatch('retrieveTypes', data);
     }
   }
 });
@@ -6467,6 +6718,9 @@ function _defineProperty(obj, key, value) {
 //
 //
 //
+//
+//
+//
 
 
 
@@ -6479,11 +6733,16 @@ function _defineProperty(obj, key, value) {
   data: function data() {
     return {
       deleting: -1,
-      offset: 3
+      offset: 3,
+      q: ''
     };
   },
   created: function created() {
-    this.$store.dispatch('retrieveUsers', 1);
+    var data = {
+      page: 1,
+      q: ''
+    };
+    this.$store.dispatch('retrieveUsers', data);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
     users: 'users',
@@ -6533,7 +6792,20 @@ function _defineProperty(obj, key, value) {
   }),
   methods: {
     getItems: function getItems(page) {
-      if (page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveUsers', page);
+      if (!this.isAdd && page <= this.pagination.last_page && page >= 1) {
+        var data = {
+          page: page,
+          q: this.q
+        };
+        this.$store.dispatch('retrieveUsers', data);
+      }
+    },
+    search: function search() {
+      var data = {
+        page: 1,
+        q: this.q
+      };
+      this.$store.dispatch('retrieveUsers', data);
     }
   }
 });
@@ -44164,6 +44436,31 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
+                _c("div", { staticClass: "search-form" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.q,
+                        expression: "q"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", placeholder: "Tìm kiếm" },
+                    domProps: { value: _vm.q },
+                    on: {
+                      keyup: _vm.search,
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.q = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
                 _c("div", { staticClass: "table-responsive" }, [
                   _c("table", { staticClass: "table" }, [
                     _vm._m(0),
@@ -44742,19 +45039,20 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.search,
-                        expression: "search"
+                        value: _vm.q,
+                        expression: "q"
                       }
                     ],
                     staticClass: "form-control",
                     attrs: { type: "text", placeholder: "Tìm kiếm" },
-                    domProps: { value: _vm.search },
+                    domProps: { value: _vm.q },
                     on: {
+                      keyup: _vm.search,
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.search = $event.target.value
+                        _vm.q = $event.target.value
                       }
                     }
                   })
@@ -45627,6 +45925,31 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
+                _c("div", { staticClass: "search-form" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.q,
+                        expression: "q"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", placeholder: "Tìm kiếm" },
+                    domProps: { value: _vm.q },
+                    on: {
+                      keyup: _vm.search,
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.q = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
                 _c("div", { staticClass: "table-responsive" }, [
                   _c("table", { staticClass: "table" }, [
                     _vm._m(0),
@@ -46210,6 +46533,31 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
+                _c("div", { staticClass: "search-form" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.q,
+                        expression: "q"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", placeholder: "Tìm kiếm" },
+                    domProps: { value: _vm.q },
+                    on: {
+                      keyup: _vm.search,
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.q = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
                 _c("div", { staticClass: "table-responsive" }, [
                   _c("table", { staticClass: "table" }, [
                     _vm._m(0),
@@ -46704,6 +47052,31 @@ var render = function() {
             _vm._m(0),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "search-form" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.q,
+                      expression: "q"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", placeholder: "Tìm kiếm" },
+                  domProps: { value: _vm.q },
+                  on: {
+                    keyup: _vm.search,
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.q = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
               _c("div", { staticClass: "table-responsive" }, [
                 _c("table", { staticClass: "table" }, [
                   _vm._m(1),
@@ -47065,6 +47438,31 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
+                _c("div", { staticClass: "search-form" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.q,
+                        expression: "q"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", placeholder: "Tìm kiếm" },
+                    domProps: { value: _vm.q },
+                    on: {
+                      keyup: _vm.search,
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.q = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
                 _c("div", { staticClass: "table-responsive" }, [
                   _c("table", { staticClass: "table" }, [
                     _vm._m(0),
@@ -47572,6 +47970,31 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
+                _c("div", { staticClass: "search-form" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.q,
+                        expression: "q"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", placeholder: "Tìm kiếm" },
+                    domProps: { value: _vm.q },
+                    on: {
+                      keyup: _vm.search,
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.q = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
                 _c("div", { staticClass: "table-responsive" }, [
                   _c("table", { staticClass: "table" }, [
                     _vm._m(0),
@@ -48594,6 +49017,31 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
+                _c("div", { staticClass: "search-form" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.q,
+                        expression: "q"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", placeholder: "Tìm kiếm" },
+                    domProps: { value: _vm.q },
+                    on: {
+                      keyup: _vm.search,
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.q = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
                 _c("div", { staticClass: "table-responsive" }, [
                   _c("table", { staticClass: "table" }, [
                     _vm._m(0),
@@ -49098,6 +49546,31 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
+                _c("div", { staticClass: "search-form" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.q,
+                        expression: "q"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", placeholder: "Tìm kiếm" },
+                    domProps: { value: _vm.q },
+                    on: {
+                      keyup: _vm.search,
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.q = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
                 _c("div", { staticClass: "table-responsive" }, [
                   _c("table", { staticClass: "table" }, [
                     _vm._m(0),
@@ -49681,6 +50154,31 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
+                _c("div", { staticClass: "search-form" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.q,
+                        expression: "q"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", placeholder: "Tìm kiếm" },
+                    domProps: { value: _vm.q },
+                    on: {
+                      keyup: _vm.search,
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.q = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
                 _c("div", { staticClass: "table-responsive" }, [
                   _c("table", { staticClass: "table" }, [
                     _vm._m(0),
@@ -50230,6 +50728,31 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
+                _c("div", { staticClass: "search-form" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.q,
+                        expression: "q"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", placeholder: "Tìm kiếm" },
+                    domProps: { value: _vm.q },
+                    on: {
+                      keyup: _vm.search,
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.q = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
                 _c("div", { staticClass: "table-responsive" }, [
                   _c("table", { staticClass: "table" }, [
                     _vm._m(0),
@@ -50721,6 +51244,31 @@ var render = function() {
             _vm._m(0),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "search-form" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.q,
+                      expression: "q"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", placeholder: "Tìm kiếm" },
+                  domProps: { value: _vm.q },
+                  on: {
+                    keyup: _vm.search,
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.q = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
               _c("div", { staticClass: "table-responsive" }, [
                 _c("table", { staticClass: "table" }, [
                   _vm._m(1),
@@ -70524,10 +71072,10 @@ var actions = {
       }
     });
   },
-  retrieveBrands: function retrieveBrands(_ref2, page) {
+  retrieveBrands: function retrieveBrands(_ref2, data) {
     var commit = _ref2.commit;
     $.ajax({
-      url: '/admin/api/brand?page=' + page,
+      url: '/admin/api/brand?page=' + data.page + '&q=' + data.q,
       type: "GET",
       dataType: "json",
       success: function success(data) {
@@ -70736,10 +71284,10 @@ var mutations = {
   }
 };
 var actions = {
-  retrieveCars: function retrieveCars(_ref, page) {
+  retrieveCars: function retrieveCars(_ref, data) {
     var commit = _ref.commit;
     $.ajax({
-      url: '/admin/api/car?page=' + page,
+      url: '/admin/api/car?page=' + data.page + '&q=' + data.q,
       type: "GET",
       dataType: "json",
       success: function success(data) {
@@ -70757,6 +71305,7 @@ var actions = {
       type: "GET",
       dataType: "json",
       success: function success(data) {
+        // console.log(data);
         commit('getCar', data);
       },
       error: function error(errors) {
@@ -70943,10 +71492,10 @@ var mutations = {
   }
 };
 var actions = {
-  retrieveColors: function retrieveColors(_ref, page) {
+  retrieveColors: function retrieveColors(_ref, data) {
     var commit = _ref.commit;
     $.ajax({
-      url: '/admin/api/color?page=' + page,
+      url: '/admin/api/color?page=' + data.page + '&q=' + data.q,
       type: "GET",
       dataType: "json",
       success: function success(data) {
@@ -71136,10 +71685,10 @@ var mutations = {
   }
 };
 var actions = {
-  retrieveConditions: function retrieveConditions(_ref, page) {
+  retrieveConditions: function retrieveConditions(_ref, data) {
     var commit = _ref.commit;
     $.ajax({
-      url: '/admin/api/condition?page=' + page,
+      url: '/admin/api/condition?page=' + data.page + '&q=' + data.q,
       type: "GET",
       dataType: "json",
       success: function success(data) {
@@ -71310,10 +71859,10 @@ var mutations = {
   }
 };
 var actions = {
-  retrieveContacts: function retrieveContacts(_ref, page) {
+  retrieveContacts: function retrieveContacts(_ref, data) {
     var commit = _ref.commit;
     $.ajax({
-      url: '/admin/api/contact?page=' + page,
+      url: '/admin/api/contact?page=' + data.page + '&q=' + data.q,
       type: "GET",
       dataType: "json",
       success: function success(data) {
@@ -71380,10 +71929,10 @@ var mutations = {
   }
 };
 var actions = {
-  retrieveConvenients: function retrieveConvenients(_ref, page) {
+  retrieveConvenients: function retrieveConvenients(_ref, data) {
     var commit = _ref.commit;
     $.ajax({
-      url: '/admin/api/convenient?page=' + page,
+      url: '/admin/api/convenient?page=' + data.page + '&q=' + data.q,
       type: "GET",
       dataType: "json",
       success: function success(data) {
@@ -71573,10 +72122,10 @@ var mutations = {
   }
 };
 var actions = {
-  retrieveFuels: function retrieveFuels(_ref, page) {
+  retrieveFuels: function retrieveFuels(_ref, data) {
     var commit = _ref.commit;
     $.ajax({
-      url: '/admin/api/fuel?page=' + page,
+      url: '/admin/api/fuel?page=' + data.page + '&q=' + data.q,
       type: "GET",
       dataType: "json",
       success: function success(data) {
@@ -71766,10 +72315,10 @@ var mutations = {
   }
 };
 var actions = {
-  retrieveOrigins: function retrieveOrigins(_ref, page) {
+  retrieveOrigins: function retrieveOrigins(_ref, data) {
     var commit = _ref.commit;
     $.ajax({
-      url: '/admin/api/origin?page=' + page,
+      url: '/admin/api/origin?page=' + data.page + '&q=' + data.q,
       type: "GET",
       dataType: "json",
       success: function success(data) {
@@ -71959,10 +72508,10 @@ var mutations = {
   }
 };
 var actions = {
-  retrieveStyles: function retrieveStyles(_ref, page) {
+  retrieveStyles: function retrieveStyles(_ref, data) {
     var commit = _ref.commit;
     $.ajax({
-      url: '/admin/api/style?page=' + page,
+      url: '/admin/api/style?page=' + data.page + '&q=' + data.q,
       type: "GET",
       dataType: "json",
       success: function success(data) {
@@ -72151,10 +72700,10 @@ var mutations = {
   }
 };
 var actions = {
-  retrieveTransmissions: function retrieveTransmissions(_ref, page) {
+  retrieveTransmissions: function retrieveTransmissions(_ref, data) {
     var commit = _ref.commit;
     $.ajax({
-      url: '/admin/api/transmission?page=' + page,
+      url: '/admin/api/transmission?page=' + data.page + '&q=' + data.q,
       type: "GET",
       dataType: "json",
       success: function success(data) {
@@ -72347,7 +72896,7 @@ var actions = {
   retrieveTypes: function retrieveTypes(_ref, data) {
     var commit = _ref.commit;
     $.ajax({
-      url: '/admin/api/type/' + data.brands_id + '/?page=' + data.page,
+      url: '/admin/api/type/?page=' + data.page + '&brands_id=' + data.brands_id + '&q=' + data.q,
       type: "GET",
       dataType: "json",
       success: function success(data) {
@@ -72526,10 +73075,10 @@ var mutations = {
   }
 };
 var actions = {
-  retrieveUsers: function retrieveUsers(_ref, page) {
+  retrieveUsers: function retrieveUsers(_ref, data) {
     var commit = _ref.commit;
     $.ajax({
-      url: '/admin/api/user?page=' + page,
+      url: '/admin/api/user?page=' + data.page + '&q=' + data.q,
       type: "GET",
       dataType: "json",
       success: function success(data) {

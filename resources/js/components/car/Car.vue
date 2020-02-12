@@ -11,7 +11,7 @@
             </div>
             <div class="card-body">
               <div class="search-form">
-                <input v-model="search" type="text" class="form-control" placeholder="Tìm kiếm">
+                <input @keyup="search" v-model="q" type="text" class="form-control" placeholder="Tìm kiếm">
               </div>
               <div class="table-responsive">
                 <table class="table">
@@ -113,12 +113,16 @@ export default {
   data() {
     return {
       offset: 3,
-      search: '',
+      q: '',
       message: '',
     }
   },
   created() {
-    this.$store.dispatch('retrieveCars', 1);
+    var data = {
+      page: 1,
+      q: '',
+    }
+    this.$store.dispatch('retrieveCars', data)
   },
   computed: {
     ...mapGetters({
@@ -161,7 +165,13 @@ export default {
   },
   methods: {
     getItems(page){
-      if(page <= this.pagination.last_page && page >= 1) this.$store.dispatch('retrieveCars', page);
+      if(page <= this.pagination.last_page && page >= 1) {
+        var data = {
+          page: page,
+          q: this.q,
+        }
+        this.$store.dispatch('retrieveCars', data);
+      }
     },
     showPopup(data){
       this.message = "Bạn có muốn xóa mẫu tin <b>"+data.ten+"</b> không?";
@@ -169,6 +179,13 @@ export default {
     },
     submit(data) {
       this.$store.dispatch('deleteCar', data.id);
+    },
+    search() {
+      var data = {
+        page: 1,
+        q: this.q,
+      }
+      this.$store.dispatch('retrieveCars', data);
     }
   }
 }
