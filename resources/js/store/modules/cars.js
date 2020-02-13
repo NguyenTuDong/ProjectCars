@@ -3,7 +3,9 @@ import {router} from '../../router'
 const state = {
   cars: {},
   car: {},
-  carChartDatas: []
+  carCount: 'Đang tải...',
+  carPerMonth: [],
+  carActivePerMonth: [],
 };
 
 const getters = {
@@ -13,8 +15,14 @@ const getters = {
   car(state) {
     return state.car;
   },
-  carChartDatas(state) {
-    return state.carChartDatas;
+  carCount(state) {
+    return state.carCount;
+  },
+  carPerMonth(state) {
+    return state.carPerMonth;
+  },
+  carActivePerMonth(state) {
+    return state.carActivePerMonth;
   },
   carsPagination(state) {
     return state.cars;
@@ -25,11 +33,17 @@ const mutations = {
   retrieveCars(state, data) {
     state.cars = data;
   },
-  countPerMonth(state, data) {
-    state.carChartDatas = data;
-  },
   getCar(state, data) {
     state.car = data;
+  },
+  carCount(state, data) {
+    state.carCount = data;
+  },
+  carPerMonth(state, data) {
+    state.carPerMonth = data;
+  },
+  carActivePerMonth(state, data) {
+    state.carActivePerMonth = data;
   },
   updateCar(state, data) {
     if(!$.isEmptyObject(state.cars)){
@@ -90,14 +104,43 @@ const actions = {
       }
     });
   },
-  countPerMonth({commit}) {
+  carCount({commit}) {
     $.ajax({
       url : '/admin/api/car/count',
       type : "GET",
       dataType : "json",
       success:function(data)
       {
-        commit('countPerMonth', data);
+        commit('carCount', data);
+      },
+      error: function (errors) {
+        console.log(errors);
+      }
+    });
+  },
+  carPerMonth({commit}) {
+    $.ajax({
+      url : '/admin/api/car/countPerMonth',
+      type : "GET",
+      dataType : "json",
+      success:function(data)
+      {
+        commit('carPerMonth', data);
+      },
+      error: function (errors) {
+        console.log(errors);
+      }
+    });
+  },
+  carActivePerMonth({commit}) {
+    $.ajax({
+      url : '/admin/api/car/countActivePerMonth',
+      type : "GET",
+      dataType : "json",
+      success:function(data)
+      {
+        console.log(data);
+        commit('carActivePerMonth', data);
       },
       error: function (errors) {
         console.log(errors);

@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         factory(App\User::class, 50)->create();
-        factory(App\Car::class, 100)->create()->each(function ($car) {
+        factory(App\Car::class, 500)->create()->each(function ($car) {
                 $car->convenientcars()->createMany(
                     factory(App\Convenientcar::class, 5)->make([
                         'cars_id' => $car->id,

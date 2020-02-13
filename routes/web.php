@@ -35,6 +35,8 @@ Route::prefix('admin')->group(function() {
     //Car
     Route::get('/car', 'Admin\CarController@index');
     Route::get('/car/count', 'Admin\CarController@count');
+    Route::get('/car/countPerMonth', 'Admin\CarController@countPerMonth');
+    Route::get('/car/countActivePerMonth', 'Admin\CarController@countActivePerMonth');
     Route::get('/car/{id}', 'Admin\CarController@show');
     Route::post('/car/approve/{car}', 'Admin\CarController@approve');
     Route::post('/car/deny/{car}', 'Admin\CarController@deny');
@@ -42,10 +44,14 @@ Route::prefix('admin')->group(function() {
 
     //User
     Route::get('/user', 'Admin\UserController@index');
+    Route::get('/user/count', 'Admin\UserController@count');
+    Route::get('/user/countPerMonth', 'Admin\UserController@countPerMonth');
     Route::get('/user/{id}', 'Admin\UserController@show');
 
     //Contact
     Route::get('/contact', 'Admin\ContactController@index');
+    Route::get('/contact/count', 'Admin\ContactController@count');
+    Route::get('/contact/countPerMonth', 'Admin\ContactController@countPerMonth');
     Route::get('/contact/{id}', 'Admin\ContactController@show');
 
     //Brand

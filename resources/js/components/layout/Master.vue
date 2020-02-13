@@ -5,12 +5,12 @@
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
     -->
       <div class="logo">
-        <a href="http://www.creative-tim.com" class="simple-text logo-mini">
-          CT
-        </a>
-        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-          Creative Tim
-        </a>
+        <router-link :to="{name: 'dashboard'}" class="simple-text logo-mini">
+          CA
+        </router-link>
+        <router-link :to="{name: 'dashboard'}" class="simple-text logo-normal">
+          Cars | Admin
+        </router-link>
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
@@ -23,74 +23,74 @@
           <hr class="nav-seq">
            <router-link tag="li" :to="{name: 'car'}">
             <a href="#">
-              <i class="now-ui-icons design_app"></i>
+              <i class="now-ui-icons business_money-coins"></i>
               <p>Mẫu tin</p>
             </a>
           </router-link>
            <router-link tag="li" :to="{name: 'user'}">
             <a href="#">
-              <i class="now-ui-icons design_app"></i>
+              <i class="now-ui-icons users_single-02"></i>
               <p>Người dùng</p>
             </a>
           </router-link>
            <router-link tag="li" :to="{name: 'contact'}">
             <a href="#">
-              <i class="now-ui-icons design_app"></i>
+              <i class="now-ui-icons ui-1_email-85"></i>
               <p>Liên hệ</p>
             </a>
           </router-link>
           <hr class="nav-seq">
           <router-link tag="li" :to="{name: 'brand'}">
             <a href="#">
-              <i class="now-ui-icons design_app"></i>
+              <i class="now-ui-icons objects_diamond"></i>
               <p>Thương hiệu</p>
             </a>
           </router-link>
           <router-link tag="li" :to="{name: 'type'}">
             <a href="#">
-              <i class="now-ui-icons design_app"></i>
+              <i class="now-ui-icons shopping_tag-content"></i>
               <p>Dòng xe</p>
             </a>
           </router-link>
           <router-link tag="li" :to="{name: 'style'}">
             <a href="#">
-              <i class="now-ui-icons design_app"></i>
+              <i class="now-ui-icons education_glasses"></i>
               <p>Kiểu dáng</p>
             </a>
           </router-link>
           <router-link tag="li" :to="{name: 'color'}">
             <a href="#">
-              <i class="now-ui-icons design_app"></i>
+              <i class="now-ui-icons design_palette"></i>
               <p>Màu xe</p>
             </a>
           </router-link>
           <router-link tag="li" :to="{name: 'condition'}">
             <a href="#">
-              <i class="now-ui-icons design_app"></i>
+              <i class="now-ui-icons media-2_sound-wave"></i>
               <p>Tình trạng</p>
             </a>
           </router-link>
           <router-link tag="li" :to="{name: 'origin'}">
             <a href="#">
-              <i class="now-ui-icons design_app"></i>
+              <i class="now-ui-icons location_world"></i>
               <p>Nguồn gốc</p>
             </a>
           </router-link>
           <router-link tag="li" :to="{name: 'fuel'}">
             <a href="#">
-              <i class="now-ui-icons design_app"></i>
+              <i class="now-ui-icons education_atom"></i>
               <p>Nhiên liệu</p>
             </a>
           </router-link>
           <router-link tag="li" :to="{name: 'transmission'}">
             <a href="#">
-              <i class="now-ui-icons design_app"></i>
+              <i class="now-ui-icons objects_spaceship"></i>
               <p>Hộp số</p>
             </a>
           </router-link>
           <router-link tag="li" :to="{name: 'convenient'}">
             <a href="#">
-              <i class="now-ui-icons design_app"></i>
+              <i class="now-ui-icons ui-2_like"></i>
               <p>Tiện nghi</p>
             </a>
           </router-link>

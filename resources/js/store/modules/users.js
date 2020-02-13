@@ -1,6 +1,8 @@
 const state = {
   users: {},
   user: {},
+  userCount: 'Đang tải...',
+  userPerMonth: [],
 };
 
 const getters = {
@@ -9,6 +11,12 @@ const getters = {
   },
   user(state) {
     return state.user;
+  },
+  userCount(state) {
+    return state.userCount;
+  },
+  userPerMonth(state) {
+    return state.userPerMonth;
   },
   usersPagination(state) {
     return state.users;
@@ -21,6 +29,12 @@ const mutations = {
   },
   getUser(state, data) {
     state.user = data;
+  },
+  userCount(state, data) {
+    state.userCount = data;
+  },
+  userPerMonth(state, data) {
+    state.userPerMonth = data;
   },
 };
 
@@ -47,6 +61,34 @@ const actions = {
       success:function(data)
       {
         commit('getUser', data);
+      },
+      error: function (errors) {
+        console.log(errors);
+      }
+    });
+  },
+  userCount({commit}) {
+    $.ajax({
+      url : '/admin/api/user/count',
+      type : "GET",
+      dataType : "json",
+      success:function(data)
+      {
+        commit('userCount', data);
+      },
+      error: function (errors) {
+        console.log(errors);
+      }
+    });
+  },
+  userPerMonth({commit}) {
+    $.ajax({
+      url : '/admin/api/user/countPerMonth',
+      type : "GET",
+      dataType : "json",
+      success:function(data)
+      {
+        commit('userPerMonth', data);
       },
       error: function (errors) {
         console.log(errors);

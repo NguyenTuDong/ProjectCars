@@ -162,11 +162,32 @@ class CarController extends Controller
 
     public function count()
     {
+        $count = Car::get()->count();
+        return response()->json($count);
+    }
+
+    public function countPerMonth()
+    {
         $chartDatas = Car::select([
             DB::raw('DATE_FORMAT(created_at, "%Y-%m") AS date'),
             DB::raw('COUNT(id) AS count'),
          ])
          ->whereBetween('created_at', [Carbon::now()->subMonth(11), Carbon::now()])
+         ->groupBy('date')
+         ->orderBy('date', 'ASC')
+         ->get()
+         ->toArray();
+        return response()->json($chartDatas);
+    }
+
+    public function countActivePerMonth()
+    {
+        $chartDatas = Car::select([
+            DB::raw('DATE_FORMAT(created_at, "%Y-%m") AS date'),
+            DB::raw('COUNT(id) AS count'),
+         ])
+         ->whereBetween('created_at', [Carbon::now()->subMonth(11), Carbon::now()])
+         ->where('trangthai', 2)
          ->groupBy('date')
          ->orderBy('date', 'ASC')
          ->get()

@@ -4030,6 +4030,127 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/BigChart.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/babel-loader/lib??ref--12-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/BigChart.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'BigChart',
+  props: {
+    data: {
+      required: true
+    }
+  },
+  watch: {
+    data: function data(newVal, oldVal) {
+      var months = newVal.map(function (data) {
+        return data.date;
+      });
+      var counts = newVal.map(function (data) {
+        return data.count;
+      });
+      $(document).ready(function () {
+        var chartColor = "#FFFFFF";
+        var ctx = document.getElementById('bigDashboardChart').getContext("2d");
+        var gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
+        gradientStroke.addColorStop(0, '#80b6f4');
+        gradientStroke.addColorStop(1, chartColor);
+        var gradientFill = ctx.createLinearGradient(0, 200, 0, 50);
+        gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
+        gradientFill.addColorStop(1, "rgba(255, 255, 255, 0.24)");
+        var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: months,
+            datasets: [{
+              label: "Mẫu tin",
+              borderColor: chartColor,
+              pointBorderColor: chartColor,
+              pointBackgroundColor: "#1e3d60",
+              pointHoverBackgroundColor: "#1e3d60",
+              pointHoverBorderColor: chartColor,
+              pointBorderWidth: 1,
+              pointHoverRadius: 7,
+              pointHoverBorderWidth: 2,
+              pointRadius: 5,
+              fill: true,
+              backgroundColor: gradientFill,
+              borderWidth: 2,
+              data: counts
+            }]
+          },
+          options: {
+            layout: {
+              padding: {
+                left: 20,
+                right: 20,
+                top: 0,
+                bottom: 0
+              }
+            },
+            maintainAspectRatio: false,
+            tooltips: {
+              backgroundColor: '#fff',
+              titleFontColor: '#333',
+              bodyFontColor: '#666',
+              bodySpacing: 4,
+              xPadding: 12,
+              mode: "nearest",
+              intersect: 0,
+              position: "nearest"
+            },
+            legend: {
+              position: "bottom",
+              fillStyle: "#FFF",
+              display: false
+            },
+            scales: {
+              yAxes: [{
+                ticks: {
+                  fontColor: "rgba(255,255,255,0.4)",
+                  fontStyle: "bold",
+                  beginAtZero: true,
+                  maxTicksLimit: 5,
+                  padding: 10
+                },
+                gridLines: {
+                  drawTicks: true,
+                  drawBorder: false,
+                  display: true,
+                  color: "rgba(255,255,255,0.1)",
+                  zeroLineColor: "transparent"
+                }
+              }],
+              xAxes: [{
+                gridLines: {
+                  zeroLineColor: "transparent",
+                  display: false
+                },
+                ticks: {
+                  padding: 10,
+                  fontColor: "rgba(255,255,255,0.4)",
+                  fontStyle: "bold"
+                }
+              }]
+            }
+          }
+        });
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/Dashboard.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/babel-loader/lib??ref--12-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/Dashboard.vue?vue&type=script&lang=js& ***!
@@ -4039,192 +4160,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-} //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _BigChart__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BigChart */ "./resources/js/components/dashboard/BigChart.vue");
+/* harmony import */ var _SmallChart__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SmallChart */ "./resources/js/components/dashboard/SmallChart.vue");
 //
 //
 //
@@ -4325,20 +4262,177 @@ function _defineProperty(obj, key, value) {
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'Dashboard',
-  data: function data() {
-    return {};
+  name: "Dashboard",
+  components: {
+    BigChart: _BigChart__WEBPACK_IMPORTED_MODULE_0__["default"],
+    SmallChart: _SmallChart__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   created: function created() {
-    this.$store.dispatch('countPerMonth');
+    this.$store.dispatch("carPerMonth");
+    this.$store.dispatch("carCount");
+    this.$store.dispatch("userCount");
+    this.$store.dispatch("contactCount");
+    this.$store.dispatch("carActivePerMonth");
+    this.$store.dispatch("userPerMonth");
+    this.$store.dispatch("contactPerMonth");
   },
   computed: {
-    carChartDatas: function carChartDatas() {
-      return this.$store.getters.carChartDatas;
+    carCountAll: function carCountAll() {
+      return this.$store.getters.carCount;
+    },
+    carPerMonth: function carPerMonth() {
+      return this.$store.getters.carPerMonth;
+    },
+    carActivePerMonth: function carActivePerMonth() {
+      return this.$store.getters.carActivePerMonth;
+    },
+    carCount: function carCount() {
+      var count = 0;
+      var data = this.$store.getters.carPerMonth;
+      data.forEach(function (el) {
+        count += el.count;
+      });
+      return count;
+    },
+    carActiveCount: function carActiveCount() {
+      var count = 0;
+      var data = this.$store.getters.carActivePerMonth;
+      data.forEach(function (el) {
+        count += el.count;
+      });
+      return count;
+    },
+    userCountAll: function userCountAll() {
+      return this.$store.getters.userCount;
+    },
+    userPerMonth: function userPerMonth() {
+      return this.$store.getters.userPerMonth;
+    },
+    userCount: function userCount() {
+      var count = 0;
+      var data = this.$store.getters.userPerMonth;
+      data.forEach(function (el) {
+        count += el.count;
+      });
+      return count;
+    },
+    contactCountAll: function contactCountAll() {
+      return this.$store.getters.contactCount;
+    },
+    contactPerMonth: function contactPerMonth() {
+      return this.$store.getters.contactPerMonth;
+    },
+    contactCount: function contactCount() {
+      var count = 0;
+      var data = this.$store.getters.contactPerMonth;
+      data.forEach(function (el) {
+        count += el.count;
+      });
+      return count;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/SmallChart.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/babel-loader/lib??ref--12-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/SmallChart.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'SmallChart',
+  props: {
+    canvas: {
+      type: String,
+      required: true
+    },
+    category: {
+      type: String,
+      "default": ''
+    },
+    title: {
+      "default": ''
+    },
+    type: {
+      type: String,
+      "default": 'line'
+    },
+    label: {
+      type: String,
+      "default": 'Data'
+    },
+    yAxes: {
+      "default": 1
+    },
+    xAxes: {
+      "default": 1
+    },
+    color: {
+      "default": '#f96332'
+    },
+    bgColor: {
+      "default": 'rgba(249, 99, 59, 0.40)'
+    },
+    chartColor: {
+      "default": '#ffffff'
+    },
+    data: {
+      required: true
     }
   },
   watch: {
-    carChartDatas: function carChartDatas(newVal, oldVal) {
+    data: function data(newVal, oldVal) {
+      var self = this;
       var months = newVal.map(function (data) {
         return data.date;
       });
@@ -4346,30 +4440,27 @@ function _defineProperty(obj, key, value) {
         return data.count;
       });
       $(document).ready(function () {
-        // console.log(this.carChartDatas);
-        var chartColor = "#FFFFFF";
-        var ctx = document.getElementById('bigDashboardChart').getContext("2d");
+        var ctx = document.getElementById(self.canvas).getContext("2d");
         var gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
         gradientStroke.addColorStop(0, '#80b6f4');
-        gradientStroke.addColorStop(1, chartColor);
-        var gradientFill = ctx.createLinearGradient(0, 200, 0, 50);
+        gradientStroke.addColorStop(1, self.chartColor);
+        var gradientFill = ctx.createLinearGradient(0, 170, 0, 50);
         gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
-        gradientFill.addColorStop(1, "rgba(255, 255, 255, 0.24)");
+        gradientFill.addColorStop(1, self.bgColor);
         var myChart = new Chart(ctx, {
-          type: 'line',
+          type: self.type,
+          responsive: true,
           data: {
             labels: months,
             datasets: [{
-              label: "Mẫu tin",
-              borderColor: chartColor,
-              pointBorderColor: chartColor,
-              pointBackgroundColor: "#1e3d60",
-              pointHoverBackgroundColor: "#1e3d60",
-              pointHoverBorderColor: chartColor,
-              pointBorderWidth: 1,
-              pointHoverRadius: 7,
-              pointHoverBorderWidth: 2,
-              pointRadius: 5,
+              label: self.label,
+              borderColor: self.color,
+              pointBorderColor: "#FFF",
+              pointBackgroundColor: self.color,
+              pointBorderWidth: 2,
+              pointHoverRadius: 4,
+              pointHoverBorderWidth: 1,
+              pointRadius: 4,
               fill: true,
               backgroundColor: gradientFill,
               borderWidth: 2,
@@ -4377,92 +4468,6 @@ function _defineProperty(obj, key, value) {
             }]
           },
           options: {
-            layout: {
-              padding: {
-                left: 20,
-                right: 20,
-                top: 0,
-                bottom: 0
-              }
-            },
-            maintainAspectRatio: false,
-            tooltips: {
-              backgroundColor: '#fff',
-              titleFontColor: '#333',
-              bodyFontColor: '#666',
-              bodySpacing: 4,
-              xPadding: 12,
-              mode: "nearest",
-              intersect: 0,
-              position: "nearest"
-            },
-            legend: {
-              position: "bottom",
-              fillStyle: "#FFF",
-              display: false
-            },
-            scales: {
-              yAxes: [{
-                ticks: {
-                  fontColor: "rgba(255,255,255,0.4)",
-                  fontStyle: "bold",
-                  beginAtZero: true,
-                  maxTicksLimit: 5,
-                  padding: 10
-                },
-                gridLines: {
-                  drawTicks: true,
-                  drawBorder: false,
-                  display: true,
-                  color: "rgba(255,255,255,0.1)",
-                  zeroLineColor: "transparent"
-                }
-              }],
-              xAxes: [{
-                gridLines: {
-                  zeroLineColor: "transparent",
-                  display: false
-                },
-                ticks: {
-                  padding: 10,
-                  fontColor: "rgba(255,255,255,0.4)",
-                  fontStyle: "bold"
-                }
-              }]
-            }
-          }
-        }); //=============================================================================
-
-        var cardStatsMiniLineColor = "#fff",
-            cardStatsMiniDotColor = "#fff";
-        ctx = document.getElementById('lineChartExample').getContext("2d");
-        gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
-        gradientStroke.addColorStop(0, '#80b6f4');
-        gradientStroke.addColorStop(1, chartColor);
-        gradientFill = ctx.createLinearGradient(0, 170, 0, 50);
-        gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
-        gradientFill.addColorStop(1, "rgba(249, 99, 59, 0.40)");
-        myChart = new Chart(ctx, {
-          type: 'line',
-          responsive: true,
-          data: {
-            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-            datasets: [{
-              label: "Active Users",
-              borderColor: "#f96332",
-              pointBorderColor: "#FFF",
-              pointBackgroundColor: "#f96332",
-              pointBorderWidth: 2,
-              pointHoverRadius: 4,
-              pointHoverBorderWidth: 1,
-              pointRadius: 4,
-              fill: true,
-              backgroundColor: gradientFill,
-              borderWidth: 2,
-              data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610, 700, 630]
-            }]
-          },
-          options: {
             maintainAspectRatio: false,
             legend: {
               display: false
@@ -4479,27 +4484,27 @@ function _defineProperty(obj, key, value) {
             responsive: 1,
             scales: {
               yAxes: [_defineProperty({
-                display: 0,
+                display: self.yAxes,
                 gridLines: 0,
                 ticks: {
-                  display: false
+                  display: true
                 }
               }, "gridLines", {
                 zeroLineColor: "transparent",
-                drawTicks: false,
-                display: false,
+                drawTicks: true,
+                display: true,
                 drawBorder: false
               })],
               xAxes: [_defineProperty({
-                display: 0,
+                display: self.xAxes,
                 gridLines: 0,
                 ticks: {
-                  display: false
+                  display: true
                 }
               }, "gridLines", {
                 zeroLineColor: "transparent",
-                drawTicks: false,
-                display: false,
+                drawTicks: true,
+                display: true,
                 drawBorder: false
               })]
             },
@@ -4512,150 +4517,7 @@ function _defineProperty(obj, key, value) {
               }
             }
           }
-        }); //==============================================================================
-
-        ctx = document.getElementById('lineChartExampleWithNumbersAndGrid').getContext("2d");
-        gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
-        gradientStroke.addColorStop(0, '#18ce0f');
-        gradientStroke.addColorStop(1, chartColor);
-        gradientFill = ctx.createLinearGradient(0, 170, 0, 50);
-        gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
-        gradientFill.addColorStop(1, hexToRGB('#18ce0f', 0.4));
-        myChart = new Chart(ctx, {
-          type: 'line',
-          responsive: true,
-          data: {
-            labels: ["12pm,", "3pm", "6pm", "9pm", "12am", "3am", "6am", "9am"],
-            datasets: [{
-              label: "Email Stats",
-              borderColor: "#18ce0f",
-              pointBorderColor: "#FFF",
-              pointBackgroundColor: "#18ce0f",
-              pointBorderWidth: 2,
-              pointHoverRadius: 4,
-              pointHoverBorderWidth: 1,
-              pointRadius: 4,
-              fill: true,
-              backgroundColor: gradientFill,
-              borderWidth: 2,
-              data: [40, 500, 650, 700, 1200, 1250, 1300, 1900]
-            }]
-          },
-          options: {
-            maintainAspectRatio: false,
-            legend: {
-              display: false
-            },
-            tooltips: {
-              bodySpacing: 4,
-              mode: "nearest",
-              intersect: 0,
-              position: "nearest",
-              xPadding: 10,
-              yPadding: 10,
-              caretPadding: 10
-            },
-            responsive: true,
-            scales: {
-              yAxes: [_defineProperty({
-                gridLines: 0
-              }, "gridLines", {
-                zeroLineColor: "transparent",
-                drawBorder: false
-              })],
-              xAxes: [_defineProperty({
-                display: 0,
-                gridLines: 0,
-                ticks: {
-                  display: false
-                }
-              }, "gridLines", {
-                zeroLineColor: "transparent",
-                drawTicks: false,
-                display: false,
-                drawBorder: false
-              })]
-            },
-            layout: {
-              padding: {
-                left: 0,
-                right: 0,
-                top: 15,
-                bottom: 15
-              }
-            }
-          }
-        }); //===================================================================================
-
-        var e = document.getElementById("barChartSimpleGradientsNumbers").getContext("2d");
-        gradientFill = ctx.createLinearGradient(0, 170, 0, 50);
-        gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
-        gradientFill.addColorStop(1, hexToRGB('#2CA8FF', 0.6));
-        var a = {
-          type: "bar",
-          data: {
-            labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-            datasets: [{
-              label: "Active Countries",
-              backgroundColor: gradientFill,
-              borderColor: "#2CA8FF",
-              pointBorderColor: "#FFF",
-              pointBackgroundColor: "#2CA8FF",
-              pointBorderWidth: 2,
-              pointHoverRadius: 4,
-              pointHoverBorderWidth: 1,
-              pointRadius: 4,
-              fill: true,
-              borderWidth: 1,
-              data: [80, 99, 86, 96, 123, 85, 100, 75, 88, 90, 123, 155]
-            }]
-          },
-          options: {
-            maintainAspectRatio: false,
-            legend: {
-              display: false
-            },
-            tooltips: {
-              bodySpacing: 4,
-              mode: "nearest",
-              intersect: 0,
-              position: "nearest",
-              xPadding: 10,
-              yPadding: 10,
-              caretPadding: 10
-            },
-            responsive: 1,
-            scales: {
-              yAxes: [_defineProperty({
-                gridLines: 0
-              }, "gridLines", {
-                zeroLineColor: "transparent",
-                drawBorder: false
-              })],
-              xAxes: [_defineProperty({
-                display: 0,
-                gridLines: 0,
-                ticks: {
-                  display: false
-                }
-              }, "gridLines", {
-                zeroLineColor: "transparent",
-                drawTicks: false,
-                display: false,
-                drawBorder: false
-              })]
-            },
-            layout: {
-              padding: {
-                left: 0,
-                right: 0,
-                top: 15,
-                bottom: 15
-              }
-            }
-          }
-        };
-        var viewsChart = new Chart(e, a);
+        });
       });
     }
   }
@@ -11733,6 +11595,25 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 // module
 exports.push([module.i, "\n.table-convenients-id{\r\n  width: 5%;\n}\n.table-convenients-name{\r\n  width: 70%;\n}\n.table-convenients-actions{\r\n  width: 25%;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/Dashboard.vue?vue&type=style&index=0&lang=css&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/Dashboard.vue?vue&type=style&index=0&lang=css& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.card-stats .statistics {\r\n  position: relative;\r\n  text-align: center;\r\n  padding: 15px 0;\n}\n.card-stats .icon {\r\n  display: inline-block;\r\n  vertical-align: top;\r\n  margin: 0 15px;\n}\n.info .info-title {\r\n  margin: 15px 0 5px;\r\n  padding: 0 15px;\r\n  color: #2c2c2c;\r\n  font-weight: 700;\n}\n.card-stats .statistics .stats-title {\r\n  margin-bottom: 5px;\r\n  color: #9a9a9a;\r\n  font-weight: 400;\n}\n.card-stats [class*=\"col-\"]:not(:last-child) .statistics:after {\r\n  position: absolute;\r\n  right: -15px;\r\n  top: 20px;\r\n  width: 1px;\r\n  height: calc(100% - 40px);\r\n  content: \"\";\r\n  background: #ddd;\n}\n.info .icon > i {\r\n  font-size: 2.3em;\n}\r\n", ""]);
 
 // exports
 
@@ -43071,6 +42952,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/Dashboard.vue?vue&type=style&index=0&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/Dashboard.vue?vue&type=style&index=0&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--7-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--7-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Dashboard.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/Dashboard.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/fuel/Fuel.vue?vue&type=style&index=0&lang=css&":
 /*!*******************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/fuel/Fuel.vue?vue&type=style&index=0&lang=css& ***!
@@ -46631,6 +46542,30 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/BigChart.vue?vue&type=template&id=33f4a504&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/BigChart.vue?vue&type=template&id=33f4a504& ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("canvas", { attrs: { id: "bigDashboardChart" } })
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/Dashboard.vue?vue&type=template&id=376ddb84&":
 /*!**********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/Dashboard.vue?vue&type=template&id=376ddb84& ***!
@@ -46646,579 +46581,67 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", { staticClass: "panel-header panel-header-lg" }, [
-        _c("canvas", { attrs: { id: "bigDashboardChart" } })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "content" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-lg-4" }, [
-            _c("div", { staticClass: "card card-chart" }, [
-              _c("div", { staticClass: "card-header" }, [
-                _c("h5", { staticClass: "card-category" }, [
-                  _vm._v("Global Sales")
-                ]),
-                _vm._v(" "),
-                _c("h4", { staticClass: "card-title" }, [
-                  _vm._v("Shipped Products")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "dropdown" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret",
-                      attrs: { type: "button", "data-toggle": "dropdown" }
-                    },
-                    [_c("i", { staticClass: "now-ui-icons loader_gear" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "dropdown-menu dropdown-menu-right" },
-                    [
-                      _c(
-                        "a",
-                        { staticClass: "dropdown-item", attrs: { href: "#" } },
-                        [_vm._v("Action")]
-                      ),
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "panel-header panel-header-lg" },
+      [_c("big-chart", { attrs: { data: _vm.carPerMonth } })],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "content" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "card card-stats" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-4" }, [
+                  _c("div", { staticClass: "statistics" }, [
+                    _c("div", { staticClass: "info" }, [
+                      _vm._m(0),
                       _vm._v(" "),
-                      _c(
-                        "a",
-                        { staticClass: "dropdown-item", attrs: { href: "#" } },
-                        [_vm._v("Another action")]
-                      ),
+                      _c("h3", { staticClass: "info-title" }, [
+                        _vm._v(
+                          "\n                      " +
+                            _vm._s(_vm.carCountAll) +
+                            "\n                    "
+                        )
+                      ]),
                       _vm._v(" "),
-                      _c(
-                        "a",
-                        { staticClass: "dropdown-item", attrs: { href: "#" } },
-                        [_vm._v("Something else here")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "dropdown-item text-danger",
-                          attrs: { href: "#" }
-                        },
-                        [_vm._v("Remove Data")]
-                      )
-                    ]
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body" }, [
-                _c("div", { staticClass: "chart-area" }, [
-                  _c("canvas", { attrs: { id: "lineChartExample" } })
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-footer" }, [
-                _c("div", { staticClass: "stats" }, [
-                  _c("i", { staticClass: "now-ui-icons arrows-1_refresh-69" }),
-                  _vm._v(" Just Updated\n            ")
-                ])
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-4 col-md-6" }, [
-            _c("div", { staticClass: "card card-chart" }, [
-              _c("div", { staticClass: "card-header" }, [
-                _c("h5", { staticClass: "card-category" }, [
-                  _vm._v("2018 Sales")
-                ]),
-                _vm._v(" "),
-                _c("h4", { staticClass: "card-title" }, [
-                  _vm._v("All products")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "dropdown" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret",
-                      attrs: { type: "button", "data-toggle": "dropdown" }
-                    },
-                    [_c("i", { staticClass: "now-ui-icons loader_gear" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "dropdown-menu dropdown-menu-right" },
-                    [
-                      _c(
-                        "a",
-                        { staticClass: "dropdown-item", attrs: { href: "#" } },
-                        [_vm._v("Action")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "a",
-                        { staticClass: "dropdown-item", attrs: { href: "#" } },
-                        [_vm._v("Another action")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "a",
-                        { staticClass: "dropdown-item", attrs: { href: "#" } },
-                        [_vm._v("Something else here")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "dropdown-item text-danger",
-                          attrs: { href: "#" }
-                        },
-                        [_vm._v("Remove Data")]
-                      )
-                    ]
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body" }, [
-                _c("div", { staticClass: "chart-area" }, [
-                  _c("canvas", {
-                    attrs: { id: "lineChartExampleWithNumbersAndGrid" }
-                  })
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-footer" }, [
-                _c("div", { staticClass: "stats" }, [
-                  _c("i", { staticClass: "now-ui-icons arrows-1_refresh-69" }),
-                  _vm._v(" Just Updated\n            ")
-                ])
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-4 col-md-6" }, [
-            _c("div", { staticClass: "card card-chart" }, [
-              _c("div", { staticClass: "card-header" }, [
-                _c("h5", { staticClass: "card-category" }, [
-                  _vm._v("Email Statistics")
-                ]),
-                _vm._v(" "),
-                _c("h4", { staticClass: "card-title" }, [
-                  _vm._v("24 Hours Performance")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body" }, [
-                _c("div", { staticClass: "chart-area" }, [
-                  _c("canvas", {
-                    attrs: { id: "barChartSimpleGradientsNumbers" }
-                  })
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-footer" }, [
-                _c("div", { staticClass: "stats" }, [
-                  _c("i", { staticClass: "now-ui-icons ui-2_time-alarm" }),
-                  _vm._v(" Last 7 days\n            ")
-                ])
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-6" }, [
-            _c("div", { staticClass: "card  card-tasks" }, [
-              _c("div", { staticClass: "card-header " }, [
-                _c("h5", { staticClass: "card-category" }, [
-                  _vm._v("Backend development")
-                ]),
-                _vm._v(" "),
-                _c("h4", { staticClass: "card-title" }, [_vm._v("Tasks")])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body " }, [
-                _c(
-                  "div",
-                  { staticClass: "table-full-width table-responsive" },
-                  [
-                    _c("table", { staticClass: "table" }, [
-                      _c("tbody", [
-                        _c("tr", [
-                          _c("td", [
-                            _c("div", { staticClass: "form-check" }, [
-                              _c("label", { staticClass: "form-check-label" }, [
-                                _c("input", {
-                                  staticClass: "form-check-input",
-                                  attrs: { type: "checkbox", checked: "" }
-                                }),
-                                _vm._v(" "),
-                                _c("span", { staticClass: "form-check-sign" })
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("td", { staticClass: "text-left" }, [
-                            _vm._v(
-                              'Sign contract for "What are conference organizers afraid of?"'
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("td", { staticClass: "td-actions text-right" }, [
-                            _c(
-                              "button",
-                              {
-                                staticClass:
-                                  "btn btn-info btn-round btn-icon btn-icon-mini btn-neutral",
-                                attrs: {
-                                  type: "button",
-                                  rel: "tooltip",
-                                  title: "",
-                                  "data-original-title": "Edit Task"
-                                }
-                              },
-                              [
-                                _c("i", {
-                                  staticClass: "now-ui-icons ui-2_settings-90"
-                                })
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass:
-                                  "btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral",
-                                attrs: {
-                                  type: "button",
-                                  rel: "tooltip",
-                                  title: "",
-                                  "data-original-title": "Remove"
-                                }
-                              },
-                              [
-                                _c("i", {
-                                  staticClass: "now-ui-icons ui-1_simple-remove"
-                                })
-                              ]
-                            )
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("tr", [
-                          _c("td", [
-                            _c("div", { staticClass: "form-check" }, [
-                              _c("label", { staticClass: "form-check-label" }, [
-                                _c("input", {
-                                  staticClass: "form-check-input",
-                                  attrs: { type: "checkbox" }
-                                }),
-                                _vm._v(" "),
-                                _c("span", { staticClass: "form-check-sign" })
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("td", { staticClass: "text-left" }, [
-                            _vm._v(
-                              "Lines From Great Russian Literature? Or E-mails From My Boss?"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("td", { staticClass: "td-actions text-right" }, [
-                            _c(
-                              "button",
-                              {
-                                staticClass:
-                                  "btn btn-info btn-round btn-icon btn-icon-mini btn-neutral",
-                                attrs: {
-                                  type: "button",
-                                  rel: "tooltip",
-                                  title: "",
-                                  "data-original-title": "Edit Task"
-                                }
-                              },
-                              [
-                                _c("i", {
-                                  staticClass: "now-ui-icons ui-2_settings-90"
-                                })
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass:
-                                  "btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral",
-                                attrs: {
-                                  type: "button",
-                                  rel: "tooltip",
-                                  title: "",
-                                  "data-original-title": "Remove"
-                                }
-                              },
-                              [
-                                _c("i", {
-                                  staticClass: "now-ui-icons ui-1_simple-remove"
-                                })
-                              ]
-                            )
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("tr", [
-                          _c("td", [
-                            _c("div", { staticClass: "form-check" }, [
-                              _c("label", { staticClass: "form-check-label" }, [
-                                _c("input", {
-                                  staticClass: "form-check-input",
-                                  attrs: { type: "checkbox", checked: "" }
-                                }),
-                                _vm._v(" "),
-                                _c("span", { staticClass: "form-check-sign" })
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("td", { staticClass: "text-left" }, [
-                            _vm._v(
-                              "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit\n                    "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("td", { staticClass: "td-actions text-right" }, [
-                            _c(
-                              "button",
-                              {
-                                staticClass:
-                                  "btn btn-info btn-round btn-icon btn-icon-mini btn-neutral",
-                                attrs: {
-                                  type: "button",
-                                  rel: "tooltip",
-                                  title: "",
-                                  "data-original-title": "Edit Task"
-                                }
-                              },
-                              [
-                                _c("i", {
-                                  staticClass: "now-ui-icons ui-2_settings-90"
-                                })
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass:
-                                  "btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral",
-                                attrs: {
-                                  type: "button",
-                                  rel: "tooltip",
-                                  title: "",
-                                  "data-original-title": "Remove"
-                                }
-                              },
-                              [
-                                _c("i", {
-                                  staticClass: "now-ui-icons ui-1_simple-remove"
-                                })
-                              ]
-                            )
-                          ])
-                        ])
+                      _c("h6", { staticClass: "stats-title" }, [
+                        _vm._v("Mẫu tin")
                       ])
                     ])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-footer " }, [
-                _c("hr"),
-                _vm._v(" "),
-                _c("div", { staticClass: "stats" }, [
-                  _c("i", { staticClass: "now-ui-icons loader_refresh spin" }),
-                  _vm._v(" Updated 3 minutes ago\n            ")
-                ])
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-6" }, [
-            _c("div", { staticClass: "card" }, [
-              _c("div", { staticClass: "card-header" }, [
-                _c("h5", { staticClass: "card-category" }, [
-                  _vm._v("All Persons List")
+                  ])
                 ]),
                 _vm._v(" "),
-                _c("h4", { staticClass: "card-title" }, [
-                  _vm._v(" Employees Stats")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body" }, [
-                _c("div", { staticClass: "table-responsive" }, [
-                  _c("table", { staticClass: "table" }, [
-                    _c("thead", { staticClass: " text-primary" }, [
-                      _c("th", [
-                        _vm._v("\n                    Name\n                  ")
+                _c("div", { staticClass: "col-md-4" }, [
+                  _c("div", { staticClass: "statistics" }, [
+                    _c("div", { staticClass: "info" }, [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c("h3", { staticClass: "info-title" }, [
+                        _vm._v(_vm._s(_vm.userCountAll))
                       ]),
                       _vm._v(" "),
-                      _c("th", [
-                        _vm._v(
-                          "\n                    Country\n                  "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("th", [
-                        _vm._v("\n                    City\n                  ")
-                      ]),
-                      _vm._v(" "),
-                      _c("th", { staticClass: "text-right" }, [
-                        _vm._v(
-                          "\n                    Salary\n                  "
-                        )
+                      _c("h6", { staticClass: "stats-title" }, [
+                        _vm._v("Khách hàng")
                       ])
-                    ]),
-                    _vm._v(" "),
-                    _c("tbody", [
-                      _c("tr", [
-                        _c("td", [
-                          _vm._v(
-                            "\n                      Dakota Rice\n                    "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            "\n                      Niger\n                    "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            "\n                      Oud-Turnhout\n                    "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "text-right" }, [
-                          _vm._v(
-                            "\n                      $36,738\n                    "
-                          )
-                        ])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-4" }, [
+                  _c("div", { staticClass: "statistics" }, [
+                    _c("div", { staticClass: "info" }, [
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c("h3", { staticClass: "info-title" }, [
+                        _vm._v(_vm._s(_vm.contactCountAll))
                       ]),
                       _vm._v(" "),
-                      _c("tr", [
-                        _c("td", [
-                          _vm._v(
-                            "\n                      Minerva Hooper\n                    "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            "\n                      Curaçao\n                    "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            "\n                      Sinaai-Waas\n                    "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "text-right" }, [
-                          _vm._v(
-                            "\n                      $23,789\n                    "
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("td", [
-                          _vm._v(
-                            "\n                      Sage Rodriguez\n                    "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            "\n                      Netherlands\n                    "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            "\n                      Baileux\n                    "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "text-right" }, [
-                          _vm._v(
-                            "\n                      $56,142\n                    "
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("td", [
-                          _vm._v(
-                            "\n                      Doris Greene\n                    "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            "\n                      Malawi\n                    "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            "\n                      Feldkirchen in Kärnten\n                    "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "text-right" }, [
-                          _vm._v(
-                            "\n                      $63,542\n                    "
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("td", [
-                          _vm._v(
-                            "\n                      Mason Porter\n                    "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            "\n                      Chile\n                    "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            "\n                      Gloucester\n                    "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "text-right" }, [
-                          _vm._v(
-                            "\n                      $78,615\n                    "
-                          )
-                        ])
+                      _c("h6", { staticClass: "stats-title" }, [
+                        _vm._v("Liên hệ")
                       ])
                     ])
                   ])
@@ -47227,6 +46650,188 @@ var staticRenderFns = [
             ])
           ])
         ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "col-lg-4" },
+          [
+            _c("small-chart", {
+              attrs: {
+                canvas: "carActivePerMonth",
+                category: "Mẫu tin được duyệt",
+                title: _vm.carActiveCount + " / " + _vm.carCount,
+                label: "Đã duyệt",
+                color: "#18ce0f",
+                yAxes: true,
+                xAxes: false,
+                bgColor: "rgba(24, 206, 15, 0.4)",
+                data: _vm.carActivePerMonth
+              }
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-lg-4 col-md-6" },
+          [
+            _c("small-chart", {
+              attrs: {
+                canvas: "userPerMonth",
+                category: "Số khách hàng",
+                title: _vm.userCount,
+                label: "Khách hàng",
+                color: "#f96332",
+                yAxes: false,
+                xAxes: false,
+                bgColor: "rgba(249, 99, 59, 0.4)",
+                data: _vm.userPerMonth
+              }
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-lg-4 col-md-6" },
+          [
+            _c("small-chart", {
+              attrs: {
+                canvas: "contactPerMonth",
+                category: "Số liên hệ",
+                title: _vm.contactCount,
+                label: "Liên hệ",
+                type: "bar",
+                color: "#2CA8FF",
+                yAxes: true,
+                xAxes: false,
+                bgColor: "rgba(44, 168, 255, 0.6)",
+                data: _vm.contactPerMonth
+              }
+            })
+          ],
+          1
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "icon text-success" }, [
+      _c("i", { staticClass: "now-ui-icons business_money-coins" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "icon text-primary" }, [
+      _c("i", { staticClass: "now-ui-icons users_single-02" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "icon text-info" }, [
+      _c("i", { staticClass: "now-ui-icons ui-1_email-85" })
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/SmallChart.vue?vue&type=template&id=56a8b15d&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/SmallChart.vue?vue&type=template&id=56a8b15d& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "card card-chart" }, [
+    _c("div", { staticClass: "card-header" }, [
+      _c("h5", { staticClass: "card-category" }, [
+        _vm._v(_vm._s(_vm.category))
+      ]),
+      _vm._v(" "),
+      _c("h4", { staticClass: "card-title" }, [_vm._v(_vm._s(_vm.title))]),
+      _vm._v(" "),
+      _vm._m(0)
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-body" }, [
+      _c("div", { staticClass: "chart-area" }, [
+        _c("canvas", { attrs: { id: _vm.canvas } })
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(1)
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "dropdown" }, [
+      _c(
+        "button",
+        {
+          staticClass:
+            "btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret",
+          attrs: { type: "button", "data-toggle": "dropdown" }
+        },
+        [_c("i", { staticClass: "now-ui-icons loader_gear" })]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "dropdown-menu dropdown-menu-right" }, [
+        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+          _vm._v("Action")
+        ]),
+        _vm._v(" "),
+        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+          _vm._v("Another action")
+        ]),
+        _vm._v(" "),
+        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+          _vm._v("Something else here")
+        ]),
+        _vm._v(" "),
+        _c(
+          "a",
+          { staticClass: "dropdown-item text-danger", attrs: { href: "#" } },
+          [_vm._v("Remove Data")]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-footer" }, [
+      _c("div", { staticClass: "stats" }, [
+        _c("i", { staticClass: "now-ui-icons arrows-1_refresh-69" }),
+        _vm._v(" Just Updated\n    ")
       ])
     ])
   }
@@ -47610,7 +47215,30 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "wrapper " }, [
     _c("div", { staticClass: "sidebar", attrs: { "data-color": "orange" } }, [
-      _vm._m(0),
+      _c(
+        "div",
+        { staticClass: "logo" },
+        [
+          _c(
+            "router-link",
+            {
+              staticClass: "simple-text logo-mini",
+              attrs: { to: { name: "dashboard" } }
+            },
+            [_vm._v("\n        CA\n      ")]
+          ),
+          _vm._v(" "),
+          _c(
+            "router-link",
+            {
+              staticClass: "simple-text logo-normal",
+              attrs: { to: { name: "dashboard" } }
+            },
+            [_vm._v("\n        Cars | Admin\n      ")]
+          )
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "div",
@@ -47636,7 +47264,7 @@ var render = function() {
               _vm._v(" "),
               _c("router-link", { attrs: { tag: "li", to: { name: "car" } } }, [
                 _c("a", { attrs: { href: "#" } }, [
-                  _c("i", { staticClass: "now-ui-icons design_app" }),
+                  _c("i", { staticClass: "now-ui-icons business_money-coins" }),
                   _vm._v(" "),
                   _c("p", [_vm._v("Mẫu tin")])
                 ])
@@ -47647,7 +47275,7 @@ var render = function() {
                 { attrs: { tag: "li", to: { name: "user" } } },
                 [
                   _c("a", { attrs: { href: "#" } }, [
-                    _c("i", { staticClass: "now-ui-icons design_app" }),
+                    _c("i", { staticClass: "now-ui-icons users_single-02" }),
                     _vm._v(" "),
                     _c("p", [_vm._v("Người dùng")])
                   ])
@@ -47659,7 +47287,7 @@ var render = function() {
                 { attrs: { tag: "li", to: { name: "contact" } } },
                 [
                   _c("a", { attrs: { href: "#" } }, [
-                    _c("i", { staticClass: "now-ui-icons design_app" }),
+                    _c("i", { staticClass: "now-ui-icons ui-1_email-85" }),
                     _vm._v(" "),
                     _c("p", [_vm._v("Liên hệ")])
                   ])
@@ -47673,7 +47301,7 @@ var render = function() {
                 { attrs: { tag: "li", to: { name: "brand" } } },
                 [
                   _c("a", { attrs: { href: "#" } }, [
-                    _c("i", { staticClass: "now-ui-icons design_app" }),
+                    _c("i", { staticClass: "now-ui-icons objects_diamond" }),
                     _vm._v(" "),
                     _c("p", [_vm._v("Thương hiệu")])
                   ])
@@ -47685,7 +47313,9 @@ var render = function() {
                 { attrs: { tag: "li", to: { name: "type" } } },
                 [
                   _c("a", { attrs: { href: "#" } }, [
-                    _c("i", { staticClass: "now-ui-icons design_app" }),
+                    _c("i", {
+                      staticClass: "now-ui-icons shopping_tag-content"
+                    }),
                     _vm._v(" "),
                     _c("p", [_vm._v("Dòng xe")])
                   ])
@@ -47697,7 +47327,7 @@ var render = function() {
                 { attrs: { tag: "li", to: { name: "style" } } },
                 [
                   _c("a", { attrs: { href: "#" } }, [
-                    _c("i", { staticClass: "now-ui-icons design_app" }),
+                    _c("i", { staticClass: "now-ui-icons education_glasses" }),
                     _vm._v(" "),
                     _c("p", [_vm._v("Kiểu dáng")])
                   ])
@@ -47709,7 +47339,7 @@ var render = function() {
                 { attrs: { tag: "li", to: { name: "color" } } },
                 [
                   _c("a", { attrs: { href: "#" } }, [
-                    _c("i", { staticClass: "now-ui-icons design_app" }),
+                    _c("i", { staticClass: "now-ui-icons design_palette" }),
                     _vm._v(" "),
                     _c("p", [_vm._v("Màu xe")])
                   ])
@@ -47721,7 +47351,7 @@ var render = function() {
                 { attrs: { tag: "li", to: { name: "condition" } } },
                 [
                   _c("a", { attrs: { href: "#" } }, [
-                    _c("i", { staticClass: "now-ui-icons design_app" }),
+                    _c("i", { staticClass: "now-ui-icons media-2_sound-wave" }),
                     _vm._v(" "),
                     _c("p", [_vm._v("Tình trạng")])
                   ])
@@ -47733,7 +47363,7 @@ var render = function() {
                 { attrs: { tag: "li", to: { name: "origin" } } },
                 [
                   _c("a", { attrs: { href: "#" } }, [
-                    _c("i", { staticClass: "now-ui-icons design_app" }),
+                    _c("i", { staticClass: "now-ui-icons location_world" }),
                     _vm._v(" "),
                     _c("p", [_vm._v("Nguồn gốc")])
                   ])
@@ -47745,7 +47375,7 @@ var render = function() {
                 { attrs: { tag: "li", to: { name: "fuel" } } },
                 [
                   _c("a", { attrs: { href: "#" } }, [
-                    _c("i", { staticClass: "now-ui-icons design_app" }),
+                    _c("i", { staticClass: "now-ui-icons education_atom" }),
                     _vm._v(" "),
                     _c("p", [_vm._v("Nhiên liệu")])
                   ])
@@ -47757,7 +47387,7 @@ var render = function() {
                 { attrs: { tag: "li", to: { name: "transmission" } } },
                 [
                   _c("a", { attrs: { href: "#" } }, [
-                    _c("i", { staticClass: "now-ui-icons design_app" }),
+                    _c("i", { staticClass: "now-ui-icons objects_spaceship" }),
                     _vm._v(" "),
                     _c("p", [_vm._v("Hộp số")])
                   ])
@@ -47769,7 +47399,7 @@ var render = function() {
                 { attrs: { tag: "li", to: { name: "convenient" } } },
                 [
                   _c("a", { attrs: { href: "#" } }, [
-                    _c("i", { staticClass: "now-ui-icons design_app" }),
+                    _c("i", { staticClass: "now-ui-icons ui-2_like" }),
                     _vm._v(" "),
                     _c("p", [_vm._v("Tiện nghi")])
                   ])
@@ -47796,9 +47426,9 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "container-fluid" }, [
-              _vm._m(1),
+              _vm._m(0),
               _vm._v(" "),
-              _vm._m(2),
+              _vm._m(1),
               _vm._v(" "),
               _c(
                 "div",
@@ -47807,15 +47437,15 @@ var render = function() {
                   attrs: { id: "navigation" }
                 },
                 [
-                  _vm._m(3),
+                  _vm._m(2),
                   _vm._v(" "),
                   _c("ul", { staticClass: "navbar-nav" }, [
+                    _vm._m(3),
+                    _vm._v(" "),
                     _vm._m(4),
                     _vm._v(" "),
-                    _vm._m(5),
-                    _vm._v(" "),
                     _c("li", { staticClass: "nav-item dropdown" }, [
-                      _vm._m(6),
+                      _vm._m(5),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -47872,7 +47502,7 @@ var render = function() {
         _vm._v(" "),
         _c("footer", { staticClass: "footer" }, [
           _c("div", { staticClass: " container-fluid " }, [
-            _vm._m(7),
+            _vm._m(6),
             _vm._v(" "),
             _c(
               "div",
@@ -47900,30 +47530,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "logo" }, [
-      _c(
-        "a",
-        {
-          staticClass: "simple-text logo-mini",
-          attrs: { href: "http://www.creative-tim.com" }
-        },
-        [_vm._v("\n        CT\n      ")]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "simple-text logo-normal",
-          attrs: { href: "http://www.creative-tim.com" }
-        },
-        [_vm._v("\n        Creative Tim\n      ")]
-      )
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -67469,6 +67075,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/dashboard/BigChart.vue":
+/*!********************************************************!*\
+  !*** ./resources/js/components/dashboard/BigChart.vue ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _BigChart_vue_vue_type_template_id_33f4a504___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BigChart.vue?vue&type=template&id=33f4a504& */ "./resources/js/components/dashboard/BigChart.vue?vue&type=template&id=33f4a504&");
+/* harmony import */ var _BigChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BigChart.vue?vue&type=script&lang=js& */ "./resources/js/components/dashboard/BigChart.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _BigChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _BigChart_vue_vue_type_template_id_33f4a504___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _BigChart_vue_vue_type_template_id_33f4a504___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/dashboard/BigChart.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/dashboard/BigChart.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/dashboard/BigChart.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_babel_loader_lib_index_js_ref_12_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BigChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/babel-loader/lib??ref--12-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./BigChart.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/BigChart.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_babel_loader_lib_index_js_ref_12_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BigChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/dashboard/BigChart.vue?vue&type=template&id=33f4a504&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/dashboard/BigChart.vue?vue&type=template&id=33f4a504& ***!
+  \***************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BigChart_vue_vue_type_template_id_33f4a504___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./BigChart.vue?vue&type=template&id=33f4a504& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/BigChart.vue?vue&type=template&id=33f4a504&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BigChart_vue_vue_type_template_id_33f4a504___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BigChart_vue_vue_type_template_id_33f4a504___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/dashboard/Dashboard.vue":
 /*!*********************************************************!*\
   !*** ./resources/js/components/dashboard/Dashboard.vue ***!
@@ -67480,7 +67155,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Dashboard_vue_vue_type_template_id_376ddb84___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=template&id=376ddb84& */ "./resources/js/components/dashboard/Dashboard.vue?vue&type=template&id=376ddb84&");
 /* harmony import */ var _Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=script&lang=js& */ "./resources/js/components/dashboard/Dashboard.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _Dashboard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/dashboard/Dashboard.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -67488,7 +67165,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _Dashboard_vue_vue_type_template_id_376ddb84___WEBPACK_IMPORTED_MODULE_0__["render"],
   _Dashboard_vue_vue_type_template_id_376ddb84___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -67520,6 +67197,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/dashboard/Dashboard.vue?vue&type=style&index=0&lang=css&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/dashboard/Dashboard.vue?vue&type=style&index=0&lang=css& ***!
+  \******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--7-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--7-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Dashboard.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/Dashboard.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
 /***/ "./resources/js/components/dashboard/Dashboard.vue?vue&type=template&id=376ddb84&":
 /*!****************************************************************************************!*\
   !*** ./resources/js/components/dashboard/Dashboard.vue?vue&type=template&id=376ddb84& ***!
@@ -67533,6 +67226,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_376ddb84___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_376ddb84___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/dashboard/SmallChart.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/dashboard/SmallChart.vue ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SmallChart_vue_vue_type_template_id_56a8b15d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SmallChart.vue?vue&type=template&id=56a8b15d& */ "./resources/js/components/dashboard/SmallChart.vue?vue&type=template&id=56a8b15d&");
+/* harmony import */ var _SmallChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SmallChart.vue?vue&type=script&lang=js& */ "./resources/js/components/dashboard/SmallChart.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _SmallChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SmallChart_vue_vue_type_template_id_56a8b15d___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SmallChart_vue_vue_type_template_id_56a8b15d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/dashboard/SmallChart.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/dashboard/SmallChart.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/dashboard/SmallChart.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_babel_loader_lib_index_js_ref_12_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SmallChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/babel-loader/lib??ref--12-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./SmallChart.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/SmallChart.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_babel_loader_lib_index_js_ref_12_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SmallChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/dashboard/SmallChart.vue?vue&type=template&id=56a8b15d&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/dashboard/SmallChart.vue?vue&type=template&id=56a8b15d& ***!
+  \*****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SmallChart_vue_vue_type_template_id_56a8b15d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./SmallChart.vue?vue&type=template&id=56a8b15d& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/SmallChart.vue?vue&type=template&id=56a8b15d&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SmallChart_vue_vue_type_template_id_56a8b15d___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SmallChart_vue_vue_type_template_id_56a8b15d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -69604,7 +69366,9 @@ __webpack_require__.r(__webpack_exports__);
 var state = {
   cars: {},
   car: {},
-  carChartDatas: []
+  carCount: 'Đang tải...',
+  carPerMonth: [],
+  carActivePerMonth: []
 };
 var getters = {
   cars: function cars(state) {
@@ -69613,8 +69377,14 @@ var getters = {
   car: function car(state) {
     return state.car;
   },
-  carChartDatas: function carChartDatas(state) {
-    return state.carChartDatas;
+  carCount: function carCount(state) {
+    return state.carCount;
+  },
+  carPerMonth: function carPerMonth(state) {
+    return state.carPerMonth;
+  },
+  carActivePerMonth: function carActivePerMonth(state) {
+    return state.carActivePerMonth;
   },
   carsPagination: function carsPagination(state) {
     return state.cars;
@@ -69624,11 +69394,17 @@ var mutations = {
   retrieveCars: function retrieveCars(state, data) {
     state.cars = data;
   },
-  countPerMonth: function countPerMonth(state, data) {
-    state.carChartDatas = data;
-  },
   getCar: function getCar(state, data) {
     state.car = data;
+  },
+  carCount: function carCount(state, data) {
+    state.carCount = data;
+  },
+  carPerMonth: function carPerMonth(state, data) {
+    state.carPerMonth = data;
+  },
+  carActivePerMonth: function carActivePerMonth(state, data) {
+    state.carActivePerMonth = data;
   },
   updateCar: function updateCar(state, data) {
     if (!$.isEmptyObject(state.cars)) {
@@ -69689,23 +69465,52 @@ var actions = {
       }
     });
   },
-  countPerMonth: function countPerMonth(_ref3) {
+  carCount: function carCount(_ref3) {
     var commit = _ref3.commit;
     $.ajax({
       url: '/admin/api/car/count',
       type: "GET",
       dataType: "json",
       success: function success(data) {
-        commit('countPerMonth', data);
+        commit('carCount', data);
       },
       error: function error(errors) {
         console.log(errors);
       }
     });
   },
-  approveCar: function approveCar(_ref4, id) {
-    var commit = _ref4.commit,
-        rootGetters = _ref4.rootGetters;
+  carPerMonth: function carPerMonth(_ref4) {
+    var commit = _ref4.commit;
+    $.ajax({
+      url: '/admin/api/car/countPerMonth',
+      type: "GET",
+      dataType: "json",
+      success: function success(data) {
+        commit('carPerMonth', data);
+      },
+      error: function error(errors) {
+        console.log(errors);
+      }
+    });
+  },
+  carActivePerMonth: function carActivePerMonth(_ref5) {
+    var commit = _ref5.commit;
+    $.ajax({
+      url: '/admin/api/car/countActivePerMonth',
+      type: "GET",
+      dataType: "json",
+      success: function success(data) {
+        console.log(data);
+        commit('carActivePerMonth', data);
+      },
+      error: function error(errors) {
+        console.log(errors);
+      }
+    });
+  },
+  approveCar: function approveCar(_ref6, id) {
+    var commit = _ref6.commit,
+        rootGetters = _ref6.rootGetters;
     $.ajax({
       headers: {
         'X-CSRF-TOKEN': rootGetters.csrf
@@ -69744,9 +69549,9 @@ var actions = {
       }
     });
   },
-  denyCar: function denyCar(_ref5, id) {
-    var commit = _ref5.commit,
-        rootGetters = _ref5.rootGetters;
+  denyCar: function denyCar(_ref7, id) {
+    var commit = _ref7.commit,
+        rootGetters = _ref7.rootGetters;
     $.ajax({
       headers: {
         'X-CSRF-TOKEN': rootGetters.csrf
@@ -69785,10 +69590,10 @@ var actions = {
       }
     });
   },
-  deleteCar: function deleteCar(_ref6, id) {
-    var state = _ref6.state,
-        commit = _ref6.commit,
-        rootGetters = _ref6.rootGetters;
+  deleteCar: function deleteCar(_ref8, id) {
+    var state = _ref8.state,
+        commit = _ref8.commit,
+        rootGetters = _ref8.rootGetters;
     $.ajax({
       headers: {
         'X-CSRF-TOKEN': rootGetters.csrf
@@ -70233,11 +70038,19 @@ var actions = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var state = {
-  contacts: {}
+  contacts: {},
+  contactCount: 'Đang tải...',
+  contactPerMonth: []
 };
 var getters = {
   contacts: function contacts(state) {
     return state.contacts.data;
+  },
+  contactCount: function contactCount(state) {
+    return state.contactCount;
+  },
+  contactPerMonth: function contactPerMonth(state) {
+    return state.contactPerMonth;
   },
   contactsPagination: function contactsPagination(state) {
     return state.contacts;
@@ -70246,6 +70059,12 @@ var getters = {
 var mutations = {
   retrieveContacts: function retrieveContacts(state, data) {
     state.contacts = data;
+  },
+  contactCount: function contactCount(state, data) {
+    state.contactCount = data;
+  },
+  contactPerMonth: function contactPerMonth(state, data) {
+    state.contactPerMonth = data;
   }
 };
 var actions = {
@@ -70257,6 +70076,34 @@ var actions = {
       dataType: "json",
       success: function success(data) {
         commit('retrieveContacts', data);
+      },
+      error: function error(errors) {
+        console.log(errors);
+      }
+    });
+  },
+  contactCount: function contactCount(_ref2) {
+    var commit = _ref2.commit;
+    $.ajax({
+      url: '/admin/api/contact/count',
+      type: "GET",
+      dataType: "json",
+      success: function success(data) {
+        commit('contactCount', data);
+      },
+      error: function error(errors) {
+        console.log(errors);
+      }
+    });
+  },
+  contactPerMonth: function contactPerMonth(_ref3) {
+    var commit = _ref3.commit;
+    $.ajax({
+      url: '/admin/api/contact/countPerMonth',
+      type: "GET",
+      dataType: "json",
+      success: function success(data) {
+        commit('contactPerMonth', data);
       },
       error: function error(errors) {
         console.log(errors);
@@ -71443,7 +71290,9 @@ var actions = {
 __webpack_require__.r(__webpack_exports__);
 var state = {
   users: {},
-  user: {}
+  user: {},
+  userCount: 'Đang tải...',
+  userPerMonth: []
 };
 var getters = {
   users: function users(state) {
@@ -71451,6 +71300,12 @@ var getters = {
   },
   user: function user(state) {
     return state.user;
+  },
+  userCount: function userCount(state) {
+    return state.userCount;
+  },
+  userPerMonth: function userPerMonth(state) {
+    return state.userPerMonth;
   },
   usersPagination: function usersPagination(state) {
     return state.users;
@@ -71462,6 +71317,12 @@ var mutations = {
   },
   getUser: function getUser(state, data) {
     state.user = data;
+  },
+  userCount: function userCount(state, data) {
+    state.userCount = data;
+  },
+  userPerMonth: function userPerMonth(state, data) {
+    state.userPerMonth = data;
   }
 };
 var actions = {
@@ -71487,6 +71348,34 @@ var actions = {
       dataType: "json",
       success: function success(data) {
         commit('getUser', data);
+      },
+      error: function error(errors) {
+        console.log(errors);
+      }
+    });
+  },
+  userCount: function userCount(_ref3) {
+    var commit = _ref3.commit;
+    $.ajax({
+      url: '/admin/api/user/count',
+      type: "GET",
+      dataType: "json",
+      success: function success(data) {
+        commit('userCount', data);
+      },
+      error: function error(errors) {
+        console.log(errors);
+      }
+    });
+  },
+  userPerMonth: function userPerMonth(_ref4) {
+    var commit = _ref4.commit;
+    $.ajax({
+      url: '/admin/api/user/countPerMonth',
+      type: "GET",
+      dataType: "json",
+      success: function success(data) {
+        commit('userPerMonth', data);
       },
       error: function error(errors) {
         console.log(errors);
@@ -71618,9 +71507,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\ProjectCars\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! D:\ProjectCars\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! D:\ProjectCars\resources\sass\admin\admin.scss */"./resources/sass/admin/admin.scss");
+__webpack_require__(/*! D:\Work\Web Developer\Projects\Car\ProjectCars\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! D:\Work\Web Developer\Projects\Car\ProjectCars\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! D:\Work\Web Developer\Projects\Car\ProjectCars\resources\sass\admin\admin.scss */"./resources/sass/admin/admin.scss");
 
 
 /***/ })

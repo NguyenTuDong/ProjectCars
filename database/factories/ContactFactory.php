@@ -22,6 +22,6 @@ $factory->define(Contact::class, function (Faker $faker) {
         'email' => $faker->unique()->safeEmail,
         'sdt' => $faker->e164PhoneNumber,
         'noidung' => $faker->realText($maxNbChars = 250, $indexSize = 2),
-        'created_at' => $faker->dateTimeBetween($startDate = '-30 days', $endDate = 'now', $timezone = null),
+        'created_at' => $faker->dateTimeBetween($startDate = '-12 months', $endDate = 'now', $timezone = null),
     ];
 });

@@ -31,6 +31,6 @@ $factory->define(User::class, function (Faker $faker) {
         'mst' => $faker->numberBetween($min = 100000000, $max = 999999999),
         'locations_id' => Location::all()->random()->id,
         'remember_token' => Str::random(10),
-        'created_at' => $faker->dateTimeBetween($startDate = '-30 days', $endDate = 'now', $timezone = null),
+        'created_at' => $faker->dateTimeBetween($startDate = '-12 months', $endDate = 'now', $timezone = null),
     ];
 });
