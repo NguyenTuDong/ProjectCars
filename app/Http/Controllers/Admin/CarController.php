@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use App\Car;
 
 class CarController extends Controller
@@ -79,7 +81,6 @@ class CarController extends Controller
             'transmissions'
             ])->paginate(10);
         return response()->json($items);
-        // return $query;
     }
 
     public function show($id)
@@ -98,7 +99,6 @@ class CarController extends Controller
             'convenientcars.convenients',
             ])->where('id', $id)->first();
         return response()->json($items);
-        // return $id;
     }
 
     /**
@@ -158,5 +158,19 @@ class CarController extends Controller
         $items->save();
 
         return response($items, 200);
+    }
+
+    public function count()
+    {
+        $chartDatas = Car::select([
+            DB::raw('DATE_FORMAT(created_at, "%Y-%m") AS date'),
+            DB::raw('COUNT(id) AS count'),
+         ])
+         ->whereBetween('created_at', [Carbon::now()->subMonth(11), Carbon::now()])
+         ->groupBy('date')
+         ->orderBy('date', 'ASC')
+         ->get()
+         ->toArray();
+        return response()->json($chartDatas);
     }
 }

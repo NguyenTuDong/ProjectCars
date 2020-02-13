@@ -33,13 +33,6 @@ Vue.component('master', require('./components/layout/Master.vue').default);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.mixin({
-    methods: {
-        init() {
-            demo.initDashboardPageCharts();
-        }
-    }
-})
 
 const app = new Vue({
     el: '#app',

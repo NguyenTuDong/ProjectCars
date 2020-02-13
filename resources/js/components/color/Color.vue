@@ -12,7 +12,7 @@
             </div>
             <div class="card-body">
               <div class="search-form">
-                <input @keyup="search" v-model="q" type="text" class="form-control" placeholder="Tìm kiếm">
+                <input v-model="q" type="text" class="form-control" placeholder="Tìm kiếm">
               </div>
               <div class="table-responsive">
                 <table class="table">
@@ -68,45 +68,10 @@
                   <button class="btn btn-primary ml-auto" @click="addColor">Thêm màu xe</button>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div v-if="colors !== undefined">
-        <div v-if="colors.length > 0" class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <!-- Pagination -->
-              <nav class="d-flex">
-                <ul class="mx-auto pagination">
-                  <li v-if="pagination.last_page > (offset * 2 + 1)">
-                    <a href="#" aria-label="Previous"
-                        @click.prevent="getItems(1)">
-                        <span aria-hidden="true"><i class="fa fa-angle-double-left" aria-hidden="true"></i></span>
-                    </a>
-                  </li>
-                  <li v-if="pagination.last_page > (offset * 2 + 1)">
-                    <a href="#" aria-label="Previous"
-                        @click.prevent="getItems(pagination.current_page - 1)">
-                        <span aria-hidden="true"><i class="fa fa-angle-left" aria-hidden="true"></i></span>
-                    </a>
-                  </li>
-                  <li v-for="(page, id) in pagesNumber" :class="[ page == isActived ? 'active' : '']" :key="id">
-                      <a v-if="page == '...'" href="#">{{ page }}</a>
-                      <a v-else href="#" @click.prevent="getItems(page)">{{ page }}</a>
-                  </li>
-                  <li v-if="pagination.last_page > (offset * 2 + 1)">
-                      <a href="#" aria-label="Next" @click.prevent="getItems(pagination.current_page + 1)">
-                          <span aria-hidden="true"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-                      </a>
-                  </li>
-                  <li v-if="pagination.last_page > (offset * 2 + 1)">
-                      <a href="#" aria-label="Next" @click.prevent="getItems(pagination.last_page)">
-                          <span aria-hidden="true"><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>
-                      </a>
-                  </li>
-                </ul>
-              </nav>
+              <pagination
+                :pagination="pagination"
+                :getItems="getItems"
+              ></pagination>
             </div>
           </div>
         </div>
@@ -124,12 +89,15 @@
 <script>
 import ColorItem from './ColorItem'
 import Modal from '../Modal';
+import Pagination from '../Pagination';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Color',
   components: {
     ColorItem,
     Modal,
+    Pagination,
   },
   data() {
     return {
@@ -144,53 +112,24 @@ export default {
       q: '',
     }
   },
+  watch: {
+    q: function() {
+      this.debouncedGetQuery();
+    }
+  },
   created() {
     var data = {
       page: 1,
       q: '',
     }
     this.$store.dispatch('retrieveColors', data);
+    this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: {
-    colors() {
-      return this.$store.getters.colors;
-    },
-    pagination() {
-      return this.$store.getters.colorsPagination;
-    },
-    isActived() {
-        return this.$store.getters.colorsPagination.current_page;
-    },
-    pagesNumber() {
-      var pagination = this.$store.getters.colorsPagination;
-      var offset = this.offset;
-      if (!pagination.to) {
-        return [];
-      }
-      var from = pagination.current_page - offset;
-      if (from > pagination.last_page - (offset * 2)){
-        from = pagination.last_page - (offset * 2);
-      }
-      if (from < 1) {
-        from = 1;
-      }
-      var to = from + (offset * 2);
-      if (to >= pagination.last_page) {
-        to = pagination.last_page;
-      }
-      var pagesArray = [];
-      while (from <= to) {
-        if(to < pagination.last_page){
-          if(from == to) pagesArray.push(pagination.last_page);
-          else if(from == to - 1) pagesArray.push('...');
-          else pagesArray.push(from);
-        } else {
-          pagesArray.push(from);
-        }
-        from++;
-      }
-      return pagesArray;
-    }
+    ...mapGetters({
+      colors: 'colors',
+      pagination: 'colorsPagination',
+    }),
   },
   methods: {
     getItems(page){
@@ -211,7 +150,7 @@ export default {
     },
     addColor() {
       var data = {
-        page: this.pagination.last_pag,
+        page: this.pagination.last_page,
         q: this.q,
       }
       this.$store.dispatch('retrieveColors', data);

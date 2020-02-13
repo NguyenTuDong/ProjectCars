@@ -3,6 +3,7 @@ import {router} from '../../router'
 const state = {
   cars: {},
   car: {},
+  carChartDatas: []
 };
 
 const getters = {
@@ -12,6 +13,9 @@ const getters = {
   car(state) {
     return state.car;
   },
+  carChartDatas(state) {
+    return state.carChartDatas;
+  },
   carsPagination(state) {
     return state.cars;
   },
@@ -20,6 +24,9 @@ const getters = {
 const mutations = {
   retrieveCars(state, data) {
     state.cars = data;
+  },
+  countPerMonth(state, data) {
+    state.carChartDatas = data;
   },
   getCar(state, data) {
     state.car = data;
@@ -77,6 +84,20 @@ const actions = {
       {
         // console.log(data);
         commit('getCar', data);
+      },
+      error: function (errors) {
+        console.log(errors);
+      }
+    });
+  },
+  countPerMonth({commit}) {
+    $.ajax({
+      url : '/admin/api/car/count',
+      type : "GET",
+      dataType : "json",
+      success:function(data)
+      {
+        commit('countPerMonth', data);
       },
       error: function (errors) {
         console.log(errors);

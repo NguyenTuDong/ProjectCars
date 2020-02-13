@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Dashboard from './components/Dashboard'
+import Dashboard from './components/dashboard/Dashboard'
 import Brand from './components/brand/Brand'
 import Type from './components/type/Type'
 import Color from './components/color/Color'

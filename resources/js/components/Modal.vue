@@ -47,6 +47,53 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+.pop-up{
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(39, 39, 39, 0.2);
+  display: none;
+  z-index: 9999;
+}
+.pop-up-inner{
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  width: 500px;
+  background-color: #f96332;
+  color: #fff;
+  box-shadow: 0 10px 50px 0 rgba(0,0,0,.5);
+  z-index: 1;
+}
+.pop-up-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+.pop-up-title{
+  font-size: 1rem;
+  font-weight: bold;
+}
+.pop-up-body{
+  padding: 30px 20px;
+  text-align: center;
+}
+.pop-up-footer{
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-around;
 
+  button{
+    margin: 0;
+  }
+
+  button:first-child{
+    opacity: .5;
+  }
+}
 </style>

@@ -42,6 +42,6 @@ $factory->define(Car::class, function (Faker $faker) {
         'lopxe' => '185/60',
         'mota' => $faker->realText($maxNbChars = 250, $indexSize = 2),
         'trangthai' => $faker->randomElement($array = array (0,2,3)),
-        'created_at' => $faker->dateTimeBetween($startDate = '-30 days', $endDate = 'now', $timezone = null),
+        'created_at' => $faker->dateTimeBetween($startDate = '-12 months', $endDate = 'now', $timezone = null),
     ];
 });
