@@ -23,6 +23,9 @@
                     <th class="table-convenients-name">
                       Tiện nghi
                     </th>
+                    <th class="table-convenients-ratio">
+                      Tỉ lệ
+                    </th>
                     <th class="table-convenients-actions text-right">
                       Tác vụ
                     </th>
@@ -33,6 +36,8 @@
                       :key="convenient.id" 
                       :convenient="convenient"
                       :editing="editing"
+                      :max="max"
+                      :carCountAll="carCountAll"
                       @changeEditing="changeEditing"
                       @showPopup="showPopup"
                     ></convenient-item>
@@ -109,6 +114,7 @@ export default {
       q: '',
     }
     this.$store.dispatch('retrieveConvenients', data);
+    this.$store.dispatch("carCount");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: {
@@ -116,6 +122,16 @@ export default {
       convenients: 'convenients',
       pagination: 'convenientsPagination',
     }),
+    carCountAll() {
+      return this.$store.getters.carCount;
+    },
+    max(){
+      var max = 0;
+      this.convenients.forEach(ele => {
+        if(ele.count > max) max = ele.count;
+      });
+      return max;
+    }
   },
   methods: {
     getItems(page){
@@ -180,7 +196,10 @@ export default {
   width: 5%;
 }
 .table-convenients-name{
-  width: 70%;
+  width: 30%;
+}
+.table-convenients-ratio{
+  width: 40%;
 }
 .table-convenients-actions{
   width: 25%;

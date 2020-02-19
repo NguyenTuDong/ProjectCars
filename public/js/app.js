@@ -2006,6 +2006,11 @@ function _defineProperty(obj, key, value) {
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -2043,12 +2048,24 @@ function _defineProperty(obj, key, value) {
       q: ''
     };
     this.$store.dispatch('retrieveBrands', data);
+    this.$store.dispatch("carCount");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])({
     brands: 'brands',
     pagination: 'brandsPagination'
-  })),
+  }), {
+    carCountAll: function carCountAll() {
+      return this.$store.getters.carCount;
+    },
+    max: function max() {
+      var max = 0;
+      this.brands.forEach(function (ele) {
+        if (ele.count > max) max = ele.count;
+      });
+      return max;
+    }
+  }),
   methods: {
     getItems: function getItems(page) {
       if (!this.isAdd && page <= this.pagination.last_page && page >= 1) {
@@ -2186,6 +2203,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'BrandItem',
   props: {
@@ -2196,6 +2219,12 @@ __webpack_require__.r(__webpack_exports__);
     editing: {
       type: Number,
       required: true
+    },
+    max: {
+      type: Number
+    },
+    carCountAll: {
+      type: Number
     }
   },
   data: function data() {
@@ -2205,6 +2234,16 @@ __webpack_require__.r(__webpack_exports__);
       logoError: "",
       nameError: ""
     };
+  },
+  computed: {
+    percent: function percent() {
+      var self = this;
+      return Math.round((self.brand.count / self.carCountAll * 100 + Number.EPSILON) * 100) / 100 + '%';
+    },
+    opacity: function opacity() {
+      var self = this;
+      return self.brand.count / self.max;
+    }
   },
   methods: {
     edit: function edit() {
@@ -2327,9 +2366,6 @@ function _defineProperty(obj, key, value) {
 
   return obj;
 } //
-//
-//
-//
 //
 //
 //
@@ -2591,16 +2627,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'CarDetail',
   data: function data() {
@@ -2632,12 +2658,6 @@ __webpack_require__.r(__webpack_exports__);
     deleteCar: function deleteCar() {
       this.$store.dispatch('deleteCar', this.car.id);
       $('.pop-up').fadeOut(300);
-    },
-    approveCar: function approveCar() {
-      this.$store.dispatch('approveCar', this.car.id);
-    },
-    denyCar: function denyCar() {
-      this.$store.dispatch('denyCar', this.car.id);
     }
   }
 });
@@ -2653,23 +2673,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2723,12 +2726,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     showPopup: function showPopup() {
       this.$emit('showPopup', this.car);
-    },
-    approveCar: function approveCar() {
-      this.$store.dispatch('approveCar', this.car.id);
-    },
-    denyCar: function denyCar() {
-      this.$store.dispatch('denyCar', this.car.id);
     }
   }
 });
@@ -2883,6 +2880,11 @@ function _defineProperty(obj, key, value) {
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -2920,12 +2922,24 @@ function _defineProperty(obj, key, value) {
       q: ''
     };
     this.$store.dispatch('retrieveColors', data);
+    this.$store.dispatch("carCount");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])({
     colors: 'colors',
     pagination: 'colorsPagination'
-  })),
+  }), {
+    carCountAll: function carCountAll() {
+      return this.$store.getters.carCount;
+    },
+    max: function max() {
+      var max = 0;
+      this.colors.forEach(function (ele) {
+        if (ele.count > max) max = ele.count;
+      });
+      return max;
+    }
+  }),
   methods: {
     getItems: function getItems(page) {
       if (!this.isAdd && page <= this.pagination.last_page && page >= 1) {
@@ -3063,6 +3077,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ColorItem',
   props: {
@@ -3073,6 +3093,12 @@ __webpack_require__.r(__webpack_exports__);
     editing: {
       type: Number,
       required: true
+    },
+    max: {
+      type: Number
+    },
+    carCountAll: {
+      type: Number
     }
   },
   data: function data() {
@@ -3082,6 +3108,16 @@ __webpack_require__.r(__webpack_exports__);
       imgError: "",
       nameError: ""
     };
+  },
+  computed: {
+    percent: function percent() {
+      var self = this;
+      return Math.round((self.color.count / self.carCountAll * 100 + Number.EPSILON) * 100) / 100 + '%';
+    },
+    opacity: function opacity() {
+      var self = this;
+      return self.color.count / self.max;
+    }
   },
   methods: {
     edit: function edit() {
@@ -3279,6 +3315,11 @@ function _defineProperty(obj, key, value) {
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -3314,12 +3355,24 @@ function _defineProperty(obj, key, value) {
       q: ''
     };
     this.$store.dispatch('retrieveConditions', data);
+    this.$store.dispatch("carCount");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])({
     conditions: 'conditions',
     pagination: 'conditionsPagination'
-  })),
+  }), {
+    carCountAll: function carCountAll() {
+      return this.$store.getters.carCount;
+    },
+    max: function max() {
+      var max = 0;
+      this.conditions.forEach(function (ele) {
+        if (ele.count > max) max = ele.count;
+      });
+      return max;
+    }
+  }),
   methods: {
     getItems: function getItems(page) {
       if (!this.isAdd && page <= this.pagination.last_page && page >= 1) {
@@ -3420,6 +3473,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ConditionItem',
   props: {
@@ -3430,6 +3489,12 @@ __webpack_require__.r(__webpack_exports__);
     editing: {
       type: Number,
       required: true
+    },
+    max: {
+      type: Number
+    },
+    carCountAll: {
+      type: Number
     }
   },
   data: function data() {
@@ -3437,6 +3502,16 @@ __webpack_require__.r(__webpack_exports__);
       newName: this.condition.ten,
       nameError: ""
     };
+  },
+  computed: {
+    percent: function percent() {
+      var self = this;
+      return Math.round((self.condition.count / self.carCountAll * 100 + Number.EPSILON) * 100) / 100 + '%';
+    },
+    opacity: function opacity() {
+      var self = this;
+      return self.condition.count / self.max;
+    }
   },
   methods: {
     edit: function edit() {
@@ -3836,6 +3911,11 @@ function _defineProperty(obj, key, value) {
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -3871,12 +3951,24 @@ function _defineProperty(obj, key, value) {
       q: ''
     };
     this.$store.dispatch('retrieveConvenients', data);
+    this.$store.dispatch("carCount");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])({
     convenients: 'convenients',
     pagination: 'convenientsPagination'
-  })),
+  }), {
+    carCountAll: function carCountAll() {
+      return this.$store.getters.carCount;
+    },
+    max: function max() {
+      var max = 0;
+      this.convenients.forEach(function (ele) {
+        if (ele.count > max) max = ele.count;
+      });
+      return max;
+    }
+  }),
   methods: {
     getItems: function getItems(page) {
       if (!this.isAdd && page <= this.pagination.last_page && page >= 1) {
@@ -3977,6 +4069,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ConvenientItem',
   props: {
@@ -3987,6 +4085,12 @@ __webpack_require__.r(__webpack_exports__);
     editing: {
       type: Number,
       required: true
+    },
+    max: {
+      type: Number
+    },
+    carCountAll: {
+      type: Number
     }
   },
   data: function data() {
@@ -3994,6 +4098,16 @@ __webpack_require__.r(__webpack_exports__);
       newName: this.convenient.ten,
       nameError: ""
     };
+  },
+  computed: {
+    percent: function percent() {
+      var self = this;
+      return Math.round((self.convenient.count / self.carCountAll * 100 + Number.EPSILON) * 100) / 100 + '%';
+    },
+    opacity: function opacity() {
+      var self = this;
+      return self.convenient.count / self.max;
+    }
   },
   methods: {
     edit: function edit() {
@@ -4258,7 +4372,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4285,22 +4398,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     carActivePerMonth: function carActivePerMonth() {
       return this.$store.getters.carActivePerMonth;
-    },
-    carCount: function carCount() {
-      var count = 0;
-      var data = this.$store.getters.carPerMonth;
-      data.forEach(function (el) {
-        count += el.count;
-      });
-      return count;
-    },
-    carActiveCount: function carActiveCount() {
-      var count = 0;
-      var data = this.$store.getters.carActivePerMonth;
-      data.forEach(function (el) {
-        count += el.count;
-      });
-      return count;
     },
     userCountAll: function userCountAll() {
       return this.$store.getters.userCount;
@@ -4661,6 +4758,11 @@ function _defineProperty(obj, key, value) {
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -4696,12 +4798,24 @@ function _defineProperty(obj, key, value) {
       q: ''
     };
     this.$store.dispatch('retrieveFuels', data);
+    this.$store.dispatch("carCount");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])({
     fuels: 'fuels',
     pagination: 'fuelsPagination'
-  })),
+  }), {
+    carCountAll: function carCountAll() {
+      return this.$store.getters.carCount;
+    },
+    max: function max() {
+      var max = 0;
+      this.fuels.forEach(function (ele) {
+        if (ele.count > max) max = ele.count;
+      });
+      return max;
+    }
+  }),
   methods: {
     getItems: function getItems(page) {
       if (!this.isAdd && page <= this.pagination.last_page && page >= 1) {
@@ -4802,6 +4916,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'FuelItem',
   props: {
@@ -4812,6 +4932,12 @@ __webpack_require__.r(__webpack_exports__);
     editing: {
       type: Number,
       required: true
+    },
+    max: {
+      type: Number
+    },
+    carCountAll: {
+      type: Number
     }
   },
   data: function data() {
@@ -4819,6 +4945,16 @@ __webpack_require__.r(__webpack_exports__);
       newName: this.fuel.ten,
       nameError: ""
     };
+  },
+  computed: {
+    percent: function percent() {
+      var self = this;
+      return Math.round((self.fuel.count / self.carCountAll * 100 + Number.EPSILON) * 100) / 100 + '%';
+    },
+    opacity: function opacity() {
+      var self = this;
+      return self.fuel.count / self.max;
+    }
   },
   methods: {
     edit: function edit() {
@@ -5241,6 +5377,11 @@ function _defineProperty(obj, key, value) {
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -5276,12 +5417,24 @@ function _defineProperty(obj, key, value) {
       q: ''
     };
     this.$store.dispatch('retrieveOrigins', data);
+    this.$store.dispatch("carCount");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])({
     origins: 'origins',
     pagination: 'originsPagination'
-  })),
+  }), {
+    carCountAll: function carCountAll() {
+      return this.$store.getters.carCount;
+    },
+    max: function max() {
+      var max = 0;
+      this.origins.forEach(function (ele) {
+        if (ele.count > max) max = ele.count;
+      });
+      return max;
+    }
+  }),
   methods: {
     getItems: function getItems(page) {
       if (!this.isAdd && page <= this.pagination.last_page && page >= 1) {
@@ -5382,6 +5535,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'OriginItem',
   props: {
@@ -5392,6 +5551,12 @@ __webpack_require__.r(__webpack_exports__);
     editing: {
       type: Number,
       required: true
+    },
+    max: {
+      type: Number
+    },
+    carCountAll: {
+      type: Number
     }
   },
   data: function data() {
@@ -5399,6 +5564,16 @@ __webpack_require__.r(__webpack_exports__);
       newName: this.origin.ten,
       nameError: ""
     };
+  },
+  computed: {
+    percent: function percent() {
+      var self = this;
+      return Math.round((self.origin.count / self.carCountAll * 100 + Number.EPSILON) * 100) / 100 + '%';
+    },
+    opacity: function opacity() {
+      var self = this;
+      return self.origin.count / self.max;
+    }
   },
   methods: {
     edit: function edit() {
@@ -5583,6 +5758,11 @@ function _defineProperty(obj, key, value) {
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -5620,12 +5800,24 @@ function _defineProperty(obj, key, value) {
       q: ''
     };
     this.$store.dispatch('retrieveStyles', data);
+    this.$store.dispatch("carCount");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])({
     styles: 'styles',
     pagination: 'stylesPagination'
-  })),
+  }), {
+    carCountAll: function carCountAll() {
+      return this.$store.getters.carCount;
+    },
+    max: function max() {
+      var max = 0;
+      this.styles.forEach(function (ele) {
+        if (ele.count > max) max = ele.count;
+      });
+      return max;
+    }
+  }),
   methods: {
     getItems: function getItems(page) {
       if (!this.isAdd && page <= this.pagination.last_page && page >= 1) {
@@ -5763,6 +5955,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'StyleItem',
   props: {
@@ -5773,6 +5971,12 @@ __webpack_require__.r(__webpack_exports__);
     editing: {
       type: Number,
       required: true
+    },
+    max: {
+      type: Number
+    },
+    carCountAll: {
+      type: Number
     }
   },
   data: function data() {
@@ -5782,6 +5986,16 @@ __webpack_require__.r(__webpack_exports__);
       imgError: "",
       nameError: ""
     };
+  },
+  computed: {
+    percent: function percent() {
+      var self = this;
+      return Math.round((self.styleItem.count / self.carCountAll * 100 + Number.EPSILON) * 100) / 100 + '%';
+    },
+    opacity: function opacity() {
+      var self = this;
+      return self.styleItem.count / self.max;
+    }
   },
   methods: {
     edit: function edit() {
@@ -5979,6 +6193,11 @@ function _defineProperty(obj, key, value) {
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -6014,12 +6233,24 @@ function _defineProperty(obj, key, value) {
       q: ''
     };
     this.$store.dispatch('retrieveTransmissions', data);
+    this.$store.dispatch("carCount");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])({
     transmissions: 'transmissions',
     pagination: 'transmissionsPagination'
-  })),
+  }), {
+    carCountAll: function carCountAll() {
+      return this.$store.getters.carCount;
+    },
+    max: function max() {
+      var max = 0;
+      this.transmissions.forEach(function (ele) {
+        if (ele.count > max) max = ele.count;
+      });
+      return max;
+    }
+  }),
   methods: {
     getItems: function getItems(page) {
       if (!this.isAdd && page <= this.pagination.last_page && page >= 1) {
@@ -6120,6 +6351,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'TransmissionItem',
   props: {
@@ -6130,6 +6367,12 @@ __webpack_require__.r(__webpack_exports__);
     editing: {
       type: Number,
       required: true
+    },
+    max: {
+      type: Number
+    },
+    carCountAll: {
+      type: Number
     }
   },
   data: function data() {
@@ -6137,6 +6380,16 @@ __webpack_require__.r(__webpack_exports__);
       newName: this.transmission.ten,
       nameError: ""
     };
+  },
+  computed: {
+    percent: function percent() {
+      var self = this;
+      return Math.round((self.transmission.count / self.carCountAll * 100 + Number.EPSILON) * 100) / 100 + '%';
+    },
+    opacity: function opacity() {
+      var self = this;
+      return self.transmission.count / self.max;
+    }
   },
   methods: {
     edit: function edit() {
@@ -6314,6 +6567,11 @@ function _defineProperty(obj, key, value) {
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -6352,13 +6610,25 @@ function _defineProperty(obj, key, value) {
       q: ''
     };
     this.$store.dispatch('retrieveTypes', data);
+    this.$store.dispatch("carCount");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])({
     brands: 'allBrands',
     types: 'types',
     pagination: 'typesPagination'
-  })),
+  }), {
+    carCountAll: function carCountAll() {
+      return this.$store.getters.carCount;
+    },
+    max: function max() {
+      var max = 0;
+      this.types.forEach(function (ele) {
+        if (ele.count > max) max = ele.count;
+      });
+      return max;
+    }
+  }),
   methods: {
     getItems: function getItems(id, page) {
       if (!this.isAdd && page <= this.pagination.last_page && page >= 1) {
@@ -6463,6 +6733,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'TypeItem',
   props: {
@@ -6473,6 +6749,12 @@ __webpack_require__.r(__webpack_exports__);
     editing: {
       type: Number,
       required: true
+    },
+    max: {
+      type: Number
+    },
+    carCountAll: {
+      type: Number
     }
   },
   data: function data() {
@@ -6482,6 +6764,16 @@ __webpack_require__.r(__webpack_exports__);
       logoError: "",
       nameError: ""
     };
+  },
+  computed: {
+    percent: function percent() {
+      var self = this;
+      return Math.round((self.type.count / self.carCountAll * 100 + Number.EPSILON) * 100) / 100 + '%';
+    },
+    opacity: function opacity() {
+      var self = this;
+      return self.type.count / self.max;
+    }
   },
   methods: {
     edit: function edit() {
@@ -11423,7 +11715,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".fade-enter-active,\n.fade-leave-active {\n  -webkit-transition-duration: 0.3s;\n          transition-duration: 0.3s;\n  -webkit-transition-property: opacity;\n  transition-property: opacity;\n  -webkit-transition-timing-function: ease;\n          transition-timing-function: ease;\n}\n.fade-enter,\n.fade-leave-active {\n  opacity: 0;\n}\n.sidebar-wrapper {\n  /* width */\n  /* Track */\n  /* Handle */\n}\n.sidebar-wrapper::-webkit-scrollbar {\n  width: 10px;\n}\n.sidebar-wrapper::-webkit-scrollbar-track {\n  background: transparent;\n  -webkit-transition: 300ms ease;\n  transition: 300ms ease;\n}\n.sidebar-wrapper::-webkit-scrollbar-thumb {\n  background: rgba(0, 0, 0, 0.2);\n  -webkit-transition: 300ms ease;\n  transition: 300ms ease;\n  border-radius: 5px;\n}\n.sidebar-wrapper::-webkit-scrollbar-thumb:hover {\n  background: rgba(0, 0, 0, 0.4);\n}\nbody {\n  /* width */\n  /* Track */\n  /* Handle */\n}\nbody::-webkit-scrollbar {\n  width: 10px;\n}\nbody::-webkit-scrollbar-track {\n  background: transparent;\n  -webkit-transition: 300ms ease;\n  transition: 300ms ease;\n}\nbody::-webkit-scrollbar-thumb {\n  background: rgba(0, 0, 0, 0.2);\n  -webkit-transition: 300ms ease;\n  transition: 300ms ease;\n  border-radius: 5px;\n}\nbody::-webkit-scrollbar-thumb:hover {\n  background: rgba(0, 0, 0, 0.4);\n}\n.nav-seq {\n  width: calc(100% - 30px);\n  margin-left: auto;\n  margin-right: auto;\n  border-color: rgba(255, 255, 255, 0.5);\n}\n.card-select {\n  min-width: 200px;\n}\n.preview-btn {\n  width: 150px;\n}\n.search-form {\n  display: -webkit-box;\n  display: flex;\n  margin-bottom: 10px;\n}\n.search-form input {\n  width: 200px;\n  margin-left: auto;\n}", ""]);
+exports.push([module.i, ".fade-enter-active,\n.fade-leave-active {\n  -webkit-transition-duration: 0.3s;\n          transition-duration: 0.3s;\n  -webkit-transition-property: opacity;\n  transition-property: opacity;\n  -webkit-transition-timing-function: ease;\n          transition-timing-function: ease;\n}\n.fade-enter,\n.fade-leave-active {\n  opacity: 0;\n}\n.sidebar-wrapper {\n  /* width */\n  /* Track */\n  /* Handle */\n}\n.sidebar-wrapper::-webkit-scrollbar {\n  width: 10px;\n}\n.sidebar-wrapper::-webkit-scrollbar-track {\n  background: transparent;\n  -webkit-transition: 300ms ease;\n  transition: 300ms ease;\n}\n.sidebar-wrapper::-webkit-scrollbar-thumb {\n  background: rgba(0, 0, 0, 0.2);\n  -webkit-transition: 300ms ease;\n  transition: 300ms ease;\n  border-radius: 5px;\n}\n.sidebar-wrapper::-webkit-scrollbar-thumb:hover {\n  background: rgba(0, 0, 0, 0.4);\n}\nbody {\n  /* width */\n  /* Track */\n  /* Handle */\n}\nbody::-webkit-scrollbar {\n  width: 10px;\n}\nbody::-webkit-scrollbar-track {\n  background: transparent;\n  -webkit-transition: 300ms ease;\n  transition: 300ms ease;\n}\nbody::-webkit-scrollbar-thumb {\n  background: rgba(0, 0, 0, 0.2);\n  -webkit-transition: 300ms ease;\n  transition: 300ms ease;\n  border-radius: 5px;\n}\nbody::-webkit-scrollbar-thumb:hover {\n  background: rgba(0, 0, 0, 0.4);\n}\n.nav-seq {\n  width: calc(100% - 30px);\n  margin-left: auto;\n  margin-right: auto;\n  border-color: rgba(255, 255, 255, 0.5);\n}\n.card-select {\n  min-width: 200px;\n}\n.search-form {\n  display: -webkit-box;\n  display: flex;\n  margin-bottom: 10px;\n}\n.search-form input {\n  width: 200px;\n  margin-left: auto;\n}\n.table .form-group {\n  margin-bottom: 0;\n}\n.records-ratio {\n  display: inline-block;\n  width: 0;\n  height: 10px;\n  background-color: #fa7a50;\n  margin-right: 30px;\n}", ""]);
 
 // exports
 
@@ -11461,7 +11753,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.table-brands-id{\r\n  width: 5%;\n}\n.table-brands-logo{\r\n  width: 15%;\n}\n.table-brands-name{\r\n  width: 55%;\n}\n.table-brands-actions{\r\n  width: 25%;\n}\r\n", ""]);
+exports.push([module.i, "\n.table-brands-id{\r\n  width: 5%;\n}\n.table-brands-logo{\r\n  width: 15%;\n}\n.table-brands-name{\r\n  width: 20%;\n}\n.table-brands-ratio{\r\n  width: 35%;\n}\n.table-brands-actions{\r\n  width: 25%;\n}\r\n", ""]);
 
 // exports
 
@@ -11480,7 +11772,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.table-cars-id{\r\n  width: 5%;\n}\n.table-cars-img{\r\n  width: 15%;\n}\n.table-cars-name{\r\n  width: 40%;\n}\n.table-cars-author{\r\n  width: 10%;\n}\n.table-cars-status{\r\n  width: 10%;\n}\n.table-cars-actions{\r\n  width: 20%;\n}\r\n", ""]);
+exports.push([module.i, "\n.table-cars-id{\r\n  width: 5%;\n}\n.table-cars-img{\r\n  width: 15%;\n}\n.table-cars-name{\r\n  width: 40%;\n}\n.table-cars-author{\r\n  width: 20%;\n}\n.table-cars-actions{\r\n  width: 20%;\n}\r\n", ""]);
 
 // exports
 
@@ -11537,7 +11829,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.table-colors-id{\r\n  width: 5%;\n}\n.table-colors-img{\r\n  width: 15%;\n}\n.table-colors-name{\r\n  width: 55%;\n}\n.table-colors-actions{\r\n  width: 25%;\n}\r\n", ""]);
+exports.push([module.i, "\n.table-colors-id{\r\n  width: 5%;\n}\n.table-colors-img{\r\n  width: 15%;\n}\n.table-colors-name{\r\n  width: 20%;\n}\n.table-colors-ratio{\r\n  width: 35%;\n}\n.table-colors-actions{\r\n  width: 25%;\n}\r\n", ""]);
 
 // exports
 
@@ -11556,7 +11848,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.table-conditions-id{\r\n  width: 5%;\n}\n.table-conditions-name{\r\n  width: 70%;\n}\n.table-conditions-actions{\r\n  width: 25%;\n}\r\n", ""]);
+exports.push([module.i, "\n.table-conditions-id{\r\n  width: 5%;\n}\n.table-conditions-name{\r\n  width: 30%;\n}\n.table-conditions-ratio{\r\n  width: 40%;\n}\n.table-conditions-actions{\r\n  width: 25%;\n}\r\n", ""]);
 
 // exports
 
@@ -11594,7 +11886,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.table-convenients-id{\r\n  width: 5%;\n}\n.table-convenients-name{\r\n  width: 70%;\n}\n.table-convenients-actions{\r\n  width: 25%;\n}\r\n", ""]);
+exports.push([module.i, "\n.table-convenients-id{\r\n  width: 5%;\n}\n.table-convenients-name{\r\n  width: 30%;\n}\n.table-convenients-ratio{\r\n  width: 40%;\n}\n.table-convenients-actions{\r\n  width: 25%;\n}\r\n", ""]);
 
 // exports
 
@@ -11632,7 +11924,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.table-fuels-id{\r\n  width: 5%;\n}\n.table-fuels-name{\r\n  width: 70%;\n}\n.table-fuels-actions{\r\n  width: 25%;\n}\r\n", ""]);
+exports.push([module.i, "\n.table-fuels-id{\r\n  width: 5%;\n}\n.table-fuels-name{\r\n  width: 30%;\n}\n.table-fuels-ratio{\r\n  width: 40%;\n}\n.table-fuels-actions{\r\n  width: 25%;\n}\r\n", ""]);
 
 // exports
 
@@ -11651,7 +11943,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.table-origins-id{\r\n  width: 5%;\n}\n.table-origins-name{\r\n  width: 70%;\n}\n.table-origins-actions{\r\n  width: 25%;\n}\r\n", ""]);
+exports.push([module.i, "\n.table-origins-id{\r\n  width: 5%;\n}\n.table-origins-name{\r\n  width: 30%;\n}\n.table-origins-ratio{\r\n  width: 40%;\n}\n.table-origins-actions{\r\n  width: 25%;\n}\r\n", ""]);
 
 // exports
 
@@ -11670,7 +11962,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.table-styles-id{\r\n  width: 5%;\n}\n.table-styles-logo{\r\n  width: 15%;\n}\n.table-styles-name{\r\n  width: 55%;\n}\n.table-styles-actions{\r\n  width: 25%;\n}\r\n", ""]);
+exports.push([module.i, "\n.table-styles-id{\r\n  width: 5%;\n}\n.table-styles-logo{\r\n  width: 15%;\n}\n.table-styles-name{\r\n  width: 20%;\n}\n.table-styles-ratio{\r\n  width: 35%;\n}\n.table-styles-actions{\r\n  width: 25%;\n}\r\n", ""]);
 
 // exports
 
@@ -11689,7 +11981,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.table-transmissions-id{\r\n  width: 5%;\n}\n.table-transmissions-name{\r\n  width: 70%;\n}\n.table-transmissions-actions{\r\n  width: 25%;\n}\r\n", ""]);
+exports.push([module.i, "\n.table-transmissions-id{\r\n  width: 5%;\n}\n.table-transmissions-name{\r\n  width: 30%;\n}\n.table-transmissions-ratio{\r\n  width: 40%;\n}\n.table-transmissions-actions{\r\n  width: 25%;\n}\r\n", ""]);
 
 // exports
 
@@ -11708,7 +12000,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.table-types-id{\r\n  width: 5%;\n}\n.table-types-name{\r\n  width: 70%;\n}\n.table-types-actions{\r\n  width: 25%;\n}\r\n", ""]);
+exports.push([module.i, "\n.table-types-id{\r\n  width: 5%;\n}\n.table-types-name{\r\n  width: 30%;\n}\n.table-types-ratio{\r\n  width: 40%;\n}\n.table-types-actions{\r\n  width: 25%;\n}\r\n", ""]);
 
 // exports
 
@@ -44112,7 +44404,12 @@ var render = function() {
                           _vm._l(_vm.brands, function(brand) {
                             return _c("brand-item", {
                               key: brand.id,
-                              attrs: { brand: brand, editing: _vm.editing },
+                              attrs: {
+                                brand: brand,
+                                editing: _vm.editing,
+                                max: _vm.max,
+                                carCountAll: _vm.carCountAll
+                              },
                               on: {
                                 changeEditing: _vm.changeEditing,
                                 showPopup: _vm.showPopup
@@ -44294,6 +44591,10 @@ var staticRenderFns = [
         _vm._v("\n                    Tên thương hiệu\n                  ")
       ]),
       _vm._v(" "),
+      _c("th", { staticClass: "table-brands-ratio" }, [
+        _vm._v("\n                    Tỉ lệ\n                  ")
+      ]),
+      _vm._v(" "),
       _c("th", { staticClass: "table-brands-actions text-right" }, [
         _vm._v("\n                    Tác vụ\n                  ")
       ])
@@ -44396,6 +44697,21 @@ var render = function() {
               ])
             : _vm._e()
         ]),
+    _vm._v(" "),
+    _c("td", [
+      _c(
+        "div",
+        { attrs: { title: _vm.brand.count + " / " + _vm.carCountAll } },
+        [
+          _c("div", {
+            staticClass: "records-ratio",
+            style: { width: _vm.percent, opacity: _vm.opacity }
+          }),
+          _vm._v(" "),
+          _c("span", [_vm._v(_vm._s(_vm.percent))])
+        ]
+      )
+    ]),
     _vm._v(" "),
     _c("td", { staticClass: "td-actions text-right" }, [
       _vm.editing != _vm.brand.id
@@ -44604,10 +44920,6 @@ var staticRenderFns = [
         _vm._v("\n                    Người đăng\n                  ")
       ]),
       _vm._v(" "),
-      _c("th", { staticClass: "table-cars-status" }, [
-        _vm._v("\n                    Trạng thái\n                  ")
-      ]),
-      _vm._v(" "),
       _c("th", { staticClass: "table-cars-actions text-right" }, [
         _vm._v("\n                    Tác vụ\n                  ")
       ])
@@ -44749,50 +45061,6 @@ var render = function() {
                 "div",
                 { staticClass: "row justify-content-center text-center" },
                 [
-                  _vm.car.trangthai == 0
-                    ? _c("div", { staticClass: "col-md-4" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass:
-                              "btn btn-success btn-round btn-icon btn-icon-mini btn-neutral",
-                            attrs: {
-                              type: "button",
-                              rel: "tooltip",
-                              title: "Duyệt",
-                              "data-original-title": "Remove"
-                            },
-                            on: { click: _vm.approveCar }
-                          },
-                          [_c("i", { staticClass: "now-ui-icons ui-1_check" })]
-                        )
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm.car.trangthai == 0
-                    ? _c("div", { staticClass: "col-md-4" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass:
-                              "btn btn-warning btn-round btn-icon btn-icon-mini btn-neutral",
-                            attrs: {
-                              type: "button",
-                              rel: "tooltip",
-                              title: "Từ chối",
-                              "data-original-title": "Remove"
-                            },
-                            on: { click: _vm.denyCar }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "now-ui-icons ui-1_simple-delete"
-                            })
-                          ]
-                        )
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
                   _c("div", { staticClass: "col-md-4" }, [
                     _c(
                       "button",
@@ -45103,63 +45371,7 @@ var render = function() {
       1
     ),
     _vm._v(" "),
-    _c("td", [
-      _vm.car.trangthai == 0
-        ? _c("span", { staticClass: "text-warning" }, [
-            _vm._v("\n      Chờ duyệt\n    ")
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.car.trangthai == 2
-        ? _c("span", { staticClass: "text-success" }, [
-            _vm._v("\n      Đã duyệt\n    ")
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.car.trangthai == 3
-        ? _c("span", { staticClass: "text-danger" }, [
-            _vm._v("\n      Đã từ chối\n    ")
-          ])
-        : _vm._e()
-    ]),
-    _vm._v(" "),
     _c("td", { staticClass: "td-actions text-right" }, [
-      _vm.car.trangthai == 0
-        ? _c(
-            "button",
-            {
-              staticClass:
-                "btn btn-success btn-round btn-icon btn-icon-mini btn-neutral",
-              attrs: {
-                type: "button",
-                rel: "tooltip",
-                title: "Duyệt",
-                "data-original-title": "Remove"
-              },
-              on: { click: _vm.approveCar }
-            },
-            [_c("i", { staticClass: "now-ui-icons ui-1_check" })]
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.car.trangthai == 0
-        ? _c(
-            "button",
-            {
-              staticClass:
-                "btn btn-warning btn-round btn-icon btn-icon-mini btn-neutral",
-              attrs: {
-                type: "button",
-                rel: "tooltip",
-                title: "Từ chối",
-                "data-original-title": "Remove"
-              },
-              on: { click: _vm.denyCar }
-            },
-            [_c("i", { staticClass: "now-ui-icons ui-1_simple-delete" })]
-          )
-        : _vm._e(),
-      _vm._v(" "),
       _c(
         "button",
         {
@@ -45260,7 +45472,12 @@ var render = function() {
                           _vm._l(_vm.colors, function(color) {
                             return _c("color-item", {
                               key: color.id,
-                              attrs: { color: color, editing: _vm.editing },
+                              attrs: {
+                                color: color,
+                                editing: _vm.editing,
+                                max: _vm.max,
+                                carCountAll: _vm.carCountAll
+                              },
                               on: {
                                 changeEditing: _vm.changeEditing,
                                 showPopup: _vm.showPopup
@@ -45442,6 +45659,10 @@ var staticRenderFns = [
         _vm._v("\n                    Tên màu xe\n                  ")
       ]),
       _vm._v(" "),
+      _c("th", { staticClass: "table-colors-ratio" }, [
+        _vm._v("\n                    Tỉ lệ\n                  ")
+      ]),
+      _vm._v(" "),
       _c("th", { staticClass: "table-colors-actions text-right" }, [
         _vm._v("\n                    Tác vụ\n                  ")
       ])
@@ -45544,6 +45765,21 @@ var render = function() {
               ])
             : _vm._e()
         ]),
+    _vm._v(" "),
+    _c("td", [
+      _c(
+        "div",
+        { attrs: { title: _vm.color.count + " / " + _vm.carCountAll } },
+        [
+          _c("div", {
+            staticClass: "records-ratio",
+            style: { width: _vm.percent, opacity: _vm.opacity }
+          }),
+          _vm._v(" "),
+          _c("span", [_vm._v(_vm._s(_vm.percent))])
+        ]
+      )
+    ]),
     _vm._v(" "),
     _c("td", { staticClass: "td-actions text-right" }, [
       _vm.editing != _vm.color.id
@@ -45704,7 +45940,9 @@ var render = function() {
                               key: condition.id,
                               attrs: {
                                 condition: condition,
-                                editing: _vm.editing
+                                editing: _vm.editing,
+                                max: _vm.max,
+                                carCountAll: _vm.carCountAll
                               },
                               on: {
                                 changeEditing: _vm.changeEditing,
@@ -45840,6 +46078,10 @@ var staticRenderFns = [
         _vm._v("\n                    Tình trạng\n                  ")
       ]),
       _vm._v(" "),
+      _c("th", { staticClass: "table-conditions-ratio" }, [
+        _vm._v("\n                    Tỉ lệ\n                  ")
+      ]),
+      _vm._v(" "),
       _c("th", { staticClass: "table-conditions-actions text-right" }, [
         _vm._v("\n                    Tác vụ\n                  ")
       ])
@@ -45903,6 +46145,21 @@ var render = function() {
               ])
             : _vm._e()
         ]),
+    _vm._v(" "),
+    _c("td", [
+      _c(
+        "div",
+        { attrs: { title: _vm.condition.count + " / " + _vm.carCountAll } },
+        [
+          _c("div", {
+            staticClass: "records-ratio",
+            style: { width: _vm.percent, opacity: _vm.opacity }
+          }),
+          _vm._v(" "),
+          _c("span", [_vm._v(_vm._s(_vm.percent))])
+        ]
+      )
+    ]),
     _vm._v(" "),
     _c("td", { staticClass: "td-actions text-right" }, [
       _vm.editing != _vm.condition.id
@@ -46260,7 +46517,9 @@ var render = function() {
                               key: convenient.id,
                               attrs: {
                                 convenient: convenient,
-                                editing: _vm.editing
+                                editing: _vm.editing,
+                                max: _vm.max,
+                                carCountAll: _vm.carCountAll
                               },
                               on: {
                                 changeEditing: _vm.changeEditing,
@@ -46396,6 +46655,10 @@ var staticRenderFns = [
         _vm._v("\n                    Tiện nghi\n                  ")
       ]),
       _vm._v(" "),
+      _c("th", { staticClass: "table-convenients-ratio" }, [
+        _vm._v("\n                    Tỉ lệ\n                  ")
+      ]),
+      _vm._v(" "),
       _c("th", { staticClass: "table-convenients-actions text-right" }, [
         _vm._v("\n                    Tác vụ\n                  ")
       ])
@@ -46459,6 +46722,21 @@ var render = function() {
               ])
             : _vm._e()
         ]),
+    _vm._v(" "),
+    _c("td", [
+      _c(
+        "div",
+        { attrs: { title: _vm.convenient.count + " / " + _vm.carCountAll } },
+        [
+          _c("div", {
+            staticClass: "records-ratio",
+            style: { width: _vm.percent, opacity: _vm.opacity }
+          }),
+          _vm._v(" "),
+          _c("span", [_vm._v(_vm._s(_vm.percent))])
+        ]
+      )
+    ]),
     _vm._v(" "),
     _c("td", { staticClass: "td-actions text-right" }, [
       _vm.editing != _vm.convenient.id
@@ -46660,9 +46938,8 @@ var render = function() {
             _c("small-chart", {
               attrs: {
                 canvas: "carActivePerMonth",
-                category: "Mẫu tin được duyệt",
-                title: _vm.carActiveCount + " / " + _vm.carCount,
-                label: "Đã duyệt",
+                category: "Số tin được đăng",
+                label: "Online",
                 color: "#18ce0f",
                 yAxes: true,
                 xAxes: false,
@@ -46917,7 +47194,12 @@ var render = function() {
                           _vm._l(_vm.fuels, function(fuel) {
                             return _c("fuel-item", {
                               key: fuel.id,
-                              attrs: { fuel: fuel, editing: _vm.editing },
+                              attrs: {
+                                fuel: fuel,
+                                editing: _vm.editing,
+                                max: _vm.max,
+                                carCountAll: _vm.carCountAll
+                              },
                               on: {
                                 changeEditing: _vm.changeEditing,
                                 showPopup: _vm.showPopup
@@ -47052,6 +47334,10 @@ var staticRenderFns = [
         _vm._v("\n                    Nhiên liệu\n                  ")
       ]),
       _vm._v(" "),
+      _c("th", { staticClass: "table-fuels-ratio" }, [
+        _vm._v("\n                    Tỉ lệ\n                  ")
+      ]),
+      _vm._v(" "),
       _c("th", { staticClass: "table-fuels-actions text-right" }, [
         _vm._v("\n                    Tác vụ\n                  ")
       ])
@@ -47115,6 +47401,21 @@ var render = function() {
               ])
             : _vm._e()
         ]),
+    _vm._v(" "),
+    _c("td", [
+      _c(
+        "div",
+        { attrs: { title: _vm.fuel.count + " / " + _vm.carCountAll } },
+        [
+          _c("div", {
+            staticClass: "records-ratio",
+            style: { width: _vm.percent, opacity: _vm.opacity }
+          }),
+          _vm._v(" "),
+          _c("span", [_vm._v(_vm._s(_vm.percent))])
+        ]
+      )
+    ]),
     _vm._v(" "),
     _c("td", { staticClass: "td-actions text-right" }, [
       _vm.editing != _vm.fuel.id
@@ -47792,7 +48093,12 @@ var render = function() {
                           _vm._l(_vm.origins, function(origin) {
                             return _c("origin-item", {
                               key: origin.id,
-                              attrs: { origin: origin, editing: _vm.editing },
+                              attrs: {
+                                origin: origin,
+                                editing: _vm.editing,
+                                max: _vm.max,
+                                carCountAll: _vm.carCountAll
+                              },
                               on: {
                                 changeEditing: _vm.changeEditing,
                                 showPopup: _vm.showPopup
@@ -47927,6 +48233,10 @@ var staticRenderFns = [
         _vm._v("\n                    Nguồn gốc\n                  ")
       ]),
       _vm._v(" "),
+      _c("th", { staticClass: "table-origins-ratio" }, [
+        _vm._v("\n                    Tỉ lệ\n                  ")
+      ]),
+      _vm._v(" "),
       _c("th", { staticClass: "table-origins-actions text-right" }, [
         _vm._v("\n                    Tác vụ\n                  ")
       ])
@@ -47990,6 +48300,21 @@ var render = function() {
               ])
             : _vm._e()
         ]),
+    _vm._v(" "),
+    _c("td", [
+      _c(
+        "div",
+        { attrs: { title: _vm.origin.count + " / " + _vm.carCountAll } },
+        [
+          _c("div", {
+            staticClass: "records-ratio",
+            style: { width: _vm.percent, opacity: _vm.opacity }
+          }),
+          _vm._v(" "),
+          _c("span", [_vm._v(_vm._s(_vm.percent))])
+        ]
+      )
+    ]),
     _vm._v(" "),
     _c("td", { staticClass: "td-actions text-right" }, [
       _vm.editing != _vm.origin.id
@@ -48148,7 +48473,12 @@ var render = function() {
                           _vm._l(_vm.styles, function(style) {
                             return _c("style-item", {
                               key: style.id,
-                              attrs: { styleItem: style, editing: _vm.editing },
+                              attrs: {
+                                styleItem: style,
+                                editing: _vm.editing,
+                                max: _vm.max,
+                                carCountAll: _vm.carCountAll
+                              },
                               on: {
                                 changeEditing: _vm.changeEditing,
                                 showPopup: _vm.showPopup
@@ -48330,6 +48660,10 @@ var staticRenderFns = [
         _vm._v("\n                    Tên kiểu dáng\n                  ")
       ]),
       _vm._v(" "),
+      _c("th", { staticClass: "table-styles-ratio" }, [
+        _vm._v("\n                    Tỉ lệ\n                  ")
+      ]),
+      _vm._v(" "),
       _c("th", { staticClass: "table-styles-actions text-right" }, [
         _vm._v("\n                    Tác vụ\n                  ")
       ])
@@ -48432,6 +48766,21 @@ var render = function() {
               ])
             : _vm._e()
         ]),
+    _vm._v(" "),
+    _c("td", [
+      _c(
+        "div",
+        { attrs: { title: _vm.styleItem.count + " / " + _vm.carCountAll } },
+        [
+          _c("div", {
+            staticClass: "records-ratio",
+            style: { width: _vm.percent, opacity: _vm.opacity }
+          }),
+          _vm._v(" "),
+          _c("span", [_vm._v(_vm._s(_vm.percent))])
+        ]
+      )
+    ]),
     _vm._v(" "),
     _c("td", { staticClass: "td-actions text-right" }, [
       _vm.editing != _vm.styleItem.id
@@ -48592,7 +48941,9 @@ var render = function() {
                               key: transmission.id,
                               attrs: {
                                 transmission: transmission,
-                                editing: _vm.editing
+                                editing: _vm.editing,
+                                max: _vm.max,
+                                carCountAll: _vm.carCountAll
                               },
                               on: {
                                 changeEditing: _vm.changeEditing,
@@ -48728,6 +49079,10 @@ var staticRenderFns = [
         _vm._v("\n                    Hộp số\n                  ")
       ]),
       _vm._v(" "),
+      _c("th", { staticClass: "table-transmissions-ratio" }, [
+        _vm._v("\n                    Tỉ lệ\n                  ")
+      ]),
+      _vm._v(" "),
       _c("th", { staticClass: "table-transmissions-actions text-right" }, [
         _vm._v("\n                    Tác vụ\n                  ")
       ])
@@ -48791,6 +49146,21 @@ var render = function() {
               ])
             : _vm._e()
         ]),
+    _vm._v(" "),
+    _c("td", [
+      _c(
+        "div",
+        { attrs: { title: _vm.transmission.count + " / " + _vm.carCountAll } },
+        [
+          _c("div", {
+            staticClass: "records-ratio",
+            style: { width: _vm.percent, opacity: _vm.opacity }
+          }),
+          _vm._v(" "),
+          _c("span", [_vm._v(_vm._s(_vm.percent))])
+        ]
+      )
+    ]),
     _vm._v(" "),
     _c("td", { staticClass: "td-actions text-right" }, [
       _vm.editing != _vm.transmission.id
@@ -48991,7 +49361,12 @@ var render = function() {
                           _vm._l(_vm.types, function(type) {
                             return _c("type-item", {
                               key: type.id,
-                              attrs: { type: type, editing: _vm.editing },
+                              attrs: {
+                                type: type,
+                                editing: _vm.editing,
+                                max: _vm.max,
+                                carCountAll: _vm.carCountAll
+                              },
                               on: {
                                 changeEditing: _vm.changeEditing,
                                 showPopup: _vm.showPopup
@@ -49126,6 +49501,10 @@ var staticRenderFns = [
         _vm._v("\n                    Tên dòng xe\n                  ")
       ]),
       _vm._v(" "),
+      _c("th", { staticClass: "table-types-ratio" }, [
+        _vm._v("\n                    Tỉ lệ\n                  ")
+      ]),
+      _vm._v(" "),
       _c("th", { staticClass: "table-types-actions text-right" }, [
         _vm._v("\n                    Tác vụ\n                  ")
       ])
@@ -49189,6 +49568,21 @@ var render = function() {
               ])
             : _vm._e()
         ]),
+    _vm._v(" "),
+    _c("td", [
+      _c(
+        "div",
+        { attrs: { title: _vm.type.count + " / " + _vm.carCountAll } },
+        [
+          _c("div", {
+            staticClass: "records-ratio",
+            style: { width: _vm.percent, opacity: _vm.opacity }
+          }),
+          _vm._v(" "),
+          _c("span", [_vm._v(_vm._s(_vm.percent))])
+        ]
+      )
+    ]),
     _vm._v(" "),
     _c("td", { staticClass: "td-actions text-right" }, [
       _vm.editing != _vm.type.id
@@ -69508,92 +69902,10 @@ var actions = {
       }
     });
   },
-  approveCar: function approveCar(_ref6, id) {
-    var commit = _ref6.commit,
+  deleteCar: function deleteCar(_ref6, id) {
+    var state = _ref6.state,
+        commit = _ref6.commit,
         rootGetters = _ref6.rootGetters;
-    $.ajax({
-      headers: {
-        'X-CSRF-TOKEN': rootGetters.csrf
-      },
-      url: '/admin/api/car/approve/' + id,
-      type: "POST",
-      processData: false,
-      contentType: false,
-      success: function success(data) {
-        commit('updateCar', data);
-        $.notify({
-          icon: "now-ui-icons ui-1_bell-53",
-          message: "Duyệt mẫu tin <b>#" + data.id + "</b> thành công."
-        }, {
-          type: 'success',
-          timer: 3000,
-          placement: {
-            from: 'top',
-            align: 'right'
-          }
-        });
-      },
-      error: function error(errors) {
-        console.log(errors);
-        $.notify({
-          icon: "now-ui-icons ui-1_bell-53",
-          message: "Duyệt mẫu tin <b>#" + data.id + "</b> thất bại."
-        }, {
-          type: 'danger',
-          timer: 3000,
-          placement: {
-            from: 'top',
-            align: 'right'
-          }
-        });
-      }
-    });
-  },
-  denyCar: function denyCar(_ref7, id) {
-    var commit = _ref7.commit,
-        rootGetters = _ref7.rootGetters;
-    $.ajax({
-      headers: {
-        'X-CSRF-TOKEN': rootGetters.csrf
-      },
-      url: '/admin/api/car/deny/' + id,
-      type: "POST",
-      processData: false,
-      contentType: false,
-      success: function success(data) {
-        commit('updateCar', data);
-        $.notify({
-          icon: "now-ui-icons ui-1_bell-53",
-          message: "Từ chối mẫu tin <b>#" + data.id + "</b> thành công."
-        }, {
-          type: 'success',
-          timer: 3000,
-          placement: {
-            from: 'top',
-            align: 'right'
-          }
-        });
-      },
-      error: function error(errors) {
-        console.log(errors);
-        $.notify({
-          icon: "now-ui-icons ui-1_bell-53",
-          message: "Từ chối mẫu tin <b>#" + data.id + "</b> thất bại."
-        }, {
-          type: 'danger',
-          timer: 3000,
-          placement: {
-            from: 'top',
-            align: 'right'
-          }
-        });
-      }
-    });
-  },
-  deleteCar: function deleteCar(_ref8, id) {
-    var state = _ref8.state,
-        commit = _ref8.commit,
-        rootGetters = _ref8.rootGetters;
     $.ajax({
       headers: {
         'X-CSRF-TOKEN': rootGetters.csrf

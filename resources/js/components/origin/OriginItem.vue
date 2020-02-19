@@ -12,6 +12,12 @@
       </div>
       <span class="text-danger" v-if="nameError != ''">{{nameError}}</span>
     </td>
+    <td>
+      <div :title="origin.count + ' / ' + carCountAll">
+        <div :style="{ width: percent, opacity: opacity }" class="records-ratio"></div>
+        <span>{{ percent }}</span>
+      </div>
+    </td>
     <td class="td-actions text-right">
       <button v-if="editing != origin.id" @click="edit" type="button" rel="tooltip" title="Chỉnh sửa" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
         <i class="now-ui-icons design-2_ruler-pencil"></i>
@@ -41,12 +47,28 @@ export default {
     editing: {
       type: Number,
       required: true,
+    },
+    max: {
+      type: Number,
+    },
+    carCountAll: {
+      type: Number,
     }
   },
   data() {
     return {
       newName: this.origin.ten,
       nameError: "",
+    }
+  },
+  computed: {
+    percent(){
+      var self = this;
+      return Math.round(((self.origin.count / self.carCountAll) * 100 + Number.EPSILON) * 100) / 100 + '%';
+    },
+    opacity(){
+      var self = this;
+      return (self.origin.count / self.max);
     }
   },
   methods: {

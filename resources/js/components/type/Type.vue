@@ -28,6 +28,9 @@
                     <th class="table-types-name">
                       Tên dòng xe
                     </th>
+                    <th class="table-types-ratio">
+                      Tỉ lệ
+                    </th>
                     <th class="table-types-actions text-right">
                       Tác vụ
                     </th>
@@ -38,6 +41,8 @@
                       :key="type.id" 
                       :type="type"
                       :editing="editing"
+                      :max="max"
+                      :carCountAll="carCountAll"
                       @changeEditing="changeEditing"
                       @showPopup="showPopup"
                     ></type-item>
@@ -117,6 +122,7 @@ export default {
       q: '',
     }
     this.$store.dispatch('retrieveTypes', data);
+    this.$store.dispatch("carCount");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: {
@@ -125,6 +131,16 @@ export default {
       types: 'types',
       pagination: 'typesPagination',
     }),
+    carCountAll() {
+      return this.$store.getters.carCount;
+    },
+    max(){
+      var max = 0;
+      this.types.forEach(ele => {
+        if(ele.count > max) max = ele.count;
+      });
+      return max;
+    }
   },
   methods: {
     getItems(id, page){
@@ -192,7 +208,10 @@ export default {
   width: 5%;
 }
 .table-types-name{
-  width: 70%;
+  width: 30%;
+}
+.table-types-ratio{
+  width: 40%;
 }
 .table-types-actions{
   width: 25%;

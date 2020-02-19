@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Style;
 
 class StyleController extends Controller
@@ -16,7 +17,22 @@ class StyleController extends Controller
     public function index(Request $request)
     {
         $query = $request->q;
-        $items = Style::where('trangthai', 0)->where('ten', 'LIKE', '%'.$query.'%')->paginate(10);
+
+        $cars = DB::raw('(SELECT a.id, a.styles_id FROM `cars` a WHERE trangthai = 0)
+               Total');
+        $items = Style::select([
+            'styles.id',
+            'styles.ten',
+            'styles.hinhanh',
+            DB::raw('COUNT(Total.id) AS count'),
+        ])
+        ->leftJoin($cars, function($join){
+            $join->on('styles.id', '=', 'Total.styles_id');
+        })
+        ->where('styles.trangthai', 0)
+        ->where('styles.ten', 'LIKE', '%'.$query.'%')
+        ->groupBy('styles.id')
+        ->paginate(10);
         return response()->json($items);
     }
 

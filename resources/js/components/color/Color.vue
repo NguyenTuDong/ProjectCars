@@ -26,6 +26,9 @@
                     <th class="table-colors-name">
                       Tên màu xe
                     </th>
+                    <th class="table-colors-ratio">
+                      Tỉ lệ
+                    </th>
                     <th class="table-colors-actions text-right">
                       Tác vụ
                     </th>
@@ -36,6 +39,8 @@
                       :key="color.id" 
                       :color="color"
                       :editing="editing"
+                      :max="max"
+                      :carCountAll="carCountAll"
                       @changeEditing="changeEditing"
                       @showPopup="showPopup"
                     ></color-item>
@@ -123,6 +128,7 @@ export default {
       q: '',
     }
     this.$store.dispatch('retrieveColors', data);
+    this.$store.dispatch("carCount");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: {
@@ -130,6 +136,16 @@ export default {
       colors: 'colors',
       pagination: 'colorsPagination',
     }),
+    carCountAll() {
+      return this.$store.getters.carCount;
+    },
+    max(){
+      var max = 0;
+      this.colors.forEach(ele => {
+        if(ele.count > max) max = ele.count;
+      });
+      return max;
+    }
   },
   methods: {
     getItems(page){
@@ -222,7 +238,10 @@ export default {
   width: 15%;
 }
 .table-colors-name{
-  width: 55%;
+  width: 20%;
+}
+.table-colors-ratio{
+  width: 35%;
 }
 .table-colors-actions{
   width: 25%;

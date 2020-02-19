@@ -23,6 +23,9 @@
                     <th class="table-conditions-name">
                       Tình trạng
                     </th>
+                    <th class="table-conditions-ratio">
+                      Tỉ lệ
+                    </th>
                     <th class="table-conditions-actions text-right">
                       Tác vụ
                     </th>
@@ -33,6 +36,8 @@
                       :key="condition.id" 
                       :condition="condition"
                       :editing="editing"
+                      :max="max"
+                      :carCountAll="carCountAll"
                       @changeEditing="changeEditing"
                       @showPopup="showPopup"
                     ></condition-item>
@@ -109,6 +114,7 @@ export default {
       q: '',
     }
     this.$store.dispatch('retrieveConditions', data);
+    this.$store.dispatch("carCount");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: {
@@ -116,6 +122,16 @@ export default {
       conditions: 'conditions',
       pagination: 'conditionsPagination',
     }),
+    carCountAll() {
+      return this.$store.getters.carCount;
+    },
+    max(){
+      var max = 0;
+      this.conditions.forEach(ele => {
+        if(ele.count > max) max = ele.count;
+      });
+      return max;
+    }
   },
   methods: {
     getItems(page){
@@ -180,7 +196,10 @@ export default {
   width: 5%;
 }
 .table-conditions-name{
-  width: 70%;
+  width: 30%;
+}
+.table-conditions-ratio{
+  width: 40%;
 }
 .table-conditions-actions{
   width: 25%;

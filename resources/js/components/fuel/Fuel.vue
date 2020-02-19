@@ -23,6 +23,9 @@
                     <th class="table-fuels-name">
                       Nhiên liệu
                     </th>
+                    <th class="table-fuels-ratio">
+                      Tỉ lệ
+                    </th>
                     <th class="table-fuels-actions text-right">
                       Tác vụ
                     </th>
@@ -33,6 +36,8 @@
                       :key="fuel.id" 
                       :fuel="fuel"
                       :editing="editing"
+                      :max="max"
+                      :carCountAll="carCountAll"
                       @changeEditing="changeEditing"
                       @showPopup="showPopup"
                     ></fuel-item>
@@ -109,6 +114,7 @@ export default {
       q: '',
     }
     this.$store.dispatch('retrieveFuels', data);
+    this.$store.dispatch("carCount");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: {
@@ -116,6 +122,16 @@ export default {
       fuels: 'fuels',
       pagination: 'fuelsPagination',
     }),
+    carCountAll() {
+      return this.$store.getters.carCount;
+    },
+    max(){
+      var max = 0;
+      this.fuels.forEach(ele => {
+        if(ele.count > max) max = ele.count;
+      });
+      return max;
+    },
   },
   methods: {
     getItems(page){
@@ -180,7 +196,10 @@ export default {
   width: 5%;
 }
 .table-fuels-name{
-  width: 70%;
+  width: 30%;
+}
+.table-fuels-ratio{
+  width: 40%;
 }
 .table-fuels-actions{
   width: 25%;

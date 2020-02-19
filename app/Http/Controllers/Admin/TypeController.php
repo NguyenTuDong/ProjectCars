@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Type;
 use App\Brand;
 
@@ -25,7 +26,22 @@ class TypeController extends Controller
         } else {
             $id = $brands_id;
         }
-        $items = Type::where('brands_id', $id)->where('trangthai', 0)->where('ten', 'LIKE', '%'.$query.'%')->paginate(10);
+
+        $cars = DB::raw('(SELECT a.id, a.types_id FROM `cars` a WHERE trangthai = 0)
+               Total');
+        $items = Type::select([
+            'types.id',
+            'types.ten',
+            DB::raw('COUNT(Total.id) AS count'),
+        ])
+        ->leftJoin($cars, function($join){
+            $join->on('types.id', '=', 'Total.types_id');
+        })
+        ->where('brands_id', $id)
+        ->where('types.trangthai', 0)
+        ->where('types.ten', 'LIKE', '%'.$query.'%')
+        ->groupBy('types.id')
+        ->paginate(10);
         return response()->json($items);
     }
 

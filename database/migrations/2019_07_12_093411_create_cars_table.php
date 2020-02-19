@@ -40,6 +40,9 @@ class CreateCarsTable extends Migration
             $table->longText('mota')->nullable();
             $table->integer('trangthai')->default(0);
             $table->string('hinhanh')->nullable();
+            $table->date('ngaydang');
+            $table->date('ngayketthuc');
+            $table->bigInteger('phi');
             $table->timestamps();
         });
 

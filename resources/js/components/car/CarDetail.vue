@@ -27,16 +27,6 @@
                 <span v-if="car.created_at != null"><b>Ngày tạo: </b>{{ car.created_at }}<br></span>
               </p>
               <div class="row justify-content-center text-center">
-                <div v-if="car.trangthai == 0" class="col-md-4">
-                  <button @click="approveCar" type="button" rel="tooltip" title="Duyệt" class="btn btn-success btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
-                    <i class="now-ui-icons ui-1_check"></i>
-                  </button>
-                </div>
-                <div v-if="car.trangthai == 0" class="col-md-4">
-                  <button @click="denyCar" type="button" rel="tooltip" title="Từ chối" class="btn btn-warning btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
-                    <i class="now-ui-icons ui-1_simple-delete"></i>
-                  </button>
-                </div>
                 <div class="col-md-4">
                   <button @click="showPopup" type="button" rel="tooltip" title="Xóa" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
                     <i class="now-ui-icons ui-1_simple-remove"></i>
@@ -166,12 +156,6 @@ export default {
     deleteCar() {
       this.$store.dispatch('deleteCar', this.car.id);
       $('.pop-up').fadeOut(300);
-    },
-    approveCar() {
-      this.$store.dispatch('approveCar', this.car.id);
-    },
-    denyCar() {
-      this.$store.dispatch('denyCar', this.car.id);
     },
   }
 }

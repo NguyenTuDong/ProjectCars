@@ -26,6 +26,9 @@
                     <th class="table-brands-name">
                       Tên thương hiệu
                     </th>
+                    <th class="table-brands-ratio">
+                      Tỉ lệ
+                    </th>
                     <th class="table-brands-actions text-right">
                       Tác vụ
                     </th>
@@ -36,6 +39,8 @@
                       :key="brand.id" 
                       :brand="brand"
                       :editing="editing"
+                      :max="max"
+                      :carCountAll="carCountAll"
                       @changeEditing="changeEditing"
                       @showPopup="showPopup"
                     ></brand-item>
@@ -123,6 +128,7 @@ export default {
       q: '',
     }
     this.$store.dispatch('retrieveBrands', data);
+    this.$store.dispatch("carCount");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: {
@@ -130,6 +136,16 @@ export default {
       brands: 'brands',
       pagination: 'brandsPagination',
     }),
+    carCountAll() {
+      return this.$store.getters.carCount;
+    },
+    max(){
+      var max = 0;
+      this.brands.forEach(ele => {
+        if(ele.count > max) max = ele.count;
+      });
+      return max;
+    }
   },
   methods: {
     getItems(page){
@@ -222,7 +238,10 @@ export default {
   width: 15%;
 }
 .table-brands-name{
-  width: 55%;
+  width: 20%;
+}
+.table-brands-ratio{
+  width: 35%;
 }
 .table-brands-actions{
   width: 25%;

@@ -18,21 +18,6 @@ class CarController extends Controller
     public function index(Request $request)
     {
         $query = $request->q;
-        $state = [
-            0 => 'Chờ duyệt',
-            2 => 'Đã duyệt',
-            3 => 'Đã từ chối',
-        ];
-
-        $state_filter = [];
-
-        if($query != ''){
-            foreach ($state as $key => $value) {
-                if (strpos($value, $query) !== false) {
-                    array_push($state_filter, $key);
-                }
-            }
-        }
 
         $items = Car::
         whereHas('users', function ($q) use ($request) {
@@ -67,8 +52,7 @@ class CarController extends Controller
         })
         ->orWhere('ten', 'LIKE', '%'.$query.'%')
         ->orWhere('gia', 'LIKE', '%'.$query.'%')
-        ->orWhereIn('trangthai', $state_filter)
-        ->where('trangthai', '!=', 1)
+        ->where('trangthai', '=', 0)
         ->with([
             'users', 
             'types.brands', 
@@ -99,50 +83,6 @@ class CarController extends Controller
             'convenientcars.convenients',
             ])->where('id', $id)->first();
         return response()->json($items);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function approve($id)
-    {
-        $items = Car::findOrFail($id);
-        $items->trangthai = 2;
-        $items->save();
-
-        return response()->json($items->with([
-            'users', 
-            'types.brands', 
-            'colors', 
-            'conditions', 
-            'fuels', 
-            'locations', 
-            'origins', 
-            'styles', 
-            'transmissions'
-            ])->where('id', $id)->first());
-    }
-    public function deny($id)
-    {
-        $items = Car::findOrFail($id);
-        $items->trangthai = 3;
-        $items->save();
-
-        return response()->json($items->with([
-            'users', 
-            'types.brands', 
-            'colors', 
-            'conditions', 
-            'fuels', 
-            'locations', 
-            'origins', 
-            'styles', 
-            'transmissions'
-            ])->where('id', $id)->first());
     }
 
     /**
@@ -182,16 +122,37 @@ class CarController extends Controller
 
     public function countActivePerMonth()
     {
-        $chartDatas = Car::select([
-            DB::raw('DATE_FORMAT(created_at, "%Y-%m") AS date'),
-            DB::raw('COUNT(id) AS count'),
-         ])
-         ->whereBetween('created_at', [Carbon::now()->subMonth(11), Carbon::now()])
-         ->where('trangthai', 2)
-         ->groupBy('date')
-         ->orderBy('date', 'ASC')
-         ->get()
-         ->toArray();
+        $first_day = Carbon::today()->startOfMonth();
+
+        $chartDatas = array();
+
+        for ($i=11; $i >=0; $i--) {
+            $f = $first_day->copy()->subMonth($i);
+            $l = $f->copy()->endOfMonth();
+
+            $count = DB::table('cars')->select([
+                DB::raw('COUNT(id) AS count'),
+            ])
+            ->where('ngaydang', '>', $f)
+            ->where('ngayketthuc', '<', $l)
+            ->first();
+
+            $obj = new ChartData($f->format('Y-m'), $count->count);
+            array_push($chartDatas, $obj);
+        }
         return response()->json($chartDatas);
     }
+}
+
+class ChartData { 
+      
+    /* Member variables */
+    var $date; 
+    var $count; 
+      
+    function __construct( $par1, $par2 )  
+    { 
+        $this->date = $par1; 
+        $this->count = $par2; 
+    } 
 }

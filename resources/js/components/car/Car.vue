@@ -28,9 +28,6 @@
                     <th class="table-cars-author">
                       Người đăng
                     </th>
-                    <th class="table-cars-status">
-                      Trạng thái
-                    </th>
                     <th class="table-cars-actions text-right">
                       Tác vụ
                     </th>
@@ -141,10 +138,7 @@ export default {
   width: 40%;
 }
 .table-cars-author{
-  width: 10%;
-}
-.table-cars-status{
-  width: 10%;
+  width: 20%;
 }
 .table-cars-actions{
   width: 20%;

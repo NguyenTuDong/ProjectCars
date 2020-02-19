@@ -23,6 +23,9 @@
                     <th class="table-transmissions-name">
                       Hộp số
                     </th>
+                    <th class="table-transmissions-ratio">
+                      Tỉ lệ
+                    </th>
                     <th class="table-transmissions-actions text-right">
                       Tác vụ
                     </th>
@@ -33,6 +36,8 @@
                       :key="transmission.id" 
                       :transmission="transmission"
                       :editing="editing"
+                      :max="max"
+                      :carCountAll="carCountAll"
                       @changeEditing="changeEditing"
                       @showPopup="showPopup"
                     ></transmission-item>
@@ -109,6 +114,7 @@ export default {
       q: '',
     }
     this.$store.dispatch('retrieveTransmissions', data);
+    this.$store.dispatch("carCount");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: {
@@ -116,6 +122,16 @@ export default {
       transmissions: 'transmissions',
       pagination: 'transmissionsPagination',
     }),
+    carCountAll() {
+      return this.$store.getters.carCount;
+    },
+    max(){
+      var max = 0;
+      this.transmissions.forEach(ele => {
+        if(ele.count > max) max = ele.count;
+      });
+      return max;
+    }
   },
   methods: {
     getItems(page){
@@ -180,7 +196,10 @@ export default {
   width: 5%;
 }
 .table-transmissions-name{
-  width: 70%;
+  width: 30%;
+}
+.table-transmissions-ratio{
+  width: 40%;
 }
 .table-transmissions-actions{
   width: 25%;

@@ -308,9 +308,6 @@ body{
 .card-select{
   min-width: 200px;
 }
-.preview-btn{
-  width: 150px;
-}
 .search-form{
   display: flex;
   margin-bottom: 10px;
@@ -318,5 +315,15 @@ body{
     width: 200px;
     margin-left: auto;
   }
+}
+.table .form-group{
+  margin-bottom: 0;
+}
+.records-ratio{
+  display: inline-block;
+  width: 0;
+  height: 10px;
+  background-color: #fa7a50;
+  margin-right: 30px;
 }
 </style>

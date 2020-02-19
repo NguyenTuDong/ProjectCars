@@ -26,6 +26,9 @@
                     <th class="table-styles-name">
                       Tên kiểu dáng
                     </th>
+                    <th class="table-styles-ratio">
+                      Tỉ lệ
+                    </th>
                     <th class="table-styles-actions text-right">
                       Tác vụ
                     </th>
@@ -36,6 +39,8 @@
                       :key="style.id" 
                       :styleItem="style"
                       :editing="editing"
+                      :max="max"
+                      :carCountAll="carCountAll"
                       @changeEditing="changeEditing"
                       @showPopup="showPopup"
                     ></style-item>
@@ -123,6 +128,7 @@ export default {
       q: '',
     }
     this.$store.dispatch('retrieveStyles', data);
+    this.$store.dispatch("carCount");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: {
@@ -130,6 +136,16 @@ export default {
       styles: 'styles',
       pagination: 'stylesPagination',
     }),
+    carCountAll() {
+      return this.$store.getters.carCount;
+    },
+    max(){
+      var max = 0;
+      this.styles.forEach(ele => {
+        if(ele.count > max) max = ele.count;
+      });
+      return max;
+    }
   },
   methods: {
     getItems(page){
@@ -221,7 +237,10 @@ export default {
   width: 15%;
 }
 .table-styles-name{
-  width: 55%;
+  width: 20%;
+}
+.table-styles-ratio{
+  width: 35%;
 }
 .table-styles-actions{
   width: 25%;

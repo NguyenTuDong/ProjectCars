@@ -38,8 +38,6 @@ Route::prefix('admin')->group(function() {
     Route::get('/car/countPerMonth', 'Admin\CarController@countPerMonth');
     Route::get('/car/countActivePerMonth', 'Admin\CarController@countActivePerMonth');
     Route::get('/car/{id}', 'Admin\CarController@show');
-    Route::post('/car/approve/{car}', 'Admin\CarController@approve');
-    Route::post('/car/deny/{car}', 'Admin\CarController@deny');
     Route::post('/car/delete/{car}', 'Admin\CarController@destroy');
 
     //User

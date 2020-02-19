@@ -53,9 +53,8 @@
         <div class="col-lg-4">
           <small-chart
             :canvas="'carActivePerMonth'"
-            :category="'Mẫu tin được duyệt'"
-            :title="carActiveCount + ' / ' + carCount"
-            :label="'Đã duyệt'"
+            :category="'Số tin được đăng'"
+            :label="'Online'"
             :color="'#18ce0f'"
             :yAxes="true"
             :xAxes="false"
@@ -127,26 +126,6 @@ export default {
     },
     carActivePerMonth() {
       return this.$store.getters.carActivePerMonth;
-    },
-    carCount() {
-      var count = 0;
-      var data = this.$store.getters.carPerMonth;
-
-      data.forEach(el => {
-        count += el.count;
-      });
-
-      return count;
-    },
-    carActiveCount() {
-      var count = 0;
-      var data = this.$store.getters.carActivePerMonth;
-
-      data.forEach(el => {
-        count += el.count;
-      });
-
-      return count;
     },
     userCountAll() {
       return this.$store.getters.userCount;

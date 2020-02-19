@@ -27,24 +27,7 @@
         {{car.users.ten}}
       </router-link>
     </td>
-    <td>
-      <span v-if="car.trangthai == 0" class="text-warning">
-        Chờ duyệt
-      </span>
-      <span v-if="car.trangthai == 2" class="text-success">
-        Đã duyệt
-      </span>
-      <span v-if="car.trangthai == 3" class="text-danger">
-        Đã từ chối
-      </span>
-    </td>
     <td class="td-actions text-right">
-      <button v-if="car.trangthai == 0" @click="approveCar" type="button" rel="tooltip" title="Duyệt" class="btn btn-success btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
-        <i class="now-ui-icons ui-1_check"></i>
-      </button>
-      <button v-if="car.trangthai == 0" @click="denyCar" type="button" rel="tooltip" title="Từ chối" class="btn btn-warning btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
-        <i class="now-ui-icons ui-1_simple-delete"></i>
-      </button>
       <button @click="showPopup" type="button" rel="tooltip" title="Xóa" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
         <i class="now-ui-icons ui-1_simple-remove"></i>
       </button>
@@ -70,12 +53,6 @@ export default {
   methods: {
     showPopup() {
       this.$emit('showPopup', this.car);
-    },
-    approveCar() {
-      this.$store.dispatch('approveCar', this.car.id);
-    },
-    denyCar() {
-      this.$store.dispatch('denyCar', this.car.id);
     },
   }
 }

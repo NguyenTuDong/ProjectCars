@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Brand;
 
 class BrandController extends Controller
@@ -16,7 +17,23 @@ class BrandController extends Controller
     public function index(Request $request)
     {
         $query = $request->q;
-        $items = Brand::where('trangthai', 0)->where('ten', 'LIKE', '%'.$query.'%')->paginate(10);
+
+        $cars = DB::raw('(SELECT a.id, a.types_id FROM `cars` a WHERE trangthai = 0)
+               TotalCars');
+        $items = Brand::select([
+            'brands.id',
+            'brands.ten',
+            'brands.logo',
+            DB::raw('COUNT(TotalCars.id) AS count'),
+        ])
+        ->leftJoin('types', 'brands.id', '=', 'types.brands_id')
+        ->leftJoin($cars, function($join){
+            $join->on('types.id', '=', 'TotalCars.types_id');
+        })
+        ->where('brands.trangthai', 0)
+        ->where('brands.ten', 'LIKE', '%'.$query.'%')
+        ->groupBy('brands.id')
+        ->paginate(10);
         return response()->json($items);
     }
 

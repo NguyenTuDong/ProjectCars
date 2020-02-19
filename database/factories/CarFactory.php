@@ -17,6 +17,13 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(Car::class, function (Faker $faker) {
+    $created_at = $faker->dateTimeBetween($startDate = '-12 months', $endDate = 'now', $timezone = null);
+    $ngaydang = $faker->dateTimeInInterval($startDate = $created_at, $interval = '+ 7 days', $timezone = null);
+    $ngayketthuc = $faker->dateTimeInInterval($startDate = $ngaydang, $interval = '+ 90 days', $timezone = null);
+
+    $difference = $ngaydang->diff($ngayketthuc);
+    $days = $difference->format('%a');
+    $cost = $days * 1000;
     return [
         'ten' => $faker->sentence($nbWords = 7, $variableNbWords = true),
         'gia' => $faker->numberBetween($min = 100, $max = 9000) * 1000000,
@@ -41,7 +48,10 @@ $factory->define(Car::class, function (Faker $faker) {
         'giamxoc' => 'Mc Pherson',
         'lopxe' => '185/60',
         'mota' => $faker->realText($maxNbChars = 250, $indexSize = 2),
-        'trangthai' => $faker->randomElement($array = array (0,2,3)),
-        'created_at' => $faker->dateTimeBetween($startDate = '-12 months', $endDate = 'now', $timezone = null),
+        'trangthai' => 0,
+        'ngaydang' => $ngaydang,
+        'ngayketthuc' => $ngayketthuc,
+        'phi' => $cost,
+        'created_at' => $created_at,
     ];
 });

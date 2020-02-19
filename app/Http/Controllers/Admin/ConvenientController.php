@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Convenient;
 
 class ConvenientController extends Controller
@@ -16,7 +17,20 @@ class ConvenientController extends Controller
     public function index(Request $request)
     {
         $query = $request->q;
-        $items = Convenient::where('trangthai', 0)->where('ten', 'LIKE', '%'.$query.'%')->paginate(10);
+
+        $cars = DB::raw('(SELECT COUNT(`convenientcars`.`convenients_id`) AS count, `convenientcars`.`convenients_id`, `convenientcars`.`cars_id`, `cars`.`trangthai` FROM `convenientcars` JOIN `cars` ON `cars`.`id` = `convenientcars`.`cars_id` WHERE `cars`.`trangthai` = 0 GROUP BY `convenientcars`.`convenients_id` ORDER BY `convenientcars`.`convenients_id`)
+               Total');
+        $items = Convenient::select([
+            'convenients.id',
+            'convenients.ten',
+            'Total.count'
+        ])
+        ->leftJoin($cars, function($join){
+            $join->on('convenients.id', '=', 'Total.convenients_id');
+        })
+        ->where('convenients.trangthai', 0)
+        ->where('convenients.ten', 'LIKE', '%'.$query.'%')
+        ->paginate(10);
         return response()->json($items);
     }
 

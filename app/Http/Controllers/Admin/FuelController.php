@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Fuel;
 
 class FuelController extends Controller
@@ -16,7 +17,21 @@ class FuelController extends Controller
     public function index(Request $request)
     {
         $query = $request->q;
-        $items = Fuel::where('trangthai', 0)->where('ten', 'LIKE', '%'.$query.'%')->paginate(10);
+        
+        $cars = DB::raw('(SELECT a.id, a.fuels_id FROM `cars` a WHERE trangthai = 0)
+               Total');
+        $items = Fuel::select([
+            'fuels.id',
+            'fuels.ten',
+            DB::raw('COUNT(Total.id) AS count'),
+        ])
+        ->leftJoin($cars, function($join){
+            $join->on('fuels.id', '=', 'Total.fuels_id');
+        })
+        ->where('fuels.trangthai', 0)
+        ->where('fuels.ten', 'LIKE', '%'.$query.'%')
+        ->groupBy('fuels.id')
+        ->paginate(10);
         return response()->json($items);
     }
 

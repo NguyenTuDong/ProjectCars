@@ -23,6 +23,9 @@
                     <th class="table-origins-name">
                       Nguồn gốc
                     </th>
+                    <th class="table-origins-ratio">
+                      Tỉ lệ
+                    </th>
                     <th class="table-origins-actions text-right">
                       Tác vụ
                     </th>
@@ -33,6 +36,8 @@
                       :key="origin.id" 
                       :origin="origin"
                       :editing="editing"
+                      :max="max"
+                      :carCountAll="carCountAll"
                       @changeEditing="changeEditing"
                       @showPopup="showPopup"
                     ></origin-item>
@@ -109,6 +114,7 @@ export default {
       q: '',
     }
     this.$store.dispatch('retrieveOrigins', data);
+    this.$store.dispatch("carCount");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: {
@@ -116,6 +122,16 @@ export default {
       origins: 'origins',
       pagination: 'originsPagination',
     }),
+    carCountAll() {
+      return this.$store.getters.carCount;
+    },
+    max(){
+      var max = 0;
+      this.origins.forEach(ele => {
+        if(ele.count > max) max = ele.count;
+      });
+      return max;
+    }
   },
   methods: {
     getItems(page){
@@ -180,7 +196,10 @@ export default {
   width: 5%;
 }
 .table-origins-name{
-  width: 70%;
+  width: 30%;
+}
+.table-origins-ratio{
+  width: 40%;
 }
 .table-origins-actions{
   width: 25%;
