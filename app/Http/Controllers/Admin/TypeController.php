@@ -27,7 +27,7 @@ class TypeController extends Controller
             $id = $brands_id;
         }
 
-        $cars = DB::raw('(SELECT a.id, a.types_id FROM `cars` a WHERE trangthai = 0)
+        $cars = DB::raw('(SELECT a.id, a.types_id FROM `cars` a WHERE trangthai = 2)
                Total');
         $items = Type::select([
             'types.id',

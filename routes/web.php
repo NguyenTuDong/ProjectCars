@@ -35,9 +35,14 @@ Route::prefix('admin')->group(function() {
     //Car
     Route::get('/car', 'Admin\CarController@index');
     Route::get('/car/count', 'Admin\CarController@count');
+    Route::get('/car/countApprove', 'Admin\CarController@countApprove');
+    Route::get('/car/countCost', 'Admin\CarController@countCost');
     Route::get('/car/countPerMonth', 'Admin\CarController@countPerMonth');
-    Route::get('/car/countActivePerMonth', 'Admin\CarController@countActivePerMonth');
+    Route::get('/car/countApprovePerMonth', 'Admin\CarController@countApprovePerMonth');
+    Route::get('/car/countCostPerMonth', 'Admin\CarController@countCostPerMonth');
     Route::get('/car/{id}', 'Admin\CarController@show');
+    Route::post('/car/approve/{car}', 'Admin\CarController@approve');
+    Route::post('/car/deny/{car}', 'Admin\CarController@deny');
     Route::post('/car/delete/{car}', 'Admin\CarController@destroy');
 
     //User

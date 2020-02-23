@@ -18,7 +18,7 @@ class ConditionController extends Controller
     {
         $query = $request->q;
 
-        $cars = DB::raw('(SELECT a.id, a.conditions_id FROM `cars` a WHERE trangthai = 0)
+        $cars = DB::raw('(SELECT a.id, a.conditions_id FROM `cars` a WHERE trangthai = 2)
                Total');
         $items = Condition::select([
             'conditions.id',

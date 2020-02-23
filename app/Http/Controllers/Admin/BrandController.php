@@ -18,7 +18,7 @@ class BrandController extends Controller
     {
         $query = $request->q;
 
-        $cars = DB::raw('(SELECT a.id, a.types_id FROM `cars` a WHERE trangthai = 0)
+        $cars = DB::raw('(SELECT a.id, a.types_id FROM `cars` a WHERE trangthai = 2)
                TotalCars');
         $items = Brand::select([
             'brands.id',

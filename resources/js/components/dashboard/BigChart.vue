@@ -32,7 +32,7 @@ export default {
           data: {
             labels: months,
             datasets: [{
-              label: "Mẫu tin",
+              label: "Doanh thu",
               borderColor: chartColor,
               pointBorderColor: chartColor,
               pointBackgroundColor: "#1e3d60",

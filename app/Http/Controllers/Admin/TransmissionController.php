@@ -18,7 +18,7 @@ class TransmissionController extends Controller
     {
         $query = $request->q;
 
-        $cars = DB::raw('(SELECT a.id, a.transmissions_id FROM `cars` a WHERE trangthai = 0)
+        $cars = DB::raw('(SELECT a.id, a.transmissions_id FROM `cars` a WHERE trangthai = 2)
                Total');
         $items = Transmission::select([
             'transmissions.id',

@@ -2048,15 +2048,15 @@ function _defineProperty(obj, key, value) {
       q: ''
     };
     this.$store.dispatch('retrieveBrands', data);
-    this.$store.dispatch("carCount");
+    this.$store.dispatch("carCountApprove");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])({
     brands: 'brands',
     pagination: 'brandsPagination'
   }), {
-    carCountAll: function carCountAll() {
-      return this.$store.getters.carCount;
+    carCountApprove: function carCountApprove() {
+      return this.$store.getters.carCountApprove;
     },
     max: function max() {
       var max = 0;
@@ -2223,7 +2223,7 @@ __webpack_require__.r(__webpack_exports__);
     max: {
       type: Number
     },
-    carCountAll: {
+    carCountApprove: {
       type: Number
     }
   },
@@ -2238,7 +2238,7 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     percent: function percent() {
       var self = this;
-      return Math.round((self.brand.count / self.carCountAll * 100 + Number.EPSILON) * 100) / 100 + '%';
+      return Math.round((self.brand.count / self.carCountApprove * 100 + Number.EPSILON) * 100) / 100 + '%';
     },
     opacity: function opacity() {
       var self = this;
@@ -2428,6 +2428,9 @@ function _defineProperty(obj, key, value) {
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2502,6 +2505,7 @@ function _defineProperty(obj, key, value) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Modal */ "./resources/js/components/Modal.vue");
 //
 //
 //
@@ -2627,11 +2631,47 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'CarDetail',
+  components: {
+    Modal: _Modal__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
     return {
-      id: this.$route.params.id
+      id: this.$route.params.id,
+      message: ''
     };
   },
   created: function created() {
@@ -2644,20 +2684,25 @@ __webpack_require__.r(__webpack_exports__);
     price: function price() {
       if (this.$store.getters.car.gia === undefined) return;
       return this.$store.getters.car.gia.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+    cost: function cost() {
+      if (this.$store.getters.car.phi === undefined) return;
+      return this.$store.getters.car.phi.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
   },
   methods: {
-    showPopup: function showPopup(id) {
-      $('.pop-up').fadeIn(300);
-      var message = "Bạn có muốn xóa mẫu tin <b>" + this.car.ten + "</b> không?";
-      $('.pop-up-body').html(message);
+    showPopup: function showPopup() {
+      this.message = "Bạn có muốn xóa mẫu tin <b>" + this.car.ten + "</b> không?";
+      this.$refs.modal.show(this.car);
     },
-    closePopup: function closePopup() {
-      $('.pop-up').fadeOut(300);
+    submit: function submit(data) {
+      this.$store.dispatch('deleteCar', data.id);
     },
-    deleteCar: function deleteCar() {
-      this.$store.dispatch('deleteCar', this.car.id);
-      $('.pop-up').fadeOut(300);
+    approveCar: function approveCar() {
+      this.$store.dispatch('approveCar', this.car.id);
+    },
+    denyCar: function denyCar() {
+      this.$store.dispatch('denyCar', this.car.id);
     }
   }
 });
@@ -2673,6 +2718,23 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2726,6 +2788,12 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     showPopup: function showPopup() {
       this.$emit('showPopup', this.car);
+    },
+    approveCar: function approveCar() {
+      this.$store.dispatch('approveCar', this.car.id);
+    },
+    denyCar: function denyCar() {
+      this.$store.dispatch('denyCar', this.car.id);
     }
   }
 });
@@ -2922,15 +2990,15 @@ function _defineProperty(obj, key, value) {
       q: ''
     };
     this.$store.dispatch('retrieveColors', data);
-    this.$store.dispatch("carCount");
+    this.$store.dispatch("carCountApprove");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])({
     colors: 'colors',
     pagination: 'colorsPagination'
   }), {
-    carCountAll: function carCountAll() {
-      return this.$store.getters.carCount;
+    carCountApprove: function carCountApprove() {
+      return this.$store.getters.carCountApprove;
     },
     max: function max() {
       var max = 0;
@@ -3097,7 +3165,7 @@ __webpack_require__.r(__webpack_exports__);
     max: {
       type: Number
     },
-    carCountAll: {
+    carCountApprove: {
       type: Number
     }
   },
@@ -3112,7 +3180,7 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     percent: function percent() {
       var self = this;
-      return Math.round((self.color.count / self.carCountAll * 100 + Number.EPSILON) * 100) / 100 + '%';
+      return Math.round((self.color.count / self.carCountApprove * 100 + Number.EPSILON) * 100) / 100 + '%';
     },
     opacity: function opacity() {
       var self = this;
@@ -3355,15 +3423,15 @@ function _defineProperty(obj, key, value) {
       q: ''
     };
     this.$store.dispatch('retrieveConditions', data);
-    this.$store.dispatch("carCount");
+    this.$store.dispatch("carCountApprove");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])({
     conditions: 'conditions',
     pagination: 'conditionsPagination'
   }), {
-    carCountAll: function carCountAll() {
-      return this.$store.getters.carCount;
+    carCountApprove: function carCountApprove() {
+      return this.$store.getters.carCountApprove;
     },
     max: function max() {
       var max = 0;
@@ -3493,7 +3561,7 @@ __webpack_require__.r(__webpack_exports__);
     max: {
       type: Number
     },
-    carCountAll: {
+    carCountApprove: {
       type: Number
     }
   },
@@ -3506,7 +3574,7 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     percent: function percent() {
       var self = this;
-      return Math.round((self.condition.count / self.carCountAll * 100 + Number.EPSILON) * 100) / 100 + '%';
+      return Math.round((self.condition.count / self.carCountApprove * 100 + Number.EPSILON) * 100) / 100 + '%';
     },
     opacity: function opacity() {
       var self = this;
@@ -3951,15 +4019,15 @@ function _defineProperty(obj, key, value) {
       q: ''
     };
     this.$store.dispatch('retrieveConvenients', data);
-    this.$store.dispatch("carCount");
+    this.$store.dispatch("carCountApprove");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])({
     convenients: 'convenients',
     pagination: 'convenientsPagination'
   }), {
-    carCountAll: function carCountAll() {
-      return this.$store.getters.carCount;
+    carCountApprove: function carCountApprove() {
+      return this.$store.getters.carCountApprove;
     },
     max: function max() {
       var max = 0;
@@ -4089,7 +4157,7 @@ __webpack_require__.r(__webpack_exports__);
     max: {
       type: Number
     },
-    carCountAll: {
+    carCountApprove: {
       type: Number
     }
   },
@@ -4102,7 +4170,7 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     percent: function percent() {
       var self = this;
-      return Math.round((self.convenient.count / self.carCountAll * 100 + Number.EPSILON) * 100) / 100 + '%';
+      return Math.round((self.convenient.count / self.carCountApprove * 100 + Number.EPSILON) * 100) / 100 + '%';
     },
     opacity: function opacity() {
       var self = this;
@@ -4186,7 +4254,7 @@ __webpack_require__.r(__webpack_exports__);
           data: {
             labels: months,
             datasets: [{
-              label: "Mẫu tin",
+              label: "Doanh thu",
               borderColor: chartColor,
               pointBorderColor: chartColor,
               pointBackgroundColor: "#1e3d60",
@@ -4276,171 +4344,41 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _BigChart__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BigChart */ "./resources/js/components/dashboard/BigChart.vue");
 /* harmony import */ var _SmallChart__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SmallChart */ "./resources/js/components/dashboard/SmallChart.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
 
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
 
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Dashboard",
-  components: {
-    BigChart: _BigChart__WEBPACK_IMPORTED_MODULE_0__["default"],
-    SmallChart: _SmallChart__WEBPACK_IMPORTED_MODULE_1__["default"]
-  },
-  created: function created() {
-    this.$store.dispatch("carPerMonth");
-    this.$store.dispatch("carCount");
-    this.$store.dispatch("userCount");
-    this.$store.dispatch("contactCount");
-    this.$store.dispatch("carActivePerMonth");
-    this.$store.dispatch("userPerMonth");
-    this.$store.dispatch("contactPerMonth");
-  },
-  computed: {
-    carCountAll: function carCountAll() {
-      return this.$store.getters.carCount;
-    },
-    carPerMonth: function carPerMonth() {
-      return this.$store.getters.carPerMonth;
-    },
-    carActivePerMonth: function carActivePerMonth() {
-      return this.$store.getters.carActivePerMonth;
-    },
-    userCountAll: function userCountAll() {
-      return this.$store.getters.userCount;
-    },
-    userPerMonth: function userPerMonth() {
-      return this.$store.getters.userPerMonth;
-    },
-    userCount: function userCount() {
-      var count = 0;
-      var data = this.$store.getters.userPerMonth;
-      data.forEach(function (el) {
-        count += el.count;
+  return keys;
+}
+
+function _objectSpread(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
       });
-      return count;
-    },
-    contactCountAll: function contactCountAll() {
-      return this.$store.getters.contactCount;
-    },
-    contactPerMonth: function contactPerMonth() {
-      return this.$store.getters.contactPerMonth;
-    },
-    contactCount: function contactCount() {
-      var count = 0;
-      var data = this.$store.getters.contactPerMonth;
-      data.forEach(function (el) {
-        count += el.count;
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
       });
-      return count;
     }
   }
-});
 
-/***/ }),
+  return target;
+}
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/SmallChart.vue?vue&type=script&lang=js&":
-/*!**************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/babel-loader/lib??ref--12-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/SmallChart.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -4484,6 +4422,252 @@ function _defineProperty(obj, key, value) {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "Dashboard",
+  components: {
+    BigChart: _BigChart__WEBPACK_IMPORTED_MODULE_0__["default"],
+    SmallChart: _SmallChart__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  created: function created() {
+    this.$store.dispatch("carCostPerMonth");
+    this.$store.dispatch("carCount");
+    this.$store.dispatch("carCountApprove");
+    this.$store.dispatch("carCountCost");
+    this.$store.dispatch("userCount");
+    this.$store.dispatch("contactCount");
+    this.$store.dispatch("carApprovePerMonth");
+    this.$store.dispatch("userPerMonth");
+    this.$store.dispatch("contactPerMonth");
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])({
+    carCountAll: 'carCount',
+    carCountApprove: 'carCountApprove',
+    carCountCost: 'carCountCost',
+    carCostPerMonth: 'carCostPerMonth',
+    carApprovePerMonth: 'carApprovePerMonth',
+    userCountAll: 'userCount',
+    userPerMonth: 'userPerMonth',
+    contactCountAll: 'contactCount',
+    contactPerMonth: 'contactPerMonth'
+  }), {
+    userCount: function userCount() {
+      var count = 0;
+      var data = this.$store.getters.userPerMonth;
+      data.forEach(function (el) {
+        count += el.count;
+      });
+      return count;
+    },
+    contactCount: function contactCount() {
+      var count = 0;
+      var data = this.$store.getters.contactPerMonth;
+      data.forEach(function (el) {
+        count += el.count;
+      });
+      return count;
+    },
+    money: function money() {
+      console.log(this.carCountCost);
+      if (this.carCountCost === 'Đang tải...') return this.carCountCost;
+
+      if (this.carCountCost > 1000000000) {
+        var money = Math.round((this.carCountCost / 1000000000 + Number.EPSILON) * 100) / 100;
+        return money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' tỉ VND';
+      }
+
+      if (this.carCountCost > 1000000) {
+        var money = Math.round((this.carCountCost / 1000000 + Number.EPSILON) * 100) / 100;
+        return money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' tr VND';
+      }
+
+      return this.carCountCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' VND';
+    }
+  })
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/SmallChart.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/babel-loader/lib??ref--12-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/SmallChart.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+} //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4492,13 +4676,6 @@ function _defineProperty(obj, key, value) {
     canvas: {
       type: String,
       required: true
-    },
-    category: {
-      type: String,
-      "default": ''
-    },
-    title: {
-      "default": ''
     },
     type: {
       type: String,
@@ -4798,15 +4975,15 @@ function _defineProperty(obj, key, value) {
       q: ''
     };
     this.$store.dispatch('retrieveFuels', data);
-    this.$store.dispatch("carCount");
+    this.$store.dispatch("carCountApprove");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])({
     fuels: 'fuels',
     pagination: 'fuelsPagination'
   }), {
-    carCountAll: function carCountAll() {
-      return this.$store.getters.carCount;
+    carCountApprove: function carCountApprove() {
+      return this.$store.getters.carCountApprove;
     },
     max: function max() {
       var max = 0;
@@ -4936,7 +5113,7 @@ __webpack_require__.r(__webpack_exports__);
     max: {
       type: Number
     },
-    carCountAll: {
+    carCountApprove: {
       type: Number
     }
   },
@@ -4949,7 +5126,7 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     percent: function percent() {
       var self = this;
-      return Math.round((self.fuel.count / self.carCountAll * 100 + Number.EPSILON) * 100) / 100 + '%';
+      return Math.round((self.fuel.count / self.carCountApprove * 100 + Number.EPSILON) * 100) / 100 + '%';
     },
     opacity: function opacity() {
       var self = this;
@@ -5417,15 +5594,15 @@ function _defineProperty(obj, key, value) {
       q: ''
     };
     this.$store.dispatch('retrieveOrigins', data);
-    this.$store.dispatch("carCount");
+    this.$store.dispatch("carCountApprove");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])({
     origins: 'origins',
     pagination: 'originsPagination'
   }), {
-    carCountAll: function carCountAll() {
-      return this.$store.getters.carCount;
+    carCountApprove: function carCountApprove() {
+      return this.$store.getters.carCountApprove;
     },
     max: function max() {
       var max = 0;
@@ -5555,7 +5732,7 @@ __webpack_require__.r(__webpack_exports__);
     max: {
       type: Number
     },
-    carCountAll: {
+    carCountApprove: {
       type: Number
     }
   },
@@ -5568,7 +5745,7 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     percent: function percent() {
       var self = this;
-      return Math.round((self.origin.count / self.carCountAll * 100 + Number.EPSILON) * 100) / 100 + '%';
+      return Math.round((self.origin.count / self.carCountApprove * 100 + Number.EPSILON) * 100) / 100 + '%';
     },
     opacity: function opacity() {
       var self = this;
@@ -5800,15 +5977,15 @@ function _defineProperty(obj, key, value) {
       q: ''
     };
     this.$store.dispatch('retrieveStyles', data);
-    this.$store.dispatch("carCount");
+    this.$store.dispatch("carCountApprove");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])({
     styles: 'styles',
     pagination: 'stylesPagination'
   }), {
-    carCountAll: function carCountAll() {
-      return this.$store.getters.carCount;
+    carCountApprove: function carCountApprove() {
+      return this.$store.getters.carCountApprove;
     },
     max: function max() {
       var max = 0;
@@ -5975,7 +6152,7 @@ __webpack_require__.r(__webpack_exports__);
     max: {
       type: Number
     },
-    carCountAll: {
+    carCountApprove: {
       type: Number
     }
   },
@@ -5990,7 +6167,7 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     percent: function percent() {
       var self = this;
-      return Math.round((self.styleItem.count / self.carCountAll * 100 + Number.EPSILON) * 100) / 100 + '%';
+      return Math.round((self.styleItem.count / self.carCountApprove * 100 + Number.EPSILON) * 100) / 100 + '%';
     },
     opacity: function opacity() {
       var self = this;
@@ -6233,15 +6410,15 @@ function _defineProperty(obj, key, value) {
       q: ''
     };
     this.$store.dispatch('retrieveTransmissions', data);
-    this.$store.dispatch("carCount");
+    this.$store.dispatch("carCountApprove");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])({
     transmissions: 'transmissions',
     pagination: 'transmissionsPagination'
   }), {
-    carCountAll: function carCountAll() {
-      return this.$store.getters.carCount;
+    carCountApprove: function carCountApprove() {
+      return this.$store.getters.carCountApprove;
     },
     max: function max() {
       var max = 0;
@@ -6371,7 +6548,7 @@ __webpack_require__.r(__webpack_exports__);
     max: {
       type: Number
     },
-    carCountAll: {
+    carCountApprove: {
       type: Number
     }
   },
@@ -6384,7 +6561,7 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     percent: function percent() {
       var self = this;
-      return Math.round((self.transmission.count / self.carCountAll * 100 + Number.EPSILON) * 100) / 100 + '%';
+      return Math.round((self.transmission.count / self.carCountApprove * 100 + Number.EPSILON) * 100) / 100 + '%';
     },
     opacity: function opacity() {
       var self = this;
@@ -6610,7 +6787,7 @@ function _defineProperty(obj, key, value) {
       q: ''
     };
     this.$store.dispatch('retrieveTypes', data);
-    this.$store.dispatch("carCount");
+    this.$store.dispatch("carCountApprove");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])({
@@ -6618,8 +6795,8 @@ function _defineProperty(obj, key, value) {
     types: 'types',
     pagination: 'typesPagination'
   }), {
-    carCountAll: function carCountAll() {
-      return this.$store.getters.carCount;
+    carCountApprove: function carCountApprove() {
+      return this.$store.getters.carCountApprove;
     },
     max: function max() {
       var max = 0;
@@ -6753,7 +6930,7 @@ __webpack_require__.r(__webpack_exports__);
     max: {
       type: Number
     },
-    carCountAll: {
+    carCountApprove: {
       type: Number
     }
   },
@@ -6768,7 +6945,7 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     percent: function percent() {
       var self = this;
-      return Math.round((self.type.count / self.carCountAll * 100 + Number.EPSILON) * 100) / 100 + '%';
+      return Math.round((self.type.count / self.carCountApprove * 100 + Number.EPSILON) * 100) / 100 + '%';
     },
     opacity: function opacity() {
       var self = this;
@@ -11703,6 +11880,25 @@ exports.push([module.i, ".pagination-custom li {\n  display: inline-block;\n}\n.
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&id=08c8776f&lang=scss&scoped=true&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--8-2!./node_modules/sass-loader/dist/cjs.js??ref--8-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&id=08c8776f&lang=scss&scoped=true& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".btn-back[data-v-08c8776f] {\n  position: absolute;\n  top: 40px;\n  left: 30px;\n  background-color: transparent;\n  padding: 0;\n  color: white;\n  border: 0;\n  cursor: pointer;\n  z-index: 1100;\n}\n.car-image[data-v-08c8776f] {\n  height: 300px;\n}\n.car-image img[data-v-08c8776f] {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\ntable[data-v-08c8776f] {\n  width: 100%;\n}", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/layout/Master.vue?vue&type=style&index=0&lang=scss&":
 /*!***********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--8-2!./node_modules/sass-loader/dist/cjs.js??ref--8-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/layout/Master.vue?vue&type=style&index=0&lang=scss& ***!
@@ -11772,26 +11968,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.table-cars-id{\r\n  width: 5%;\n}\n.table-cars-img{\r\n  width: 15%;\n}\n.table-cars-name{\r\n  width: 40%;\n}\n.table-cars-author{\r\n  width: 20%;\n}\n.table-cars-actions{\r\n  width: 20%;\n}\r\n", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&lang=css&":
-/*!*******************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&lang=css& ***!
-  \*******************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.btn-back{\r\n  position: absolute;\r\n  top: 40px;\r\n  left: 30px;\r\n  background-color: transparent;\r\n  padding: 0;\r\n  color: white;\r\n  border: 0;\r\n  cursor: pointer;\r\n  z-index: 1100;\n}\r\n", ""]);
+exports.push([module.i, "\n.table-cars-id{\r\n  width: 5%;\n}\n.table-cars-img{\r\n  width: 15%;\n}\n.table-cars-name{\r\n  width: 40%;\n}\n.table-cars-author{\r\n  width: 10%;\n}\n.table-cars-status{\r\n  width: 10%;\n}\n.table-cars-actions{\r\n  width: 20%;\n}\r\n", ""]);
 
 // exports
 
@@ -42944,6 +43121,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&id=08c8776f&lang=scss&scoped=true&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--8-2!./node_modules/sass-loader/dist/cjs.js??ref--8-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&id=08c8776f&lang=scss&scoped=true& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--8-2!../../../../node_modules/sass-loader/dist/cjs.js??ref--8-3!../../../../node_modules/vue-loader/lib??vue-loader-options!./CarDetail.vue?vue&type=style&index=0&id=08c8776f&lang=scss&scoped=true& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&id=08c8776f&lang=scss&scoped=true&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/layout/Master.vue?vue&type=style&index=0&lang=scss&":
 /*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--8-2!./node_modules/sass-loader/dist/cjs.js??ref--8-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/layout/Master.vue?vue&type=style&index=0&lang=scss& ***!
@@ -43043,36 +43250,6 @@ if(false) {}
 
 
 var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--7-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--7-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Car.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/car/Car.vue?vue&type=style&index=0&lang=css&");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&lang=css&":
-/*!***********************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&lang=css& ***!
-  \***********************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--7-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--7-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./CarDetail.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&lang=css&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -44408,7 +44585,7 @@ var render = function() {
                                 brand: brand,
                                 editing: _vm.editing,
                                 max: _vm.max,
-                                carCountAll: _vm.carCountAll
+                                carCountApprove: _vm.carCountApprove
                               },
                               on: {
                                 changeEditing: _vm.changeEditing,
@@ -44701,12 +44878,14 @@ var render = function() {
     _c("td", [
       _c(
         "div",
-        { attrs: { title: _vm.brand.count + " / " + _vm.carCountAll } },
+        { attrs: { title: _vm.brand.count + " / " + _vm.carCountApprove } },
         [
-          _c("div", {
-            staticClass: "records-ratio",
-            style: { width: _vm.percent, opacity: _vm.opacity }
-          }),
+          _vm.brand.count > 0
+            ? _c("div", {
+                staticClass: "records-ratio",
+                style: { width: _vm.percent, opacity: _vm.opacity }
+              })
+            : _vm._e(),
           _vm._v(" "),
           _c("span", [_vm._v(_vm._s(_vm.percent))])
         ]
@@ -44920,6 +45099,10 @@ var staticRenderFns = [
         _vm._v("\n                    Người đăng\n                  ")
       ]),
       _vm._v(" "),
+      _c("th", { staticClass: "table-cars-status" }, [
+        _vm._v("\n                    Trạng thái\n                  ")
+      ]),
+      _vm._v(" "),
       _c("th", { staticClass: "table-cars-actions text-right" }, [
         _vm._v("\n                    Tác vụ\n                  ")
       ])
@@ -44932,10 +45115,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/car/CarDetail.vue?vue&type=template&id=08c8776f&":
-/*!****************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/car/CarDetail.vue?vue&type=template&id=08c8776f& ***!
-  \****************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/car/CarDetail.vue?vue&type=template&id=08c8776f&scoped=true&":
+/*!****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/car/CarDetail.vue?vue&type=template&id=08c8776f&scoped=true& ***!
+  \****************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -44947,346 +45130,443 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "panel-header panel-header-sm" }),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        staticClass: "btn-back",
-        on: {
-          click: function($event) {
-            return _vm.$router.go(-1)
+  return _c(
+    "div",
+    [
+      _c("div", { staticClass: "panel-header panel-header-sm" }),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn-back",
+          on: {
+            click: function($event) {
+              return _vm.$router.go(-1)
+            }
           }
-        }
-      },
-      [
-        _c("i", { staticClass: "now-ui-icons arrows-1_minimal-left" }),
-        _vm._v(" Trở lại")
-      ]
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "content" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-4" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "car-image" }, [
-              _c("img", { attrs: { src: _vm.car.hinhanh_path, alt: "" } })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c(
-                "h5",
-                { staticClass: "title text-primary text-center car-price" },
-                [
-                  _vm._v(
-                    "\n              " +
-                      _vm._s(_vm.price) +
-                      " VND\n            "
-                  )
-                ]
-              ),
+        },
+        [
+          _c("i", { staticClass: "now-ui-icons arrows-1_minimal-left" }),
+          _vm._v(" Trở lại")
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "content" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "car-image" }, [
+                _c("img", { attrs: { src: _vm.car.hinhanh_path, alt: "" } })
+              ]),
               _vm._v(" "),
-              _vm.car.types !== undefined
-                ? _c("p", { staticClass: "text-center" }, [
+              _c("div", { staticClass: "card-body" }, [
+                _c(
+                  "h5",
+                  { staticClass: "title text-primary text-center car-price" },
+                  [
                     _vm._v(
                       "\n              " +
-                        _vm._s(_vm.car.types.ten) +
-                        " | " +
-                        _vm._s(_vm.car.types.brands.ten) +
-                        "\n            "
+                        _vm._s(_vm.price) +
+                        " VND\n            "
                     )
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("p", [
-                _vm.car.styles !== undefined
-                  ? _c("span", [
-                      _c("b", [_vm._v("Kiểu dáng: ")]),
-                      _vm._v(_vm._s(_vm.car.styles.ten)),
-                      _c("br")
+                  ]
+                ),
+                _vm._v(" "),
+                _vm.car.types !== undefined
+                  ? _c("p", { staticClass: "text-center" }, [
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.car.types.ten) +
+                          " | " +
+                          _vm._s(_vm.car.types.brands.ten) +
+                          "\n            "
+                      )
                     ])
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.car.origins !== undefined
-                  ? _c("span", [
-                      _c("b", [_vm._v("Nguồn gốc: ")]),
-                      _vm._v(_vm._s(_vm.car.origins.ten)),
-                      _c("br")
-                    ])
-                  : _vm._e(),
+                _c("table", [
+                  _vm.car.styles !== undefined
+                    ? _c("tr", [
+                        _vm._m(0),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(_vm.car.styles.ten))])
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.car.origins !== undefined
+                    ? _c("tr", [
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(_vm.car.origins.ten))])
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.car.conditions !== undefined
+                    ? _c("tr", [
+                        _vm._m(2),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(_vm.car.conditions.ten))])
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.car.doixe !== null
+                    ? _c("tr", [
+                        _vm._m(3),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(_vm.car.doixe))])
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.car.namsx !== null
+                    ? _c("tr", [
+                        _vm._m(4),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(_vm.car.namsx))])
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.car.locations !== undefined
+                    ? _c("tr", [
+                        _vm._m(5),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(_vm.car.locations.ten))])
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.car.created_at !== null
+                    ? _c("tr", [
+                        _vm._m(6),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(_vm.car.created_at))])
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.car.ngaydang !== null
+                    ? _c("tr", [
+                        _vm._m(7),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(_vm.car.ngaydang))])
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.car.ngayketthuc !== null
+                    ? _c("tr", [
+                        _vm._m(8),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(_vm.car.ngayketthuc))])
+                      ])
+                    : _vm._e()
+                ]),
                 _vm._v(" "),
-                _vm.car.conditions !== undefined
-                  ? _c("span", [
-                      _c("b", [_vm._v("Tình trạng: ")]),
-                      _vm._v(_vm._s(_vm.car.conditions.ten)),
-                      _c("br")
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.car.doixe != null
-                  ? _c("span", [
-                      _c("b", [_vm._v("Đời xe: ")]),
-                      _vm._v(_vm._s(_vm.car.doixe)),
-                      _c("br")
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.car.namsx != null
-                  ? _c("span", [
-                      _c("b", [_vm._v("Năm sản xuất: ")]),
-                      _vm._v(_vm._s(_vm.car.namsx)),
-                      _c("br")
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.car.locations !== undefined
-                  ? _c("span", [
-                      _c("b", [_vm._v("Nơi bán: ")]),
-                      _vm._v(_vm._s(_vm.car.locations.ten)),
-                      _c("br")
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.car.created_at != null
-                  ? _c("span", [
-                      _c("b", [_vm._v("Ngày tạo: ")]),
-                      _vm._v(_vm._s(_vm.car.created_at)),
-                      _c("br")
-                    ])
-                  : _vm._e()
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "row justify-content-center text-center" },
-                [
-                  _c("div", { staticClass: "col-md-4" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral",
-                        attrs: {
-                          type: "button",
-                          rel: "tooltip",
-                          title: "Xóa",
-                          "data-original-title": "Remove"
-                        },
-                        on: { click: _vm.showPopup }
-                      },
-                      [
-                        _c("i", {
-                          staticClass: "now-ui-icons ui-1_simple-remove"
-                        })
-                      ]
-                    )
-                  ])
-                ]
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "d-flex card-header" }, [
-              _c("h5", { staticClass: "title" }, [_vm._v(_vm._s(_vm.car.ten))])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm.car.users !== undefined
-                ? _c(
-                    "p",
-                    [
-                      _c("b", [_vm._v("Người đăng: ")]),
-                      _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "row justify-content-center text-center" },
+                  [
+                    _vm.car.trangthai == 0
+                      ? _c("div", { staticClass: "col-md-4" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "btn btn-success btn-round btn-icon btn-icon-mini btn-neutral",
+                              attrs: {
+                                type: "button",
+                                rel: "tooltip",
+                                title: "Duyệt",
+                                "data-original-title": "Remove"
+                              },
+                              on: { click: _vm.approveCar }
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "now-ui-icons ui-1_check"
+                              })
+                            ]
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.car.trangthai == 0
+                      ? _c("div", { staticClass: "col-md-4" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "btn btn-warning btn-round btn-icon btn-icon-mini btn-neutral",
+                              attrs: {
+                                type: "button",
+                                rel: "tooltip",
+                                title: "Từ chối",
+                                "data-original-title": "Remove"
+                              },
+                              on: { click: _vm.denyCar }
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "now-ui-icons ui-1_simple-delete"
+                              })
+                            ]
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-4" }, [
                       _c(
-                        "router-link",
+                        "button",
                         {
+                          staticClass:
+                            "btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral",
                           attrs: {
-                            to: {
-                              name: "user-detail",
-                              params: { id: _vm.car.users_id }
-                            }
-                          }
+                            type: "button",
+                            rel: "tooltip",
+                            title: "Xóa",
+                            "data-original-title": "Remove"
+                          },
+                          on: { click: _vm.showPopup }
                         },
                         [
-                          _vm._v(
-                            "\n                " +
-                              _vm._s(_vm.car.users.ten) +
-                              "\n              "
-                          )
+                          _c("i", {
+                            staticClass: "now-ui-icons ui-1_simple-remove"
+                          })
                         ]
                       )
-                    ],
-                    1
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _c("div", { domProps: { innerHTML: _vm._s(_vm.car.mota) } }),
-              _vm._v(" "),
-              _c("h5", [_vm._v("Thông tin cơ bản")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row mb-4" }, [
-                _vm.car.fuels !== undefined
-                  ? _c("div", { staticClass: "col-md-6" }, [
-                      _c("b", [_vm._v("Nhiên liệu: ")]),
-                      _vm._v(_vm._s(_vm.car.fuels.ten) + "\n              ")
                     ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.car.transmissions !== undefined
-                  ? _c("div", { staticClass: "col-md-6" }, [
-                      _c("b", [_vm._v("Hộp số: ")]),
-                      _vm._v(
-                        _vm._s(_vm.car.transmissions.ten) + "\n              "
-                      )
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.car.colors !== undefined
-                  ? _c("div", { staticClass: "col-md-6" }, [
-                      _c("b", [_vm._v("Màu xe: ")]),
-                      _vm._v(_vm._s(_vm.car.colors.ten) + "\n              ")
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.car.furnitures !== undefined
-                  ? _c("div", { staticClass: "col-md-6" }, [
-                      _c("b", [_vm._v("Màu nội thất: ")]),
-                      _vm._v(
-                        _vm._s(_vm.car.furnitures.ten) + "\n              "
-                      )
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.car.socua != null
-                  ? _c("div", { staticClass: "col-md-6" }, [
-                      _c("b", [_vm._v("Số cửa: ")]),
-                      _vm._v(_vm._s(_vm.car.socua) + "\n              ")
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.car.sochongoi != null
-                  ? _c("div", { staticClass: "col-md-6" }, [
-                      _c("b", [_vm._v("Số chổ ngồi: ")]),
-                      _vm._v(_vm._s(_vm.car.sochongoi) + "\n              ")
-                    ])
-                  : _vm._e()
+                  ]
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-8" }, [
+            _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "d-flex card-header" }, [
+                _c("h5", { staticClass: "title" }, [
+                  _vm._v(_vm._s(_vm.car.ten))
+                ])
               ]),
               _vm._v(" "),
-              _c("h5", [_vm._v("Thông tin kỹ thuật")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row mb-4" }, [
-                _vm.car.kichthuoc != null
-                  ? _c("div", { staticClass: "col-md-6" }, [
-                      _c("b", [_vm._v("Dài x Rộng x Cao (mm): ")]),
-                      _vm._v(_vm._s(_vm.car.kichthuoc) + "\n              ")
-                    ])
+              _c("div", { staticClass: "card-body" }, [
+                _vm.car.users !== undefined
+                  ? _c(
+                      "p",
+                      [
+                        _c("b", [_vm._v("Người đăng: ")]),
+                        _vm._v(" "),
+                        _c(
+                          "router-link",
+                          {
+                            attrs: {
+                              to: {
+                                name: "user-detail",
+                                params: { id: _vm.car.users_id }
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                " +
+                                _vm._s(_vm.car.users.ten) +
+                                "\n              "
+                            )
+                          ]
+                        )
+                      ],
+                      1
+                    )
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.car.phanh != null
-                  ? _c("div", { staticClass: "col-md-6" }, [
-                      _c("b", [_vm._v("Phanh: ")]),
-                      _vm._v(_vm._s(_vm.car.phanh) + "\n              ")
+                _c("p", [
+                  _c("b", [
+                    _vm._v("Phí: "),
+                    _c("span", { staticClass: "text-primary" }, [
+                      _vm._v(_vm._s(_vm.cost) + " VND")
                     ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.car.cannang != null
-                  ? _c("div", { staticClass: "col-md-6" }, [
-                      _c("b", [_vm._v("Trọng lượng không tải (kg): ")]),
-                      _vm._v(_vm._s(_vm.car.cannang) + "\n              ")
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.car.giamxoc != null
-                  ? _c("div", { staticClass: "col-md-6" }, [
-                      _c("b", [_vm._v("Giảm xóc: ")]),
-                      _vm._v(_vm._s(_vm.car.giamxoc) + "\n              ")
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.car.dungtich != null
-                  ? _c("div", { staticClass: "col-md-6" }, [
-                      _c("b", [_vm._v("Dung tích động cơ: ")]),
-                      _vm._v(_vm._s(_vm.car.dungtich) + "\n              ")
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.car.lopxe != null
-                  ? _c("div", { staticClass: "col-md-6" }, [
-                      _c("b", [_vm._v("Lốp xe: ")]),
-                      _vm._v(_vm._s(_vm.car.lopxe) + "\n              ")
-                    ])
-                  : _vm._e()
-              ]),
-              _vm._v(" "),
-              _c("h5", [_vm._v("Tiện nghi")]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "row mb-4" },
-                _vm._l(_vm.car.convenientcars, function(item) {
-                  return _c("div", { key: item.id, staticClass: "col-md-6" }, [
-                    _c("b", [_vm._v(_vm._s(item.convenients.ten))])
                   ])
-                }),
-                0
-              )
+                ]),
+                _vm._v(" "),
+                _c("p", { domProps: { innerHTML: _vm._s(_vm.car.mota) } }),
+                _vm._v(" "),
+                _c("h5", [_vm._v("Thông tin cơ bản")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row mb-4" }, [
+                  _vm.car.fuels !== undefined
+                    ? _c("div", { staticClass: "col-md-6" }, [
+                        _c("b", [_vm._v("Nhiên liệu: ")]),
+                        _vm._v(_vm._s(_vm.car.fuels.ten) + "\n              ")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.car.transmissions !== undefined
+                    ? _c("div", { staticClass: "col-md-6" }, [
+                        _c("b", [_vm._v("Hộp số: ")]),
+                        _vm._v(
+                          _vm._s(_vm.car.transmissions.ten) + "\n              "
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.car.colors !== undefined
+                    ? _c("div", { staticClass: "col-md-6" }, [
+                        _c("b", [_vm._v("Màu xe: ")]),
+                        _vm._v(_vm._s(_vm.car.colors.ten) + "\n              ")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.car.furnitures !== undefined
+                    ? _c("div", { staticClass: "col-md-6" }, [
+                        _c("b", [_vm._v("Màu nội thất: ")]),
+                        _vm._v(
+                          _vm._s(_vm.car.furnitures.ten) + "\n              "
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.car.socua != null
+                    ? _c("div", { staticClass: "col-md-6" }, [
+                        _c("b", [_vm._v("Số cửa: ")]),
+                        _vm._v(_vm._s(_vm.car.socua) + "\n              ")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.car.sochongoi != null
+                    ? _c("div", { staticClass: "col-md-6" }, [
+                        _c("b", [_vm._v("Số chổ ngồi: ")]),
+                        _vm._v(_vm._s(_vm.car.sochongoi) + "\n              ")
+                      ])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("h5", [_vm._v("Thông tin kỹ thuật")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row mb-4" }, [
+                  _vm.car.kichthuoc != null
+                    ? _c("div", { staticClass: "col-md-6" }, [
+                        _c("b", [_vm._v("Dài x Rộng x Cao (mm): ")]),
+                        _vm._v(_vm._s(_vm.car.kichthuoc) + "\n              ")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.car.phanh != null
+                    ? _c("div", { staticClass: "col-md-6" }, [
+                        _c("b", [_vm._v("Phanh: ")]),
+                        _vm._v(_vm._s(_vm.car.phanh) + "\n              ")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.car.cannang != null
+                    ? _c("div", { staticClass: "col-md-6" }, [
+                        _c("b", [_vm._v("Trọng lượng không tải (kg): ")]),
+                        _vm._v(_vm._s(_vm.car.cannang) + "\n              ")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.car.giamxoc != null
+                    ? _c("div", { staticClass: "col-md-6" }, [
+                        _c("b", [_vm._v("Giảm xóc: ")]),
+                        _vm._v(_vm._s(_vm.car.giamxoc) + "\n              ")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.car.dungtich != null
+                    ? _c("div", { staticClass: "col-md-6" }, [
+                        _c("b", [_vm._v("Dung tích động cơ: ")]),
+                        _vm._v(_vm._s(_vm.car.dungtich) + "\n              ")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.car.lopxe != null
+                    ? _c("div", { staticClass: "col-md-6" }, [
+                        _c("b", [_vm._v("Lốp xe: ")]),
+                        _vm._v(_vm._s(_vm.car.lopxe) + "\n              ")
+                      ])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("h5", [_vm._v("Tiện nghi")]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "row mb-4" },
+                  _vm._l(_vm.car.convenientcars, function(item) {
+                    return _c(
+                      "div",
+                      { key: item.id, staticClass: "col-md-6" },
+                      [_c("b", [_vm._v(_vm._s(item.convenients.ten))])]
+                    )
+                  }),
+                  0
+                )
+              ])
             ])
           ])
         ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "pop-up" }, [
-      _c("div", { staticClass: "pop-up-inner" }, [
-        _c("div", { staticClass: "pop-up-header" }, [
-          _c("div", { staticClass: "pop-up-title" }, [_vm._v("Thông báo")]),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-link btn-neutral",
-              attrs: {
-                type: "button",
-                rel: "tooltip",
-                title: "",
-                "data-original-title": "Remove"
-              },
-              on: { click: _vm.closePopup }
-            },
-            [_c("i", { staticClass: "now-ui-icons ui-1_simple-remove" })]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "pop-up-body" }),
-        _vm._v(" "),
-        _c("div", { staticClass: "pop-up-footer" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-link btn-neutral",
-              on: { click: _vm.deleteCar }
-            },
-            [_vm._v("Xóa")]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-link btn-neutral",
-              on: { click: _vm.closePopup }
-            },
-            [_vm._v("Hủy")]
-          )
-        ])
-      ])
-    ])
-  ])
+      ]),
+      _vm._v(" "),
+      _c("modal", {
+        ref: "modal",
+        attrs: { message: _vm.message },
+        on: { submit: _vm.submit }
+      })
+    ],
+    1
+  )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", [_c("b", [_vm._v("Kiểu dáng: ")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", [_c("b", [_vm._v("Nguồn gốc: ")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", [_c("b", [_vm._v("Tình trạng: ")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", [_c("b", [_vm._v("Đời xe: ")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", [_c("b", [_vm._v("Năm sản xuất: ")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", [_c("b", [_vm._v("Nơi bán: ")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", [_c("b", [_vm._v("Ngày tạo: ")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", [_c("b", [_vm._v("Ngày đăng: ")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", [_c("b", [_vm._v("Ngày kết thúc: ")])])
+  }
+]
 render._withStripped = true
 
 
@@ -45371,7 +45651,63 @@ var render = function() {
       1
     ),
     _vm._v(" "),
+    _c("td", [
+      _vm.car.trangthai == 0
+        ? _c("span", { staticClass: "text-warning" }, [
+            _vm._v("\n      Chờ duyệt\n    ")
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.car.trangthai == 2
+        ? _c("span", { staticClass: "text-success" }, [
+            _vm._v("\n      Đã duyệt\n    ")
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.car.trangthai == 3
+        ? _c("span", { staticClass: "text-danger" }, [
+            _vm._v("\n      Đã từ chối\n    ")
+          ])
+        : _vm._e()
+    ]),
+    _vm._v(" "),
     _c("td", { staticClass: "td-actions text-right" }, [
+      _vm.car.trangthai == 0
+        ? _c(
+            "button",
+            {
+              staticClass:
+                "btn btn-success btn-round btn-icon btn-icon-mini btn-neutral",
+              attrs: {
+                type: "button",
+                rel: "tooltip",
+                title: "Duyệt",
+                "data-original-title": "Remove"
+              },
+              on: { click: _vm.approveCar }
+            },
+            [_c("i", { staticClass: "now-ui-icons ui-1_check" })]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.car.trangthai == 0
+        ? _c(
+            "button",
+            {
+              staticClass:
+                "btn btn-warning btn-round btn-icon btn-icon-mini btn-neutral",
+              attrs: {
+                type: "button",
+                rel: "tooltip",
+                title: "Từ chối",
+                "data-original-title": "Remove"
+              },
+              on: { click: _vm.denyCar }
+            },
+            [_c("i", { staticClass: "now-ui-icons ui-1_simple-delete" })]
+          )
+        : _vm._e(),
+      _vm._v(" "),
       _c(
         "button",
         {
@@ -45476,7 +45812,7 @@ var render = function() {
                                 color: color,
                                 editing: _vm.editing,
                                 max: _vm.max,
-                                carCountAll: _vm.carCountAll
+                                carCountApprove: _vm.carCountApprove
                               },
                               on: {
                                 changeEditing: _vm.changeEditing,
@@ -45769,12 +46105,14 @@ var render = function() {
     _c("td", [
       _c(
         "div",
-        { attrs: { title: _vm.color.count + " / " + _vm.carCountAll } },
+        { attrs: { title: _vm.color.count + " / " + _vm.carCountApprove } },
         [
-          _c("div", {
-            staticClass: "records-ratio",
-            style: { width: _vm.percent, opacity: _vm.opacity }
-          }),
+          _vm.color.count > 0
+            ? _c("div", {
+                staticClass: "records-ratio",
+                style: { width: _vm.percent, opacity: _vm.opacity }
+              })
+            : _vm._e(),
           _vm._v(" "),
           _c("span", [_vm._v(_vm._s(_vm.percent))])
         ]
@@ -45942,7 +46280,7 @@ var render = function() {
                                 condition: condition,
                                 editing: _vm.editing,
                                 max: _vm.max,
-                                carCountAll: _vm.carCountAll
+                                carCountApprove: _vm.carCountApprove
                               },
                               on: {
                                 changeEditing: _vm.changeEditing,
@@ -46149,12 +46487,14 @@ var render = function() {
     _c("td", [
       _c(
         "div",
-        { attrs: { title: _vm.condition.count + " / " + _vm.carCountAll } },
+        { attrs: { title: _vm.condition.count + " / " + _vm.carCountApprove } },
         [
-          _c("div", {
-            staticClass: "records-ratio",
-            style: { width: _vm.percent, opacity: _vm.opacity }
-          }),
+          _vm.condition.count > 0
+            ? _c("div", {
+                staticClass: "records-ratio",
+                style: { width: _vm.percent, opacity: _vm.opacity }
+              })
+            : _vm._e(),
           _vm._v(" "),
           _c("span", [_vm._v(_vm._s(_vm.percent))])
         ]
@@ -46519,7 +46859,7 @@ var render = function() {
                                 convenient: convenient,
                                 editing: _vm.editing,
                                 max: _vm.max,
-                                carCountAll: _vm.carCountAll
+                                carCountApprove: _vm.carCountApprove
                               },
                               on: {
                                 changeEditing: _vm.changeEditing,
@@ -46726,12 +47066,16 @@ var render = function() {
     _c("td", [
       _c(
         "div",
-        { attrs: { title: _vm.convenient.count + " / " + _vm.carCountAll } },
+        {
+          attrs: { title: _vm.convenient.count + " / " + _vm.carCountApprove }
+        },
         [
-          _c("div", {
-            staticClass: "records-ratio",
-            style: { width: _vm.percent, opacity: _vm.opacity }
-          }),
+          _vm.convenient.count > 0
+            ? _c("div", {
+                staticClass: "records-ratio",
+                style: { width: _vm.percent, opacity: _vm.opacity }
+              })
+            : _vm._e(),
           _vm._v(" "),
           _c("span", [_vm._v(_vm._s(_vm.percent))])
         ]
@@ -46863,7 +47207,7 @@ var render = function() {
     _c(
       "div",
       { staticClass: "panel-header panel-header-lg" },
-      [_c("big-chart", { attrs: { data: _vm.carPerMonth } })],
+      [_c("big-chart", { attrs: { data: _vm.carCostPerMonth } })],
       1
     ),
     _vm._v(" "),
@@ -46873,7 +47217,7 @@ var render = function() {
           _c("div", { staticClass: "card card-stats" }, [
             _c("div", { staticClass: "card-body" }, [
               _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-4" }, [
+                _c("div", { staticClass: "col-md-3" }, [
                   _c("div", { staticClass: "statistics" }, [
                     _c("div", { staticClass: "info" }, [
                       _vm._m(0),
@@ -46881,6 +47225,28 @@ var render = function() {
                       _c("h3", { staticClass: "info-title" }, [
                         _vm._v(
                           "\n                      " +
+                            _vm._s(_vm.money) +
+                            "\n                    "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("h6", { staticClass: "stats-title" }, [
+                        _vm._v("Doanh thu")
+                      ])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("div", { staticClass: "statistics" }, [
+                    _c("div", { staticClass: "info" }, [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c("h3", { staticClass: "info-title" }, [
+                        _vm._v(
+                          "\n                      " +
+                            _vm._s(_vm.carCountApprove) +
+                            " / " +
                             _vm._s(_vm.carCountAll) +
                             "\n                    "
                         )
@@ -46893,10 +47259,10 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-4" }, [
+                _c("div", { staticClass: "col-md-3" }, [
                   _c("div", { staticClass: "statistics" }, [
                     _c("div", { staticClass: "info" }, [
-                      _vm._m(1),
+                      _vm._m(2),
                       _vm._v(" "),
                       _c("h3", { staticClass: "info-title" }, [
                         _vm._v(_vm._s(_vm.userCountAll))
@@ -46909,10 +47275,10 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-4" }, [
+                _c("div", { staticClass: "col-md-3" }, [
                   _c("div", { staticClass: "statistics" }, [
                     _c("div", { staticClass: "info" }, [
-                      _vm._m(2),
+                      _vm._m(3),
                       _vm._v(" "),
                       _c("h3", { staticClass: "info-title" }, [
                         _vm._v(_vm._s(_vm.contactCountAll))
@@ -46931,68 +47297,112 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
-        _c(
-          "div",
-          { staticClass: "col-lg-4" },
-          [
-            _c("small-chart", {
-              attrs: {
-                canvas: "carActivePerMonth",
-                category: "Số tin được đăng",
-                label: "Online",
-                color: "#18ce0f",
-                yAxes: true,
-                xAxes: false,
-                bgColor: "rgba(24, 206, 15, 0.4)",
-                data: _vm.carActivePerMonth
-              }
-            })
-          ],
-          1
-        ),
+        _c("div", { staticClass: "col-lg-4" }, [
+          _c("div", { staticClass: "card card-chart" }, [
+            _vm._m(4),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _c(
+                "div",
+                { staticClass: "chart-area" },
+                [
+                  _c("small-chart", {
+                    attrs: {
+                      canvas: "carApprovePerMonth",
+                      label: "Online",
+                      color: "#18ce0f",
+                      yAxes: true,
+                      xAxes: false,
+                      bgColor: "rgba(24, 206, 15, 0.4)",
+                      data: _vm.carApprovePerMonth
+                    }
+                  })
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(5)
+          ])
+        ]),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-lg-4 col-md-6" },
-          [
-            _c("small-chart", {
-              attrs: {
-                canvas: "userPerMonth",
-                category: "Số khách hàng",
-                title: _vm.userCount,
-                label: "Khách hàng",
-                color: "#f96332",
-                yAxes: false,
-                xAxes: false,
-                bgColor: "rgba(249, 99, 59, 0.4)",
-                data: _vm.userPerMonth
-              }
-            })
-          ],
-          1
-        ),
+        _c("div", { staticClass: "col-lg-4 col-md-6" }, [
+          _c("div", { staticClass: "card card-chart" }, [
+            _c("div", { staticClass: "card-header" }, [
+              _c("h5", { staticClass: "card-category" }, [
+                _vm._v("Số khách hàng")
+              ]),
+              _vm._v(" "),
+              _c("h4", { staticClass: "card-title" }, [
+                _vm._v(_vm._s(_vm.userCount))
+              ]),
+              _vm._v(" "),
+              _vm._m(6)
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _c(
+                "div",
+                { staticClass: "chart-area" },
+                [
+                  _c("small-chart", {
+                    attrs: {
+                      canvas: "userPerMonth",
+                      label: "Khách hàng",
+                      color: "#f96332",
+                      yAxes: false,
+                      xAxes: false,
+                      bgColor: "rgba(249, 99, 59, 0.4)",
+                      data: _vm.userPerMonth
+                    }
+                  })
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(7)
+          ])
+        ]),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-lg-4 col-md-6" },
-          [
-            _c("small-chart", {
-              attrs: {
-                canvas: "contactPerMonth",
-                category: "Số liên hệ",
-                title: _vm.contactCount,
-                label: "Liên hệ",
-                type: "bar",
-                color: "#2CA8FF",
-                yAxes: true,
-                xAxes: false,
-                bgColor: "rgba(44, 168, 255, 0.6)",
-                data: _vm.contactPerMonth
-              }
-            })
-          ],
-          1
-        )
+        _c("div", { staticClass: "col-lg-4 col-md-6" }, [
+          _c("div", { staticClass: "card card-chart" }, [
+            _c("div", { staticClass: "card-header" }, [
+              _c("h5", { staticClass: "card-category" }, [
+                _vm._v("Số liên hệ")
+              ]),
+              _vm._v(" "),
+              _c("h4", { staticClass: "card-title" }, [
+                _vm._v(_vm._s(_vm.contactCount))
+              ]),
+              _vm._v(" "),
+              _vm._m(8)
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _c(
+                "div",
+                { staticClass: "chart-area" },
+                [
+                  _c("small-chart", {
+                    attrs: {
+                      canvas: "contactPerMonth",
+                      label: "Liên hệ",
+                      color: "#2CA8FF",
+                      yAxes: true,
+                      xAxes: false,
+                      bgColor: "rgba(44, 168, 255, 0.6)",
+                      data: _vm.contactPerMonth
+                    }
+                  })
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(9)
+          ])
+        ])
       ])
     ])
   ])
@@ -47002,8 +47412,16 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "icon text-success" }, [
+    return _c("div", { staticClass: "icon text-warning" }, [
       _c("i", { staticClass: "now-ui-icons business_money-coins" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "icon text-success" }, [
+      _c("i", { staticClass: "now-ui-icons files_paper" })
     ])
   },
   function() {
@@ -47021,50 +47439,58 @@ var staticRenderFns = [
     return _c("div", { staticClass: "icon text-info" }, [
       _c("i", { staticClass: "now-ui-icons ui-1_email-85" })
     ])
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/SmallChart.vue?vue&type=template&id=56a8b15d&":
-/*!***********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/SmallChart.vue?vue&type=template&id=56a8b15d& ***!
-  \***********************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card card-chart" }, [
-    _c("div", { staticClass: "card-header" }, [
-      _c("h5", { staticClass: "card-category" }, [
-        _vm._v(_vm._s(_vm.category))
-      ]),
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h5", { staticClass: "card-category" }, [_vm._v("Số tin được đăng")]),
       _vm._v(" "),
-      _c("h4", { staticClass: "card-title" }, [_vm._v(_vm._s(_vm.title))]),
-      _vm._v(" "),
-      _vm._m(0)
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "card-body" }, [
-      _c("div", { staticClass: "chart-area" }, [
-        _c("canvas", { attrs: { id: _vm.canvas } })
+      _c("div", { staticClass: "dropdown" }, [
+        _c(
+          "button",
+          {
+            staticClass:
+              "btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret",
+            attrs: { type: "button", "data-toggle": "dropdown" }
+          },
+          [_c("i", { staticClass: "now-ui-icons loader_gear" })]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "dropdown-menu dropdown-menu-right" }, [
+          _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+            _vm._v("Action")
+          ]),
+          _vm._v(" "),
+          _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+            _vm._v("Another action")
+          ]),
+          _vm._v(" "),
+          _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+            _vm._v("Something else here")
+          ]),
+          _vm._v(" "),
+          _c(
+            "a",
+            { staticClass: "dropdown-item text-danger", attrs: { href: "#" } },
+            [_vm._v("Remove Data")]
+          )
+        ])
       ])
-    ]),
-    _vm._v(" "),
-    _vm._m(1)
-  ])
-}
-var staticRenderFns = [
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-footer" }, [
+      _c("div", { staticClass: "stats" }, [
+        _c("i", { staticClass: "now-ui-icons arrows-1_refresh-69" }),
+        _vm._v(" Just Updated\n            ")
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -47108,11 +47534,82 @@ var staticRenderFns = [
     return _c("div", { staticClass: "card-footer" }, [
       _c("div", { staticClass: "stats" }, [
         _c("i", { staticClass: "now-ui-icons arrows-1_refresh-69" }),
-        _vm._v(" Just Updated\n    ")
+        _vm._v(" Just Updated\n            ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "dropdown" }, [
+      _c(
+        "button",
+        {
+          staticClass:
+            "btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret",
+          attrs: { type: "button", "data-toggle": "dropdown" }
+        },
+        [_c("i", { staticClass: "now-ui-icons loader_gear" })]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "dropdown-menu dropdown-menu-right" }, [
+        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+          _vm._v("Action")
+        ]),
+        _vm._v(" "),
+        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+          _vm._v("Another action")
+        ]),
+        _vm._v(" "),
+        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+          _vm._v("Something else here")
+        ]),
+        _vm._v(" "),
+        _c(
+          "a",
+          { staticClass: "dropdown-item text-danger", attrs: { href: "#" } },
+          [_vm._v("Remove Data")]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-footer" }, [
+      _c("div", { staticClass: "stats" }, [
+        _c("i", { staticClass: "now-ui-icons arrows-1_refresh-69" }),
+        _vm._v(" Just Updated\n            ")
       ])
     ])
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/SmallChart.vue?vue&type=template&id=56a8b15d&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/SmallChart.vue?vue&type=template&id=56a8b15d& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("canvas", { attrs: { id: _vm.canvas } })
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -47198,7 +47695,7 @@ var render = function() {
                                 fuel: fuel,
                                 editing: _vm.editing,
                                 max: _vm.max,
-                                carCountAll: _vm.carCountAll
+                                carCountApprove: _vm.carCountApprove
                               },
                               on: {
                                 changeEditing: _vm.changeEditing,
@@ -47405,12 +47902,14 @@ var render = function() {
     _c("td", [
       _c(
         "div",
-        { attrs: { title: _vm.fuel.count + " / " + _vm.carCountAll } },
+        { attrs: { title: _vm.fuel.count + " / " + _vm.carCountApprove } },
         [
-          _c("div", {
-            staticClass: "records-ratio",
-            style: { width: _vm.percent, opacity: _vm.opacity }
-          }),
+          _vm.fuel.count > 0
+            ? _c("div", {
+                staticClass: "records-ratio",
+                style: { width: _vm.percent, opacity: _vm.opacity }
+              })
+            : _vm._e(),
           _vm._v(" "),
           _c("span", [_vm._v(_vm._s(_vm.percent))])
         ]
@@ -48097,7 +48596,7 @@ var render = function() {
                                 origin: origin,
                                 editing: _vm.editing,
                                 max: _vm.max,
-                                carCountAll: _vm.carCountAll
+                                carCountApprove: _vm.carCountApprove
                               },
                               on: {
                                 changeEditing: _vm.changeEditing,
@@ -48304,12 +48803,14 @@ var render = function() {
     _c("td", [
       _c(
         "div",
-        { attrs: { title: _vm.origin.count + " / " + _vm.carCountAll } },
+        { attrs: { title: _vm.origin.count + " / " + _vm.carCountApprove } },
         [
-          _c("div", {
-            staticClass: "records-ratio",
-            style: { width: _vm.percent, opacity: _vm.opacity }
-          }),
+          _vm.origin.count > 0
+            ? _c("div", {
+                staticClass: "records-ratio",
+                style: { width: _vm.percent, opacity: _vm.opacity }
+              })
+            : _vm._e(),
           _vm._v(" "),
           _c("span", [_vm._v(_vm._s(_vm.percent))])
         ]
@@ -48477,7 +48978,7 @@ var render = function() {
                                 styleItem: style,
                                 editing: _vm.editing,
                                 max: _vm.max,
-                                carCountAll: _vm.carCountAll
+                                carCountApprove: _vm.carCountApprove
                               },
                               on: {
                                 changeEditing: _vm.changeEditing,
@@ -48770,12 +49271,14 @@ var render = function() {
     _c("td", [
       _c(
         "div",
-        { attrs: { title: _vm.styleItem.count + " / " + _vm.carCountAll } },
+        { attrs: { title: _vm.styleItem.count + " / " + _vm.carCountApprove } },
         [
-          _c("div", {
-            staticClass: "records-ratio",
-            style: { width: _vm.percent, opacity: _vm.opacity }
-          }),
+          _vm.styleItem.count > 0
+            ? _c("div", {
+                staticClass: "records-ratio",
+                style: { width: _vm.percent, opacity: _vm.opacity }
+              })
+            : _vm._e(),
           _vm._v(" "),
           _c("span", [_vm._v(_vm._s(_vm.percent))])
         ]
@@ -48943,7 +49446,7 @@ var render = function() {
                                 transmission: transmission,
                                 editing: _vm.editing,
                                 max: _vm.max,
-                                carCountAll: _vm.carCountAll
+                                carCountApprove: _vm.carCountApprove
                               },
                               on: {
                                 changeEditing: _vm.changeEditing,
@@ -49150,12 +49653,16 @@ var render = function() {
     _c("td", [
       _c(
         "div",
-        { attrs: { title: _vm.transmission.count + " / " + _vm.carCountAll } },
+        {
+          attrs: { title: _vm.transmission.count + " / " + _vm.carCountApprove }
+        },
         [
-          _c("div", {
-            staticClass: "records-ratio",
-            style: { width: _vm.percent, opacity: _vm.opacity }
-          }),
+          _vm.transmission.count > 0
+            ? _c("div", {
+                staticClass: "records-ratio",
+                style: { width: _vm.percent, opacity: _vm.opacity }
+              })
+            : _vm._e(),
           _vm._v(" "),
           _c("span", [_vm._v(_vm._s(_vm.percent))])
         ]
@@ -49365,7 +49872,7 @@ var render = function() {
                                 type: type,
                                 editing: _vm.editing,
                                 max: _vm.max,
-                                carCountAll: _vm.carCountAll
+                                carCountApprove: _vm.carCountApprove
                               },
                               on: {
                                 changeEditing: _vm.changeEditing,
@@ -49572,12 +50079,14 @@ var render = function() {
     _c("td", [
       _c(
         "div",
-        { attrs: { title: _vm.type.count + " / " + _vm.carCountAll } },
+        { attrs: { title: _vm.type.count + " / " + _vm.carCountApprove } },
         [
-          _c("div", {
-            staticClass: "records-ratio",
-            style: { width: _vm.percent, opacity: _vm.opacity }
-          }),
+          _vm.type.count > 0
+            ? _c("div", {
+                staticClass: "records-ratio",
+                style: { width: _vm.percent, opacity: _vm.opacity }
+              })
+            : _vm._e(),
           _vm._v(" "),
           _c("span", [_vm._v(_vm._s(_vm.percent))])
         ]
@@ -66680,9 +67189,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _CarDetail_vue_vue_type_template_id_08c8776f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CarDetail.vue?vue&type=template&id=08c8776f& */ "./resources/js/components/car/CarDetail.vue?vue&type=template&id=08c8776f&");
+/* harmony import */ var _CarDetail_vue_vue_type_template_id_08c8776f_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CarDetail.vue?vue&type=template&id=08c8776f&scoped=true& */ "./resources/js/components/car/CarDetail.vue?vue&type=template&id=08c8776f&scoped=true&");
 /* harmony import */ var _CarDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CarDetail.vue?vue&type=script&lang=js& */ "./resources/js/components/car/CarDetail.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _CarDetail_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CarDetail.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&lang=css&");
+/* empty/unused harmony star reexport *//* harmony import */ var _CarDetail_vue_vue_type_style_index_0_id_08c8776f_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CarDetail.vue?vue&type=style&index=0&id=08c8776f&lang=scss&scoped=true& */ "./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&id=08c8776f&lang=scss&scoped=true&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -66694,11 +67203,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _CarDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _CarDetail_vue_vue_type_template_id_08c8776f___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _CarDetail_vue_vue_type_template_id_08c8776f___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _CarDetail_vue_vue_type_template_id_08c8776f_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CarDetail_vue_vue_type_template_id_08c8776f_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  null,
+  "08c8776f",
   null
   
 )
@@ -66724,35 +67233,35 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&lang=css&":
-/*!************************************************************************************!*\
-  !*** ./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&lang=css& ***!
-  \************************************************************************************/
+/***/ "./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&id=08c8776f&lang=scss&scoped=true&":
+/*!*************************************************************************************************************!*\
+  !*** ./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&id=08c8776f&lang=scss&scoped=true& ***!
+  \*************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--7-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--7-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./CarDetail.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_style_index_0_id_08c8776f_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--8-2!../../../../node_modules/sass-loader/dist/cjs.js??ref--8-3!../../../../node_modules/vue-loader/lib??vue-loader-options!./CarDetail.vue?vue&type=style&index=0&id=08c8776f&lang=scss&scoped=true& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/car/CarDetail.vue?vue&type=style&index=0&id=08c8776f&lang=scss&scoped=true&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_style_index_0_id_08c8776f_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_style_index_0_id_08c8776f_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_style_index_0_id_08c8776f_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_style_index_0_id_08c8776f_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_style_index_0_id_08c8776f_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
-/***/ "./resources/js/components/car/CarDetail.vue?vue&type=template&id=08c8776f&":
-/*!**********************************************************************************!*\
-  !*** ./resources/js/components/car/CarDetail.vue?vue&type=template&id=08c8776f& ***!
-  \**********************************************************************************/
+/***/ "./resources/js/components/car/CarDetail.vue?vue&type=template&id=08c8776f&scoped=true&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/car/CarDetail.vue?vue&type=template&id=08c8776f&scoped=true& ***!
+  \**********************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_template_id_08c8776f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./CarDetail.vue?vue&type=template&id=08c8776f& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/car/CarDetail.vue?vue&type=template&id=08c8776f&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_template_id_08c8776f___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_template_id_08c8776f_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./CarDetail.vue?vue&type=template&id=08c8776f&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/car/CarDetail.vue?vue&type=template&id=08c8776f&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_template_id_08c8776f_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_template_id_08c8776f___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CarDetail_vue_vue_type_template_id_08c8776f_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -69761,8 +70270,11 @@ var state = {
   cars: {},
   car: {},
   carCount: 'Đang tải...',
+  carCountApprove: 'Đang tải...',
+  carCountCost: 'Đang tải...',
   carPerMonth: [],
-  carActivePerMonth: []
+  carApprovePerMonth: [],
+  carCostPerMonth: []
 };
 var getters = {
   cars: function cars(state) {
@@ -69774,11 +70286,20 @@ var getters = {
   carCount: function carCount(state) {
     return state.carCount;
   },
+  carCountApprove: function carCountApprove(state) {
+    return state.carCountApprove;
+  },
+  carCountCost: function carCountCost(state) {
+    return state.carCountCost;
+  },
   carPerMonth: function carPerMonth(state) {
     return state.carPerMonth;
   },
-  carActivePerMonth: function carActivePerMonth(state) {
-    return state.carActivePerMonth;
+  carApprovePerMonth: function carApprovePerMonth(state) {
+    return state.carApprovePerMonth;
+  },
+  carCostPerMonth: function carCostPerMonth(state) {
+    return state.carCostPerMonth;
   },
   carsPagination: function carsPagination(state) {
     return state.cars;
@@ -69794,11 +70315,20 @@ var mutations = {
   carCount: function carCount(state, data) {
     state.carCount = data;
   },
+  carCountApprove: function carCountApprove(state, data) {
+    state.carCountApprove = data;
+  },
+  carCountCost: function carCountCost(state, data) {
+    state.carCountCost = data;
+  },
   carPerMonth: function carPerMonth(state, data) {
     state.carPerMonth = data;
   },
-  carActivePerMonth: function carActivePerMonth(state, data) {
-    state.carActivePerMonth = data;
+  carApprovePerMonth: function carApprovePerMonth(state, data) {
+    state.carApprovePerMonth = data;
+  },
+  carCostPerMonth: function carCostPerMonth(state, data) {
+    state.carCostPerMonth = data;
   },
   updateCar: function updateCar(state, data) {
     if (!$.isEmptyObject(state.cars)) {
@@ -69873,8 +70403,36 @@ var actions = {
       }
     });
   },
-  carPerMonth: function carPerMonth(_ref4) {
+  carCountApprove: function carCountApprove(_ref4) {
     var commit = _ref4.commit;
+    $.ajax({
+      url: '/admin/api/car/countApprove',
+      type: "GET",
+      dataType: "json",
+      success: function success(data) {
+        commit('carCountApprove', data);
+      },
+      error: function error(errors) {
+        console.log(errors);
+      }
+    });
+  },
+  carCountCost: function carCountCost(_ref5) {
+    var commit = _ref5.commit;
+    $.ajax({
+      url: '/admin/api/car/countCost',
+      type: "GET",
+      dataType: "json",
+      success: function success(data) {
+        commit('carCountCost', data);
+      },
+      error: function error(errors) {
+        console.log(errors);
+      }
+    });
+  },
+  carPerMonth: function carPerMonth(_ref6) {
+    var commit = _ref6.commit;
     $.ajax({
       url: '/admin/api/car/countPerMonth',
       type: "GET",
@@ -69887,25 +70445,120 @@ var actions = {
       }
     });
   },
-  carActivePerMonth: function carActivePerMonth(_ref5) {
-    var commit = _ref5.commit;
+  carApprovePerMonth: function carApprovePerMonth(_ref7) {
+    var commit = _ref7.commit;
     $.ajax({
-      url: '/admin/api/car/countActivePerMonth',
+      url: '/admin/api/car/countApprovePerMonth',
       type: "GET",
       dataType: "json",
       success: function success(data) {
-        console.log(data);
-        commit('carActivePerMonth', data);
+        commit('carApprovePerMonth', data);
       },
       error: function error(errors) {
         console.log(errors);
       }
     });
   },
-  deleteCar: function deleteCar(_ref6, id) {
-    var state = _ref6.state,
-        commit = _ref6.commit,
-        rootGetters = _ref6.rootGetters;
+  carCostPerMonth: function carCostPerMonth(_ref8) {
+    var commit = _ref8.commit;
+    $.ajax({
+      url: '/admin/api/car/countCostPerMonth',
+      type: "GET",
+      dataType: "json",
+      success: function success(data) {
+        commit('carCostPerMonth', data);
+      },
+      error: function error(errors) {
+        console.log(errors);
+      }
+    });
+  },
+  approveCar: function approveCar(_ref9, id) {
+    var commit = _ref9.commit,
+        rootGetters = _ref9.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/car/approve/' + id,
+      type: "POST",
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('updateCar', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Duyệt mẫu tin <b>#" + data.id + "</b> thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        console.log(errors);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Duyệt mẫu tin <b>#" + data.id + "</b> thất bại."
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  },
+  denyCar: function denyCar(_ref10, id) {
+    var commit = _ref10.commit,
+        rootGetters = _ref10.rootGetters;
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': rootGetters.csrf
+      },
+      url: '/admin/api/car/deny/' + id,
+      type: "POST",
+      processData: false,
+      contentType: false,
+      success: function success(data) {
+        commit('updateCar', data);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Từ chối mẫu tin <b>#" + data.id + "</b> thành công."
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      },
+      error: function error(errors) {
+        console.log(errors);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Từ chối mẫu tin <b>#" + data.id + "</b> thất bại."
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+      }
+    });
+  },
+  deleteCar: function deleteCar(_ref11, id) {
+    var state = _ref11.state,
+        commit = _ref11.commit,
+        rootGetters = _ref11.rootGetters;
     $.ajax({
       headers: {
         'X-CSRF-TOKEN': rootGetters.csrf

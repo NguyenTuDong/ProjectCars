@@ -4,8 +4,11 @@ const state = {
   cars: {},
   car: {},
   carCount: 'Đang tải...',
+  carCountApprove: 'Đang tải...',
+  carCountCost: 'Đang tải...',
   carPerMonth: [],
-  carActivePerMonth: [],
+  carApprovePerMonth: [],
+  carCostPerMonth: [],
 };
 
 const getters = {
@@ -18,11 +21,20 @@ const getters = {
   carCount(state) {
     return state.carCount;
   },
+  carCountApprove(state) {
+    return state.carCountApprove;
+  },
+  carCountCost(state) {
+    return state.carCountCost;
+  },
   carPerMonth(state) {
     return state.carPerMonth;
   },
-  carActivePerMonth(state) {
-    return state.carActivePerMonth;
+  carApprovePerMonth(state) {
+    return state.carApprovePerMonth;
+  },
+  carCostPerMonth(state) {
+    return state.carCostPerMonth;
   },
   carsPagination(state) {
     return state.cars;
@@ -39,11 +51,20 @@ const mutations = {
   carCount(state, data) {
     state.carCount = data;
   },
+  carCountApprove(state, data) {
+    state.carCountApprove = data;
+  },
+  carCountCost(state, data) {
+    state.carCountCost = data;
+  },
   carPerMonth(state, data) {
     state.carPerMonth = data;
   },
-  carActivePerMonth(state, data) {
-    state.carActivePerMonth = data;
+  carApprovePerMonth(state, data) {
+    state.carApprovePerMonth = data;
+  },
+  carCostPerMonth(state, data) {
+    state.carCostPerMonth = data;
   },
   updateCar(state, data) {
     if(!$.isEmptyObject(state.cars)){
@@ -118,6 +139,34 @@ const actions = {
       }
     });
   },
+  carCountApprove({commit}) {
+    $.ajax({
+      url : '/admin/api/car/countApprove',
+      type : "GET",
+      dataType : "json",
+      success:function(data)
+      {
+        commit('carCountApprove', data);
+      },
+      error: function (errors) {
+        console.log(errors);
+      }
+    });
+  },
+  carCountCost({commit}) {
+    $.ajax({
+      url : '/admin/api/car/countCost',
+      type : "GET",
+      dataType : "json",
+      success:function(data)
+      {
+        commit('carCountCost', data);
+      },
+      error: function (errors) {
+        console.log(errors);
+      }
+    });
+  },
   carPerMonth({commit}) {
     $.ajax({
       url : '/admin/api/car/countPerMonth',
@@ -132,20 +181,119 @@ const actions = {
       }
     });
   },
-  carActivePerMonth({commit}) {
+  carApprovePerMonth({commit}) {
     $.ajax({
-      url : '/admin/api/car/countActivePerMonth',
+      url : '/admin/api/car/countApprovePerMonth',
       type : "GET",
       dataType : "json",
       success:function(data)
       {
-        console.log(data);
-        commit('carActivePerMonth', data);
+        commit('carApprovePerMonth', data);
       },
       error: function (errors) {
         console.log(errors);
       }
     });
+  },
+  carCostPerMonth({commit}) {
+    $.ajax({
+      url : '/admin/api/car/countCostPerMonth',
+      type : "GET",
+      dataType : "json",
+      success:function(data)
+      {
+        commit('carCostPerMonth', data);
+      },
+      error: function (errors) {
+        console.log(errors);
+      }
+    });
+  },
+  approveCar({commit, rootGetters}, id) {
+    $.ajax({
+      headers: {
+      'X-CSRF-TOKEN': rootGetters.csrf,
+      },
+      url : '/admin/api/car/approve/'+id,
+      type : "POST",
+      processData: false,
+      contentType: false,
+      success:function(data)
+      {
+        commit('updateCar', data);
+
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Duyệt mẫu tin <b>#"+data.id+"</b> thành công."
+
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+          from: 'top',
+          align: 'right'
+          }
+        });
+      },
+      error: function (errors) {
+        console.log(errors);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Duyệt mẫu tin <b>#"+data.id+"</b> thất bại."
+
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+          from: 'top',
+          align: 'right'
+          }
+        });
+      }
+    })
+  },
+  denyCar({commit, rootGetters}, id) {
+    $.ajax({
+      headers: {
+      'X-CSRF-TOKEN': rootGetters.csrf,
+      },
+      url : '/admin/api/car/deny/'+id,
+      type : "POST",
+      processData: false,
+      contentType: false,
+      success:function(data)
+      {
+        commit('updateCar', data);
+
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Từ chối mẫu tin <b>#"+data.id+"</b> thành công."
+
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+          from: 'top',
+          align: 'right'
+          }
+        });
+      },
+      error: function (errors) {
+        console.log(errors);
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Từ chối mẫu tin <b>#"+data.id+"</b> thất bại."
+
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+          from: 'top',
+          align: 'right'
+          }
+        });
+      }
+    })
   },
   deleteCar({state, commit, rootGetters}, id) {
     $.ajax({

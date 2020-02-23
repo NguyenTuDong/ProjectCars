@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="panel-header panel-header-lg">
-      <big-chart :data="carPerMonth"></big-chart>
+      <big-chart :data="carCostPerMonth"></big-chart>
     </div>
     <div class="content">
       <div class="row">
@@ -9,20 +9,33 @@
           <div class="card card-stats">
             <div class="card-body">
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="statistics">
                     <div class="info">
-                      <div class="icon text-success">
+                      <div class="icon text-warning">
                         <i class="now-ui-icons business_money-coins"></i>
                       </div>
                       <h3 class="info-title">
-                        {{carCountAll}}
+                        {{ money }}
+                      </h3>
+                      <h6 class="stats-title">Doanh thu</h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="statistics">
+                    <div class="info">
+                      <div class="icon text-success">
+                        <i class="now-ui-icons files_paper"></i>
+                      </div>
+                      <h3 class="info-title">
+                        {{ carCountApprove }} / {{ carCountAll }}
                       </h3>
                       <h6 class="stats-title">Mẫu tin</h6>
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="statistics">
                     <div class="info">
                       <div class="icon text-primary">
@@ -33,7 +46,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="statistics">
                     <div class="info">
                       <div class="icon text-info">
@@ -51,43 +64,114 @@
       </div>
       <div class="row">
         <div class="col-lg-4">
-          <small-chart
-            :canvas="'carActivePerMonth'"
-            :category="'Số tin được đăng'"
-            :label="'Online'"
-            :color="'#18ce0f'"
-            :yAxes="true"
-            :xAxes="false"
-            :bgColor="'rgba(24, 206, 15, 0.4)'"
-            :data="carActivePerMonth"
-          ></small-chart>
+          <div class="card card-chart">
+            <div class="card-header">
+              <h5 class="card-category">Số tin được đăng</h5>
+              <div class="dropdown">
+                <button type="button" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" data-toggle="dropdown">
+                  <i class="now-ui-icons loader_gear"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                  <a class="dropdown-item text-danger" href="#">Remove Data</a>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chart-area">
+                <small-chart
+                  :canvas="'carApprovePerMonth'"
+                  :label="'Online'"
+                  :color="'#18ce0f'"
+                  :yAxes="true"
+                  :xAxes="false"
+                  :bgColor="'rgba(24, 206, 15, 0.4)'"
+                  :data="carApprovePerMonth"
+                ></small-chart>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="stats">
+                <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
+              </div>
+            </div>
+          </div>
         </div>
         <div class="col-lg-4 col-md-6">
-          <small-chart
-            :canvas="'userPerMonth'"
-            :category="'Số khách hàng'"
-            :title="userCount"
-            :label="'Khách hàng'"
-            :color="'#f96332'"
-            :yAxes="false"
-            :xAxes="false"
-            :bgColor="'rgba(249, 99, 59, 0.4)'"
-            :data="userPerMonth"
-          ></small-chart>
+          <div class="card card-chart">
+            <div class="card-header">
+              <h5 class="card-category">Số khách hàng</h5>
+              <h4 class="card-title">{{userCount}}</h4>
+              <div class="dropdown">
+                <button type="button" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" data-toggle="dropdown">
+                  <i class="now-ui-icons loader_gear"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                  <a class="dropdown-item text-danger" href="#">Remove Data</a>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chart-area">
+                <small-chart
+                  :canvas="'userPerMonth'"
+                  :label="'Khách hàng'"
+                  :color="'#f96332'"
+                  :yAxes="false"
+                  :xAxes="false"
+                  :bgColor="'rgba(249, 99, 59, 0.4)'"
+                  :data="userPerMonth"
+                ></small-chart>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="stats">
+                <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
+              </div>
+            </div>
+          </div>
         </div>
         <div class="col-lg-4 col-md-6">
-          <small-chart
-            :canvas="'contactPerMonth'"
-            :category="'Số liên hệ'"
-            :title="contactCount"
-            :label="'Liên hệ'"
-            :type="'bar'"
-            :color="'#2CA8FF'"
-            :yAxes="true"
-            :xAxes="false"
-            :bgColor="'rgba(44, 168, 255, 0.6)'"
-            :data="contactPerMonth"
-          ></small-chart>
+          <div class="card card-chart">
+            <div class="card-header">
+              <h5 class="card-category">Số liên hệ</h5>
+              <h4 class="card-title">{{contactCount}}</h4>
+              <div class="dropdown">
+                <button type="button" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" data-toggle="dropdown">
+                  <i class="now-ui-icons loader_gear"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                  <a class="dropdown-item text-danger" href="#">Remove Data</a>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chart-area">
+                <small-chart
+                  :canvas="'contactPerMonth'"
+                  :label="'Liên hệ'"
+                  :color="'#2CA8FF'"
+                  :yAxes="true"
+                  :xAxes="false"
+                  :bgColor="'rgba(44, 168, 255, 0.6)'"
+                  :data="contactPerMonth"
+                ></small-chart>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="stats">
+                <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -97,6 +181,7 @@
 <script>
 import BigChart from "./BigChart";
 import SmallChart from "./SmallChart";
+import { mapGetters } from 'vuex';
 
 export default {
   name: "Dashboard",
@@ -105,34 +190,32 @@ export default {
     SmallChart
   },
   created() {
-    this.$store.dispatch("carPerMonth");
+    this.$store.dispatch("carCostPerMonth");
 
     this.$store.dispatch("carCount");
+    this.$store.dispatch("carCountApprove");
+    this.$store.dispatch("carCountCost");
     this.$store.dispatch("userCount");
     this.$store.dispatch("contactCount");
 
-    this.$store.dispatch("carActivePerMonth");
+    this.$store.dispatch("carApprovePerMonth");
 
     this.$store.dispatch("userPerMonth");
 
     this.$store.dispatch("contactPerMonth");
   },
   computed: {
-    carCountAll() {
-      return this.$store.getters.carCount;
-    },
-    carPerMonth() {
-      return this.$store.getters.carPerMonth;
-    },
-    carActivePerMonth() {
-      return this.$store.getters.carActivePerMonth;
-    },
-    userCountAll() {
-      return this.$store.getters.userCount;
-    },
-    userPerMonth() {
-      return this.$store.getters.userPerMonth;
-    },
+    ...mapGetters({
+      carCountAll: 'carCount',
+      carCountApprove: 'carCountApprove',
+      carCountCost: 'carCountCost',
+      carCostPerMonth: 'carCostPerMonth',
+      carApprovePerMonth: 'carApprovePerMonth',
+      userCountAll: 'userCount',
+      userPerMonth: 'userPerMonth',
+      contactCountAll: 'contactCount',
+      contactPerMonth: 'contactPerMonth',
+    }),
     userCount() {
       var count = 0;
       var data = this.$store.getters.userPerMonth;
@@ -142,12 +225,6 @@ export default {
       });
 
       return count;
-    },
-    contactCountAll() {
-      return this.$store.getters.contactCount;
-    },
-    contactPerMonth() {
-      return this.$store.getters.contactPerMonth;
     },
     contactCount() {
       var count = 0;
@@ -159,6 +236,19 @@ export default {
 
       return count;
     },
+    money() {
+      console.log(this.carCountCost);
+      if(this.carCountCost === 'Đang tải...') return this.carCountCost;
+      if(this.carCountCost > 1000000000){
+        var money = Math.round(((this.carCountCost / 1000000000) + Number.EPSILON) * 100) / 100;
+        return money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' tỉ VND';
+      }
+      if(this.carCountCost > 1000000){
+        var money = Math.round(((this.carCountCost / 1000000) + Number.EPSILON) * 100) / 100;
+        return money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' tr VND';
+      }
+      return this.carCountCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' VND';
+    }
   }
 };
 </script>

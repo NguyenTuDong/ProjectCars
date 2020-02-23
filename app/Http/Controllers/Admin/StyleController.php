@@ -18,7 +18,7 @@ class StyleController extends Controller
     {
         $query = $request->q;
 
-        $cars = DB::raw('(SELECT a.id, a.styles_id FROM `cars` a WHERE trangthai = 0)
+        $cars = DB::raw('(SELECT a.id, a.styles_id FROM `cars` a WHERE trangthai = 2)
                Total');
         $items = Style::select([
             'styles.id',

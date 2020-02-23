@@ -18,7 +18,7 @@ class ConvenientController extends Controller
     {
         $query = $request->q;
 
-        $cars = DB::raw('(SELECT COUNT(`convenientcars`.`convenients_id`) AS count, `convenientcars`.`convenients_id`, `convenientcars`.`cars_id`, `cars`.`trangthai` FROM `convenientcars` JOIN `cars` ON `cars`.`id` = `convenientcars`.`cars_id` WHERE `cars`.`trangthai` = 0 GROUP BY `convenientcars`.`convenients_id` ORDER BY `convenientcars`.`convenients_id`)
+        $cars = DB::raw('(SELECT COUNT(`convenientcars`.`convenients_id`) AS count, `convenientcars`.`convenients_id`, `convenientcars`.`cars_id`, `cars`.`trangthai` FROM `convenientcars` JOIN `cars` ON `cars`.`id` = `convenientcars`.`cars_id` WHERE `cars`.`trangthai` = 2 GROUP BY `convenientcars`.`convenients_id` ORDER BY `convenientcars`.`convenients_id`)
                Total');
         $items = Convenient::select([
             'convenients.id',

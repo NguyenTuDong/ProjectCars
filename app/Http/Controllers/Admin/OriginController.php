@@ -18,7 +18,7 @@ class OriginController extends Controller
     {
         $query = $request->q;
 
-        $cars = DB::raw('(SELECT a.id, a.origins_id FROM `cars` a WHERE trangthai = 0)
+        $cars = DB::raw('(SELECT a.id, a.origins_id FROM `cars` a WHERE trangthai = 2)
                Total');
         $items = Origin::select([
             'origins.id',

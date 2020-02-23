@@ -25,8 +25,8 @@
       <span class="text-danger" v-if="nameError != ''">{{nameError}}</span>
     </td>
     <td>
-      <div :title="brand.count + ' / ' + carCountAll">
-        <div :style="{ width: percent, opacity: opacity }" class="records-ratio"></div>
+      <div :title="brand.count + ' / ' + carCountApprove">
+        <div v-if="brand.count > 0" :style="{ width: percent, opacity: opacity }" class="records-ratio"></div>
         <span>{{ percent }}</span>
       </div>
     </td>
@@ -63,7 +63,7 @@ export default {
     max: {
       type: Number,
     },
-    carCountAll: {
+    carCountApprove: {
       type: Number,
     }
   },
@@ -78,7 +78,7 @@ export default {
   computed: {
     percent(){
       var self = this;
-      return Math.round(((self.brand.count / self.carCountAll) * 100 + Number.EPSILON) * 100) / 100 + '%';
+      return Math.round(((self.brand.count / self.carCountApprove) * 100 + Number.EPSILON) * 100) / 100 + '%';
     },
     opacity(){
       var self = this;

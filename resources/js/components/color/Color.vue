@@ -40,7 +40,7 @@
                       :color="color"
                       :editing="editing"
                       :max="max"
-                      :carCountAll="carCountAll"
+                      :carCountApprove="carCountApprove"
                       @changeEditing="changeEditing"
                       @showPopup="showPopup"
                     ></color-item>
@@ -128,7 +128,7 @@ export default {
       q: '',
     }
     this.$store.dispatch('retrieveColors', data);
-    this.$store.dispatch("carCount");
+    this.$store.dispatch("carCountApprove");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: {
@@ -136,8 +136,8 @@ export default {
       colors: 'colors',
       pagination: 'colorsPagination',
     }),
-    carCountAll() {
-      return this.$store.getters.carCount;
+    carCountApprove() {
+      return this.$store.getters.carCountApprove;
     },
     max(){
       var max = 0;

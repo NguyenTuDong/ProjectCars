@@ -17,16 +17,55 @@
               <p v-if="car.types !== undefined" class="text-center">
                 {{ car.types.ten }} | {{ car.types.brands.ten }}
               </p>
-              <p>
-                <span v-if="car.styles !== undefined"><b>Kiểu dáng: </b>{{ car.styles.ten }}<br></span>
-                <span v-if="car.origins !== undefined"><b>Nguồn gốc: </b>{{ car.origins.ten }}<br></span>
-                <span v-if="car.conditions !== undefined"><b>Tình trạng: </b>{{ car.conditions.ten }}<br></span>
-                <span v-if="car.doixe != null"><b>Đời xe: </b>{{ car.doixe }}<br></span>
-                <span v-if="car.namsx != null"><b>Năm sản xuất: </b>{{ car.namsx }}<br></span>
-                <span v-if="car.locations !== undefined"><b>Nơi bán: </b>{{ car.locations.ten }}<br></span>
-                <span v-if="car.created_at != null"><b>Ngày tạo: </b>{{ car.created_at }}<br></span>
-              </p>
+              <table>
+                <tr v-if="car.styles !== undefined">
+                  <th><b>Kiểu dáng: </b></th>
+                  <td>{{ car.styles.ten }}</td>
+                </tr>
+                <tr v-if="car.origins !== undefined">
+                  <th><b>Nguồn gốc: </b></th>
+                  <td>{{ car.origins.ten }}</td>
+                </tr>
+                <tr v-if="car.conditions !== undefined">
+                  <th><b>Tình trạng: </b></th>
+                  <td>{{ car.conditions.ten }}</td>
+                </tr>
+                <tr v-if="car.doixe !== null">
+                  <th><b>Đời xe: </b></th>
+                  <td>{{ car.doixe }}</td>
+                </tr>
+                <tr v-if="car.namsx !== null">
+                  <th><b>Năm sản xuất: </b></th>
+                  <td>{{ car.namsx }}</td>
+                </tr>
+                <tr v-if="car.locations !== undefined">
+                  <th><b>Nơi bán: </b></th>
+                  <td>{{ car.locations.ten }}</td>
+                </tr>
+                <tr v-if="car.created_at !== null">
+                  <th><b>Ngày tạo: </b></th>
+                  <td>{{ car.created_at }}</td>
+                </tr>
+                <tr v-if="car.ngaydang !== null">
+                  <th><b>Ngày đăng: </b></th>
+                  <td>{{ car.ngaydang }}</td>
+                </tr>
+                <tr v-if="car.ngayketthuc !== null">
+                  <th><b>Ngày kết thúc: </b></th>
+                  <td>{{ car.ngayketthuc }}</td>
+                </tr>
+              </table>
               <div class="row justify-content-center text-center">
+                <div v-if="car.trangthai == 0" class="col-md-4">
+                  <button @click="approveCar" type="button" rel="tooltip" title="Duyệt" class="btn btn-success btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
+                    <i class="now-ui-icons ui-1_check"></i>
+                  </button>
+                </div>
+                <div v-if="car.trangthai == 0" class="col-md-4">
+                  <button @click="denyCar" type="button" rel="tooltip" title="Từ chối" class="btn btn-warning btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
+                    <i class="now-ui-icons ui-1_simple-delete"></i>
+                  </button>
+                </div>
                 <div class="col-md-4">
                   <button @click="showPopup" type="button" rel="tooltip" title="Xóa" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
                     <i class="now-ui-icons ui-1_simple-remove"></i>
@@ -48,7 +87,10 @@
                   {{car.users.ten}}
                 </router-link>
               </p>
-              <div v-html="car.mota"></div>
+              <p>
+                <b>Phí: <span class="text-primary">{{cost}} VND</span></b>
+              </p>
+              <p v-html="car.mota"></p>
               <h5>Thông tin cơ bản</h5>
               <div class="row mb-4">
                 <div v-if="car.fuels !== undefined" class="col-md-6">
@@ -104,32 +146,26 @@
       </div>
     </div>
     
-    <div class="pop-up">
-      <div class="pop-up-inner">
-        <div class="pop-up-header">
-          <div class="pop-up-title">Thông báo</div>
-          <button @click="closePopup" type="button" rel="tooltip" title="" class="btn btn-link btn-neutral" data-original-title="Remove">
-            <i class="now-ui-icons ui-1_simple-remove"></i>
-          </button>
-        </div>
-        <div class="pop-up-body">
-        </div>
-        <div class="pop-up-footer">
-          <button @click="deleteCar" class="btn btn-link btn-neutral">Xóa</button>
-          <button @click="closePopup" class="btn btn-link btn-neutral">Hủy</button>
-        </div>
-      </div>
-    </div>
+    <modal
+      ref="modal"
+      :message="message"
+      @submit="submit"
+    ></modal>
   </div>
 </template>
 
 <script>
+import Modal from '../Modal';
 
 export default {
   name: 'CarDetail',
+  components: {
+    Modal,
+  },
   data() {
     return {
-      id: this.$route.params.id
+      id: this.$route.params.id,
+      message: '',
     }
   },
   created() {
@@ -142,35 +178,51 @@ export default {
     price() {
       if(this.$store.getters.car.gia === undefined) return;
       return this.$store.getters.car.gia.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+    cost() {
+      if(this.$store.getters.car.phi === undefined) return;
+      return this.$store.getters.car.phi.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
   },
   methods: {
-    showPopup(id){
-      $('.pop-up').fadeIn(300);
-      var message = "Bạn có muốn xóa mẫu tin <b>"+this.car.ten+"</b> không?";
-      $('.pop-up-body').html(message);
+    showPopup(){
+      this.message = "Bạn có muốn xóa mẫu tin <b>"+this.car.ten+"</b> không?";
+      this.$refs.modal.show(this.car);
     },
-    closePopup(){
-      $('.pop-up').fadeOut(300);
+    submit(data) {
+      this.$store.dispatch('deleteCar', data.id);
     },
-    deleteCar() {
-      this.$store.dispatch('deleteCar', this.car.id);
-      $('.pop-up').fadeOut(300);
+    approveCar() {
+      this.$store.dispatch('approveCar', this.car.id);
+    },
+    denyCar() {
+      this.$store.dispatch('denyCar', this.car.id);
     },
   }
 }
 </script>
 
-<style>
-.btn-back{
-  position: absolute;
-  top: 40px;
-  left: 30px;
-  background-color: transparent;
-  padding: 0;
-  color: white;
-  border: 0;
-  cursor: pointer;
-  z-index: 1100;
-}
+<style lang="scss" scoped>
+  .btn-back{
+    position: absolute;
+    top: 40px;
+    left: 30px;
+    background-color: transparent;
+    padding: 0;
+    color: white;
+    border: 0;
+    cursor: pointer;
+    z-index: 1100;
+  }
+  .car-image{
+    height: 300px;
+    img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  table{
+    width: 100%;
+  }
 </style>

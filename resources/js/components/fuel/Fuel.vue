@@ -37,7 +37,7 @@
                       :fuel="fuel"
                       :editing="editing"
                       :max="max"
-                      :carCountAll="carCountAll"
+                      :carCountApprove="carCountApprove"
                       @changeEditing="changeEditing"
                       @showPopup="showPopup"
                     ></fuel-item>
@@ -114,7 +114,7 @@ export default {
       q: '',
     }
     this.$store.dispatch('retrieveFuels', data);
-    this.$store.dispatch("carCount");
+    this.$store.dispatch("carCountApprove");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: {
@@ -122,8 +122,8 @@ export default {
       fuels: 'fuels',
       pagination: 'fuelsPagination',
     }),
-    carCountAll() {
-      return this.$store.getters.carCount;
+    carCountApprove() {
+      return this.$store.getters.carCountApprove;
     },
     max(){
       var max = 0;

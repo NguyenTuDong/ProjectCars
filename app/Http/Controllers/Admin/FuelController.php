@@ -18,7 +18,7 @@ class FuelController extends Controller
     {
         $query = $request->q;
         
-        $cars = DB::raw('(SELECT a.id, a.fuels_id FROM `cars` a WHERE trangthai = 0)
+        $cars = DB::raw('(SELECT a.id, a.fuels_id FROM `cars` a WHERE trangthai = 2)
                Total');
         $items = Fuel::select([
             'fuels.id',

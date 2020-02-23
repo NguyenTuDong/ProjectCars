@@ -48,7 +48,7 @@ $factory->define(Car::class, function (Faker $faker) {
         'giamxoc' => 'Mc Pherson',
         'lopxe' => '185/60',
         'mota' => $faker->realText($maxNbChars = 250, $indexSize = 2),
-        'trangthai' => 0,
+        'trangthai' => $faker->randomElement($array = array (0, 2, 3)),
         'ngaydang' => $ngaydang,
         'ngayketthuc' => $ngayketthuc,
         'phi' => $cost,

@@ -40,7 +40,7 @@
                       :brand="brand"
                       :editing="editing"
                       :max="max"
-                      :carCountAll="carCountAll"
+                      :carCountApprove="carCountApprove"
                       @changeEditing="changeEditing"
                       @showPopup="showPopup"
                     ></brand-item>
@@ -128,7 +128,7 @@ export default {
       q: '',
     }
     this.$store.dispatch('retrieveBrands', data);
-    this.$store.dispatch("carCount");
+    this.$store.dispatch("carCountApprove");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: {
@@ -136,8 +136,8 @@ export default {
       brands: 'brands',
       pagination: 'brandsPagination',
     }),
-    carCountAll() {
-      return this.$store.getters.carCount;
+    carCountApprove() {
+      return this.$store.getters.carCountApprove;
     },
     max(){
       var max = 0;

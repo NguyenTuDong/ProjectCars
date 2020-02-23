@@ -42,7 +42,7 @@
                       :type="type"
                       :editing="editing"
                       :max="max"
-                      :carCountAll="carCountAll"
+                      :carCountApprove="carCountApprove"
                       @changeEditing="changeEditing"
                       @showPopup="showPopup"
                     ></type-item>
@@ -122,7 +122,7 @@ export default {
       q: '',
     }
     this.$store.dispatch('retrieveTypes', data);
-    this.$store.dispatch("carCount");
+    this.$store.dispatch("carCountApprove");
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: {
@@ -131,8 +131,8 @@ export default {
       types: 'types',
       pagination: 'typesPagination',
     }),
-    carCountAll() {
-      return this.$store.getters.carCount;
+    carCountApprove() {
+      return this.$store.getters.carCountApprove;
     },
     max(){
       var max = 0;
