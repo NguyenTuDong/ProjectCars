@@ -26,22 +26,22 @@
 
 <body class="">
   <div id="app">
-    <master routes={{
-      collect(\Route::getRoutes())->map(function ($route) {
+    <master></master>
+  </div>
+  <script>
+    window.__user__ = @json($user);
+    window.__routes__ = @json(collect(\Route::getRoutes())->map(function ($route) {
         $route->uri = URL::to($route->uri);;
         return $route;
-      })
-    }}></master>
-  </div>
+      }));
+  </script>
   <script src="{{asset('js/app.js')}}"></script>
   <!--   Core JS Files   -->
-  <script src="js/admin/plugins/perfect-scrollbar.jquery.min.js"></script>
+  {{-- <script src="js/admin/plugins/perfect-scrollbar.jquery.min.js"></script> --}}
   <!-- Chart JS -->
   <script src="js/admin/plugins/chartjs.min.js"></script>
   <!--  Notifications Plugin    -->
   <script src="js/admin/plugins/bootstrap-notify.js"></script>
-  <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="js/admin/now-ui-dashboard.js" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
 
 </body>
 

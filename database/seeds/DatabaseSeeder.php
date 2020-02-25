@@ -32,12 +32,15 @@ class DatabaseSeeder extends Seeder
             TransmissionSeeder::class,
             StyleSeeder::class,
             ConvenientSeeder::class,
+            PermissionTableSeeder::class,
+            RoleTableSeeder::class,
+            AdminTableSeeder::class,
         ]);
 
         factory(App\User::class, 50)->create();
-        factory(App\Car::class, 500)->create()->each(function ($car) {
+        factory(App\Car::class, 300)->create()->each(function ($car) {
                 $car->convenientcars()->createMany(
-                    factory(App\Convenientcar::class, 5)->make([
+                    factory(App\Convenientcar::class, 2)->make([
                         'cars_id' => $car->id,
                     ])->toArray()
                 );

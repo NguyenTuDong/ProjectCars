@@ -1,10 +1,10 @@
-import {router} from '../../router'
+import router from '../../router'
 
 const state = {
   cars: {},
   car: {},
   carCount: 'Đang tải...',
-  carCountApprove: 'Đang tải...',
+  carCountApprove: 0,
   carCountCost: 'Đang tải...',
   carPerMonth: [],
   carApprovePerMonth: [],

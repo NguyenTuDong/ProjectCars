@@ -10,7 +10,7 @@ require('./demo');
 window.Vue = require('vue');
 
 import {store} from './store/store';
-import {router} from './router';
+import router from './router';
 
 
 /**
@@ -36,6 +36,17 @@ Vue.component('master', require('./components/layout/Master.vue').default);
 
 const app = new Vue({
     el: '#app',
+    data: {
+        user: window.__user__,
+        routes: window.__routes__,
+    },
+    methods: {
+      route(name) {
+        return this.routes.filter(item => {
+            return item.action.as == name;
+        })[0].uri;
+      }
+    },
     store,
     router,
 });

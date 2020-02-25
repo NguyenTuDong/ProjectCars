@@ -31,29 +31,11 @@ export const store = new Vuex.Store({
     contacts,
   },
   state: {
-    csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-    routes: [],
+    csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
   },
   getters: {
-    csrf(state) {
+    csrf(state){
       return state.csrf;
-    },
-    route(state) {
-      return name => {
-        return state.routes.filter(item => {
-          return item.action.as == name;
-        })[0].uri;
-      };
-    },
-  },
-  mutations: {
-    setRoutes(state, routes) {
-      state.routes = routes;
-    },
-  },
-  actions: {
-    setRoutes(context, routes) {
-      context.commit('setRoutes', routes);
-    },
-  },
+    }
+  }
 })

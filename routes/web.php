@@ -131,7 +131,10 @@ Route::post('/user/updateavatar','UserController@updateAvatar')->name('update.av
 Route::resource('car','CarController');
 Route::resource('user','UserController');
 
-Route::get('/{vue_capture?}', function () {
-    return view('admin.dashboard');
-})->where('vue_capture', '[\/\w\.-]*');
+Route::get('/test', function () {
+  $user = Auth::guard('admin')->user();
+  dd($user->can('create-brands'));
+  return view('welcome');
+});
 
+Route::get('/{vue_capture?}', 'Admin\AdminController@index')->where('vue_capture', '^(?!storage).*$');

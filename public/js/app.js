@@ -5386,9 +5386,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Master',
-  props: ['routes'],
   data: function data() {
     return {};
   },
@@ -5397,21 +5397,13 @@ __webpack_require__.r(__webpack_exports__);
       document.title = to.meta.title || 'Admin';
     }
   },
-  created: function created() {
-    this.$store.dispatch('setRoutes', JSON.parse(this.routes));
-  },
   computed: {
-    csrf: function csrf() {
-      return this.$store.state.csrf;
-    },
     year: function year() {
       var d = new Date();
       return d.getFullYear();
-    }
-  },
-  methods: {
-    route: function route(name) {
-      return this.$store.getters.route(name);
+    },
+    csrf: function csrf() {
+      return this.$store.getters.csrf;
     }
   }
 });
@@ -48258,8 +48250,17 @@ var render = function() {
                             "a",
                             {
                               staticClass: "dropdown-item",
+                              attrs: { href: "#" }
+                            },
+                            [_vm._v(_vm._s(_vm.$root.user.ten))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
                               attrs: {
-                                href: _vm.route("admin.logout"),
+                                href: _vm.$root.route("admin.logout"),
                                 onclick:
                                   "event.preventDefault(); document.getElementById('logout-form').submit();"
                               }
@@ -48277,7 +48278,7 @@ var render = function() {
                               staticStyle: { display: "none" },
                               attrs: {
                                 id: "logout-form",
-                                action: _vm.route("admin.logout"),
+                                action: _vm.$root.route("admin.logout"),
                                 method: "POST"
                               }
                             },
@@ -66699,8 +66700,19 @@ Vue.component('master', __webpack_require__(/*! ./components/layout/Master.vue *
 
 var app = new Vue({
   el: '#app',
+  data: {
+    user: window.__user__,
+    routes: window.__routes__
+  },
+  methods: {
+    route: function route(name) {
+      return this.routes.filter(function (item) {
+        return item.action.as == name;
+      })[0].uri;
+    }
+  },
   store: _store_store__WEBPACK_IMPORTED_MODULE_0__["store"],
-  router: _router__WEBPACK_IMPORTED_MODULE_1__["router"]
+  router: _router__WEBPACK_IMPORTED_MODULE_1__["default"]
 });
 
 /***/ }),
@@ -69884,12 +69896,11 @@ demo = {
 /*!********************************!*\
   !*** ./resources/js/router.js ***!
   \********************************/
-/*! exports provided: router */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "router", function() { return router; });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
@@ -70037,6 +70048,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   routes: routes,
   linkExactActiveClass: 'active'
 });
+/* harmony default export */ __webpack_exports__["default"] = (router);
 
 /***/ }),
 
@@ -70270,7 +70282,7 @@ var state = {
   cars: {},
   car: {},
   carCount: 'Đang tải...',
-  carCountApprove: 'Đang tải...',
+  carCountApprove: 0,
   carCountCost: 'Đang tải...',
   carPerMonth: [],
   carApprovePerMonth: [],
@@ -70355,7 +70367,7 @@ var mutations = {
     }
 
     if (!$.isEmptyObject(state.car)) {
-      _router__WEBPACK_IMPORTED_MODULE_0__["router"].go(-1);
+      _router__WEBPACK_IMPORTED_MODULE_0__["default"].go(-1);
     }
   }
 };
@@ -72414,29 +72426,11 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     contacts: _modules_contacts__WEBPACK_IMPORTED_MODULE_13__["default"]
   },
   state: {
-    csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-    routes: []
+    csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
   },
   getters: {
     csrf: function csrf(state) {
       return state.csrf;
-    },
-    route: function route(state) {
-      return function (name) {
-        return state.routes.filter(function (item) {
-          return item.action.as == name;
-        })[0].uri;
-      };
-    }
-  },
-  mutations: {
-    setRoutes: function setRoutes(state, routes) {
-      state.routes = routes;
-    }
-  },
-  actions: {
-    setRoutes: function setRoutes(context, routes) {
-      context.commit('setRoutes', routes);
     }
   }
 });
@@ -72472,9 +72466,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Work\Web Developer\Projects\Car\ProjectCars\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! D:\Work\Web Developer\Projects\Car\ProjectCars\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! D:\Work\Web Developer\Projects\Car\ProjectCars\resources\sass\admin\admin.scss */"./resources/sass/admin/admin.scss");
+__webpack_require__(/*! D:\ProjectCars\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! D:\ProjectCars\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! D:\ProjectCars\resources\sass\admin\admin.scss */"./resources/sass/admin/admin.scss");
 
 
 /***/ })

@@ -160,11 +160,12 @@
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" :href="route('admin.logout')"
+                  <a class="dropdown-item" href="#">{{$root.user.ten}}</a>
+                  <a class="dropdown-item" :href="$root.route('admin.logout')"
                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                       Đăng xuất
                   </a>
-                  <form id="logout-form" :action="route('admin.logout')" method="POST" style="display: none;">
+                  <form id="logout-form" :action="$root.route('admin.logout')" method="POST" style="display: none;">
                       <input type="hidden" name="_token" :value="csrf">
                   </form>
                 </div>
@@ -210,7 +211,6 @@
 <script>
 export default {
   name: 'Master',
-  props: ['routes'],
   data() {
     return {
       
@@ -221,21 +221,13 @@ export default {
       document.title = to.meta.title || 'Admin'
     }
   },
-  created() {
-    this.$store.dispatch('setRoutes', JSON.parse(this.routes));
-  },
   computed: {
-    csrf() {
-      return this.$store.state.csrf;
-    },
     year() {
       var d = new Date();
       return d.getFullYear();
-    }
-  },
-  methods: {
-    route(name) {
-      return this.$store.getters.route(name);
+    },
+    csrf() {
+      return this.$store.getters.csrf;
     }
   }
 }
