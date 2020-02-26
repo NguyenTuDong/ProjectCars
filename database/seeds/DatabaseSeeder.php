@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             TransmissionSeeder::class,
             StyleSeeder::class,
             ConvenientSeeder::class,
-            PermissionTableSeeder::class,
+            PermissionSeeder::class,
             RoleTableSeeder::class,
             AdminTableSeeder::class,
         ]);

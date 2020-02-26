@@ -230,6 +230,7 @@ export default {
   computed: {
     year() {
       var d = new Date();
+      console.log(this.$root.userCan('xem-dashboard'));
       return d.getFullYear();
     },
     csrf() {

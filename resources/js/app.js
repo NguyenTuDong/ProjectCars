@@ -46,8 +46,7 @@ const app = new Vue({
             return item.action.as == name;
         })[0].uri;
       },
-      changeToSlug(text)
-      {
+      changeToSlug(text) {
         //Đổi chữ hoa thành chữ thường
         var slug = text.toLowerCase();
     
@@ -73,6 +72,18 @@ const app = new Vue({
         slug = slug.replace(/-+$/g, '');
         //In slug ra textbox có id “slug”
         return slug;
+      },
+      userCan(slug) {
+        var check = false;
+        this.user.permissions.forEach(element => {
+          if (element.slug == slug) check = true;
+        });
+        this.user.roles.forEach(element => {
+          element.permissions.forEach(ele => {
+            if (ele.slug == slug) check = true;
+          })
+        });
+        return check;
       }
     },
     store,

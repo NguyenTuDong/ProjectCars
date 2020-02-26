@@ -5411,6 +5411,7 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     year: function year() {
       var d = new Date();
+      console.log(this.$root.userCan('xem-dashboard'));
       return d.getFullYear();
     },
     csrf: function csrf() {
@@ -67671,6 +67672,18 @@ var app = new Vue({
       slug = slug.replace(/-+$/g, ''); //In slug ra textbox có id “slug”
 
       return slug;
+    },
+    userCan: function userCan(slug) {
+      var check = false;
+      this.user.permissions.forEach(function (element) {
+        if (element.slug == slug) check = true;
+      });
+      this.user.roles.forEach(function (element) {
+        element.permissions.forEach(function (ele) {
+          if (ele.slug == slug) check = true;
+        });
+      });
+      return check;
     }
   },
   store: _store_store__WEBPACK_IMPORTED_MODULE_0__["store"],
@@ -73999,9 +74012,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\ProjectCars\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! D:\ProjectCars\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! D:\ProjectCars\resources\sass\admin\admin.scss */"./resources/sass/admin/admin.scss");
+__webpack_require__(/*! D:\Work\Web Developer\Projects\Car\ProjectCars\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! D:\Work\Web Developer\Projects\Car\ProjectCars\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! D:\Work\Web Developer\Projects\Car\ProjectCars\resources\sass\admin\admin.scss */"./resources/sass/admin/admin.scss");
 
 
 /***/ })

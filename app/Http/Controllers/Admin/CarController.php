@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Car;
+use Auth;
 
 class CarController extends Controller
 {
@@ -27,74 +28,90 @@ class CarController extends Controller
      */
     public function index(Request $request)
     {
-        $search = $request->q;
+        $user = Auth::guard('admin')->user();
+        if($user->can('xem-tin')){
 
-        $items = Car::
-        where('trangthai', '<>', 1)
-        ->where(function($query) use ($request, $search) {
-            $query->whereHas('users', function ($q) use ($request) {
-                $q->where('ten', 'LIKE', "%{$request->q}%");
-            });
-            $query->orWhereHas('types', function ($q) use ($request) {
-                $q->where('ten', 'LIKE', "%{$request->q}%");
-            });
-            $query->orWhereHas('types.brands', function ($q) use ($request) {
-                $q->where('ten', 'LIKE', "%{$request->q}%");
-            });
-            $query->orWhereHas('styles', function ($q) use ($request) {
-                $q->where('ten', 'LIKE', "%{$request->q}%");
-            });
-            $query->orWhereHas('colors', function ($q) use ($request) {
-                $q->where('ten', 'LIKE', "%{$request->q}%");
-            });
-            $query->orWhereHas('origins', function ($q) use ($request) {
-                $q->where('ten', 'LIKE', "%{$request->q}%");
-            });
-            $query->orWhereHas('conditions', function ($q) use ($request) {
-                $q->where('ten', 'LIKE', "%{$request->q}%");
-            });
-            $query->orWhereHas('fuels', function ($q) use ($request) {
-                $q->where('ten', 'LIKE', "%{$request->q}%");
-            });
-            $query->orWhereHas('locations', function ($q) use ($request) {
-                $q->where('ten', 'LIKE', "%{$request->q}%");
-            });
-            $query->orWhereHas('transmissions', function ($q) use ($request) {
-                $q->where('ten', 'LIKE', "%{$request->q}%");
-            });
-            $query->orWhere('ten', 'LIKE', '%'.$search.'%');
-            $query->orWhere('gia', 'LIKE', '%'.$search.'%');
-        })
-        ->with([
-            'users', 
-            'types.brands', 
-            'colors', 
-            'conditions', 
-            'fuels', 
-            'locations', 
-            'origins', 
-            'styles', 
-            'transmissions'
-            ])->paginate(10);
-        return response()->json($items);
+            $search = $request->q;
+
+            $items = Car::
+            where('trangthai', '<>', 1)
+            ->where(function($query) use ($request, $search) {
+                $query->whereHas('users', function ($q) use ($request) {
+                    $q->where('ten', 'LIKE', "%{$request->q}%");
+                });
+                $query->orWhereHas('types', function ($q) use ($request) {
+                    $q->where('ten', 'LIKE', "%{$request->q}%");
+                });
+                $query->orWhereHas('types.brands', function ($q) use ($request) {
+                    $q->where('ten', 'LIKE', "%{$request->q}%");
+                });
+                $query->orWhereHas('styles', function ($q) use ($request) {
+                    $q->where('ten', 'LIKE', "%{$request->q}%");
+                });
+                $query->orWhereHas('colors', function ($q) use ($request) {
+                    $q->where('ten', 'LIKE', "%{$request->q}%");
+                });
+                $query->orWhereHas('origins', function ($q) use ($request) {
+                    $q->where('ten', 'LIKE', "%{$request->q}%");
+                });
+                $query->orWhereHas('conditions', function ($q) use ($request) {
+                    $q->where('ten', 'LIKE', "%{$request->q}%");
+                });
+                $query->orWhereHas('fuels', function ($q) use ($request) {
+                    $q->where('ten', 'LIKE', "%{$request->q}%");
+                });
+                $query->orWhereHas('locations', function ($q) use ($request) {
+                    $q->where('ten', 'LIKE', "%{$request->q}%");
+                });
+                $query->orWhereHas('transmissions', function ($q) use ($request) {
+                    $q->where('ten', 'LIKE', "%{$request->q}%");
+                });
+                $query->orWhere('ten', 'LIKE', '%'.$search.'%');
+                $query->orWhere('gia', 'LIKE', '%'.$search.'%');
+            })
+            ->with([
+                'users', 
+                'types.brands', 
+                'colors', 
+                'conditions', 
+                'fuels', 
+                'locations', 
+                'origins', 
+                'styles', 
+                'transmissions'
+                ])->paginate(10);
+            return response()->json($items);
+        } 
+        
+        return response([
+            'message' => 'Bạn không có quyền xem tin!' 
+        ], 401);
     }
 
     public function show($id)
     {
-        $items = Car::with([
-            'users', 
-            'types.brands', 
-            'colors', 
-            'furnitures', 
-            'conditions', 
-            'fuels', 
-            'locations', 
-            'origins', 
-            'styles', 
-            'transmissions',
-            'convenientcars.convenients',
-            ])->where('id', $id)->first();
-        return response()->json($items);
+        $user = Auth::guard('admin')->user();
+        if($user->can('xem-tin')){
+
+            $items = Car::with([
+                'users', 
+                'types.brands', 
+                'colors', 
+                'furnitures', 
+                'conditions', 
+                'fuels', 
+                'locations', 
+                'origins', 
+                'styles', 
+                'transmissions',
+                'convenientcars.convenients',
+                ])->where('id', $id)->first();
+            return response()->json($items);
+        } 
+        
+        return response([
+            'message' => 'Bạn không có quyền xem tin!' 
+        ], 401);
     }
     
     /**
@@ -106,39 +123,55 @@ class CarController extends Controller
      */
     public function approve($id)
     {
-        $items = Car::findOrFail($id);
-        $items->trangthai = 2;
-        $items->save();
+        $user = Auth::guard('admin')->user();
+        if($user->can('duyet-tin')){
 
-        return response()->json($items->with([
-            'users', 
-            'types.brands', 
-            'colors', 
-            'conditions', 
-            'fuels', 
-            'locations', 
-            'origins', 
-            'styles', 
-            'transmissions'
-            ])->where('id', $id)->first());
+            $items = Car::findOrFail($id);
+            $items->trangthai = 2;
+            $items->save();
+
+            return response()->json($items->with([
+                'users', 
+                'types.brands', 
+                'colors', 
+                'conditions', 
+                'fuels', 
+                'locations', 
+                'origins', 
+                'styles', 
+                'transmissions'
+                ])->where('id', $id)->first());
+        } 
+        
+        return response([
+            'message' => 'Bạn không có quyền duyệt tin!' 
+        ], 401);
     }
     public function deny($id)
     {
-        $items = Car::findOrFail($id);
-        $items->trangthai = 3;
-        $items->save();
+        $user = Auth::guard('admin')->user();
+        if($user->can('duyet-tin')){
 
-        return response()->json($items->with([
-            'users', 
-            'types.brands', 
-            'colors', 
-            'conditions', 
-            'fuels', 
-            'locations', 
-            'origins', 
-            'styles', 
-            'transmissions'
-            ])->where('id', $id)->first());
+            $items = Car::findOrFail($id);
+            $items->trangthai = 3;
+            $items->save();
+
+            return response()->json($items->with([
+                'users', 
+                'types.brands', 
+                'colors', 
+                'conditions', 
+                'fuels', 
+                'locations', 
+                'origins', 
+                'styles', 
+                'transmissions'
+                ])->where('id', $id)->first());
+        } 
+        
+        return response([
+            'message' => 'Bạn không có quyền duyệt tin!' 
+        ], 401);
     }
 
     /**
@@ -149,116 +182,180 @@ class CarController extends Controller
      */
     public function destroy($id)
     {
-        $items = Car::findOrFail($id);
-        $items->trangthai = 1;
-        $items->save();
+        $user = Auth::guard('admin')->user();
+        if($user->can('duyet-tin')){
 
-        return response($items, 200);
+            $items = Car::findOrFail($id);
+            $items->trangthai = 1;
+            $items->save();
+
+            return response($items, 200);
+        } 
+        
+        return response([
+            'message' => 'Bạn không có quyền xóa tin!' 
+        ], 401);
     }
 
     public function count()
     {
-        $count = Car::get()->count();
-        return response()->json($count);
+        $user = Auth::guard('admin')->user();
+        if($user->can('xem-dashboard')){
+
+            $count = Car::get()->count();
+            return response()->json($count);
+        } 
+        
+        return response([
+            'message' => 'Bạn không có quyền này!' 
+        ], 401);
     }
 
     public function countApprove()
     {
-        $count = Car::where('trangthai', '=', 2)->get()->count();
-        return response()->json($count);
+        $user = Auth::guard('admin')->user();
+        if($user->can('xem-dashboard') || $user->can('quan-ly-danh-muc')){
+
+            $count = Car::where('trangthai', '=', 2)->get()->count();
+            return response()->json($count);
+        } 
+        
+        return response([
+            'message' => 'Bạn không có quyền này!' 
+        ], 401);
     }
 
     public function countCost()
     {
-        $count = Car::where('trangthai', '=', 2)->get()->sum('phi');
-        return response()->json($count);
+        $user = Auth::guard('admin')->user();
+        if($user->can('xem-dashboard')){
+
+            $count = Car::where('trangthai', '=', 2)->get()->sum('phi');
+            return response()->json($count);
+        } 
+        
+        return response([
+            'message' => 'Bạn không có quyền này!' 
+        ], 401);
     }
 
     public function countPerMonth()
     {
-        $first_day = Carbon::today()->startOfMonth();
-        $chartDatas = array();
-        for ($i=11; $i >=0; $i--) {
-            $f = $first_day->copy()->subMonth($i);
-            $l = $f->copy()->endOfMonth();
+        $user = Auth::guard('admin')->user();
+        if($user->can('xem-dashboard')){
 
-            $count = DB::table('cars')->select([
-                DB::raw('COUNT(id) AS count'),
-            ])
-            ->whereBetween('created_at', [$f, $l])
-            ->first();
+            $first_day = Carbon::today()->startOfMonth();
+            $chartDatas = array();
+            for ($i=11; $i >=0; $i--) {
+                $f = $first_day->copy()->subMonth($i);
+                $l = $f->copy()->endOfMonth();
 
-            $obj = new ChartData($f->format('Y-m'), $count->count);
-            array_push($chartDatas, $obj);
-        }
-        return response()->json($chartDatas);
+                $count = DB::table('cars')->select([
+                    DB::raw('COUNT(id) AS count'),
+                ])
+                ->whereBetween('created_at', [$f, $l])
+                ->first();
+
+                $obj = new ChartData($f->format('Y-m'), $count->count);
+                array_push($chartDatas, $obj);
+            }
+            return response()->json($chartDatas);
+        } 
+        
+        return response([
+            'message' => 'Bạn không có quyền này!' 
+        ], 401);
     }
 
     public function countApprovePerMonth()
     {
-        $first_day = Carbon::today()->startOfMonth();
-        $chartDatas = array();
-        for ($i=11; $i >=0; $i--) {
-            $f = $first_day->copy()->subMonth($i);
-            $l = $f->copy()->endOfMonth();
+        $user = Auth::guard('admin')->user();
+        if($user->can('xem-dashboard')){
 
-            $count = DB::table('cars')->select([
-                DB::raw('COUNT(id) AS count'),
-            ])
-            ->whereBetween('created_at', [$f, $l])
-            ->where('trangthai', '=', 2)
-            ->first();
+            $first_day = Carbon::today()->startOfMonth();
+            $chartDatas = array();
+            for ($i=11; $i >=0; $i--) {
+                $f = $first_day->copy()->subMonth($i);
+                $l = $f->copy()->endOfMonth();
 
-            $obj = new ChartData($f->format('Y-m'), $count->count);
-            array_push($chartDatas, $obj);
-        }
-        return response()->json($chartDatas);
+                $count = DB::table('cars')->select([
+                    DB::raw('COUNT(id) AS count'),
+                ])
+                ->whereBetween('created_at', [$f, $l])
+                ->where('trangthai', '=', 2)
+                ->first();
+
+                $obj = new ChartData($f->format('Y-m'), $count->count);
+                array_push($chartDatas, $obj);
+            }
+            return response()->json($chartDatas);
+        } 
+        
+        return response([
+            'message' => 'Bạn không có quyền này!' 
+        ], 401);
     }
 
     public function countCostPerMonth()
     {
-        $first_day = Carbon::today()->startOfMonth();
-        $chartDatas = array();
-        for ($i=11; $i >=0; $i--) {
-            $f = $first_day->copy()->subMonth($i);
-            $l = $f->copy()->endOfMonth();
+        $user = Auth::guard('admin')->user();
+        if($user->can('xem-dashboard')){
 
-            $count = DB::table('cars')->select([
-                DB::raw('SUM(phi) AS count'),
-            ])
-            ->whereBetween('created_at', [$f, $l])
-            ->where('trangthai', '=', 2)
-            ->first();
+            $first_day = Carbon::today()->startOfMonth();
+            $chartDatas = array();
+            for ($i=11; $i >=0; $i--) {
+                $f = $first_day->copy()->subMonth($i);
+                $l = $f->copy()->endOfMonth();
 
-            if($count->count == null){
-                $count->count = 0;
+                $count = DB::table('cars')->select([
+                    DB::raw('SUM(phi) AS count'),
+                ])
+                ->whereBetween('created_at', [$f, $l])
+                ->where('trangthai', '=', 2)
+                ->first();
+
+                if($count->count == null){
+                    $count->count = 0;
+                }
+
+                $obj = new ChartData($f->format('Y-m'), $count->count);
+                array_push($chartDatas, $obj);
             }
-
-            $obj = new ChartData($f->format('Y-m'), $count->count);
-            array_push($chartDatas, $obj);
-        }
-        return response()->json($chartDatas);
+            return response()->json($chartDatas);
+        } 
+        
+        return response([
+            'message' => 'Bạn không có quyền này!' 
+        ], 401);
     }
 
     public function countActivePerMonth()
     {
-        $first_day = Carbon::today()->startOfMonth();
-        $chartDatas = array();
-        for ($i=11; $i >=0; $i--) {
-            $f = $first_day->copy()->subMonth($i);
-            $l = $f->copy()->endOfMonth();
+        $user = Auth::guard('admin')->user();
+        if($user->can('xem-dashboard')){
 
-            $count = DB::table('cars')->select([
-                DB::raw('COUNT(id) AS count'),
-            ])
-            ->where('ngaydang', '>', $f)
-            ->where('ngayketthuc', '<', $l)
-            ->first();
+            $first_day = Carbon::today()->startOfMonth();
+            $chartDatas = array();
+            for ($i=11; $i >=0; $i--) {
+                $f = $first_day->copy()->subMonth($i);
+                $l = $f->copy()->endOfMonth();
 
-            $obj = new ChartData($f->format('Y-m'), $count->count);
-            array_push($chartDatas, $obj);
-        }
-        return response()->json($chartDatas);
+                $count = DB::table('cars')->select([
+                    DB::raw('COUNT(id) AS count'),
+                ])
+                ->where('ngaydang', '>', $f)
+                ->where('ngayketthuc', '<', $l)
+                ->first();
+
+                $obj = new ChartData($f->format('Y-m'), $count->count);
+                array_push($chartDatas, $obj);
+            }
+            return response()->json($chartDatas);
+        } 
+        
+        return response([
+            'message' => 'Bạn không có quyền này!' 
+        ], 401);
     }
 }
 

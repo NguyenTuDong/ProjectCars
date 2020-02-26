@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\User;
+use Auth;
 
 class UserController extends Controller
 {
@@ -27,37 +28,69 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $query = $request->q;
-        $items = User::where('ten', 'LIKE', '%'.$query.'%')
-        ->orWhere('email', 'LIKE', '%'.$query.'%')
-        ->orWhere('sdt', 'LIKE', '%'.$query.'%')
-        ->paginate(10);
-        return response()->json($items);
+        $user = Auth::guard('admin')->user();
+        if($user->can('xem-khach-hang')){
+
+            $query = $request->q;
+            $items = User::where('ten', 'LIKE', '%'.$query.'%')
+            ->orWhere('email', 'LIKE', '%'.$query.'%')
+            ->orWhere('sdt', 'LIKE', '%'.$query.'%')
+            ->paginate(10);
+            return response()->json($items);
+        } 
+        
+        return response([
+            'message' => 'Bạn không có quyền xem khách hàng!' 
+        ], 401);
     }
 
     public function show($id)
     {
-        $items = User::findOrFail($id);
-        return response()->json($items);
+        $user = Auth::guard('admin')->user();
+        if($user->can('xem-khach-hang')){
+
+            $items = User::findOrFail($id);
+            return response()->json($items);
+        } 
+        
+        return response([
+            'message' => 'Bạn không có quyền xem khách hàng!' 
+        ], 401);
     }
 
     public function count()
     {
-        $count = User::get()->count();
-        return response()->json($count);
+        $user = Auth::guard('admin')->user();
+        if($user->can('xem-dashboard')){
+
+            $count = User::get()->count();
+            return response()->json($count);
+        } 
+        
+        return response([
+            'message' => 'Bạn không có quyền này!' 
+        ], 401);
     }
 
     public function countPerMonth()
     {
-        $chartDatas = User::select([
-            DB::raw('DATE_FORMAT(created_at, "%Y-%m") AS date'),
-            DB::raw('COUNT(id) AS count'),
-         ])
-         ->whereBetween('created_at', [Carbon::now()->subMonth(11), Carbon::now()])
-         ->groupBy('date')
-         ->orderBy('date', 'ASC')
-         ->get()
-         ->toArray();
-        return response()->json($chartDatas);
+        $user = Auth::guard('admin')->user();
+        if($user->can('xem-dashboard')){
+
+            $chartDatas = User::select([
+                DB::raw('DATE_FORMAT(created_at, "%Y-%m") AS date'),
+                DB::raw('COUNT(id) AS count'),
+            ])
+            ->whereBetween('created_at', [Carbon::now()->subMonth(11), Carbon::now()])
+            ->groupBy('date')
+            ->orderBy('date', 'ASC')
+            ->get()
+            ->toArray();
+            return response()->json($chartDatas);
+        } 
+        
+        return response([
+            'message' => 'Bạn không có quyền này!' 
+        ], 401);
     }
 }
