@@ -17,7 +17,7 @@ class AdminController extends Controller
     {
         $this->middleware('auth:admin');
     }
-
+    
     /**
      * Show the application dashboard.
      *
@@ -25,7 +25,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $user = Auth::guard('admin')->user()->load(['roles', 'permissions']);
+        $user = Auth::guard('admin')->user()->load(['roles.permissions', 'permissions']);
         return view('admin.dashboard', compact('user'));
     }
 }

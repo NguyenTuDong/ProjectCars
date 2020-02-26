@@ -110,6 +110,15 @@ Route::prefix('admin')->group(function() {
     Route::post('/convenient', 'Admin\ConvenientController@store');
     Route::post('/convenient/{convenient}', 'Admin\ConvenientController@update');
     Route::post('/convenient/delete/{convenient}', 'Admin\ConvenientController@destroy');
+    
+    //Role
+    Route::get('/role', 'Admin\RoleController@index');
+    Route::post('/role', 'Admin\RoleController@store');
+    Route::post('/role/{role}', 'Admin\RoleController@update');
+    Route::post('/role/delete/{role}', 'Admin\RoleController@destroy');
+    
+    //Permission
+    Route::get('/permission', 'Admin\PermissionController@index');
   });
 });
 
@@ -133,7 +142,11 @@ Route::resource('user','UserController');
 
 Route::get('/test', function () {
   $user = Auth::guard('admin')->user();
-  dd($user->can('create-brands'));
+//   $test = Auth::guard('admin')->user()->where('id', $user->id)->whereHas('roles.permissions', function ($q) {
+//     $q->where('slug', 'xem-tin');
+// })->count();
+  dd($user->can('xem-tin'));
+  // dd($test);
   return view('welcome');
 });
 

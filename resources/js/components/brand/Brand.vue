@@ -62,6 +62,7 @@
                         </div>
                         <span class="text-danger" v-if="nameError != ''">{{nameError}}</span>
                       </td>
+                      <td></td>
                       <td class="td-actions text-right">
                         <button @click="createBrand" class="btn btn-primary">Thêm thương hiệu</button>
                         <button @click="isAdd = false" class="btn btn-danger">Hủy</button>

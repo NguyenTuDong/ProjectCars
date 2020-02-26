@@ -16,12 +16,13 @@ const mutations = {
     state.convenients = data;
   },
   createConvenient(state, data) {
+    data.count = 0;
     state.convenients.data.push(data);
   },
   updateConvenient(state, data) {
     state.convenients.data.forEach((element, index) => {
       if(element.id === data.id) {
-          state.convenients.data[index] = data;
+          state.convenients.data[index].ten = data.ten;
       }
     });
     var temp = state.convenients.data;

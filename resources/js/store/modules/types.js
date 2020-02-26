@@ -16,12 +16,13 @@ const mutations = {
     state.types = data;
   },
   createType(state, data) {
+    data.count = 0;
     state.types.data.push(data);
   },
   updateType(state, data) {
     state.types.data.forEach((element, index) => {
       if(element.id === data.id) {
-          state.types.data[index] = data;
+          state.types.data[index].ten = data.ten;
       }
     });
     var temp = state.types.data;

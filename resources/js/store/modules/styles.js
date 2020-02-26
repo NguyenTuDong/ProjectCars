@@ -16,12 +16,15 @@ const mutations = {
     state.styles = data;
   },
   createStyle(state, data) {
+    data.count = 0;
     state.styles.data.push(data);
   },
   updateStyle(state, data) {
     state.styles.data.forEach((element, index) => {
       if(element.id === data.id) {
-          state.styles.data[index] = data;
+          state.styles.data[index].ten = data.ten;
+          state.styles.data[index].hinhanh = data.hinhanh;
+          state.styles.data[index].hinhanh_path = data.hinhanh_path;
       }
     });
     var temp = state.styles.data;

@@ -26,7 +26,10 @@ trait HasPermissionsTrait {
     }
      
     public function hasPermission($permission) {
-        return (bool) $this->permissions->where('slug', $permission->slug)->count();
+        return (bool) $this->permissions->where('slug', $permission->slug)->count() 
+        || $this->where('id', $this->id)->whereHas('roles.permissions', function ($q) use ($permission) {
+            $q->where('slug', $permission->slug);
+        })->count();
     }
 
     protected function getAllPermissions($permissions)

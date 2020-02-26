@@ -15,6 +15,7 @@ import CarDetail from './components/car/CarDetail'
 import User from './components/user/User'
 import UserDetail from './components/user/UserDetail'
 import Contact from './components/contact/Contact'
+import Role from './components/role/Role'
 
 Vue.use(VueRouter);
 
@@ -137,6 +138,14 @@ const routes = [
     component: Contact,
     meta: {
       title: 'Admin | Liên hệ'
+    }
+  },
+  { 
+    path: '/admin/role', 
+    name: 'role',
+    component: Role,
+    meta: {
+      title: 'Admin | Chức vụ'
     }
   }
 ]

@@ -23,12 +23,15 @@ const mutations = {
     state.brands = data;
   },
   createBrand(state, data) {
+    data.count = 0;
     state.brands.data.push(data);
   },
   updateBrand(state, data) {
     state.brands.data.forEach((element, index) => {
       if(element.id === data.id) {
-          state.brands.data[index] = data;
+          state.brands.data[index].ten = data.ten;
+          state.brands.data[index].logo = data.logo;
+          state.brands.data[index].logo_path = data.logo_path;
       }
     });
     var temp = state.brands.data;
@@ -69,11 +72,11 @@ const actions = {
       },
       error: function (errors) {
         console.log(errors);
+        commit('retrieveBrands', {});
       }
     });
   },
   createBrand({commit, rootGetters}, formData) {
-    console.log(rootGetters.csrf);
     $.ajax({
       headers: {
       'X-CSRF-TOKEN': rootGetters.csrf,
@@ -103,7 +106,7 @@ const actions = {
         console.log(errors);
         $.notify({
           icon: "now-ui-icons ui-1_bell-53",
-          message: "Thêm thương hiệu thất bại!"
+          message: "Thêm thương hiệu thất bại! " + errors.responseJSON.message,
 
         }, {
           type: 'danger',

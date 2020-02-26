@@ -7,8 +7,8 @@
         <div class="col-md-12">
           <div class="card">
             <div class="d-flex card-header">
-              <h4 class="card-title">Nguồn gốc</h4>
-              <button class="btn btn-primary ml-auto" @click="addOrigin">Thêm nguồn gốc</button>
+              <h4 class="card-title">Xuất xứ</h4>
+              <button class="btn btn-primary ml-auto" @click="addOrigin">Thêm xuất xứ</button>
             </div>
             <div class="card-body">
               <div class="search-form">
@@ -21,7 +21,7 @@
                       Id
                     </th>
                     <th class="table-origins-name">
-                      Nguồn gốc
+                      Xuất xứ
                     </th>
                     <th class="table-origins-ratio">
                       Tỉ lệ
@@ -46,19 +46,20 @@
                       </td>
                       <td>
                         <div class="form-group">
-                          <input ref="newName" type="text" class="form-control" placeholder="Nguồn gốc" v-model="newName">
+                          <input ref="newName" type="text" class="form-control" placeholder="Xuất xứ" v-model="newName">
                         </div>
                         <span class="text-danger" v-if="nameError != ''">{{nameError}}</span>
                       </td>
+                      <td></td>
                       <td class="td-actions text-right">
-                        <button @click="createOrigin" class="btn btn-primary">Thêm nguồn gốc</button>
+                        <button @click="createOrigin" class="btn btn-primary">Thêm xuất xứ</button>
                         <button @click="isAdd = false" class="btn btn-danger">Hủy</button>
                       </td>
                     </tr>
                   </tbody>
                 </table>
                 <div v-if="!isAdd" class="d-flex">
-                  <button class="btn btn-primary ml-auto" @click="addOrigin">Thêm nguồn gốc</button>
+                  <button class="btn btn-primary ml-auto" @click="addOrigin">Thêm xuất xứ</button>
                 </div>
               </div>
               <pagination
@@ -147,7 +148,7 @@ export default {
       this.editing = id;
     },
     showPopup(data){
-      this.message = "Bạn có muốn xóa nguồn gốc <b>"+data.ten+"</b> không?";
+      this.message = "Bạn có muốn xóa xuất xứ <b>"+data.ten+"</b> không?";
       this.$refs.modal.show(data);
     },
     addOrigin() {
@@ -163,7 +164,7 @@ export default {
     },
     createOrigin() {
       if(this.newName == ""){
-        this.nameError = "Vui lòng nhập nguồn gốc!";
+        this.nameError = "Vui lòng nhập xuất xứ!";
       } else {
         this.nameError = "";
       }

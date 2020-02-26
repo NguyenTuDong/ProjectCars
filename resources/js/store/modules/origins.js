@@ -16,12 +16,13 @@ const mutations = {
     state.origins = data;
   },
   createOrigin(state, data) {
+    data.count = 0;
     state.origins.data.push(data);
   },
   updateOrigin(state, data) {
     state.origins.data.forEach((element, index) => {
       if(element.id === data.id) {
-          state.origins.data[index] = data;
+          state.origins.data[index].ten = data.ten;
       }
     });
     var temp = state.origins.data;

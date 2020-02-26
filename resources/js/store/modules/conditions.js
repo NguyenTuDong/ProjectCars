@@ -16,12 +16,13 @@ const mutations = {
     state.conditions = data;
   },
   createCondition(state, data) {
+    data.count = 0;
     state.conditions.data.push(data);
   },
   updateCondition(state, data) {
     state.conditions.data.forEach((element, index) => {
       if(element.id === data.id) {
-          state.conditions.data[index] = data;
+          state.conditions.data[index].ten = data.ten;
       }
     });
     var temp = state.conditions.data;

@@ -20,7 +20,7 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'ten', 'email', 'password',
+        'ten', 'email', 'password', 'avatar', 'cover', 'diaChi', 'sdt', 'cmnd'
     ];
 
     /**
@@ -40,6 +40,31 @@ class Admin extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $appends = [
+        'avatar_path',
+        'cover_path',
+    ];
+
+    public function getCoverPathAttribute(){
+        if (empty($this->attributes['cover'])) {
+            return \URL::to("/").'\\storage\\img\\no-img.png';
+        }
+        else {
+            
+            return \URL::to("/").'\\storage\\img\\userfiles\\'.md5($this->attributes['id']).'\\images\\Cover\\' . $this->attributes['cover'];
+        }
+    }
+
+    public function getAvatarPathAttribute()
+    {
+        if (empty($this->attributes['avatar'])) {
+            return \URL::to("/").'\\storage\\img\\no-avatar.png';
+        }
+        else {
+            return \URL::to("/").'\\storage\\img\\userfiles\\'.md5($this->attributes['id']).'\\images\\Avatar\\' . $this->attributes['avatar'];
+        }
+    }
     
     public function sendPasswordResetNotification($token)
     {

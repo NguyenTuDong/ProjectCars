@@ -13,16 +13,64 @@ class PermissionTableSeeder extends Seeder
     {
         $permissions = [
             [
-                'slug' => 'create-brands',
-                'name' => 'Create Brands',
+                'slug' => 'xem-dashboard',
+                'ten' => 'Xem Dashboard',
             ],
             [
-                'slug' => 'edit-brands',
-                'name' => 'Edit Brands',
+                'slug' => 'quan-ly-danh-muc',
+                'ten' => 'Quản lý danh mục',
             ],
             [
-                'slug' => 'delete-brands',
-                'name' => 'Delete Brands',
+                'slug' => 'quan-ly-chuc-vu',
+                'ten' => 'Quản lý chức vụ',
+            ],
+            [
+                'slug' => 'phan-quyen',
+                'ten' => 'Phân quyền',
+            ],
+            [
+                'slug' => 'xem-nhan-vien',
+                'ten' => 'Xem nhân viên',
+            ],
+            [
+                'slug' => 'them-nhan-vien',
+                'ten' => 'Thêm nhân viên',
+            ],
+            [
+                'slug' => 'xoa-nhan-vien',
+                'ten' => 'Xóa nhân viên',
+            ],
+            [
+                'slug' => 'sua-nhan-vien',
+                'ten' => 'Sửa nhân viên',
+            ],
+            [
+                'slug' => 'xem-tin',
+                'ten' => 'Xem tin',
+            ],
+            [
+                'slug' => 'duyet-tin',
+                'ten' => 'Duyệt tin',
+            ],
+            [
+                'slug' => 'xoa-tin',
+                'ten' => 'Xóa tin',
+            ],
+            [
+                'slug' => 'xem-khach-hang',
+                'ten' => 'Xem khách hàng',
+            ],
+            [
+                'slug' => 'xem-lien-he',
+                'ten' => 'Xem liên hệ',
+            ],
+            [
+                'slug' => 'thong-ke',
+                'ten' => 'Thống kê',
+            ],
+            [
+                'slug' => 'bao-cao',
+                'ten' => 'Báo cáo',
             ],
         ];
 

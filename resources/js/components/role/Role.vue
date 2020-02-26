@@ -7,13 +7,8 @@
         <div class="col-md-12">
           <div class="card">
             <div class="d-flex card-header">
-              <h4 class="card-title">Dòng xe - 
-                <select v-model="selectBrand" @click="getItems(selectBrand, 1)" class="card-select">
-                  <option v-for="brand in brands" :key="brand.id" :value="brand.id">{{brand.ten}}</option>
-                </select>
-              </h4>
-              
-              <button class="btn btn-primary ml-auto" @click="addType">Thêm dòng xe</button>
+              <h4 class="card-title">Chức vụ</h4>
+              <button class="btn btn-primary ml-auto" @click="addRole">Thêm chức vụ</button>
             </div>
             <div class="card-body">
               <div class="search-form">
@@ -22,49 +17,55 @@
               <div class="table-responsive">
                 <table class="table">
                   <thead class=" text-primary">
-                    <th class="table-types-id">
+                    <th class="table-roles-id">
                       Id
                     </th>
-                    <th class="table-types-name">
-                      Tên dòng xe
+                    <th class="table-roles-name">
+                      Chức vụ
                     </th>
-                    <th class="table-types-ratio">
-                      Tỉ lệ
+                    <th class="table-roles-slug">
+                      Slug
                     </th>
-                    <th class="table-types-actions text-right">
+                    <th class="table-roles-permissions">
+                      Quyền
+                    </th>
+                    <th class="table-roles-admins">
+                      Nhân viên
+                    </th>
+                    <th class="table-roles-actions text-right">
                       Tác vụ
                     </th>
                   </thead>
                   <tbody>
-                    <type-item 
-                      v-for="type in types" 
-                      :key="type.id" 
-                      :type="type"
+                    <role-item 
+                      v-for="role in roles" 
+                      :key="role.id" 
+                      :role="role"
                       :editing="editing"
-                      :max="max"
-                      :carCountApprove="carCountApprove"
+                      :permissions="permissions"
                       @changeEditing="changeEditing"
                       @showPopup="showPopup"
-                    ></type-item>
+                    ></role-item>
                     <tr v-if="isAdd">
-                      <td>
-                      </td>
+                      <td></td>
                       <td>
                         <div class="form-group">
-                          <input ref="newName" type="text" class="form-control" placeholder="Tên dòng xe" v-model="newName">
+                          <input ref="newName" type="text" class="form-control" placeholder="Chức vụ" v-model="newName">
                         </div>
                         <span class="text-danger" v-if="nameError != ''">{{nameError}}</span>
                       </td>
+                      <td>{{slug}}</td>
+                      <td></td>
                       <td></td>
                       <td class="td-actions text-right">
-                        <button @click="createType" class="btn btn-primary">Thêm dòng xe</button>
+                        <button @click="createRole" class="btn btn-primary">Thêm chức vụ</button>
                         <button @click="isAdd = false" class="btn btn-danger">Hủy</button>
                       </td>
                     </tr>
                   </tbody>
                 </table>
                 <div v-if="!isAdd" class="d-flex">
-                  <button class="btn btn-primary ml-auto" @click="addType">Thêm dòng xe</button>
+                  <button class="btn btn-primary ml-auto" @click="addRole">Thêm chức vụ</button>
                 </div>
               </div>
               <pagination
@@ -86,15 +87,15 @@
 </template>
 
 <script>
-import TypeItem from './TypeItem'
+import RoleItem from './RoleItem'
 import Modal from '../Modal';
 import Pagination from '../Pagination';
 import { mapGetters } from 'vuex';
 
 export default {
-  name: 'Type',
+  name: 'Role',
   components: {
-    TypeItem,
+    RoleItem,
     Modal,
     Pagination,
   },
@@ -102,7 +103,6 @@ export default {
     return {
       editing: -1,
       isAdd: false,
-      selectBrand: 1,
       newName: "",
       nameError: "",
       offset: 3,
@@ -116,105 +116,100 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('allBrands');
     var data = {
-      brands_id: 1,
       page: 1,
       q: '',
     }
-    this.$store.dispatch('retrieveTypes', data);
-    this.$store.dispatch("carCountApprove");
+    this.$store.dispatch('retrieveRoles', data);
+    this.$store.dispatch('retrievePermissions');
     this.debouncedGetQuery = _.debounce(this.search, 500);
   },
   computed: {
     ...mapGetters({
-      brands: 'allBrands',
-      types: 'types',
-      pagination: 'typesPagination',
+      roles: 'roles',
+      pagination: 'rolesPagination',
+      permissions: 'permissions',
     }),
-    carCountApprove() {
-      return this.$store.getters.carCountApprove;
-    },
-    max(){
-      var max = 0;
-      this.types.forEach(ele => {
-        if(ele.count > max) max = ele.count;
-      });
-      return max;
+    slug() {
+      return this.$root.changeToSlug(this.newName);
     }
   },
   methods: {
-    getItems(id, page){
+    getItems(page){
       if(!this.isAdd && page <= this.pagination.last_page && page >= 1) {
         var data = {
-          brands_id: id,
           page: page,
           q: this.q,
         }
-        this.$store.dispatch('retrieveTypes', data);
+        this.$store.dispatch('retrieveRoles', data);
       }
     },
     changeEditing(id) {
       this.editing = id;
     },
     showPopup(data){
-      this.message = "Bạn có muốn xóa dòng xe <b>"+data.ten+"</b> không?";
+      this.message = "Bạn có muốn xóa chức vụ <b>"+data.ten+"</b> không?";
       this.$refs.modal.show(data);
     },
-    addType() {
+    addRole() {
       var data = {
-        brands_id: this.selectBrand,
         page: this.pagination.last_page,
         q: this.q,
       }
-      this.$store.dispatch('retrieveTypes', data);
+      this.$store.dispatch('retrieveRoles', data);
       this.isAdd = true;
       this.$nextTick(() => {
         this.$refs.newName.focus();
       });
     },
-    createType() {
+    createRole() {
       if(this.newName == ""){
-        this.nameError = "Vui lòng nhập tên dòng xe!";
+        this.nameError = "Vui lòng nhập chức vụ!";
       } else {
         this.nameError = "";
       }
-      if(this.newName != null){
+      
+      if(this.newName != ""){
         var formData = new FormData();
-        formData.append("brands_id", this.selectBrand);
         formData.append("name", this.newName);
+        formData.append("slug", this.slug);
 
-        this.$store.dispatch('createType', formData);
+        this.$store.dispatch('createRole', formData);
         this.newName = "";
         this.isAdd = false;
       }
     },
     submit(data) {
-      this.$store.dispatch('deleteType', data.id);
+      this.$store.dispatch('deleteRole', data.id);
     },
     search() {
       var data = {
-        brands_id: this.selectBrand,
         page: 1,
         q: this.q,
       }
-      this.$store.dispatch('retrieveTypes', data);
+      this.$store.dispatch('retrieveRoles', data);
     }
   }
 }
 </script>
 
 <style>
-.table-types-id{
+.table-roles-id{
   width: 5%;
 }
-.table-types-name{
-  width: 30%;
+.table-roles-name{
+  width: 10%;
 }
-.table-types-ratio{
-  width: 40%;
+.table-roles-slug{
+  width: 10%;
 }
-.table-types-actions{
-  width: 25%;
+.table-roles-permissions{
+  width: 45%;
+}
+.table-roles-admins{
+  width: 20%;
+}
+.table-roles-actions{
+  width: 10%;
 }
 </style>

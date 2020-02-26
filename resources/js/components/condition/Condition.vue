@@ -50,6 +50,7 @@
                         </div>
                         <span class="text-danger" v-if="nameError != ''">{{nameError}}</span>
                       </td>
+                      <td></td>
                       <td class="td-actions text-right">
                         <button @click="createCondition" class="btn btn-primary">Thêm tình trạng</button>
                         <button @click="isAdd = false" class="btn btn-danger">Hủy</button>

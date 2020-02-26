@@ -6,9 +6,20 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Brand;
+use Auth;
 
 class BrandController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -16,25 +27,33 @@ class BrandController extends Controller
      */
     public function index(Request $request)
     {
-        $query = $request->q;
+        $user = Auth::guard('admin')->user();
+        if($user->can('quan-ly-danh-muc')){
 
-        $cars = DB::raw('(SELECT a.id, a.types_id FROM `cars` a WHERE trangthai = 2)
-               TotalCars');
-        $items = Brand::select([
-            'brands.id',
-            'brands.ten',
-            'brands.logo',
-            DB::raw('COUNT(TotalCars.id) AS count'),
-        ])
-        ->leftJoin('types', 'brands.id', '=', 'types.brands_id')
-        ->leftJoin($cars, function($join){
-            $join->on('types.id', '=', 'TotalCars.types_id');
-        })
-        ->where('brands.trangthai', 0)
-        ->where('brands.ten', 'LIKE', '%'.$query.'%')
-        ->groupBy('brands.id')
-        ->paginate(10);
-        return response()->json($items);
+            $query = $request->q;
+
+            $cars = DB::raw('(SELECT a.id, a.types_id FROM `cars` a WHERE trangthai = 2)
+                TotalCars');
+            $items = Brand::select([
+                'brands.id',
+                'brands.ten',
+                'brands.logo',
+                DB::raw('COUNT(TotalCars.id) AS count'),
+            ])
+            ->leftJoin('types', 'brands.id', '=', 'types.brands_id')
+            ->leftJoin($cars, function($join){
+                $join->on('types.id', '=', 'TotalCars.types_id');
+            })
+            ->where('brands.trangthai', 0)
+            ->where('brands.ten', 'LIKE', '%'.$query.'%')
+            ->groupBy('brands.id')
+            ->paginate(10);
+            return response()->json($items);
+        } 
+        
+        return response([
+            'message' => 'Bạn không có quyền xem thương hiệu!' 
+        ], 401);
     }
 
     /**
@@ -45,24 +64,32 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate([
-            'logo' => 'image',
-        ]);
+        $user = Auth::guard('admin')->user();
+        if($user->can('quan-ly-danh-muc')){
 
-        $items = new Brand();
-
-        if($request->hasFile('logo')){
-            $fileNameWithExt = $request->file('logo')->getClientOriginalName();
-            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-            $extension = $request->file('logo')->getClientOriginalExtension();
-            $fileNameToStore = 'logo_'.time().'.'.$extension;
-            $path = $request->file('logo')->storeAs('img/logo', $fileNameToStore);
-            $items->logo = $fileNameToStore;
-        }
-        $items->ten = $request->name;
-
-        $items->save();
-        return response($items, 201);
+            request()->validate([
+                'logo' => 'image',
+            ]);
+    
+            $items = new Brand();
+    
+            if($request->hasFile('logo')){
+                $fileNameWithExt = $request->file('logo')->getClientOriginalName();
+                $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file('logo')->getClientOriginalExtension();
+                $fileNameToStore = 'logo_'.time().'.'.$extension;
+                $path = $request->file('logo')->storeAs('img/logo', $fileNameToStore);
+                $items->logo = $fileNameToStore;
+            }
+            $items->ten = $request->name;
+    
+            $items->save();
+            return response($items, 201);
+        } 
+        
+        return response([
+            'message' => 'Bạn không có quyền thêm thương hiệu!' 
+        ], 401);
     }
 
     /**
@@ -74,24 +101,32 @@ class BrandController extends Controller
      */
     public function update(Request $request, $id)
     {
-        request()->validate([
-            'logo' => 'image',
-        ]);
+        $user = Auth::guard('admin')->user();
+        if($user->can('quan-ly-danh-muc')){
 
-        $items = Brand::findOrFail($id);
-        $items->ten = $request->name;
+            request()->validate([
+                'logo' => 'image',
+            ]);
 
-        if($request->hasFile('logo')){
-            $fileNameWithExt = $request->file('logo')->getClientOriginalName();
-            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-            $extension = $request->file('logo')->getClientOriginalExtension();
-            $fileNameToStore = 'logo_'.time().'.'.$extension;
-            $path = $request->file('logo')->storeAs('img/logo', $fileNameToStore);
-            $items->logo = $fileNameToStore;
-        }
+            $items = Brand::findOrFail($id);
+            $items->ten = $request->name;
 
-        $items->save();
-        return response($items, 200);
+            if($request->hasFile('logo')){
+                $fileNameWithExt = $request->file('logo')->getClientOriginalName();
+                $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file('logo')->getClientOriginalExtension();
+                $fileNameToStore = 'logo_'.time().'.'.$extension;
+                $path = $request->file('logo')->storeAs('img/logo', $fileNameToStore);
+                $items->logo = $fileNameToStore;
+            }
+
+            $items->save();
+            return response($items, 200);
+        } 
+        
+        return response([
+            'message' => 'Bạn không có quyền cập nhật thương hiệu!' 
+        ], 401);
     }
 
     /**
@@ -102,9 +137,17 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
-        $items = Brand::findOrFail($id);
-        $items->trangthai = 1;
-        $items->save();
-        return response($items, 200);
+        $user = Auth::guard('admin')->user();
+        if($user->can('quan-ly-danh-muc')){
+                
+            $items = Brand::findOrFail($id);
+            $items->trangthai = 1;
+            $items->save();
+            return response($items, 200);
+        } 
+        
+        return response([
+            'message' => 'Bạn không có quyền xóa thương hiệu!' 
+        ], 401);
     }
 }

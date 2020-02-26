@@ -8,7 +8,7 @@
     </td>
     <td v-else>
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Nguồn gốc" v-model="newName">
+        <input type="text" class="form-control" placeholder="Xuất xứ" v-model="newName">
       </div>
       <span class="text-danger" v-if="nameError != ''">{{nameError}}</span>
     </td>

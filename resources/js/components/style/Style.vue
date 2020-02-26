@@ -62,6 +62,7 @@
                         </div>
                         <span class="text-danger" v-if="nameError != ''">{{nameError}}</span>
                       </td>
+                      <td></td>
                       <td class="td-actions text-right">
                         <button @click="createStyle" class="btn btn-primary">Thêm kiểu dáng</button>
                         <button @click="isAdd = false" class="btn btn-danger">Hủy</button>

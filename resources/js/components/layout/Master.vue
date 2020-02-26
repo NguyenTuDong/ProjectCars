@@ -73,7 +73,7 @@
           <router-link tag="li" :to="{name: 'origin'}">
             <a href="#">
               <i class="now-ui-icons location_world"></i>
-              <p>Nguồn gốc</p>
+              <p>Xuất xứ</p>
             </a>
           </router-link>
           <router-link tag="li" :to="{name: 'fuel'}">
@@ -95,6 +95,12 @@
             </a>
           </router-link>
           <hr class="nav-seq">
+          <router-link tag="li" :to="{name: 'role'}">
+            <a href="#">
+              <i class="now-ui-icons ui-2_like"></i>
+              <p>Chức vụ</p>
+            </a>
+          </router-link>
         </ul>
       </div>
     </div>
@@ -317,5 +323,39 @@ body{
   height: 10px;
   background-color: #fa7a50;
   margin-right: 30px;
+}
+.blocks {
+  font-size: 0;
+  margin: 0 -2px;
+  span{
+    display: inline-block;
+    background-color: #eee;
+    font-size: 11px;
+    color: #2A5788;
+    padding: 4px 8px;
+    margin: 4px;
+    font-weight: 600;
+    letter-spacing: .7px;
+    border-radius: 3px;
+  }
+}
+.blocks-edit {
+  font-size: 0;
+  margin: 0 -2px;
+  span{
+    display: inline-block;
+    background-color: #eee;
+    font-size: 11px;
+    color: gray;
+    padding: 4px 8px;
+    margin: 4px;
+    font-weight: 600;
+    letter-spacing: .7px;
+    border-radius: 3px;
+    cursor: pointer;
+    &.is-selected{
+      color: #2A5788;
+    }
+  }
 }
 </style>

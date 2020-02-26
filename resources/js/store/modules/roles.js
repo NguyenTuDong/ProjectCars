@@ -1,73 +1,72 @@
 const state = {
-  fuels: {},
+  roles: {},
 };
 
 const getters = {
-  fuels(state) {
-    return state.fuels.data;
+  roles(state) {
+    return state.roles.data;
   },
-  fuelsPagination(state) {
-    return state.fuels;
+  rolesPagination(state) {
+    return state.roles;
   },
 };
 
 const mutations = {
-  retrieveFuels(state, data) {
-    state.fuels = data;
+  retrieveRoles(state, data) {
+    state.roles = data;
   },
-  createFuel(state, data) {
-    data.count = 0;
-    state.fuels.data.push(data);
+  createRole(state, data) {
+    state.roles.data.push(data);
   },
-  updateFuel(state, data) {
-    state.fuels.data.forEach((element, index) => {
+  updateRole(state, data) {
+    state.roles.data.forEach((element, index) => {
       if(element.id === data.id) {
-          state.fuels.data[index].ten = data.ten;
+          state.roles.data[index] = data;
       }
     });
-    var temp = state.fuels.data;
-    state.fuels.data = [];
-    state.fuels.data = temp;
+    var temp = state.roles.data;
+    state.roles.data = [];
+    state.roles.data = temp;
   },
-  deleteFuel(state, data) {
-    var index = state.fuels.data.findIndex((obj) => {
+  deleteRole(state, data) {
+    var index = state.roles.data.findIndex((obj) => {
       return obj.id == data.id;
     });
-    state.fuels.data.splice(index, 1);
+    state.roles.data.splice(index, 1);
   },
 };
 
 const actions = {
-  retrieveFuels({commit}, data) {
+  retrieveRoles({commit}, data) {
     $.ajax({
-      url : '/admin/api/fuel?page='+data.page+'&q='+data.q,
+      url : '/admin/api/role?page='+data.page+'&q='+data.q,
       type : "GET",
       dataType : "json",
       success:function(data)
       {
-        commit('retrieveFuels', data);
+        commit('retrieveRoles', data);
       },
       error: function (errors) {
         console.log(errors);
       }
     });
   },
-  createFuel({commit, rootGetters}, formData) {
+  createRole({commit, rootGetters}, formData) {
     $.ajax({
       headers: {
       'X-CSRF-TOKEN': rootGetters.csrf,
       },
-      url : '/admin/api/fuel',
+      url : '/admin/api/role',
       type : "POST",
       data: formData,
       processData: false,
       contentType: false,
       success:function(data)
       {
-        commit('createFuel', data);
+        commit('createRole', data);
         $.notify({
           icon: "now-ui-icons ui-1_bell-53",
-          message: "Thêm nhiên liệu thành công."
+          message: "Thêm chức vụ thành công."
 
         }, {
           type: 'success',
@@ -82,7 +81,7 @@ const actions = {
         console.log(errors);
         $.notify({
           icon: "now-ui-icons ui-1_bell-53",
-          message: "Thêm nhiên liệu thất bại!"
+          message: "Thêm chức vụ thất bại!"
 
         }, {
           type: 'danger',
@@ -95,23 +94,23 @@ const actions = {
       }
     })
   },
-  updateFuel({commit, rootGetters}, data) {
+  updateRole({commit, rootGetters}, data) {
     $.ajax({
       headers: {
       'X-CSRF-TOKEN': rootGetters.csrf,
       },
-      url : '/admin/api/fuel/'+data.id,
+      url : '/admin/api/role/'+data.id,
       type : "POST",
       data: data.formData,
       processData: false,
       contentType: false,
       success:function(data)
       {
-        commit('updateFuel', data);
+        commit('updateRole', data);
 
         $.notify({
           icon: "now-ui-icons ui-1_bell-53",
-          message: "Cập nhật nhiên liệu <b>#"+data.id+"</b> thành công."
+          message: "Cập nhật chức vụ <b>#"+data.id+"</b> thành công."
 
         }, {
           type: 'success',
@@ -123,9 +122,10 @@ const actions = {
         });
       },
       error: function (errors) {
+        console.log(errors);
         $.notify({
           icon: "now-ui-icons ui-1_bell-53",
-          message: "Cập nhật nhiên liệu <b>#"+data.id+"</b> thất bại."
+          message: "Cập nhật chức vụ <b>#"+data.id+"</b> thất bại."
 
         }, {
           type: 'danger',
@@ -138,22 +138,22 @@ const actions = {
       }
     })
   },
-  deleteFuel({commit, rootGetters}, id) {
+  deleteRole({commit, rootGetters}, id) {
     $.ajax({
       headers: {
       'X-CSRF-TOKEN': rootGetters.csrf,
       },
-      url : '/admin/api/fuel/delete/'+id,
+      url : '/admin/api/role/delete/'+id,
       type : "POST",
       processData: false,
       contentType: false,
       success:function(data)
       {
-        commit('deleteFuel', data);
+        commit('deleteRole', data);
 
         $.notify({
           icon: "now-ui-icons ui-1_bell-53",
-          message: "Xóa nhiên liệu <b>#"+data.id+"</b> thành công."
+          message: "Xóa chức vụ <b>#"+data.id+"</b> thành công."
 
         }, {
           type: 'success',
@@ -167,7 +167,7 @@ const actions = {
       error: function (errors) {
         $.notify({
           icon: "now-ui-icons ui-1_bell-53",
-          message: "Xóa nhiên liệu <b>#"+data.id+"</b> thất bại."
+          message: "Xóa chức vụ <b>#"+data.id+"</b> thất bại."
         }, {
           type: 'danger',
           timer: 3000,

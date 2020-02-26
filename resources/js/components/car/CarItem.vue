@@ -82,11 +82,4 @@ export default {
 </script>
 
 <style>
-.blocks span{
-  display: inline-block;
-  background-color: #fa7a50;
-  font-size: 11px;
-  color: white;
-  padding: 2px 5px;
-}
 </style>

@@ -12,6 +12,8 @@ import convenients from './modules/convenients';
 import cars from './modules/cars';
 import users from './modules/users';
 import contacts from './modules/contacts';
+import roles from './modules/roles';
+import permissions from './modules/permissions';
 
 Vue.use(Vuex);
 
@@ -29,6 +31,8 @@ export const store = new Vuex.Store({
     cars,
     users,
     contacts,
+    roles,
+    permissions,
   },
   state: {
     csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')

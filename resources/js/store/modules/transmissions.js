@@ -16,12 +16,13 @@ const mutations = {
     state.transmissions = data;
   },
   createTransmission(state, data) {
+    data.count = 0;
     state.transmissions.data.push(data);
   },
   updateTransmission(state, data) {
     state.transmissions.data.forEach((element, index) => {
       if(element.id === data.id) {
-          state.transmissions.data[index] = data;
+          state.transmissions.data[index].ten = data.ten;
       }
     });
     var temp = state.transmissions.data;

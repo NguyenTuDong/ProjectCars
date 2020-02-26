@@ -16,12 +16,15 @@ const mutations = {
     state.colors = data;
   },
   createColor(state, data) {
+    data.count = 0;
     state.colors.data.push(data);
   },
   updateColor(state, data) {
     state.colors.data.forEach((element, index) => {
       if(element.id === data.id) {
-          state.colors.data[index] = data;
+          state.colors.data[index].ten = data.ten;
+          state.colors.data[index].rgb = data.rgb;
+          state.colors.data[index].rgb_path = data.rgb_path;
       }
     });
     var temp = state.colors.data;
