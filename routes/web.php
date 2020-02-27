@@ -32,6 +32,9 @@ Route::prefix('admin')->group(function() {
 
   Route::prefix('api')->group(function() {
 
+    //Auth
+    Route::get('/auth', 'Admin\AdminController@auth');
+
     //Car
     Route::get('/car', 'Admin\CarController@index');
     Route::get('/car/count', 'Admin\CarController@count');
@@ -119,6 +122,14 @@ Route::prefix('admin')->group(function() {
     
     //Permission
     Route::get('/permission', 'Admin\PermissionController@index');
+
+    //Employee
+    Route::get('/employee', 'Admin\EmployeeController@index');
+    Route::post('/employee', 'Admin\EmployeeController@store');
+    Route::post('/employee/{employee}', 'Admin\EmployeeController@update');
+    Route::get('/employee/count', 'Admin\EmployeeController@count');
+    Route::get('/employee/countPerMonth', 'Admin\EmployeeController@countPerMonth');
+    Route::get('/employee/{id}', 'Admin\EmployeeController@show');
   });
 });
 

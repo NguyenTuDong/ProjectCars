@@ -38,14 +38,14 @@
         Đã từ chối
       </span>
     </td>
-    <td class="td-actions text-right">
-      <button v-if="car.trangthai == 0" @click="approveCar" type="button" rel="tooltip" title="Duyệt" class="btn btn-success btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
+    <td class="td-actions text-right" v-if="$root.userCan('duyet-tin') || $root.userCan('xoa-tin')">
+      <button v-if="car.trangthai == 0 && $root.userCan('duyet-tin')" @click="approveCar" type="button" rel="tooltip" title="Duyệt" class="btn btn-success btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
         <i class="now-ui-icons ui-1_check"></i>
       </button>
-      <button v-if="car.trangthai == 0" @click="denyCar" type="button" rel="tooltip" title="Từ chối" class="btn btn-warning btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
+      <button v-if="car.trangthai == 0 && $root.userCan('duyet-tin')" @click="denyCar" type="button" rel="tooltip" title="Từ chối" class="btn btn-warning btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
         <i class="now-ui-icons ui-1_simple-delete"></i>
       </button>
-      <button @click="showPopup" type="button" rel="tooltip" title="Xóa" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
+      <button v-if="$root.userCan('xoa-tin')" @click="showPopup" type="button" rel="tooltip" title="Xóa" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
         <i class="now-ui-icons ui-1_simple-remove"></i>
       </button>
     </td>

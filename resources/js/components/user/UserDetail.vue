@@ -92,41 +92,4 @@ export default {
 </script>
 
 <style lang="scss">
-.btn-back {
-  position: absolute;
-  top: 40px;
-  left: 30px;
-  background-color: transparent;
-  padding: 0;
-  color: white;
-  border: 0;
-  cursor: pointer;
-  z-index: 1100;
-}
-.user-cover{
-  height: 120px;
-  overflow: hidden;
-  position: relative;
-  img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
-.user-avatar{
-  width: 124px;
-  height: 124px;
-  border: 1px solid #FFFFFF;
-  position: relative;
-  overflow: hidden;
-  border-radius: 50%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 15px;
-  img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
 </style>

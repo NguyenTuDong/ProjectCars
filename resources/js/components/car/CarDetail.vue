@@ -4,7 +4,7 @@
     </div>
     <button @click="$router.go(-1)" class="btn-back"><i class="now-ui-icons arrows-1_minimal-left"></i> Trở lại</button>
     <div class="content">
-      <div class="row">
+      <div class="row" v-if="$root.userCan('xem-tin')">
         <div class="col-md-4">
           <div class="card">
             <div class="car-image">
@@ -56,17 +56,17 @@
                 </tr>
               </table>
               <div class="row justify-content-center text-center">
-                <div v-if="car.trangthai == 0" class="col-md-4">
+                <div v-if="car.trangthai == 0 && $root.userCan('duyet-tin')" class="col-md-4">
                   <button @click="approveCar" type="button" rel="tooltip" title="Duyệt" class="btn btn-success btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
                     <i class="now-ui-icons ui-1_check"></i>
                   </button>
                 </div>
-                <div v-if="car.trangthai == 0" class="col-md-4">
+                <div v-if="car.trangthai == 0 && $root.userCan('duyet-tin')" class="col-md-4">
                   <button @click="denyCar" type="button" rel="tooltip" title="Từ chối" class="btn btn-warning btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
                     <i class="now-ui-icons ui-1_simple-delete"></i>
                   </button>
                 </div>
-                <div class="col-md-4">
+                <div v-if="$root.userCan('xoa-tin')" class="col-md-4">
                   <button @click="showPopup" type="button" rel="tooltip" title="Xóa" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
                     <i class="now-ui-icons ui-1_simple-remove"></i>
                   </button>

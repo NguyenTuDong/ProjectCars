@@ -14,6 +14,7 @@ import users from './modules/users';
 import contacts from './modules/contacts';
 import roles from './modules/roles';
 import permissions from './modules/permissions';
+import employees from './modules/employees';
 
 Vue.use(Vuex);
 
@@ -33,13 +34,39 @@ export const store = new Vuex.Store({
     contacts,
     roles,
     permissions,
+    employees,
   },
   state: {
-    csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+    auth: {},
   },
   getters: {
     csrf(state){
       return state.csrf;
+    },
+    auth(state){
+      return state.auth;
     }
+  },
+  mutations: {
+    auth(state, data) {
+      state.auth = data;
+    }
+  },
+  actions: {
+    auth({commit}) {
+      $.ajax({
+        url : '/admin/api/auth',
+        type : "GET",
+        dataType : "json",
+        success:function(data)
+        {
+          commit('auth', data);
+        },
+        error: function (errors) {
+          console.log(errors);
+        }
+      });
+    },
   }
 })

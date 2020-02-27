@@ -58,6 +58,21 @@ const actions = {
       },
       error: function (errors) {
         console.log(errors);
+        commit('retrieveBrands', {});
+        if(errors.responseJSON.message){
+          $.notify({
+            icon: "now-ui-icons ui-1_bell-53",
+            message: errors.responseJSON.message,
+  
+          }, {
+            type: 'danger',
+            timer: 3000,
+            placement: {
+            from: 'top',
+            align: 'right'
+            }
+          });
+        }
       }
     });
   },
@@ -73,6 +88,20 @@ const actions = {
       error: function (errors) {
         console.log(errors);
         commit('retrieveBrands', {});
+        if(errors.responseJSON.message){
+          $.notify({
+            icon: "now-ui-icons ui-1_bell-53",
+            message: errors.responseJSON.message,
+  
+          }, {
+            type: 'danger',
+            timer: 3000,
+            placement: {
+            from: 'top',
+            align: 'right'
+            }
+          });
+        }
       }
     });
   },
@@ -106,7 +135,7 @@ const actions = {
         console.log(errors);
         $.notify({
           icon: "now-ui-icons ui-1_bell-53",
-          message: "Thêm thương hiệu thất bại! " + errors.responseJSON.message,
+          message: "Thêm thương hiệu thất bại!",
 
         }, {
           type: 'danger',

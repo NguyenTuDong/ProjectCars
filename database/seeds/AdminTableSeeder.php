@@ -32,7 +32,6 @@ class AdminTableSeeder extends Seeder
         $developer->password = bcrypt('123456');
         $developer->save();
         $developer->roles()->attach($admin_role);
-        $developer->permissions()->attach($xem_dashboard);
 
         $developer = new Admin();
         $developer->ten = 'I am developer';
@@ -40,7 +39,6 @@ class AdminTableSeeder extends Seeder
         $developer->password = bcrypt('123456');
         $developer->save();
         $developer->roles()->attach($dev_role);
-        $developer->permissions()->attach($xem_dashboard);
 
         $manager = new Admin();
         $manager->ten = 'I am manager';
@@ -48,7 +46,6 @@ class AdminTableSeeder extends Seeder
         $manager->password = bcrypt('123456');
         $manager->save();
         $manager->roles()->attach($manager_role);
-        $manager->permissions()->attach($xem_dashboard);
 
         $admin = new Admin();
         $admin->ten = 'I am admin';
@@ -56,6 +53,5 @@ class AdminTableSeeder extends Seeder
         $admin->password = bcrypt('123456');
         $admin->save();
         $admin->roles()->attach($admin_role);
-        $admin->permissions()->attach($xem_dashboard);
     }
 }

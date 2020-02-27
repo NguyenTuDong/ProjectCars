@@ -10,7 +10,7 @@
               <h4 class="card-title">Mẫu tin</h4>
             </div>
             <div class="card-body">
-              <div class="search-form">
+              <div class="search-form" v-if="$root.userCan('xem-tin')">
                 <input v-model="q" type="text" class="form-control" placeholder="Tìm kiếm">
               </div>
               <div class="table-responsive">
@@ -31,7 +31,7 @@
                     <th class="table-cars-status">
                       Trạng thái
                     </th>
-                    <th class="table-cars-actions text-right">
+                    <th class="table-cars-actions text-right" v-if="$root.userCan('duyet-tin') || $root.userCan('xoa-tin')">
                       Tác vụ
                     </th>
                   </thead>

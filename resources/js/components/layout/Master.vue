@@ -14,81 +14,81 @@
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
-           <router-link tag="li" :to="{name: 'dashboard'}">
+           <router-link tag="li" :to="{name: 'dashboard'}" :class="{ 'is-disable': !$root.userCan('xem-dashboard') }">
             <a href="#">
               <i class="now-ui-icons design_app"></i>
               <p>Dashboard</p>
             </a>
           </router-link>
           <hr class="nav-seq">
-           <router-link tag="li" :to="{name: 'car'}">
+           <router-link tag="li" :to="{name: 'car'}" :class="{ 'is-disable': !$root.userCan('xem-tin') && (!$root.userCan('duyet-tin') || !$root.userCan('xoa-tin')) }">
             <a href="#">
               <i class="now-ui-icons business_money-coins"></i>
               <p>Mẫu tin</p>
             </a>
           </router-link>
-           <router-link tag="li" :to="{name: 'user'}">
+           <router-link tag="li" :to="{name: 'user'}" :class="{ 'is-disable': !$root.userCan('xem-khach-hang') }">
             <a href="#">
               <i class="now-ui-icons users_single-02"></i>
               <p>Người dùng</p>
             </a>
           </router-link>
-           <router-link tag="li" :to="{name: 'contact'}">
+           <router-link tag="li" :to="{name: 'contact'}" :class="{ 'is-disable': !$root.userCan('xem-lien-he') }">
             <a href="#">
               <i class="now-ui-icons ui-1_email-85"></i>
               <p>Liên hệ</p>
             </a>
           </router-link>
           <hr class="nav-seq">
-          <router-link tag="li" :to="{name: 'brand'}">
+          <router-link tag="li" :to="{name: 'brand'}" :class="{ 'is-disable': !$root.userCan('quan-ly-danh-muc') }">
             <a href="#">
               <i class="now-ui-icons objects_diamond"></i>
               <p>Thương hiệu</p>
             </a>
           </router-link>
-          <router-link tag="li" :to="{name: 'type'}">
+          <router-link tag="li" :to="{name: 'type'}" :class="{ 'is-disable': !$root.userCan('quan-ly-danh-muc') }">
             <a href="#">
               <i class="now-ui-icons shopping_tag-content"></i>
               <p>Dòng xe</p>
             </a>
           </router-link>
-          <router-link tag="li" :to="{name: 'style'}">
+          <router-link tag="li" :to="{name: 'style'}" :class="{ 'is-disable': !$root.userCan('quan-ly-danh-muc') }">
             <a href="#">
               <i class="now-ui-icons education_glasses"></i>
               <p>Kiểu dáng</p>
             </a>
           </router-link>
-          <router-link tag="li" :to="{name: 'color'}">
+          <router-link tag="li" :to="{name: 'color'}" :class="{ 'is-disable': !$root.userCan('quan-ly-danh-muc') }">
             <a href="#">
               <i class="now-ui-icons design_palette"></i>
               <p>Màu xe</p>
             </a>
           </router-link>
-          <router-link tag="li" :to="{name: 'condition'}">
+          <router-link tag="li" :to="{name: 'condition'}" :class="{ 'is-disable': !$root.userCan('quan-ly-danh-muc') }">
             <a href="#">
               <i class="now-ui-icons media-2_sound-wave"></i>
               <p>Tình trạng</p>
             </a>
           </router-link>
-          <router-link tag="li" :to="{name: 'origin'}">
+          <router-link tag="li" :to="{name: 'origin'}" :class="{ 'is-disable': !$root.userCan('quan-ly-danh-muc') }">
             <a href="#">
               <i class="now-ui-icons location_world"></i>
               <p>Xuất xứ</p>
             </a>
           </router-link>
-          <router-link tag="li" :to="{name: 'fuel'}">
+          <router-link tag="li" :to="{name: 'fuel'}" :class="{ 'is-disable': !$root.userCan('quan-ly-danh-muc') }">
             <a href="#">
               <i class="now-ui-icons education_atom"></i>
               <p>Nhiên liệu</p>
             </a>
           </router-link>
-          <router-link tag="li" :to="{name: 'transmission'}">
+          <router-link tag="li" :to="{name: 'transmission'}" :class="{ 'is-disable': !$root.userCan('quan-ly-danh-muc') }">
             <a href="#">
               <i class="now-ui-icons objects_spaceship"></i>
               <p>Hộp số</p>
             </a>
           </router-link>
-          <router-link tag="li" :to="{name: 'convenient'}">
+          <router-link tag="li" :to="{name: 'convenient'}" :class="{ 'is-disable': !$root.userCan('quan-ly-danh-muc') }">
             <a href="#">
               <i class="now-ui-icons ui-2_like"></i>
               <p>Tiện nghi</p>
@@ -99,6 +99,12 @@
             <a href="#">
               <i class="now-ui-icons ui-2_like"></i>
               <p>Chức vụ</p>
+            </a>
+          </router-link>
+          <router-link tag="li" :to="{name: 'employee'}">
+            <a href="#">
+              <i class="now-ui-icons ui-2_like"></i>
+              <p>Nhân viên</p>
             </a>
           </router-link>
         </ul>
@@ -166,7 +172,7 @@
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">{{$root.user.ten}}</a>
+                  <a class="dropdown-item" href="#">{{$root.auth.ten}}</a>
                   <a class="dropdown-item" :href="$root.route('admin.logout')"
                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                       Đăng xuất
@@ -230,7 +236,6 @@ export default {
   computed: {
     year() {
       var d = new Date();
-      console.log(this.$root.userCan('xem-dashboard'));
       return d.getFullYear();
     },
     csrf() {
@@ -298,6 +303,12 @@ body{
     }
   }
 }
+.nav{
+  .is-disable{
+    opacity: .5;
+    pointer-events: none;
+  }
+}
 .nav-seq{
   width: calc(100% - 30px);
   margin-left: auto;
@@ -357,6 +368,50 @@ body{
     &.is-selected{
       color: #2A5788;
     }
+  }
+}
+.comma-list{
+  span:not(:last-child){
+    &::after{
+      content: ',';
+    }
+  }
+}
+.btn-back {
+  position: absolute;
+  top: 40px;
+  left: 30px;
+  background-color: transparent;
+  padding: 0;
+  color: white;
+  border: 0;
+  cursor: pointer;
+  z-index: 1100;
+}
+.user-cover{
+  height: 120px;
+  overflow: hidden;
+  position: relative;
+  img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+.user-avatar{
+  width: 124px;
+  height: 124px;
+  border: 1px solid #FFFFFF;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+  img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }
 </style>

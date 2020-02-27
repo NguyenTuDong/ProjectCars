@@ -16,6 +16,10 @@ import User from './components/user/User'
 import UserDetail from './components/user/UserDetail'
 import Contact from './components/contact/Contact'
 import Role from './components/role/Role'
+import Employee from './components/employee/Employee'
+import EmployeeDetail from './components/employee/EmployeeDetail'
+
+import {store} from './store/store';
 
 Vue.use(VueRouter);
 
@@ -25,7 +29,8 @@ const routes = [
     name: 'dashboard',
     component: Dashboard,
     meta: {
-      title: 'Admin | Dashboard'
+      title: 'Admin | Dashboard',
+      requiredPermissions: ['xem-dashboard'],
     }
   },
   { 
@@ -33,7 +38,8 @@ const routes = [
     name: 'brand',
     component: Brand,
     meta: {
-      title: 'Admin | Thương hiệu'
+      title: 'Admin | Thương hiệu',
+      requiredPermissions: ['quan-ly-danh-muc'],
     }
   },
   { 
@@ -41,7 +47,8 @@ const routes = [
     name: 'type',
     component: Type,
     meta: {
-      title: 'Admin | Dòng xe'
+      title: 'Admin | Dòng xe',
+      requiredPermissions: ['quan-ly-danh-muc'],
     }
   },
   { 
@@ -49,7 +56,8 @@ const routes = [
     name: 'color',
     component: Color,
     meta: {
-      title: 'Admin | Màu xe'
+      title: 'Admin | Màu xe',
+      requiredPermissions: ['quan-ly-danh-muc'],
     }
   },
   { 
@@ -57,7 +65,8 @@ const routes = [
     name: 'condition',
     component: Condition,
     meta: {
-      title: 'Admin | Tình trạng'
+      title: 'Admin | Tình trạng',
+      requiredPermissions: ['quan-ly-danh-muc'],
     }
   },
   { 
@@ -65,7 +74,8 @@ const routes = [
     name: 'origin',
     component: Origin,
     meta: {
-      title: 'Admin | Nguồn gốc'
+      title: 'Admin | Nguồn gốc',
+      requiredPermissions: ['quan-ly-danh-muc'],
     }
   },
   { 
@@ -73,7 +83,8 @@ const routes = [
     name: 'fuel',
     component: Fuel,
     meta: {
-      title: 'Admin | Nhiên liệu'
+      title: 'Admin | Nhiên liệu',
+      requiredPermissions: ['quan-ly-danh-muc'],
     }
   },
   { 
@@ -81,7 +92,8 @@ const routes = [
     name: 'transmission',
     component: Transmission,
     meta: {
-      title: 'Admin | Hộp số'
+      title: 'Admin | Hộp số',
+      requiredPermissions: ['quan-ly-danh-muc'],
     }
   },
   { 
@@ -89,7 +101,8 @@ const routes = [
     name: 'style',
     component: Style,
     meta: {
-      title: 'Admin | Kiểu dáng'
+      title: 'Admin | Kiểu dáng',
+      requiredPermissions: ['quan-ly-danh-muc'],
     }
   },
   { 
@@ -97,7 +110,8 @@ const routes = [
     name: 'convenient',
     component: Convenient,
     meta: {
-      title: 'Admin | Tiện nghi'
+      title: 'Admin | Tiện nghi',
+      requiredPermissions: ['quan-ly-danh-muc'],
     }
   },
   { 
@@ -105,7 +119,8 @@ const routes = [
     name: 'car',
     component: Car,
     meta: {
-      title: 'Admin | Mẫu tin'
+      title: 'Admin | Mẫu tin',
+      requiredPermissions: ['xem-tin', 'duyet-tin', 'xoa-tin'],
     }
   },
   {
@@ -113,7 +128,8 @@ const routes = [
     name: 'car-detail',
     component: CarDetail,
     meta: {
-      title: 'Admin | Chi tiết mâu tin'
+      title: 'Admin | Chi tiết mâu tin',
+      requiredPermissions: ['xem-tin', 'duyet-tin', 'xoa-tin'],
     }
   },
   { 
@@ -121,7 +137,8 @@ const routes = [
     name: 'user',
     component: User,
     meta: {
-      title: 'Admin | Người dùng'
+      title: 'Admin | Người dùng',
+      requiredPermissions: ['xem-khach-hang'],
     }
   },
   {
@@ -129,7 +146,8 @@ const routes = [
     name: 'user-detail',
     component: UserDetail,
     meta: {
-      title: 'Admin | Chi tiết người dùng'
+      title: 'Admin | Chi tiết người dùng',
+      requiredPermissions: ['xem-khach-hang'],
     }
   },
   { 
@@ -137,7 +155,8 @@ const routes = [
     name: 'contact',
     component: Contact,
     meta: {
-      title: 'Admin | Liên hệ'
+      title: 'Admin | Liên hệ',
+      requiredPermissions: ['xem-lien-he'],
     }
   },
   { 
@@ -147,7 +166,23 @@ const routes = [
     meta: {
       title: 'Admin | Chức vụ'
     }
-  }
+  },
+  { 
+    path: '/admin/employee', 
+    name: 'employee',
+    component: Employee,
+    meta: {
+      title: 'Admin | Nhân viên'
+    }
+  },
+  {
+    path: '/admin/employee/:id',
+    name: 'employee-detail',
+    component: EmployeeDetail,
+    meta: {
+      title: 'Admin | Chi tiết nhân viên',
+    }
+  },
 ]
 
 const router = new VueRouter({
@@ -155,5 +190,32 @@ const router = new VueRouter({
   routes,
   linkExactActiveClass: 'active',
 });
+
+router.beforeEach((to, from, next) => {
+  var auth = window.__user__;
+  store.dispatch('auth');
+  if(store.getters.auth.permissions && store.getters.auth.roles) {
+    auth = store.getters.auth;
+  }
+  if(to.meta.requiredPermissions){
+    var check = false;
+    auth.permissions.forEach(element => {
+      if (to.meta.requiredPermissions.includes(element.slug)) check = true;
+    });
+    auth.roles.forEach(element => {
+      element.permissions.forEach(ele => {
+        if (to.meta.requiredPermissions.includes(ele.slug)) check = true;
+      })
+    });
+    if (check) {
+      next()
+    } else {
+      alert('Bạn không có quyền truy cập trang web này!');
+      window.history.back();
+    }
+  } else {
+    next();
+  }
+})
 
 export default router

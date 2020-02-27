@@ -37,8 +37,15 @@ Vue.component('master', require('./components/layout/Master.vue').default);
 const app = new Vue({
     el: '#app',
     data: {
-        user: window.__user__,
         routes: window.__routes__,
+    },
+    created(){
+      this.$store.dispatch('auth');
+    },
+    computed: {
+      auth() {
+        return this.$store.getters.auth;
+      }
     },
     methods: {
       route(name) {
@@ -75,14 +82,16 @@ const app = new Vue({
       },
       userCan(slug) {
         var check = false;
-        this.user.permissions.forEach(element => {
-          if (element.slug == slug) check = true;
-        });
-        this.user.roles.forEach(element => {
-          element.permissions.forEach(ele => {
-            if (ele.slug == slug) check = true;
-          })
-        });
+        if(this.auth.permissions && this.auth.roles){
+          this.auth.permissions.forEach(element => {
+            if (element.slug == slug) check = true;
+          });
+          this.auth.roles.forEach(element => {
+            element.permissions.forEach(ele => {
+              if (ele.slug == slug) check = true;
+            })
+          });
+        }
         return check;
       }
     },

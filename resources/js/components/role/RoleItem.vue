@@ -33,7 +33,7 @@
     <td>
       <div class="admin-list">
         <div class="admin-item" v-for="admin in role.admins" :key="admin.key">
-          <div class="admin-avatar">
+          <div class="admin-avatar" :class="{ 'is-current': admin.id == $root.auth.id }">
             <img :src="admin.avatar_path" alt="">
           </div>
           <div class="admin-info">
@@ -173,6 +173,9 @@ export default {
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+    &.is-current{
+      border-color: #2A5788;
     }
   }
   &-info{

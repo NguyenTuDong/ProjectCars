@@ -45,6 +45,21 @@ const actions = {
       },
       error: function (errors) {
         console.log(errors);
+        commit('retrievePermissions', {});
+        if(errors.responseJSON.message){
+          $.notify({
+            icon: "now-ui-icons ui-1_bell-53",
+            message: errors.responseJSON.message,
+  
+          }, {
+            type: 'danger',
+            timer: 3000,
+            placement: {
+            from: 'top',
+            align: 'right'
+            }
+          });
+        }
       }
     });
   },

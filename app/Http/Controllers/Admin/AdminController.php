@@ -28,4 +28,10 @@ class AdminController extends Controller
         $user = Auth::guard('admin')->user()->load(['roles.permissions', 'permissions']);
         return view('admin.dashboard', compact('user'));
     }
+
+    public function auth()
+    {
+        $auth = Auth::guard('admin')->user()->load(['roles.permissions', 'permissions']);
+        return response()->json($auth);
+    }
 }

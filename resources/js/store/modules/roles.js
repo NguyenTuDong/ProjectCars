@@ -48,10 +48,25 @@ const actions = {
       },
       error: function (errors) {
         console.log(errors);
+        commit('retrieveRoles', {});
+        if(errors.responseJSON.message){
+          $.notify({
+            icon: "now-ui-icons ui-1_bell-53",
+            message: errors.responseJSON.message,
+  
+          }, {
+            type: 'danger',
+            timer: 3000,
+            placement: {
+            from: 'top',
+            align: 'right'
+            }
+          });
+        }
       }
     });
   },
-  createRole({commit, rootGetters}, formData) {
+  createRole({commit, dispatch, rootGetters}, formData) {
     $.ajax({
       headers: {
       'X-CSRF-TOKEN': rootGetters.csrf,
@@ -64,6 +79,7 @@ const actions = {
       success:function(data)
       {
         commit('createRole', data);
+        dispatch('auth');
         $.notify({
           icon: "now-ui-icons ui-1_bell-53",
           message: "Thêm chức vụ thành công."
@@ -94,7 +110,7 @@ const actions = {
       }
     })
   },
-  updateRole({commit, rootGetters}, data) {
+  updateRole({commit, dispatch, rootGetters}, data) {
     $.ajax({
       headers: {
       'X-CSRF-TOKEN': rootGetters.csrf,
@@ -107,6 +123,7 @@ const actions = {
       success:function(data)
       {
         commit('updateRole', data);
+        dispatch('auth');
 
         $.notify({
           icon: "now-ui-icons ui-1_bell-53",
@@ -138,7 +155,7 @@ const actions = {
       }
     })
   },
-  deleteRole({commit, rootGetters}, id) {
+  deleteRole({commit, dispatch, rootGetters}, id) {
     $.ajax({
       headers: {
       'X-CSRF-TOKEN': rootGetters.csrf,
@@ -150,6 +167,7 @@ const actions = {
       success:function(data)
       {
         commit('deleteRole', data);
+        dispatch('auth');
 
         $.notify({
           icon: "now-ui-icons ui-1_bell-53",

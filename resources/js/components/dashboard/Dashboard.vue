@@ -237,7 +237,6 @@ export default {
       return count;
     },
     money() {
-      console.log(this.carCountCost);
       if(this.carCountCost === 'Đang tải...') return this.carCountCost;
       if(this.carCountCost > 1000000000){
         var money = Math.round(((this.carCountCost / 1000000000) + Number.EPSILON) * 100) / 100;
