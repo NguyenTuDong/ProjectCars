@@ -29,7 +29,7 @@ class TypeController extends Controller
     public function index(Request $request)
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('quan-ly-danh-muc')){
+        if($user->hasPermission('quan-ly-danh-muc')){
 
             $brands_id = $request->brands_id;
             $query = $request->q;
@@ -73,7 +73,7 @@ class TypeController extends Controller
     public function store(Request $request)
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('quan-ly-danh-muc')){
+        if($user->hasPermission('quan-ly-danh-muc')){
 
             $item = new Type();
             $item->brands_id = $request->brands_id;
@@ -97,7 +97,7 @@ class TypeController extends Controller
     public function update(Request $request, $id)
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('quan-ly-danh-muc')){
+        if($user->hasPermission('quan-ly-danh-muc')){
 
             $item = Type::findOrFail($id);
             $item->ten = $request->name;
@@ -119,7 +119,7 @@ class TypeController extends Controller
     public function destroy($id)
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('quan-ly-danh-muc')){
+        if($user->hasPermission('quan-ly-danh-muc')){
 
             $item = Type::findOrFail($id);
             $item->trangthai = 1;

@@ -29,7 +29,7 @@ class ContactController extends Controller
     public function index(Request $request)
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('xem-lien-he')){
+        if($user->hasPermission('xem-lien-he')){
 
             $query = $request->q;
             $items = Contact::whereHas('users', function ($q) use ($request) {
@@ -52,7 +52,7 @@ class ContactController extends Controller
     public function show($id)
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('xem-lien-he')){
+        if($user->hasPermission('xem-lien-he')){
 
             $items = Contact::findOrFail($id)->with('users')->first();
             return response()->json($items);
@@ -66,7 +66,7 @@ class ContactController extends Controller
     public function count()
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('xem-dashboard')){
+        if($user->hasPermission('xem-dashboard')){
 
         $count = Contact::get()->count();
         return response()->json($count);
@@ -80,7 +80,7 @@ class ContactController extends Controller
     public function countPerMonth()
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('xem-dashboard')){
+        if($user->hasPermission('xem-dashboard')){
 
             $chartDatas = Contact::select([
                 DB::raw('DATE_FORMAT(created_at, "%Y-%m") AS date'),

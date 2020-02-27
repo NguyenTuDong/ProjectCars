@@ -29,7 +29,7 @@ class EmployeeController extends Controller
     public function index(Request $request)
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('xem-nhan-vien')){
+        if($user->hasPermission('xem-nhan-vien')){
 
             $query = $request->q;
             $items = Admin::where('ten', 'LIKE', '%'.$query.'%')
@@ -48,7 +48,7 @@ class EmployeeController extends Controller
     public function show($id)
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('xem-nhan-vien')){
+        if($user->hasPermission('xem-nhan-vien')){
 
             $items = Admin::where('id', $id)
             ->with(['roles.permissions', 'permissions'])->first();
@@ -69,7 +69,7 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('them-nhan-vien')){
+        if($user->hasPermission('them-nhan-vien')){
 
             $item = new Admin();
             $item->ten = $request->name;
@@ -108,7 +108,7 @@ class EmployeeController extends Controller
     public function count()
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('xem-dashboard')){
+        if($user->hasPermission('xem-dashboard')){
 
             $count = Admin::get()->count();
             return response()->json($count);
@@ -122,7 +122,7 @@ class EmployeeController extends Controller
     public function countPerMonth()
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('xem-dashboard')){
+        if($user->hasPermission('xem-dashboard')){
 
             $chartDatas = Admin::select([
                 DB::raw('DATE_FORMAT(created_at, "%Y-%m") AS date'),

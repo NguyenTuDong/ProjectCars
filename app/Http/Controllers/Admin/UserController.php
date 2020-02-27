@@ -29,7 +29,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('xem-khach-hang')){
+        if($user->hasPermission('xem-khach-hang')){
 
             $query = $request->q;
             $items = User::where('ten', 'LIKE', '%'.$query.'%')
@@ -47,7 +47,7 @@ class UserController extends Controller
     public function show($id)
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('xem-khach-hang')){
+        if($user->hasPermission('xem-khach-hang')){
 
             $items = User::findOrFail($id);
             return response()->json($items);
@@ -61,7 +61,7 @@ class UserController extends Controller
     public function count()
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('xem-dashboard')){
+        if($user->hasPermission('xem-dashboard')){
 
             $count = User::get()->count();
             return response()->json($count);
@@ -75,7 +75,7 @@ class UserController extends Controller
     public function countPerMonth()
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('xem-dashboard')){
+        if($user->hasPermission('xem-dashboard')){
 
             $chartDatas = User::select([
                 DB::raw('DATE_FORMAT(created_at, "%Y-%m") AS date'),

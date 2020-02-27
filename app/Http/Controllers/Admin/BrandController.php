@@ -28,7 +28,7 @@ class BrandController extends Controller
     public function index(Request $request)
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('quan-ly-danh-muc')){
+        if($user->hasPermission('quan-ly-danh-muc')){
 
             $query = $request->q;
 
@@ -65,7 +65,7 @@ class BrandController extends Controller
     public function store(Request $request)
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('quan-ly-danh-muc')){
+        if($user->hasPermission('quan-ly-danh-muc')){
 
             request()->validate([
                 'logo' => 'image',
@@ -102,7 +102,7 @@ class BrandController extends Controller
     public function update(Request $request, $id)
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('quan-ly-danh-muc')){
+        if($user->hasPermission('quan-ly-danh-muc')){
 
             request()->validate([
                 'logo' => 'image',
@@ -138,7 +138,7 @@ class BrandController extends Controller
     public function destroy($id)
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('quan-ly-danh-muc')){
+        if($user->hasPermission('quan-ly-danh-muc')){
                 
             $items = Brand::findOrFail($id);
             $items->trangthai = 1;

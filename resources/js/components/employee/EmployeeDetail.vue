@@ -41,7 +41,7 @@
                     </span>
                   </td>
                 </tr>
-                <tr v-if="employee.permissions.length > 0">
+                <tr>
                   <td>
                     Khác: 
                   </td>
@@ -107,6 +107,12 @@ export default {
     return {
       id: this.$route.params.id
     };
+  },
+  watch: {
+    '$route' (to, from) {
+      this.id = this.$route.params.id,
+      this.$store.dispatch("getEmployee", this.id);
+    }
   },
   created() {
     this.$store.dispatch("getEmployee", this.id);

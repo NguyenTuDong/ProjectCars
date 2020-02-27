@@ -29,7 +29,7 @@ class CarController extends Controller
     public function index(Request $request)
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('xem-tin')){
+        if($user->hasPermission('xem-tin')){
 
             $search = $request->q;
 
@@ -91,7 +91,7 @@ class CarController extends Controller
     public function show($id)
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('xem-tin')){
+        if($user->hasPermission('xem-tin')){
 
             $items = Car::with([
                 'users', 
@@ -124,7 +124,7 @@ class CarController extends Controller
     public function approve($id)
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('duyet-tin')){
+        if($user->hasPermission('duyet-tin')){
 
             $items = Car::findOrFail($id);
             $items->trangthai = 2;
@@ -150,7 +150,7 @@ class CarController extends Controller
     public function deny($id)
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('duyet-tin')){
+        if($user->hasPermission('duyet-tin')){
 
             $items = Car::findOrFail($id);
             $items->trangthai = 3;
@@ -183,7 +183,7 @@ class CarController extends Controller
     public function destroy($id)
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('duyet-tin')){
+        if($user->hasPermission('duyet-tin')){
 
             $items = Car::findOrFail($id);
             $items->trangthai = 1;
@@ -200,7 +200,7 @@ class CarController extends Controller
     public function count()
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('xem-dashboard')){
+        if($user->hasPermission('xem-dashboard')){
 
             $count = Car::get()->count();
             return response()->json($count);
@@ -214,7 +214,7 @@ class CarController extends Controller
     public function countApprove()
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('xem-dashboard') || $user->can('quan-ly-danh-muc')){
+        if($user->hasPermission('xem-dashboard') || $user->hasPermission('quan-ly-danh-muc')){
 
             $count = Car::where('trangthai', '=', 2)->get()->count();
             return response()->json($count);
@@ -228,7 +228,7 @@ class CarController extends Controller
     public function countCost()
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('xem-dashboard')){
+        if($user->hasPermission('xem-dashboard')){
 
             $count = Car::where('trangthai', '=', 2)->get()->sum('phi');
             return response()->json($count);
@@ -242,7 +242,7 @@ class CarController extends Controller
     public function countPerMonth()
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('xem-dashboard')){
+        if($user->hasPermission('xem-dashboard')){
 
             $first_day = Carbon::today()->startOfMonth();
             $chartDatas = array();
@@ -270,7 +270,7 @@ class CarController extends Controller
     public function countApprovePerMonth()
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('xem-dashboard')){
+        if($user->hasPermission('xem-dashboard')){
 
             $first_day = Carbon::today()->startOfMonth();
             $chartDatas = array();
@@ -299,7 +299,7 @@ class CarController extends Controller
     public function countCostPerMonth()
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('xem-dashboard')){
+        if($user->hasPermission('xem-dashboard')){
 
             $first_day = Carbon::today()->startOfMonth();
             $chartDatas = array();
@@ -332,7 +332,7 @@ class CarController extends Controller
     public function countActivePerMonth()
     {
         $user = Auth::guard('admin')->user();
-        if($user->can('xem-dashboard')){
+        if($user->hasPermission('xem-dashboard')){
 
             $first_day = Carbon::today()->startOfMonth();
             $chartDatas = array();

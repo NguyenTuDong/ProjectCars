@@ -3,7 +3,7 @@
     <div class="sidebar" data-color="orange">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
-    -->
+      -->
       <div class="logo">
         <router-link :to="{name: 'dashboard'}" class="simple-text logo-mini">
           CA
@@ -172,7 +172,9 @@
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">{{$root.auth.ten}}</a>
+                  <router-link :to="{name: 'employee-detail', params: { id: $root.auth.id || 1 }}" class="dropdown-item">
+                    {{$root.auth.ten}}
+                  </router-link>
                   <a class="dropdown-item" :href="$root.route('admin.logout')"
                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                       Đăng xuất
