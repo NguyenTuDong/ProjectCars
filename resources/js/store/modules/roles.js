@@ -1,5 +1,6 @@
 const state = {
   roles: {},
+  allRoles: {},
 };
 
 const getters = {
@@ -9,11 +10,17 @@ const getters = {
   rolesPagination(state) {
     return state.roles;
   },
+  allRoles(state) {
+    return state.allRoles;
+  },
 };
 
 const mutations = {
   retrieveRoles(state, data) {
     state.roles = data;
+  },
+  allRoles(state, data) {
+    state.allRoles = data;
   },
   createRole(state, data) {
     state.roles.data.push(data);
@@ -49,6 +56,35 @@ const actions = {
       error: function (errors) {
         console.log(errors);
         commit('retrieveRoles', {});
+        if(errors.responseJSON.message){
+          $.notify({
+            icon: "now-ui-icons ui-1_bell-53",
+            message: errors.responseJSON.message,
+  
+          }, {
+            type: 'danger',
+            timer: 3000,
+            placement: {
+            from: 'top',
+            align: 'right'
+            }
+          });
+        }
+      }
+    });
+  },
+  allRoles({commit}, data) {
+    $.ajax({
+      url : '/admin/api/role/getRoles',
+      type : "GET",
+      dataType : "json",
+      success:function(data)
+      {
+        commit('allRoles', data);
+      },
+      error: function (errors) {
+        console.log(errors);
+        commit('allRoles', {});
         if(errors.responseJSON.message){
           $.notify({
             icon: "now-ui-icons ui-1_bell-53",

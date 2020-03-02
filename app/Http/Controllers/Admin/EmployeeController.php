@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Admin;
+use App\Role;
 use Auth;
 
 class EmployeeController extends Controller
@@ -139,5 +140,16 @@ class EmployeeController extends Controller
         return response([
             'message' => 'Bạn không có quyền này!' 
         ], 401);
+    }
+
+    public function updateEmployeeRoles(Request $request)
+    {
+
+        $item = Admin::findOrFail($request->id);
+
+        $roles = Role::whereIn('id', json_decode($request->roles))->get();
+        $item->roles()->detach();
+        $item->roles()->attach($roles);
+        return response()->json($item->with(['roles.permissions', 'permissions'])->where('id', $request->id)->first());
     }
 }

@@ -117,6 +117,7 @@ Route::prefix('admin')->group(function() {
     //Role
     Route::get('/role', 'Admin\RoleController@index');
     Route::post('/role', 'Admin\RoleController@store');
+    Route::get('/role/getRoles', 'Admin\RoleController@getRoles');
     Route::post('/role/{role}', 'Admin\RoleController@update');
     Route::post('/role/delete/{role}', 'Admin\RoleController@destroy');
     
@@ -126,9 +127,10 @@ Route::prefix('admin')->group(function() {
     //Employee
     Route::get('/employee', 'Admin\EmployeeController@index');
     Route::post('/employee', 'Admin\EmployeeController@store');
-    Route::post('/employee/{employee}', 'Admin\EmployeeController@update');
     Route::get('/employee/count', 'Admin\EmployeeController@count');
     Route::get('/employee/countPerMonth', 'Admin\EmployeeController@countPerMonth');
+    Route::post('/employee/updateEmployeeRoles', 'Admin\EmployeeController@updateEmployeeRoles');
+    Route::post('/employee/{employee}', 'Admin\EmployeeController@update');
     Route::get('/employee/{id}', 'Admin\EmployeeController@show');
   });
 });

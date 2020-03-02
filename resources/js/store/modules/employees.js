@@ -111,7 +111,7 @@ const actions = {
         commit('createEmployee', data);
         $.notify({
           icon: "now-ui-icons ui-1_bell-53",
-          message: "Thêm tiện nghi thành công."
+          message: "Thêm nhân viên thành công."
 
         }, {
           type: 'success',
@@ -126,7 +126,7 @@ const actions = {
         console.log(errors);
         $.notify({
           icon: "now-ui-icons ui-1_bell-53",
-          message: "Thêm tiện nghi thất bại!"
+          message: "Thêm nhân viên thất bại!"
 
         }, {
           type: 'danger',
@@ -155,7 +155,7 @@ const actions = {
 
         $.notify({
           icon: "now-ui-icons ui-1_bell-53",
-          message: "Cập nhật tiện nghi <b>#"+data.id+"</b> thành công."
+          message: "Cập nhật nhân viên <b>#"+data.id+"</b> thành công."
 
         }, {
           type: 'success',
@@ -169,7 +169,51 @@ const actions = {
       error: function (errors) {
         $.notify({
           icon: "now-ui-icons ui-1_bell-53",
-          message: "Cập nhật tiện nghi <b>#"+data.id+"</b> thất bại."
+          message: "Cập nhật nhân viên thất bại."
+
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+          from: 'top',
+          align: 'right'
+          }
+        });
+      }
+    })
+  },
+  updateEmployeeRoles({commit, dispatch, rootGetters}, formData) {
+    $.ajax({
+      headers: {
+      'X-CSRF-TOKEN': rootGetters.csrf,
+      },
+      url : '/admin/api/employee/updateEmployeeRoles',
+      type : "POST",
+      data: formData,
+      processData: false,
+      contentType: false,
+      success:function(data)
+      {
+        commit('getEmployee', data);
+        dispatch('auth');
+
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Cập nhật chức vụ nhân viên <b>"+data.ten+"</b> thành công."
+
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+          from: 'top',
+          align: 'right'
+          }
+        });
+      },
+      error: function (errors) {
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Cập nhật chức vụ nhân viên thất bại."
 
         }, {
           type: 'danger',

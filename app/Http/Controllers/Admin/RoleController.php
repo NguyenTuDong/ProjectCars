@@ -67,7 +67,6 @@ class RoleController extends Controller
         $item->permissions()->detach();
         $item->permissions()->attach($permissions);
         return response()->json($item->with(['permissions', 'admins'])->where('id', $id)->first());
-        // return $request->permissions;
     }
 
     /**
@@ -82,5 +81,11 @@ class RoleController extends Controller
         $item->trangthai = 1;
         $item->save();
         return response($item, 200);
+    }
+
+    public function getRoles()
+    {
+        $item = Role::where('trangthai', 0)->get();
+        return response()->json($item);
     }
 }
