@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div v-if="!loaded" class="lds-dual-ring-wrapper">
+      <div class="lds-dual-ring"></div>
+    </div>
     <div class="panel-header panel-header-sm">
     </div>
     <button @click="$router.go(-1)" class="btn-back"><i class="now-ui-icons arrows-1_minimal-left"></i> Trở lại</button>
@@ -166,6 +169,12 @@ export default {
     return {
       id: this.$route.params.id,
       message: '',
+      loaded: false,
+    }
+  },
+  watch: {
+    car(to, from){
+      this.loaded = true;
     }
   },
   created() {

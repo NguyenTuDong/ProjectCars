@@ -173,7 +173,10 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                   <router-link :to="{name: 'employee-detail', params: { id: $root.auth.id || 1 }}" class="dropdown-item">
-                    {{$root.auth.ten}}
+                    Trang cá nhân
+                  </router-link>
+                  <router-link :to="{name: 'employee-edit'}" class="dropdown-item">
+                    Cập nhật thông tin
                   </router-link>
                   <a class="dropdown-item" :href="$root.route('admin.logout')"
                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -248,17 +251,49 @@ export default {
 </script>
 
 <style lang="scss">
-.fade-enter-active,
-.fade-leave-active {
-  transition-duration: 0.3s;
-  transition-property: opacity;
-  transition-timing-function: ease;
+.lds-dual-ring {
+  display: block;
+  width: 80px;
+  height: 80px;
+  margin: 80px auto;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #fa7a50;
+  border-color: #fa7a50 transparent #fa7a50 transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.lds-dual-ring-wrapper{
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: calc(100% - 260px);
+  height: 100%;
+  background-color: rgba($color: #fff, $alpha: .8);
+  z-index: 1000;
+  .lds-dual-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    margin: 0;
+  }
 }
 
-.fade-enter,
-.fade-leave-active {
-  opacity: 0
-}
 .sidebar-wrapper{
   /* width */
   &::-webkit-scrollbar {

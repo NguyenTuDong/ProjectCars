@@ -4,7 +4,7 @@
       {{employee.id}}
     </td>
     <td class="text-center">
-      <div class="user-avatar border-gray">
+      <div class="user-avatar mb-0">
         <img v-if="employee.avatar_path != null" :src="employee.avatar_path" alt="..." />
       </div>
     </td>

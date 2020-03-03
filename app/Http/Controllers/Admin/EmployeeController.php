@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Admin;
 use App\Role;
+use App\Permission;
 use Auth;
 
 class EmployeeController extends Controller
@@ -90,14 +91,43 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $user = Auth::guard('admin')->user();
-        if($user->id == $id){
+        if($user){
 
-            $item = Admin::findOrFail($id);
+            $item = Admin::findOrFail($user->id);
             $item->ten = $request->name;
+            $item->sdt = $request->phone;
+            $item->email = $request->email;
+            $item->diachi = $request->address;
+            $item->cmnd = $request->cmnd;
+
+            if($request->hasFile('avatar')){
+                $fileNameWithExt = $request->file('avatar')->getClientOriginalName();
+                $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file('avatar')->getClientOriginalExtension();
+                $fileNameToStore = $filename.'_'.time().'.'.$extension;
+                $path = $request->file('avatar')->storeAs('adminfiles/'. md5($user->id) . '/images/Avatar', $fileNameToStore);
+                $item->avatar = $fileNameToStore;
+            }
+
+            if($request->hasFile('cover')){
+                $fileNameWithExt = $request->file('cover')->getClientOriginalName();
+                $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file('cover')->getClientOriginalExtension();
+                $fileNameToStore = $filename.'_'.time().'.'.$extension;
+                $path = $request->file('cover')->storeAs('adminfiles/'. md5($user->id) . '/images/Cover', $fileNameToStore);
+                $item->cover = $fileNameToStore;
+            }
+
             $item->save();
+
+            if($user->hasPermission('phan-quyen')){
+                $roles = Role::whereIn('id', json_decode($request->roles))->get();
+                $item->roles()->detach();
+                $item->roles()->attach($roles);
+            }
             return response($item, 200);
         } 
         
@@ -142,7 +172,7 @@ class EmployeeController extends Controller
         ], 401);
     }
 
-    public function updateEmployeeRoles(Request $request)
+    public function updateEmployeeRolesPermissions(Request $request)
     {
 
         $item = Admin::findOrFail($request->id);
@@ -150,6 +180,10 @@ class EmployeeController extends Controller
         $roles = Role::whereIn('id', json_decode($request->roles))->get();
         $item->roles()->detach();
         $item->roles()->attach($roles);
+
+        $permissions = Permission::whereIn('id', json_decode($request->permissions))->get();
+        $item->permissions()->detach();
+        $item->permissions()->attach($permissions);
         return response()->json($item->with(['roles.permissions', 'permissions'])->where('id', $request->id)->first());
     }
 }

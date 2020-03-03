@@ -13,9 +13,10 @@
                 </select>
               </h4>
               
-              <button class="btn btn-primary ml-auto" @click="addType">Thêm dòng xe</button>
+              <button v-if="types" class="btn btn-primary ml-auto" @click="addType">Thêm dòng xe</button>
             </div>
-            <div class="card-body">
+            <div v-if="!types" class="lds-dual-ring"></div>
+            <div v-else class="card-body">
               <div class="search-form">
                 <input v-model="q" type="text" class="form-control" placeholder="Tìm kiếm">
               </div>

@@ -18,6 +18,7 @@ import Contact from './components/contact/Contact'
 import Role from './components/role/Role'
 import Employee from './components/employee/Employee'
 import EmployeeDetail from './components/employee/EmployeeDetail'
+import EmployeeEdit from './components/employee/EmployeeEdit'
 
 import {store} from './store/store';
 
@@ -173,6 +174,14 @@ const routes = [
     component: Employee,
     meta: {
       title: 'Admin | Nhân viên'
+    }
+  },
+  {
+    path: '/admin/employee/edit',
+    name: 'employee-edit',
+    component: EmployeeEdit,
+    meta: {
+      title: 'Admin | Chỉnh sửa thông tin',
     }
   },
   {

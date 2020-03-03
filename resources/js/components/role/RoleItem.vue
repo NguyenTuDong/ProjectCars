@@ -33,11 +33,24 @@
     <td>
       <div class="admin-list">
         <div class="admin-item" v-for="admin in role.admins" :key="admin.key">
-          <div class="admin-avatar" :class="{ 'is-current': admin.id == $root.auth.id }">
-            <img :src="admin.avatar_path" alt="">
-          </div>
+          <router-link :to="{name: 'employee-detail', params: { id: admin.id }}">
+            <div class="admin-avatar" :class="{ 'is-current': admin.id == $root.auth.id }">
+              <img :src="admin.avatar_path" alt="">
+            </div>
+          </router-link>
+          
           <div class="admin-info">
-            <div class="admin-name">{{admin.ten}}</div>
+            <div class="admin-wrapper">
+              <div class="admin-cover">
+                <img :src="admin.cover_path" alt="">
+              </div>
+              <div class="admin-name">{{admin.ten}}</div>
+              <div class="admin-inner">
+                <div><b>Email: </b><a :href="'mailto:'+admin.email">{{admin.email}}</a></div>
+                <div><b>Sđt: </b><a :href="'tel:'+admin.sdt">{{admin.sdt}}</a></div>
+                <p><b>Địa chỉ: </b>{{admin.diachi}}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -143,6 +156,9 @@ export default {
 </script>
 
 <style lang="scss">
+.table-responsive{
+  overflow: visible;
+}
 .admin{
   &-list{
     display: flex;
@@ -180,17 +196,19 @@ export default {
   }
   &-info{
     position: absolute;
-    top: 60px;
+    top: 50px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: white;
-    padding: 20px;
-    border-radius: 0.1875rem;;
+    padding-top: 10px;
+    width: 300px;
     z-index: 1;
     display: none;
+  }
+  &-wrapper{
+    background-color: white;
+    border-radius: 0.1875rem;
     box-shadow: 0 1px 15px 1px rgba(39, 39, 39, 0.1);
-    width: 300px;
-    text-align: center;
+    position: relative;
     &::before{
       content: '';
       display: block;
@@ -201,7 +219,34 @@ export default {
       top: -5px;
       left: 50%;
       transform: translateX(-50%) rotate(45deg);
+      z-index: -1;
     }
+  }
+  &-cover{
+    height: 100px;
+    img{
+      width: 100%;
+      height: 100%;
+      -o-object-fit: cover;
+      object-fit: cover;
+    }
+  }
+  &-name{
+    width: 250px;
+    margin: -25px auto 0 auto;
+    position: relative;
+    z-index: 1;
+    background-color: white;
+    padding: 10px;
+    border-radius: 0.1875rem;
+    box-shadow: 0 1px 15px 1px rgba(39, 39, 39, 0.1);
+    font-weight: bold;
+    text-align: center;
+    font-size: 18px;
+  }
+  &-inner{
+    padding: 20px;
+    line-height: 2;
   }
 }
 .slug{

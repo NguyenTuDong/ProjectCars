@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div v-if="!loaded" class="lds-dual-ring-wrapper">
+      <div class="lds-dual-ring"></div>
+    </div>
     <div class="panel-header panel-header-sm"></div>
     <button @click="$router.go(-1)" class="btn-back">
       <i class="now-ui-icons arrows-1_minimal-left"></i> Trở lại
@@ -45,10 +48,19 @@
                   <td>
                     Khác: 
                   </td>
-                  <td class="blocks">
-                    <span v-for="role in employee.permissions" :key="role.id">
+                  <td v-if="!isAddPermission" class="blocks">
+                    <span v-for="permission in employee.permissions" :key="permission.id">
                       {{ permission.ten }}
                     </span>
+                    <button v-if="$root.userCan('phan-quyen')" @click="addPermission" class="blocks-btn"><i class="now-ui-icons ui-1_simple-add"></i></button>
+                  </td>
+                  <td v-else class="blocks-edit">
+                    <span 
+                      v-for="permission in permissions" 
+                      :key="permission.id" 
+                      :class="{ 'is-selected': isSelected(permission.id) }"
+                      @click="togglePermission(permission.id)"
+                      >{{permission.ten}}</span>
                   </td>
                 </tr>
               </table>
@@ -90,7 +102,8 @@
                 
                 <p v-if="employee.email"><a :href="'mailto:' + employee.email">{{employee.email}}</a></p>
                 <p v-if="employee.sdt"><a :href="'tel:' + employee.sdt">{{employee.sdt}}</a></p>
-                <button v-if="JSON.stringify(roles) !== JSON.stringify(currentRoles)" class="btn btn-primary" @click="updateRole">Lưu</button>
+                <button v-if="JSON.stringify(roles) !== JSON.stringify(currentRoles) || isAddPermission" class="btn btn-primary" @click="updateRole">Lưu</button>
+                <button v-if="JSON.stringify(roles) !== JSON.stringify(currentRoles) || isAddPermission" class="btn btn-primary" @click="cancel">Hủy</button>
               </div>
             </div>
             <!-- <hr /> -->
@@ -113,6 +126,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: "EmployeeDetail",
   data() {
@@ -120,12 +135,15 @@ export default {
       id: this.$route.params.id,
       currentRoles: [],
       roles: [],
+      loaded: false,
+      isAddPermission: false,
     };
   },
   watch: {
     $route(to, from) {
       this.id = this.$route.params.id,
       this.$store.dispatch("getEmployee", this.id);
+      this.loaded = false;
     },
     employee(to, from) {
       this.currentRoles.length = 0;
@@ -134,18 +152,29 @@ export default {
         this.currentRoles.push(ele.id);
         this.roles.push(ele.id);
       })
+      this.loaded = true;
+      this.isAddPermission = false;
     },
   },
   created() {
     this.$store.dispatch("getEmployee", this.id);
     this.$store.dispatch("allRoles");
+    this.$store.dispatch('retrievePermissions');
   },
   computed: {
-    employee() {
-      return this.$store.getters.employee;
-    },
-    allRoles() {
-      return this.$store.getters.allRoles;
+    ...mapGetters({
+      employee: 'employee',
+      allRoles: 'allRoles',
+      permissions: 'permissions',
+    }),
+    admins_permissions() {
+      var result = [];
+      if(this.employee){
+        result = this.employee.permissions.map(function(item) {
+          return item.id;
+        })
+      }
+      return result;
     },
   },
   methods: {
@@ -153,7 +182,8 @@ export default {
       var formData = new FormData();
       formData.append("id", this.id);
       formData.append("roles", JSON.stringify(this.roles));
-      this.$store.dispatch("updateEmployeeRoles", formData);
+      formData.append("permissions", JSON.stringify(this.admins_permissions));
+      this.$store.dispatch("updateEmployeeRolesPermissions", formData);
     },
     changeRole(index, id) {
       if(this.$refs["role-"+index][0].value == 'remove'){
@@ -164,7 +194,40 @@ export default {
     },
     addRole() {
       this.$set(this.roles, this.roles.length, 6);
-    }
+    },
+    addPermission() {
+      this.isAddPermission = true;
+    },
+    cancel() {
+      this.isAddPermission = false;
+
+      var permissions = [];
+      if(this.employee){
+        permissions = this.employee.permissions.map(function(item) {
+          return item.id;
+        })
+      }
+      this.$set(this.admins_permissions, permissions);
+
+      this.roles.length = 0;
+      this.employee.roles.forEach(ele => {
+        this.roles.push(ele.id);
+      })
+    },
+    isSelected(id) {
+      return this.admins_permissions.includes(id);
+    },
+    togglePermission(id) {
+      if(this.isSelected(id)){
+        var index = this.admins_permissions.findIndex((obj) => {
+          return obj == id;
+        });
+        this.admins_permissions.splice(index, 1);
+      } else {
+        this.admins_permissions.push(id);
+      }
+      this.$forceUpdate();
+    },
   }
 };
 </script>
@@ -178,5 +241,14 @@ export default {
 .select-role{
   text-align: center;
   text-align-last: center;
+}
+.blocks-btn{
+  background-color: #eee;
+  font-size: 11px;
+  color: #f96332;
+  padding: 4px 8px 2px 8px;
+  margin: 4px;
+  border-radius: 3px;
+  border: 0;
 }
 </style>

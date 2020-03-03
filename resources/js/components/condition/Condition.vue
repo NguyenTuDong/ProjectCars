@@ -8,9 +8,10 @@
           <div class="card">
             <div class="d-flex card-header">
               <h4 class="card-title">Tình trạng</h4>
-              <button class="btn btn-primary ml-auto" @click="addCondition">Thêm tình trạng</button>
+              <button v-if="conditions" class="btn btn-primary ml-auto" @click="addCondition">Thêm tình trạng</button>
             </div>
-            <div class="card-body">
+            <div v-if="!conditions" class="lds-dual-ring"></div>
+            <div v-else class="card-body">
               <div class="search-form">
                 <input v-model="q" type="text" class="form-control" placeholder="Tìm kiếm">
               </div>

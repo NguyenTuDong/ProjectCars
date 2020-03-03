@@ -8,9 +8,10 @@
           <div class="card">
             <div class="d-flex card-header">
               <h4 class="card-title">Xuất xứ</h4>
-              <button class="btn btn-primary ml-auto" @click="addOrigin">Thêm xuất xứ</button>
+              <button v-if="origins" class="btn btn-primary ml-auto" @click="addOrigin">Thêm xuất xứ</button>
             </div>
-            <div class="card-body">
+            <div v-if="!origins" class="lds-dual-ring"></div>
+            <div v-else class="card-body">
               <div class="search-form">
                 <input v-model="q" type="text" class="form-control" placeholder="Tìm kiếm">
               </div>

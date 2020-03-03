@@ -34,16 +34,6 @@ const mutations = {
     data.count = 0;
     state.employees.data.push(data);
   },
-  updateEmployee(state, data) {
-    state.employees.data.forEach((element, index) => {
-      if(element.id === data.id) {
-          state.employees.data[index].ten = data.ten;
-      }
-    });
-    var temp = state.employees.data;
-    state.employees.data = [];
-    state.employees.data = temp;
-  },
   employeeCount(state, data) {
     state.employeeCount = data;
   },
@@ -139,23 +129,23 @@ const actions = {
       }
     })
   },
-  updateEmployee({commit, rootGetters}, data) {
+  updateEmployee({commit, dispatch, rootGetters}, formData) {
     $.ajax({
       headers: {
       'X-CSRF-TOKEN': rootGetters.csrf,
       },
-      url : '/admin/api/employee/'+data.id,
+      url : '/admin/api/employee/update',
       type : "POST",
-      data: data.formData,
+      data: formData,
       processData: false,
       contentType: false,
       success:function(data)
       {
-        commit('updateEmployee', data);
+        dispatch('auth');
 
         $.notify({
           icon: "now-ui-icons ui-1_bell-53",
-          message: "Cập nhật nhân viên <b>#"+data.id+"</b> thành công."
+          message: "Cập nhật nhân viên <b>"+data.ten+"</b> thành công."
 
         }, {
           type: 'success',
@@ -167,6 +157,7 @@ const actions = {
         });
       },
       error: function (errors) {
+        console.log(errors);
         $.notify({
           icon: "now-ui-icons ui-1_bell-53",
           message: "Cập nhật nhân viên thất bại."
@@ -182,12 +173,12 @@ const actions = {
       }
     })
   },
-  updateEmployeeRoles({commit, dispatch, rootGetters}, formData) {
+  updateEmployeeRolesPermissions({commit, dispatch, rootGetters}, formData) {
     $.ajax({
       headers: {
       'X-CSRF-TOKEN': rootGetters.csrf,
       },
-      url : '/admin/api/employee/updateEmployeeRoles',
+      url : '/admin/api/employee/updateEmployeeRolesPermissions',
       type : "POST",
       data: formData,
       processData: false,

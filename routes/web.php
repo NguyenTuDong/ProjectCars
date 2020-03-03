@@ -129,7 +129,8 @@ Route::prefix('admin')->group(function() {
     Route::post('/employee', 'Admin\EmployeeController@store');
     Route::get('/employee/count', 'Admin\EmployeeController@count');
     Route::get('/employee/countPerMonth', 'Admin\EmployeeController@countPerMonth');
-    Route::post('/employee/updateEmployeeRoles', 'Admin\EmployeeController@updateEmployeeRoles');
+    Route::post('/employee/update', 'Admin\EmployeeController@update');
+    Route::post('/employee/updateEmployeeRolesPermissions', 'Admin\EmployeeController@updateEmployeeRolesPermissions');
     Route::post('/employee/{employee}', 'Admin\EmployeeController@update');
     Route::get('/employee/{id}', 'Admin\EmployeeController@show');
   });

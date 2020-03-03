@@ -8,9 +8,10 @@
           <div class="card">
             <div class="d-flex card-header">
               <h4 class="card-title">Hộp số</h4>
-              <button class="btn btn-primary ml-auto" @click="addTransmission">Thêm hộp số</button>
+              <button v-if="transmissions" class="btn btn-primary ml-auto" @click="addTransmission">Thêm hộp số</button>
             </div>
-            <div class="card-body">
+            <div v-if="!transmissions" class="lds-dual-ring"></div>
+            <div v-else class="card-body">
               <div class="search-form">
                 <input v-model="q" type="text" class="form-control" placeholder="Tìm kiếm">
               </div>

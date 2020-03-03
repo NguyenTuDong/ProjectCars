@@ -52,7 +52,7 @@ class Admin extends Authenticatable
         }
         else {
             
-            return \URL::to("/").'\\storage\\img\\userfiles\\'.md5($this->attributes['id']).'\\images\\Cover\\' . $this->attributes['cover'];
+            return \URL::to("/").'\\storage\\adminfiles\\'.md5($this->attributes['id']).'\\images\\Cover\\' . $this->attributes['cover'];
         }
     }
 
@@ -62,7 +62,7 @@ class Admin extends Authenticatable
             return \URL::to("/").'\\storage\\img\\no-avatar.png';
         }
         else {
-            return \URL::to("/").'\\storage\\img\\userfiles\\'.md5($this->attributes['id']).'\\images\\Avatar\\' . $this->attributes['avatar'];
+            return \URL::to("/").'\\storage\\adminfiles\\'.md5($this->attributes['id']).'\\images\\Avatar\\' . $this->attributes['avatar'];
         }
     }
     

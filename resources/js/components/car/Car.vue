@@ -9,7 +9,8 @@
             <div class="d-flex card-header">
               <h4 class="card-title">Mẫu tin</h4>
             </div>
-            <div class="card-body">
+            <div v-if="!cars" class="lds-dual-ring"></div>
+            <div v-else class="card-body">
               <div class="search-form" v-if="$root.userCan('xem-tin')">
                 <input v-model="q" type="text" class="form-control" placeholder="Tìm kiếm">
               </div>

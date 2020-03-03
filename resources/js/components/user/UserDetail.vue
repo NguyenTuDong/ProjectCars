@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div v-if="!loaded" class="lds-dual-ring-wrapper">
+      <div class="lds-dual-ring"></div>
+    </div>
     <div class="panel-header panel-header-sm"></div>
     <button @click="$router.go(-1)" class="btn-back">
       <i class="now-ui-icons arrows-1_minimal-left"></i> Trở lại
@@ -77,8 +80,14 @@ export default {
   name: "UserDetail",
   data() {
     return {
-      id: this.$route.params.id
+      id: this.$route.params.id,
+      loaded: false,
     };
+  },
+  watch: {
+    user(to, from){
+      this.loaded = true;
+    }
   },
   created() {
     this.$store.dispatch("getUser", this.id);
