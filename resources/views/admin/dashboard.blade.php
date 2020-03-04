@@ -35,7 +35,7 @@
         return $route;
       }));
   </script>
-  <script src="{{asset('js/app.js')}}"></script>
+  <script src="{{asset('js/admin.js')}}"></script>
   <!--   Core JS Files   -->
   {{-- <script src="js/admin/plugins/perfect-scrollbar.jquery.min.js"></script> --}}
   <!-- Chart JS -->

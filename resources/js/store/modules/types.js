@@ -40,7 +40,7 @@ const mutations = {
 const actions = {
   retrieveTypes({commit}, data) {
     $.ajax({
-      url : '/admin/api/type/?page='+data.page+'&brands_id='+data.brands_id+'&q='+data.q,
+      url : '/admin/api/type/?page='+data.page+'&brands_id='+data.brands_id+'&q='+data.q+'&orderBy='+data.orderBy+'&direction='+data.direction,
       type : "GET",
       dataType : "json",
       success:function(data)

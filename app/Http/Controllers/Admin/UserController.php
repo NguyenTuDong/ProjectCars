@@ -32,9 +32,16 @@ class UserController extends Controller
         if($user->hasPermission('xem-khach-hang')){
 
             $query = $request->q;
+
+            $orderBy = 'created_at';
+            if($request->orderBy != null){
+                $orderBy = $request->orderBy;
+            }
+            
             $items = User::where('ten', 'LIKE', '%'.$query.'%')
             ->orWhere('email', 'LIKE', '%'.$query.'%')
             ->orWhere('sdt', 'LIKE', '%'.$query.'%')
+            ->orderBy($orderBy, $request->direction)
             ->paginate(10);
             return response()->json($items);
         } 

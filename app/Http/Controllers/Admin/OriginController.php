@@ -32,11 +32,15 @@ class OriginController extends Controller
 
             $query = $request->q;
 
+            $orderBy = 'id';
+            if($request->orderBy != null){
+                $orderBy = $request->orderBy;
+            }
+
             $cars = DB::raw('(SELECT a.id, a.origins_id FROM `cars` a WHERE trangthai = 2)
                 Total');
             $items = Origin::select([
-                'origins.id',
-                'origins.ten',
+                'origins.*',
                 DB::raw('COUNT(Total.id) AS count'),
             ])
             ->leftJoin($cars, function($join){
@@ -44,6 +48,7 @@ class OriginController extends Controller
             })
             ->where('origins.trangthai', 0)
             ->where('origins.ten', 'LIKE', '%'.$query.'%')
+            ->orderBy($orderBy, $request->direction)
             ->groupBy('origins.id')
             ->paginate(10);
             return response()->json($items);

@@ -18,19 +18,19 @@
                 <table class="table">
                   <thead class=" text-primary">
                     <th class="table-cars-id">
-                      Id
+                      <button class="sort-btn" :class="{'sort-btn-asc': (isASC && orderBy == 'id'), 'sort-btn-desc': (!isASC && orderBy == 'id')}" @click="toggleOrderBy('id')">Id</button>
                     </th>
                     <th class="table-cars-img text-center">
                       Hình
                     </th>
                     <th class="table-cars-name">
-                      Tên mẫu tin
+                      <button class="sort-btn" :class="{'sort-btn-asc': (isASC && orderBy == 'ten'), 'sort-btn-desc': (!isASC && orderBy == 'ten')}" @click="toggleOrderBy('ten')">Tên mẫu tin</button>
                     </th>
                     <th class="table-cars-author">
-                      Người đăng
+                      <button class="sort-btn" :class="{'sort-btn-asc': (isASC && orderBy == 'users.ten'), 'sort-btn-desc': (!isASC && orderBy == 'users.ten')}" @click="toggleOrderBy('users.ten')">Người đăng</button>
                     </th>
                     <th class="table-cars-status">
-                      Trạng thái
+                      <button class="sort-btn" :class="{'sort-btn-asc': (isASC && orderBy == 'trangthai'), 'sort-btn-desc': (!isASC && orderBy == 'trangthai')}" @click="toggleOrderBy('trangthai')">Trạng thái</button>
                     </th>
                     <th class="table-cars-actions text-right" v-if="$root.userCan('duyet-tin') || $root.userCan('xoa-tin')">
                       Tác vụ
@@ -82,6 +82,8 @@ export default {
     return {
       q: '',
       message: '',
+      orderBy: '',
+      isASC: false,
     }
   },
   watch: {
@@ -93,6 +95,8 @@ export default {
     var data = {
       page: 1,
       q: '',
+      orderBy: 'created_at',
+      direction: 'DESC',
     }
     this.$store.dispatch('retrieveCars', data)
     this.debouncedGetQuery = _.debounce(this.search, 500)
@@ -109,6 +113,8 @@ export default {
         var data = {
           page: page,
           q: this.q,
+          orderBy: this.orderBy,
+          direction: this.isASC ? 'ASC' : 'DESC',
         }
         this.$store.dispatch('retrieveCars', data);
       }
@@ -124,6 +130,23 @@ export default {
       var data = {
         page: 1,
         q: this.q,
+        orderBy: this.orderBy,
+        direction: this.isASC ? 'ASC' : 'DESC',
+      }
+      this.$store.dispatch('retrieveCars', data);
+    },
+    toggleOrderBy(column){
+      if(this.orderBy == column){
+        this.isASC = !this.isASC;
+      } else {
+        this.orderBy = column;
+        this.isASC = true;
+      }
+      var data = {
+        page: this.pagination.current_page,
+        q: this.q,
+        orderBy: this.orderBy,
+        direction: this.isASC ? 'ASC' : 'DESC',
       }
       this.$store.dispatch('retrieveCars', data);
     }
@@ -142,12 +165,12 @@ export default {
   width: 40%;
 }
 .table-cars-author{
-  width: 10%;
+  width: 15%;
 }
 .table-cars-status{
   width: 10%;
 }
 .table-cars-actions{
-  width: 20%;
+  width: 15%;
 }
 </style>

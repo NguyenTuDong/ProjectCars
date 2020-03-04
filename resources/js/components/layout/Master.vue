@@ -451,4 +451,26 @@ body{
     object-fit: cover;
   }
 }
+.sort-btn{
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+  color: #f96332;
+  font-weight: bold;
+  &:focus{
+    outline: none;
+  }
+  &-asc{
+    &::after{
+      content: ' 🡅';
+      color: #dbdbdb;
+    }
+  }
+  &-desc{
+    &::after{
+      content: ' 🡇';
+      color: #dbdbdb;
+    }
+  }
+}
 </style>

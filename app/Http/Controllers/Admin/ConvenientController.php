@@ -32,18 +32,23 @@ class ConvenientController extends Controller
 
             $query = $request->q;
 
+            $orderBy = 'id';
+            if($request->orderBy != null){
+                $orderBy = $request->orderBy;
+            }
+
             $cars = DB::raw('(SELECT COUNT(`convenientcars`.`convenients_id`) AS count, `convenientcars`.`convenients_id`, `convenientcars`.`cars_id`, `cars`.`trangthai` FROM `convenientcars` JOIN `cars` ON `cars`.`id` = `convenientcars`.`cars_id` WHERE `cars`.`trangthai` = 2 GROUP BY `convenientcars`.`convenients_id` ORDER BY `convenientcars`.`convenients_id`)
                 Total');
             $items = Convenient::select([
-                'convenients.id',
-                'convenients.ten',
-                'Total.count'
+                'convenients.*',
+                'Total.count as count'
             ])
             ->leftJoin($cars, function($join){
                 $join->on('convenients.id', '=', 'Total.convenients_id');
             })
             ->where('convenients.trangthai', 0)
             ->where('convenients.ten', 'LIKE', '%'.$query.'%')
+            ->orderBy($orderBy, $request->direction)
             ->paginate(10);
             return response()->json($items);
         } 

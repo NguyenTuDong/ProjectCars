@@ -45,7 +45,7 @@ const mutations = {
 const actions = {
   retrieveEmployees({commit}, data) {
     $.ajax({
-      url : '/admin/api/employee?page='+data.page+'&q='+data.q,
+      url : '/admin/api/employee?page='+data.page+'&q='+data.q+'&orderBy='+data.orderBy+'&direction='+data.direction,
       type : "GET",
       dataType : "json",
       success:function(data)

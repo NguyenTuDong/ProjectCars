@@ -42,7 +42,7 @@ const mutations = {
 const actions = {
   retrieveStyles({commit}, data) {
     $.ajax({
-      url : '/admin/api/style?page='+data.page+'&q='+data.q,
+      url : '/admin/api/style?page='+data.page+'&q='+data.q+'&orderBy='+data.orderBy+'&direction='+data.direction,
       type : "GET",
       dataType : "json",
       success:function(data)

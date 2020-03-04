@@ -18,22 +18,22 @@
                 <table class="table">
                   <thead class=" text-primary">
                     <th class="table-contacts-id">
-                      Id
+                      <button class="sort-btn" :class="{'sort-btn-asc': (isASC && orderBy == 'id'), 'sort-btn-desc': (!isASC && orderBy == 'id')}" @click="toggleOrderBy('id')">Id</button>
                     </th>
                     <th class="table-contacts-receive">
-                      Người nhận
+                      <button class="sort-btn" :class="{'sort-btn-asc': (isASC && orderBy == 'users.ten'), 'sort-btn-desc': (!isASC && orderBy == 'users.ten')}" @click="toggleOrderBy('users.ten')">Người nhận</button>
                     </th>
                     <th class="table-contacts-send">
-                      Người gửi
+                      <button class="sort-btn" :class="{'sort-btn-asc': (isASC && orderBy == 'ten'), 'sort-btn-desc': (!isASC && orderBy == 'ten')}" @click="toggleOrderBy('ten')">Người gửi</button>
                     </th>
                     <th class="table-contacts-email">
-                      Email
+                      <button class="sort-btn" :class="{'sort-btn-asc': (isASC && orderBy == 'email'), 'sort-btn-desc': (!isASC && orderBy == 'email')}" @click="toggleOrderBy('email')">Email</button>
                     </th>
                     <th class="table-contacts-phone">
-                      Số điện thoại
+                      <button class="sort-btn" :class="{'sort-btn-asc': (isASC && orderBy == 'sdt'), 'sort-btn-desc': (!isASC && orderBy == 'sdt')}" @click="toggleOrderBy('sdt')">Số điện thoại</button>
                     </th>
                     <th class="table-contacts-content">
-                      Nội dung
+                      <button class="sort-btn" :class="{'sort-btn-asc': (isASC && orderBy == 'noidung'), 'sort-btn-desc': (!isASC && orderBy == 'noidung')}" @click="toggleOrderBy('noidung')">Nội dung</button>
                     </th>
                   </thead>
                   <tbody>
@@ -74,6 +74,8 @@ export default {
       deleting: -1,
       offset: 3,
       q: '',
+      orderBy: '',
+      isASC: false,
     }
   },
   watch: {
@@ -85,6 +87,8 @@ export default {
     var data = {
       page: 1,
       q: '',
+      orderBy: 'created_at',
+      direction: 'DESC',
     }
     this.$store.dispatch('retrieveContacts', data);
     this.debouncedGetQuery = _.debounce(this.search, 500);
@@ -101,6 +105,8 @@ export default {
         var data = {
           page: page,
           q: this.q,
+          orderBy: this.orderBy,
+          direction: this.isASC ? 'ASC' : 'DESC',
         }
         this.$store.dispatch('retrieveContacts', data);
       }
@@ -109,6 +115,23 @@ export default {
       var data = {
         page: 1,
         q: this.q,
+        orderBy: this.orderBy,
+        direction: this.isASC ? 'ASC' : 'DESC',
+      }
+      this.$store.dispatch('retrieveContacts', data);
+    },
+    toggleOrderBy(column){
+      if(this.orderBy == column){
+        this.isASC = !this.isASC;
+      } else {
+        this.orderBy = column;
+        this.isASC = true;
+      }
+      var data = {
+        page: this.pagination.current_page,
+        q: this.q,
+        orderBy: this.orderBy,
+        direction: this.isASC ? 'ASC' : 'DESC',
       }
       this.$store.dispatch('retrieveContacts', data);
     }

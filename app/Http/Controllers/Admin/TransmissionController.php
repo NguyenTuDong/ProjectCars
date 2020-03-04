@@ -32,6 +32,11 @@ class TransmissionController extends Controller
 
             $query = $request->q;
 
+            $orderBy = 'id';
+            if($request->orderBy != null){
+                $orderBy = $request->orderBy;
+            }
+
             $cars = DB::raw('(SELECT a.id, a.transmissions_id FROM `cars` a WHERE trangthai = 2)
                 Total');
             $items = Transmission::select([
@@ -44,6 +49,7 @@ class TransmissionController extends Controller
             })
             ->where('transmissions.trangthai', 0)
             ->where('transmissions.ten', 'LIKE', '%'.$query.'%')
+            ->orderBy($orderBy, $request->direction)
             ->groupBy('transmissions.id')
             ->paginate(10);
             return response()->json($items);

@@ -32,11 +32,15 @@ class ConditionController extends Controller
 
             $query = $request->q;
 
+            $orderBy = 'id';
+            if($request->orderBy != null){
+                $orderBy = $request->orderBy;
+            }
+
             $cars = DB::raw('(SELECT a.id, a.conditions_id FROM `cars` a WHERE trangthai = 2)
                 Total');
             $items = Condition::select([
-                'conditions.id',
-                'conditions.ten',
+                'conditions.*',
                 DB::raw('COUNT(Total.id) AS count'),
             ])
             ->leftJoin($cars, function($join){
@@ -44,6 +48,7 @@ class ConditionController extends Controller
             })
             ->where('conditions.trangthai', 0)
             ->where('conditions.ten', 'LIKE', '%'.$query.'%')
+            ->orderBy($orderBy, $request->direction)
             ->groupBy('conditions.id')
             ->paginate(10);
             return response()->json($items);

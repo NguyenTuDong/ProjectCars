@@ -31,12 +31,16 @@ class FuelController extends Controller
         if($user->hasPermission('quan-ly-danh-muc')){
 
             $query = $request->q;
+
+            $orderBy = 'id';
+            if($request->orderBy != null){
+                $orderBy = $request->orderBy;
+            }
             
             $cars = DB::raw('(SELECT a.id, a.fuels_id FROM `cars` a WHERE trangthai = 2)
                 Total');
             $items = Fuel::select([
-                'fuels.id',
-                'fuels.ten',
+                'fuels.*',
                 DB::raw('COUNT(Total.id) AS count'),
             ])
             ->leftJoin($cars, function($join){
@@ -44,6 +48,7 @@ class FuelController extends Controller
             })
             ->where('fuels.trangthai', 0)
             ->where('fuels.ten', 'LIKE', '%'.$query.'%')
+            ->orderBy($orderBy, $request->direction)
             ->groupBy('fuels.id')
             ->paginate(10);
             return response()->json($items);

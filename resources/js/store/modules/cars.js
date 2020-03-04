@@ -98,7 +98,7 @@ const mutations = {
 const actions = {
   retrieveCars({commit}, data) {
     $.ajax({
-      url : '/admin/api/car?page='+data.page+'&q='+data.q,
+      url : '/admin/api/car?page='+data.page+'&q='+data.q+'&orderBy='+data.orderBy+'&direction='+data.direction,
       type : "GET",
       dataType : "json",
       success:function(data)

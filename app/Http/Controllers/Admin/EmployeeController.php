@@ -34,9 +34,16 @@ class EmployeeController extends Controller
         if($user->hasPermission('xem-nhan-vien')){
 
             $query = $request->q;
+
+            $orderBy = 'id';
+            if($request->orderBy != null){
+                $orderBy = $request->orderBy;
+            }
+            
             $items = Admin::where('ten', 'LIKE', '%'.$query.'%')
             ->orWhere('email', 'LIKE', '%'.$query.'%')
             ->orWhere('sdt', 'LIKE', '%'.$query.'%')
+            ->orderBy($orderBy, $request->direction)
             ->with('roles')
             ->paginate(10);
             return response()->json($items);

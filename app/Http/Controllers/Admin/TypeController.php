@@ -33,6 +33,12 @@ class TypeController extends Controller
 
             $brands_id = $request->brands_id;
             $query = $request->q;
+
+            $orderBy = 'id';
+            if($request->orderBy != null){
+                $orderBy = $request->orderBy;
+            }
+
             $brand = Brand::find($brands_id);
             $id = null;
             if($brand === null) {
@@ -44,8 +50,7 @@ class TypeController extends Controller
             $cars = DB::raw('(SELECT a.id, a.types_id FROM `cars` a WHERE trangthai = 2)
                 Total');
             $items = Type::select([
-                'types.id',
-                'types.ten',
+                'types.*',
                 DB::raw('COUNT(Total.id) AS count'),
             ])
             ->leftJoin($cars, function($join){
@@ -54,6 +59,7 @@ class TypeController extends Controller
             ->where('brands_id', $id)
             ->where('types.trangthai', 0)
             ->where('types.ten', 'LIKE', '%'.$query.'%')
+            ->orderBy($orderBy, $request->direction)
             ->groupBy('types.id')
             ->paginate(10);
             return response()->json($items);

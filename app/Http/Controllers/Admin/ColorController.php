@@ -31,13 +31,16 @@ class ColorController extends Controller
         if($user->hasPermission('quan-ly-danh-muc')){
 
             $query = $request->q;
+
+            $orderBy = 'id';
+            if($request->orderBy != null){
+                $orderBy = $request->orderBy;
+            }
             
             $cars = DB::raw('(SELECT a.id, a.colors_id FROM `cars` a WHERE trangthai = 2)
                 Total');
             $items = Color::select([
-                'colors.id',
-                'colors.ten',
-                'colors.rgb',
+                'colors.*',
                 DB::raw('COUNT(Total.id) AS count'),
             ])
             ->leftJoin($cars, function($join){
@@ -45,6 +48,7 @@ class ColorController extends Controller
             })
             ->where('colors.trangthai', 0)
             ->where('colors.ten', 'LIKE', '%'.$query.'%')
+            ->orderBy($orderBy, $request->direction)
             ->groupBy('colors.id')
             ->paginate(10);
             return response()->json($items);

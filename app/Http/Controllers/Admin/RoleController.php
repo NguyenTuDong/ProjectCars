@@ -29,7 +29,14 @@ class RoleController extends Controller
     {
         $query = $request->q;
 
-        $items = Role::where('roles.ten', 'LIKE', '%'.$query.'%')->with(['permissions', 'admins'])
+        $orderBy = 'id';
+        if($request->orderBy != null){
+            $orderBy = $request->orderBy;
+        }
+
+        $items = Role::where('roles.ten', 'LIKE', '%'.$query.'%')
+        ->orderBy($orderBy, $request->direction)
+        ->with(['permissions', 'admins'])
         ->paginate(10);
         return response()->json($items);
     }

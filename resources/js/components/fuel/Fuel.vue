@@ -19,13 +19,13 @@
                 <table class="table">
                   <thead class=" text-primary">
                     <th class="table-fuels-id">
-                      Id
+                      <button class="sort-btn" :class="{'sort-btn-asc': (isASC && orderBy == 'id'), 'sort-btn-desc': (!isASC && orderBy == 'id')}" @click="toggleOrderBy('id')">Id</button>
                     </th>
                     <th class="table-fuels-name">
-                      Nhiên liệu
+                      <button class="sort-btn" :class="{'sort-btn-asc': (isASC && orderBy == 'ten'), 'sort-btn-desc': (!isASC && orderBy == 'ten')}" @click="toggleOrderBy('ten')">Nhiên liệu</button>
                     </th>
                     <th class="table-fuels-ratio">
-                      Tỉ lệ
+                      <button class="sort-btn" :class="{'sort-btn-asc': (isASC && orderBy == 'count'), 'sort-btn-desc': (!isASC && orderBy == 'count')}" @click="toggleOrderBy('count')">Tỉ lệ</button>
                     </th>
                     <th class="table-fuels-actions text-right">
                       Tác vụ
@@ -103,6 +103,8 @@ export default {
       offset: 3,
       message: '',
       q: '',
+      orderBy: '',
+      isASC: true,
     }
   },
   watch: {
@@ -114,6 +116,8 @@ export default {
     var data = {
       page: 1,
       q: '',
+      orderBy: 'id',
+      direction: 'ASC',
     }
     this.$store.dispatch('retrieveFuels', data);
     this.$store.dispatch("carCountApprove");
@@ -141,6 +145,8 @@ export default {
         var data = {
           page: page,
           q: this.q,
+          orderBy: this.orderBy,
+          direction: this.isASC ? 'ASC' : 'DESC',
         }
         this.$store.dispatch('retrieveFuels', data);
       }
@@ -156,6 +162,8 @@ export default {
       var data = {
         page: this.pagination.last_page,
         q: this.q,
+        orderBy: this.orderBy,
+        direction: this.isASC ? 'ASC' : 'DESC',
       }
       this.$store.dispatch('retrieveFuels', data);
       this.isAdd = true;
@@ -186,6 +194,23 @@ export default {
       var data = {
         page: 1,
         q: this.q,
+        orderBy: this.orderBy,
+        direction: this.isASC ? 'ASC' : 'DESC',
+      }
+      this.$store.dispatch('retrieveFuels', data);
+    },
+    toggleOrderBy(column){
+      if(this.orderBy == column){
+        this.isASC = !this.isASC;
+      } else {
+        this.orderBy = column;
+        this.isASC = true;
+      }
+      var data = {
+        page: this.pagination.current_page,
+        q: this.q,
+        orderBy: this.orderBy,
+        direction: this.isASC ? 'ASC' : 'DESC',
       }
       this.$store.dispatch('retrieveFuels', data);
     }

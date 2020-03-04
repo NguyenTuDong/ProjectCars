@@ -78,7 +78,7 @@ const actions = {
   },
   retrieveBrands({commit}, data) {
     $.ajax({
-      url : '/admin/api/brand?page='+data.page+'&q='+data.q,
+      url : '/admin/api/brand?page='+data.page+'&q='+data.q+'&orderBy='+data.orderBy+'&direction='+data.direction,
       type : "GET",
       dataType : "json",
       success:function(data)

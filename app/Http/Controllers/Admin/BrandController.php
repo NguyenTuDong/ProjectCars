@@ -32,12 +32,15 @@ class BrandController extends Controller
 
             $query = $request->q;
 
+            $orderBy = 'id';
+            if($request->orderBy != null){
+                $orderBy = $request->orderBy;
+            }
+
             $cars = DB::raw('(SELECT a.id, a.types_id FROM `cars` a WHERE trangthai = 2)
                 TotalCars');
             $items = Brand::select([
-                'brands.id',
-                'brands.ten',
-                'brands.logo',
+                'brands.*',
                 DB::raw('COUNT(TotalCars.id) AS count'),
             ])
             ->leftJoin('types', 'brands.id', '=', 'types.brands_id')
@@ -46,6 +49,7 @@ class BrandController extends Controller
             })
             ->where('brands.trangthai', 0)
             ->where('brands.ten', 'LIKE', '%'.$query.'%')
+            ->orderBy($orderBy, $request->direction)
             ->groupBy('brands.id')
             ->paginate(10);
             return response()->json($items);

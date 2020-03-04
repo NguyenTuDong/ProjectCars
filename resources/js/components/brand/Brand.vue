@@ -19,16 +19,16 @@
                 <table class="table">
                   <thead class=" text-primary">
                     <th class="table-brands-id">
-                      Id
+                      <button class="sort-btn" :class="{'sort-btn-asc': (isASC && orderBy == 'id'), 'sort-btn-desc': (!isASC && orderBy == 'id')}" @click="toggleOrderBy('id')">Id</button>
                     </th>
                     <th class="table-brands-logo text-center">
                       Logo
                     </th>
                     <th class="table-brands-name">
-                      Tên thương hiệu
+                      <button class="sort-btn" :class="{'sort-btn-asc': (isASC && orderBy == 'ten'), 'sort-btn-desc': (!isASC && orderBy == 'ten')}" @click="toggleOrderBy('ten')">Tên thương hiệu</button>
                     </th>
                     <th class="table-brands-ratio">
-                      Tỉ lệ
+                      <button class="sort-btn" :class="{'sort-btn-asc': (isASC && orderBy == 'count'), 'sort-btn-desc': (!isASC && orderBy == 'count')}" @click="toggleOrderBy('count')">Tỉ lệ</button>
                     </th>
                     <th class="table-brands-actions text-right">
                       Tác vụ
@@ -117,6 +117,8 @@ export default {
       offset: 3,
       message: '',
       q: '',
+      orderBy: '',
+      isASC: true,
     }
   },
   watch: {
@@ -128,6 +130,8 @@ export default {
     var data = {
       page: 1,
       q: '',
+      orderBy: 'id',
+      direction: 'ASC',
     }
     this.$store.dispatch('retrieveBrands', data);
     this.$store.dispatch("carCountApprove");
@@ -155,6 +159,8 @@ export default {
         var data = {
           page: page,
           q: this.q,
+          orderBy: this.orderBy,
+          direction: this.isASC ? 'ASC' : 'DESC',
         }
         this.$store.dispatch('retrieveBrands', data);
       }
@@ -170,6 +176,8 @@ export default {
       var data = {
         page: this.pagination.last_page,
         q: this.q,
+        orderBy: this.orderBy,
+        direction: this.isASC ? 'ASC' : 'DESC',
       }
       this.$store.dispatch('retrieveBrands', data);
       this.isAdd = true;
@@ -225,6 +233,23 @@ export default {
       var data = {
         page: 1,
         q: this.q,
+        orderBy: this.orderBy,
+        direction: this.isASC ? 'ASC' : 'DESC',
+      }
+      this.$store.dispatch('retrieveBrands', data);
+    },
+    toggleOrderBy(column){
+      if(this.orderBy == column){
+        this.isASC = !this.isASC;
+      } else {
+        this.orderBy = column;
+        this.isASC = true;
+      }
+      var data = {
+        page: this.pagination.current_page,
+        q: this.q,
+        orderBy: this.orderBy,
+        direction: this.isASC ? 'ASC' : 'DESC',
       }
       this.$store.dispatch('retrieveBrands', data);
     }

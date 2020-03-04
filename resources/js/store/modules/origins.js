@@ -40,7 +40,7 @@ const mutations = {
 const actions = {
   retrieveOrigins({commit}, data) {
     $.ajax({
-      url : '/admin/api/origin?page='+data.page+'&q='+data.q,
+      url : '/admin/api/origin?page='+data.page+'&q='+data.q+'&orderBy='+data.orderBy+'&direction='+data.direction,
       type : "GET",
       dataType : "json",
       success:function(data)

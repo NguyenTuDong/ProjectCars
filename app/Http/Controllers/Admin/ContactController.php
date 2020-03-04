@@ -32,13 +32,21 @@ class ContactController extends Controller
         if($user->hasPermission('xem-lien-he')){
 
             $query = $request->q;
-            $items = Contact::whereHas('users', function ($q) use ($request) {
-                $q->where('ten', 'LIKE', "%{$request->q}%");
-            })
-            ->orWhere('ten', 'LIKE', '%'.$query.'%')
-            ->orWhere('email', 'LIKE', '%'.$query.'%')
-            ->orWhere('sdt', 'LIKE', '%'.$query.'%')
-            ->orWhere('noidung', 'LIKE', '%'.$query.'%')
+
+            $orderBy = 'created_at';
+            if($request->orderBy != null){
+                $orderBy = $request->orderBy;
+            }
+
+            $items = Contact::
+            join('users', 'contacts.users_id', '=', 'users.id')
+            ->select('contacts.*')
+            ->where('users.ten', 'LIKE', '%'.$query.'%')
+            ->orWhere('contacts.ten', 'LIKE', '%'.$query.'%')
+            ->orWhere('contacts.email', 'LIKE', '%'.$query.'%')
+            ->orWhere('contacts.sdt', 'LIKE', '%'.$query.'%')
+            ->orWhere('contacts.noidung', 'LIKE', '%'.$query.'%')
+            ->orderBy($orderBy, $request->direction)
             ->with('users')
             ->paginate(10);
             return response()->json($items);

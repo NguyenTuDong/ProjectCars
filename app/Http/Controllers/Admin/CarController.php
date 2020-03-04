@@ -33,8 +33,31 @@ class CarController extends Controller
 
             $search = $request->q;
 
+            $state = [
+                0 => 'Chờ duyệt',
+                2 => 'Đã duyệt',
+                3 => 'Đã từ chối',
+            ];
+    
+            $state_filter = [];
+    
+            if($search != ''){
+                foreach ($state as $key => $value) {
+                    if (strpos($value, $search) !== false) {
+                        array_push($state_filter, $key);
+                    }
+                }
+            }
+
+            $orderBy = 'created_at';
+            if($request->orderBy != null){
+                $orderBy = $request->orderBy;
+            }
+
             $items = Car::
-            where('trangthai', '<>', 1)
+            join('users', 'cars.users_id', '=', 'users.id')
+            ->select('cars.*')
+            ->where('cars.trangthai', '<>', 1)
             ->where(function($query) use ($request, $search) {
                 $query->whereHas('users', function ($q) use ($request) {
                     $q->where('ten', 'LIKE', "%{$request->q}%");
@@ -66,9 +89,11 @@ class CarController extends Controller
                 $query->orWhereHas('transmissions', function ($q) use ($request) {
                     $q->where('ten', 'LIKE', "%{$request->q}%");
                 });
-                $query->orWhere('ten', 'LIKE', '%'.$search.'%');
-                $query->orWhere('gia', 'LIKE', '%'.$search.'%');
+                $query->orWhere('cars.ten', 'LIKE', '%'.$search.'%');
+                $query->orWhere('cars.gia', 'LIKE', '%'.$search.'%');
             })
+            ->orWhereIn('cars.trangthai', $state_filter)
+            ->orderBy($orderBy, $request->direction)
             ->with([
                 'users', 
                 'types.brands', 

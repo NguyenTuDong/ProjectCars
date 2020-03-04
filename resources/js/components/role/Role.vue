@@ -19,13 +19,13 @@
                 <table class="table">
                   <thead class=" text-primary">
                     <th class="table-roles-id">
-                      Id
+                      <button class="sort-btn" :class="{'sort-btn-asc': (isASC && orderBy == 'id'), 'sort-btn-desc': (!isASC && orderBy == 'id')}" @click="toggleOrderBy('id')">Id</button>
                     </th>
                     <th class="table-roles-name">
-                      Chức vụ
+                      <button class="sort-btn" :class="{'sort-btn-asc': (isASC && orderBy == 'ten'), 'sort-btn-desc': (!isASC && orderBy == 'ten')}" @click="toggleOrderBy('ten')">Chức vụ</button>
                     </th>
                     <th class="table-roles-slug">
-                      Slug
+                      <button class="sort-btn" :class="{'sort-btn-asc': (isASC && orderBy == 'slug'), 'sort-btn-desc': (!isASC && orderBy == 'slug')}" @click="toggleOrderBy('slug')">Slug</button>
                     </th>
                     <th class="table-roles-permissions">
                       Quyền
@@ -109,6 +109,8 @@ export default {
       offset: 3,
       message: '',
       q: '',
+      orderBy: '',
+      isASC: false,
     }
   },
   watch: {
@@ -120,6 +122,8 @@ export default {
     var data = {
       page: 1,
       q: '',
+      orderBy: 'created_at',
+      direction: 'DESC',
     }
     this.$store.dispatch('retrieveRoles', data);
     this.$store.dispatch('retrievePermissions');
@@ -141,6 +145,8 @@ export default {
         var data = {
           page: page,
           q: this.q,
+          orderBy: this.orderBy,
+          direction: this.isASC ? 'ASC' : 'DESC',
         }
         this.$store.dispatch('retrieveRoles', data);
       }
@@ -156,6 +162,8 @@ export default {
       var data = {
         page: this.pagination.last_page,
         q: this.q,
+        orderBy: this.orderBy,
+        direction: this.isASC ? 'ASC' : 'DESC',
       }
       this.$store.dispatch('retrieveRoles', data);
       this.isAdd = true;
@@ -187,6 +195,23 @@ export default {
       var data = {
         page: 1,
         q: this.q,
+        orderBy: this.orderBy,
+        direction: this.isASC ? 'ASC' : 'DESC',
+      }
+      this.$store.dispatch('retrieveRoles', data);
+    },
+    toggleOrderBy(column){
+      if(this.orderBy == column){
+        this.isASC = !this.isASC;
+      } else {
+        this.orderBy = column;
+        this.isASC = true;
+      }
+      var data = {
+        page: this.pagination.current_page,
+        q: this.q,
+        orderBy: this.orderBy,
+        direction: this.isASC ? 'ASC' : 'DESC',
       }
       this.$store.dispatch('retrieveRoles', data);
     }
