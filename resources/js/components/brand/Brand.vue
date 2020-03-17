@@ -114,7 +114,6 @@ export default {
       preview: "",
       logoError: "",
       nameError: "",
-      offset: 3,
       message: '',
       q: '',
       orderBy: '',

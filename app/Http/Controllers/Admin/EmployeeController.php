@@ -80,10 +80,22 @@ class EmployeeController extends Controller
         $user = Auth::guard('admin')->user();
         if($user->hasPermission('them-nhan-vien')){
 
+            $checkExist = Admin::where('email', $request->email)->get();
+            if($checkExist->count() > 0){
+                return response([
+                    'message' => 'Email này đã tồn tại!' 
+                ], 401);
+            }
+
             $item = new Admin();
             $item->ten = $request->name;
+            $item->email = $request->email;
+            $item->password = $request->password;
             $item->save();
-            return response($item, 201);
+
+            $roles = Role::where('slug', 'employee')->get();
+            $item->roles()->attach($roles);
+            return response($item->with('roles')->where('email', $request->email)->first(), 201);
         } 
         
         return response([

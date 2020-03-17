@@ -116,8 +116,7 @@ const actions = {
         console.log(errors);
         $.notify({
           icon: "now-ui-icons ui-1_bell-53",
-          message: "Thêm nhân viên thất bại!"
-
+          message: errors.responseJSON.message,
         }, {
           type: 'danger',
           timer: 3000,

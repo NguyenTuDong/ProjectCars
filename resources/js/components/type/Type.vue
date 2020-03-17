@@ -106,7 +106,6 @@ export default {
       selectBrand: 1,
       newName: "",
       nameError: "",
-      offset: 3,
       message: '',
       q: '',
       orderBy: '',

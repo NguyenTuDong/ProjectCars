@@ -68,8 +68,6 @@ export default {
   },
   data() {
     return {
-      deleting: -1,
-      offset: 3,
       q: '',
       orderBy: '',
       isASC: false,

@@ -106,7 +106,6 @@ export default {
       isAdd: false,
       newName: "",
       nameError: "",
-      offset: 3,
       message: '',
       q: '',
       orderBy: '',

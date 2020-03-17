@@ -92,6 +92,79 @@ const app = new Vue({
           });
         }
         return check;
+      },
+      validation(node){
+        const ERROR_CLASS = 'has-danger';
+        const SUCCESS_CLASS = 'has-success';
+        var check = 0;
+        var items = $(node).find('.valid');
+
+        items.each((i) => {
+          var ele = items.eq(i);
+          var input = ele.find('input');
+          var isEmail = input.attr('email');
+          var minLength = input.attr('minLength');
+          var maxLength = input.attr('maxLength');
+          var min = input.attr('min');
+          var max = input.attr('max');
+          var equalTo = $(input.attr('equalTo'));
+
+          input.on('keyup', () => {
+            var value = input.val();
+
+            if(value == ''){
+              error();
+            } else if(isEmail && !this.validateEmail(value)){
+              error();
+            } else if(minLength && value.length < minLength){
+              error();
+            } else if(maxLength && value.length > maxLength){
+              error();
+            } else if(min && value < min){
+              error();
+            } else if(max && value > max){
+              error();
+            } else if(equalTo.length > 0 && value != equalTo.val()){
+              error();
+            } else {
+              success();
+            }
+          })
+
+          if(equalTo.length > 0){
+            equalTo.each((index) => {
+              equalTo.eq(index).on('keyup', () => {
+                if(equalTo.eq(index).val() != input.val()){
+                  error();
+                } else {
+                  success();
+                }
+              })
+            })
+          }
+
+          function error(){
+            ele.addClass(ERROR_CLASS);
+            ele.removeClass(SUCCESS_CLASS);
+          }
+          function success(){
+            ele.removeClass(ERROR_CLASS);
+            ele.addClass(SUCCESS_CLASS);
+          }
+
+        })
+
+        items.each((i) => {
+          if(items.eq(i).hasClass(SUCCESS_CLASS)){
+            check++;
+          }
+        })
+
+        return check == items.length;
+      },
+      validateEmail(email) {
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
       }
     },
     store,
