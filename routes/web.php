@@ -154,14 +154,4 @@ Route::post('/user/updateavatar','UserController@updateAvatar')->name('update.av
 Route::resource('car','CarController');
 Route::resource('user','UserController');
 
-Route::get('/test', function () {
-  $user = Auth::guard('admin')->user();
-//   $test = Auth::guard('admin')->user()->where('id', $user->id)->whereHas('roles.permissions', function ($q) {
-//     $q->where('slug', 'xem-tin');
-// })->count();
-  dd($user->can('xem-tin'));
-  // dd($test);
-  return view('welcome');
-});
-
 Route::get('/{vue_capture?}', 'Admin\AdminController@index')->where('vue_capture', '^(?!storage).*$');

@@ -18,11 +18,12 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(User::class, function (Faker $faker) {
+    $date = $faker->dateTimeBetween($startDate = '-12 months', $endDate = 'now', $timezone = null);
     return [
         'ten' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        'email_verified_at' => $date,
+        'password' => bcrypt('123456'), // password
         'diachi' => $faker->address,
         'sdt' => $faker->e164PhoneNumber,
         'cmnd' => $faker->numberBetween($min = 100000000, $max = 999999999),
@@ -31,6 +32,7 @@ $factory->define(User::class, function (Faker $faker) {
         'mst' => $faker->numberBetween($min = 100000000, $max = 999999999),
         'locations_id' => Location::all()->random()->id,
         'remember_token' => Str::random(10),
-        'created_at' => $faker->dateTimeBetween($startDate = '-12 months', $endDate = 'now', $timezone = null),
+        'created_at' => $date,
+        'updated_at' => $date,
     ];
 });

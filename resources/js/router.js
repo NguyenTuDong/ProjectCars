@@ -31,7 +31,6 @@ const routes = [
     component: Dashboard,
     meta: {
       title: 'Admin | Dashboard',
-      requiredPermissions: ['xem-dashboard'],
     }
   },
   { 

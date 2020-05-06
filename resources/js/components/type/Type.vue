@@ -8,7 +8,7 @@
           <div class="card">
             <div class="d-flex card-header">
               <h4 class="card-title">Dòng xe - 
-                <select v-model="selectBrand" @click="getItems(selectBrand, 1)" class="card-select">
+                <select v-model="selectBrand" @change="getItems(1)" class="card-select">
                   <option v-for="brand in brands" :key="brand.id" :value="brand.id">{{brand.ten}}</option>
                 </select>
               </h4>
@@ -148,10 +148,10 @@ export default {
     }
   },
   methods: {
-    getItems(id, page){
+    getItems(page){
       if(!this.isAdd && page <= this.pagination.last_page && page >= 1) {
         var data = {
-          brands_id: id,
+          brands_id: this.selectBrand,
           page: page,
           q: this.q,
           orderBy: this.orderBy,

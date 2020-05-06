@@ -16,12 +16,14 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(Contact::class, function (Faker $faker) {
+    $created = $faker->dateTimeBetween($startDate = '-12 months', $endDate = 'now', $timezone = null);
     return [
         'users_id' => App\User::all()->random()->id,
         'ten' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'sdt' => $faker->e164PhoneNumber,
         'noidung' => $faker->realText($maxNbChars = 250, $indexSize = 2),
-        'created_at' => $faker->dateTimeBetween($startDate = '-12 months', $endDate = 'now', $timezone = null),
+        'created_at' => $created,
+        'updated_at' => $created,
     ];
 });

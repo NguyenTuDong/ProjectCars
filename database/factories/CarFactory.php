@@ -24,6 +24,7 @@ $factory->define(Car::class, function (Faker $faker) {
     $difference = $ngaydang->diff($ngayketthuc);
     $days = $difference->format('%a');
     $cost = $days * 1000;
+    $namsx = $faker->year($max = 'now');
     return [
         'ten' => $faker->sentence($nbWords = 7, $variableNbWords = true),
         'gia' => $faker->numberBetween($min = 100, $max = 9000) * 1000000,
@@ -37,9 +38,9 @@ $factory->define(Car::class, function (Faker $faker) {
         'furnitures_id' => App\Color::all()->random()->id,
         'styles_id' => App\Style::all()->random()->id,
         'users_id' => App\User::all()->random()->id,
-        'namsx' => $faker->year($max = 'now'),
-        'doixe' => $faker->year($max = 'now'),
-        'socua' => $faker->numberBetween($min = 1, $max = 4),
+        'namsx' => $namsx,
+        'doixe' => $namsx,
+        'socua' => $faker->numberBetween($min = 2, $max = 5),
         'sochongoi' => $faker->randomElement($array = array (1,2,4,7,9,12,16,45)),
         'kichthuoc' => '4425x1700x1465',
         'cannang' => $faker->numberBetween($min = 1000, $max = 3000),
@@ -53,5 +54,6 @@ $factory->define(Car::class, function (Faker $faker) {
         'ngayketthuc' => $ngayketthuc,
         'phi' => $cost,
         'created_at' => $created_at,
+        'updated_at' => $created_at,
     ];
 });

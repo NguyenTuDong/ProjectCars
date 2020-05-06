@@ -26,32 +26,36 @@ class AdminTableSeeder extends Seeder
         $admin_role->permissions()->attach($all);
         $dev_role->permissions()->attach($all);
 
-        $developer = new Admin();
-        $developer->ten = 'Dong Nguyen';
-        $developer->email = 'tudong.ng@gmail.com';
-        $developer->password = bcrypt('123456');
-        $developer->save();
-        $developer->roles()->attach($admin_role);
+
+        $admin = new Admin();
+        $admin->ten = 'Admin';
+        $admin->email = 'admin@test.com';
+        $admin->email_verified_at = '2019-04-06 13:51:52';
+        $admin->password = bcrypt('123456');
+        $admin->created_at = '2019-04-06 13:51:52';
+        $admin->updated_at = '2019-04-06 13:51:52';
+        $admin->save();
+        $admin->roles()->attach($admin_role);
+
 
         $developer = new Admin();
-        $developer->ten = 'I am developer';
+        $developer->ten = 'Developer';
         $developer->email = 'dev@test.com';
+        $developer->email_verified_at = '2019-04-06 13:51:52';
         $developer->password = bcrypt('123456');
+        $developer->created_at = '2019-04-06 13:51:52';
+        $developer->updated_at = '2019-04-06 13:51:52';
         $developer->save();
         $developer->roles()->attach($dev_role);
 
         $manager = new Admin();
-        $manager->ten = 'I am manager';
+        $manager->ten = 'Manager';
         $manager->email = 'manager@test.com';
+        $manager->email_verified_at = '2019-04-06 13:51:52';
         $manager->password = bcrypt('123456');
+        $manager->created_at = '2019-04-06 13:51:52';
+        $manager->updated_at = '2019-04-06 13:51:52';
         $manager->save();
         $manager->roles()->attach($manager_role);
-
-        $admin = new Admin();
-        $admin->ten = 'I am admin';
-        $admin->email = 'admin@test.com';
-        $admin->password = bcrypt('123456');
-        $admin->save();
-        $admin->roles()->attach($admin_role);
     }
 }

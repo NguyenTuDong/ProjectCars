@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
+
 
 class RoleTableSeeder extends Seeder
 {
@@ -15,32 +17,38 @@ class RoleTableSeeder extends Seeder
             [
                 'slug' => 'admin',
                 'ten' => 'Admin',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'created_at' => '2019-04-06 13:51:52',
+                'updated_at' => '2019-04-06 13:51:52',
             ],
             [
                 'slug' => 'developer',
                 'ten' => 'Developer',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'created_at' => '2019-04-06 13:51:52',
+                'updated_at' => '2019-04-06 13:51:52',
             ],
             [
                 'slug' => 'manager',
                 'ten' => 'Manager',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'created_at' => '2019-04-06 13:51:52',
+                'updated_at' => '2019-04-06 13:51:52',
             ],
             [
                 'slug' => 'censor',
                 'ten' => 'Censor',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'created_at' => '2019-04-06 13:51:52',
+                'updated_at' => '2019-04-06 13:51:52',
             ],
             [
                 'slug' => 'accountant',
                 'ten' => 'Accountant',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'created_at' => '2019-04-06 13:51:52',
+                'updated_at' => '2019-04-06 13:51:52',
             ],
             [
                 'slug' => 'employee',
                 'ten' => 'Employee',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'created_at' => '2019-04-06 13:51:52',
+                'updated_at' => '2019-04-06 13:51:52',
             ],
         ];
 
