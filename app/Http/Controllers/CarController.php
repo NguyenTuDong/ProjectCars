@@ -8,6 +8,7 @@ use App\Convenient;
 use App\Convenientcar;
 use Auth;
 use Session;
+use Carbon\Carbon;
 
 class CarController extends Controller
 {
@@ -52,6 +53,13 @@ class CarController extends Controller
 
             $car = new Car();
 
+            // $start = new Carbon($request->start);
+            // $end = new Carbon($request->end);
+            $start = Carbon::createFromFormat('d/m/Y', $request->start);
+            $end = Carbon::createFromFormat('d/m/Y', $request->end);
+            
+            $cost = $start->diffInDays($end) * 1000;
+
             if($request->hasFile('hinhanh')){
                 $fileNameWithExt = $request->file('hinhanh')->getClientOriginalName();
                 $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
@@ -60,7 +68,7 @@ class CarController extends Controller
                 $path = $request->file('hinhanh')->storeAs('img/userfiles/'. md5(Auth::user()->id) . '/images', $fileNameToStore);
                 $car->hinhanh = $fileNameToStore;
             }
-
+            
             
             $car->ten = $request->name;
 
@@ -88,6 +96,9 @@ class CarController extends Controller
             $car->giamxoc = $request->giamxoc;
             $car->lopxe = $request->lopxe;
             $car->mota = $request->mota;
+            $car->ngaydang = $start->format('Y-m-d');
+            $car->ngayketthuc = $end->format('Y-m-d');
+            $car->phi = $cost;
 
             $convenients = $request->convenient;
 

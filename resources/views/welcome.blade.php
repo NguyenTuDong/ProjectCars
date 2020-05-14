@@ -106,11 +106,13 @@
                                     <span>{{$car->created_at->diffForHumans()}}</span>
                                 </div>
                                 <div class="mt-2">
+                                    <span class="badge">{{$car->types->brands->ten}}</span>
+                                    <span class="badge">{{$car->types->ten}}</span>
                                     @if (!empty($car->namsx))
                                         <span class="badge">{{$car->namsx}}</span>
                                     @endif
-                                    <span class="badge">{{$car->conditions['ten']}}</span>
-                                    <span class="badge">{{$car->fuels['ten']}}</span>
+                                    <span class="badge">{{$car->conditions->ten}}</span>
+                                    <span class="badge">{{$car->fuels->ten}}</span>
                                     @if (!empty($car->dungtich))
                                         <span class="badge">{{$car->dungtich}} cc</span>
                                     @endif
@@ -122,6 +124,7 @@
                         </div>
                     </div>
                 @endforeach
+                {{ $cars->links() }}
             </div>
         </div>
     </div>

@@ -20,21 +20,7 @@
     <link rel="stylesheet" href="{{asset('js/jqwidgets/styles/jqx.material.css')}}" type="text/css" />
     <link rel="stylesheet" href="{{asset('js/jqwidgets/styles/jqx.light.css')}}" type="text/css" />
 
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxcore.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxbuttons.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxscrollbar.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxsplitter.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxlistbox.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxdata.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxcombobox.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxinput.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxpasswordinput.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxtooltip.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxexpander.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxvalidator.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxmaskedinput.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxdropdownlist.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jqwidgets/jqxtextarea.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/jqwidgets/jqx-all.js')}}"></script>
 
     <link rel="stylesheet" href="{{asset('css/app.css')}}" type="text/css">
 

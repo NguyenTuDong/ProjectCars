@@ -314,3 +314,22 @@ a:hover {
   box-shadow: 0 50px 100px rgba(90, 119, 216, 0.328), 0 0 20px rgba(0, 0, 0, 0);
   z-index:1000;
 }
+.pagination {
+  justify-content: center;
+}
+.cost{
+  border-collapse: collapse;
+  min-width: 300px;
+  td{
+    padding: 7px 0;
+  }
+  td:last-child{
+    text-align: right;
+  }
+  .total{
+    font-weight: bold;
+    td:last-child{
+      color: #4DB748;
+    }
+  }
+}

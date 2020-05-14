@@ -11744,3 +11744,29 @@ a:hover {
   z-index: 1000;
 }
 
+.pagination {
+  -webkit-box-pack: center;
+          justify-content: center;
+}
+
+.cost {
+  border-collapse: collapse;
+  min-width: 300px;
+}
+
+.cost td {
+  padding: 7px 0;
+}
+
+.cost td:last-child {
+  text-align: right;
+}
+
+.cost .total {
+  font-weight: bold;
+}
+
+.cost .total td:last-child {
+  color: #4DB748;
+}
+

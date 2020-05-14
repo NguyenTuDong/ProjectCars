@@ -36,7 +36,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $cars = Car::where('trangthai', 2)->orderBy('created_at', 'DESC')->get();
+        $cars = Car::where('trangthai', 2)->orderBy('created_at', 'DESC')->paginate(10);
         $conditions = Condition::get();
 
         return view('welcome', compact('cars', 'conditions'));
