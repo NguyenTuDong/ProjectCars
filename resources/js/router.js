@@ -164,7 +164,8 @@ const routes = [
     name: 'role',
     component: Role,
     meta: {
-      title: 'Admin | Chức vụ'
+      title: 'Admin | Chức vụ',
+      requiredPermissions: ['quan-ly-chuc-vu'],
     }
   },
   { 
@@ -172,7 +173,8 @@ const routes = [
     name: 'employee',
     component: Employee,
     meta: {
-      title: 'Admin | Nhân viên'
+      title: 'Admin | Nhân viên',
+      requiredPermissions: ['xem-nhan-vien'],
     }
   },
   {
@@ -189,6 +191,7 @@ const routes = [
     component: EmployeeDetail,
     meta: {
       title: 'Admin | Chi tiết nhân viên',
+      requiredPermissions: ['xem-nhan-vien'],
     }
   },
 ]
@@ -207,6 +210,9 @@ router.beforeEach((to, from, next) => {
   }
   if(to.meta.requiredPermissions){
     var check = false;
+    if(to.meta.requiredPermissions.includes('xem-nhan-vien')){
+      if(to.params.id == auth.id) check = true;
+    }
     auth.permissions.forEach(element => {
       if (to.meta.requiredPermissions.includes(element.slug)) check = true;
     });

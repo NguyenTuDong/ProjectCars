@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="panel-header panel-header-sm"></div>
-    <div class="pop-up" v-if="$root.userCan('them-nhan-vien')">
+    <div id="add-employee" class="pop-up" v-if="$root.userCan('them-nhan-vien')">
       <div class="pop-up-inner">
         <div class="pop-up-header">
           <div class="pop-up-title">Thêm nhân viên</div>
@@ -106,12 +106,16 @@
                         @click="toggleOrderBy('sdt')"
                       >Số điện thoại</button>
                     </th>
+                    <th v-if="$root.userCan('xoa-nhan-vien')" class="table-employees-actions text-right">
+                      Tác vụ
+                    </th>
                   </thead>
                   <tbody>
                     <employee-item
                       v-for="employee in employees"
                       :key="employee.id"
                       :employee="employee"
+                      @showPopup="showPopup"
                     ></employee-item>
                   </tbody>
                 </table>
@@ -125,11 +129,18 @@
         </div>
       </div>
     </div>
+    
+    <modal
+      ref="modal"
+      :message="message"
+      @submit="deleteEmployee"
+    ></modal>
   </div>
 </template>
 
 <script>
 import EmployeeItem from './EmployeeItem'
+import Modal from '../Modal';
 import Pagination from '../Pagination';
 import { mapGetters } from 'vuex';
 
@@ -137,6 +148,7 @@ export default {
   name: 'Employee',
   components: {
     EmployeeItem,
+    Modal,
     Pagination,
   },
   data() {
@@ -145,6 +157,7 @@ export default {
       newEmail: '',
       newPassword: '',
       confirmation: '',
+      message: '',
       q: '',
       orderBy: '',
       isASC: false,
@@ -187,10 +200,19 @@ export default {
       }
     },
     addEmployee() {
-      $('.pop-up').fadeIn(300);
+      $('#add-employee').fadeIn(300);
+    },
+    showPopup(data){
+      this.message = "Bạn có muốn xóa nhân viên <b>"+data.ten+"</b> không?";
+      console.log(this.message);
+      this.$refs.modal.show(data);
     },
     cancel(){
-      $('.pop-up').fadeOut(300);
+      $('#add-employee').fadeOut(300);
+      this.newName = "";
+      this.newEmail = "";
+      this.newPassword = "";
+      this.confirmation = "";
     },
     submit() {
       if(this.$root.validation('#form-valid')){
@@ -206,6 +228,9 @@ export default {
         this.confirmation = "";
         $('.pop-up').fadeOut(300);
       }
+    },
+    deleteEmployee(data) {
+      this.$store.dispatch('deleteEmployee', data.id);
     },
     search() {
       var data = {
@@ -252,7 +277,10 @@ export default {
   width: 20%;
 }
 .table-employees-phone {
-  width: 20%;
+  width: 15%;
+}
+.table-employees-actions {
+  width: 5%;
 }
 
 .pop-up {

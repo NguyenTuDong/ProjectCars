@@ -1,5 +1,5 @@
 <template>
-  <div class="pop-up">
+  <div id="modal" class="pop-up">
     <div class="pop-up-inner">
       <div class="pop-up-header">
         <div class="pop-up-title">Thông báo</div>
@@ -34,14 +34,14 @@ export default {
   methods: {
     show(data){
       this.data = data;
-      $('.pop-up').fadeIn(300);
+      $('#modal').fadeIn(300);
     },
     cancel(){
-      $('.pop-up').fadeOut(300);
+      $('#modal').fadeOut(300);
     },
     submit() {
       this.$emit('submit', this.data);
-      $('.pop-up').fadeOut(300);
+      $('#modal').fadeOut(300);
     }
   }
 }

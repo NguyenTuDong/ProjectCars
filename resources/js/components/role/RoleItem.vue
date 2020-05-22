@@ -21,7 +21,7 @@
       </div>
     </td>
     <td v-else>
-      <div class="blocks-edit">
+      <div v-if="$root.userCan('phan-quyen')" class="blocks-edit">
         <span 
           v-for="permission in permissions" 
           :key="permission.id" 
@@ -55,7 +55,7 @@
         </div>
       </div>
     </td>
-    <td class="td-actions text-right">
+    <td v-if="$root.userCan('quan-ly-chuc-vu')" class="td-actions text-right">
       <button v-if="editing != role.id && role.slug != 'admin'" @click="edit" type="button" rel="tooltip" title="Chỉnh sửa" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
         <i class="now-ui-icons design-2_ruler-pencil"></i>
       </button>

@@ -26,6 +26,11 @@
         {{employee.sdt}}
       </a>
     </td>
+    <td v-if="$root.userCan('xoa-nhan-vien')" class="td-actions text-right">
+      <button @click="showPopup" type="button" rel="tooltip" title="Xóa" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
+        <i class="now-ui-icons ui-1_simple-remove"></i>
+      </button>
+    </td>
   </tr>
 </template>
 
@@ -39,6 +44,11 @@ export default {
       required: true,
     }
   },
+  methods: {
+    showPopup() {
+      this.$emit('showPopup', this.employee);
+    },
+  }
 }
 </script>
 

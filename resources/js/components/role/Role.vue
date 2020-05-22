@@ -8,7 +8,7 @@
           <div class="card">
             <div class="d-flex card-header">
               <h4 class="card-title">Chức vụ</h4>
-              <button v-if="roles" class="btn btn-primary ml-auto" @click="addRole">Thêm chức vụ</button>
+              <button v-if="roles && $root.userCan('quan-ly-chuc-vu')" class="btn btn-primary ml-auto" @click="addRole">Thêm chức vụ</button>
             </div>
             <div v-if="!roles" class="lds-dual-ring"></div>
             <div v-else class="card-body">
@@ -33,7 +33,7 @@
                     <th class="table-roles-admins">
                       Nhân viên
                     </th>
-                    <th class="table-roles-actions text-right">
+                    <th v-if="$root.userCan('quan-ly-chuc-vu')" class="table-roles-actions text-right">
                       Tác vụ
                     </th>
                   </thead>
@@ -47,7 +47,7 @@
                       @changeEditing="changeEditing"
                       @showPopup="showPopup"
                     ></role-item>
-                    <tr v-if="isAdd">
+                    <tr v-if="isAdd && $root.userCan('quan-ly-chuc-vu')">
                       <td></td>
                       <td>
                         <div class="form-group">
@@ -65,7 +65,7 @@
                     </tr>
                   </tbody>
                 </table>
-                <div v-if="!isAdd" class="d-flex">
+                <div v-if="!isAdd && $root.userCan('quan-ly-chuc-vu')" class="d-flex">
                   <button class="btn btn-primary ml-auto" @click="addRole">Thêm chức vụ</button>
                 </div>
               </div>

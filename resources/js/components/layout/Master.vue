@@ -14,7 +14,7 @@
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
-           <router-link tag="li" :to="{name: 'dashboard'}" :class="{ 'is-disable': !$root.userCan('xem-dashboard') }">
+           <router-link tag="li" :to="{name: 'dashboard'}">
             <a href="#">
               <i class="now-ui-icons design_app"></i>
               <p>Dashboard</p>
@@ -95,13 +95,13 @@
             </a>
           </router-link>
           <hr class="nav-seq">
-          <router-link tag="li" :to="{name: 'role'}">
+          <router-link tag="li" :to="{name: 'role'}" :class="{ 'is-disable': !$root.userCan('quan-ly-chuc-vu') }">
             <a href="#">
               <i class="now-ui-icons ui-2_like"></i>
               <p>Chức vụ</p>
             </a>
           </router-link>
-          <router-link tag="li" :to="{name: 'employee'}">
+          <router-link tag="li" :to="{name: 'employee'}" :class="{ 'is-disable': !$root.userCan('xem-nhan-vien') }">
             <a href="#">
               <i class="now-ui-icons ui-2_like"></i>
               <p>Nhân viên</p>

@@ -57,7 +57,7 @@ class EmployeeController extends Controller
     public function show($id)
     {
         $user = Auth::guard('admin')->user();
-        if($user->hasPermission('xem-nhan-vien')){
+        if($user->hasPermission('xem-nhan-vien') || $user->id == $id){
 
             $items = Admin::where('id', $id)
             ->with(['roles.permissions', 'permissions'])->first();
@@ -152,6 +152,28 @@ class EmployeeController extends Controller
         
         return response([
             'message' => 'Bạn không có quyền sửa tài khoản này!' 
+        ], 401);
+    }
+    
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $user = Auth::guard('admin')->user();
+        if($user->hasPermission('xoa-nhan-vien')){
+
+            $item = Admin::findOrFail($id);
+            $item->delete();
+            return response($item, 200);
+        } 
+        
+        return response([
+            'message' => 'Bạn không có quyền xoá nhân viên!' 
         ], 401);
     }
 

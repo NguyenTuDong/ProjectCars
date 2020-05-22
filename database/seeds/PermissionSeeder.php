@@ -57,12 +57,6 @@ class PermissionSeeder extends Seeder
                 'updated_at' => '2019-04-06 13:51:52',
             ],
             [
-                'slug' => 'sua-nhan-vien',
-                'ten' => 'Sửa nhân viên',
-                'created_at' => '2019-04-06 13:51:52',
-                'updated_at' => '2019-04-06 13:51:52',
-            ],
-            [
                 'slug' => 'xem-tin',
                 'ten' => 'Xem tin',
                 'created_at' => '2019-04-06 13:51:52',

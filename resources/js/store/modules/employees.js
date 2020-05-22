@@ -34,6 +34,12 @@ const mutations = {
     data.count = 0;
     state.employees.data.push(data);
   },
+  deleteEmployee(state, data) {
+    var index = state.employees.data.findIndex((obj) => {
+      return obj.id == data.id;
+    });
+    state.employees.data.splice(index, 1);
+  },
   employeeCount(state, data) {
     state.employeeCount = data;
   },
@@ -205,6 +211,48 @@ const actions = {
           icon: "now-ui-icons ui-1_bell-53",
           message: "Cập nhật chức vụ nhân viên thất bại."
 
+        }, {
+          type: 'danger',
+          timer: 3000,
+          placement: {
+          from: 'top',
+          align: 'right'
+          }
+        });
+      }
+    })
+  },
+  deleteEmployee({commit, dispatch, rootGetters}, id) {
+    $.ajax({
+      headers: {
+      'X-CSRF-TOKEN': rootGetters.csrf,
+      },
+      url : '/admin/api/employee/delete/'+id,
+      type : "POST",
+      processData: false,
+      contentType: false,
+      success:function(data)
+      {
+        commit('deleteEmployee', data);
+        dispatch('auth');
+
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Xóa nhân viên <b>#"+data.id+"</b> thành công."
+
+        }, {
+          type: 'success',
+          timer: 3000,
+          placement: {
+          from: 'top',
+          align: 'right'
+          }
+        });
+      },
+      error: function (errors) {
+        $.notify({
+          icon: "now-ui-icons ui-1_bell-53",
+          message: "Xóa nhân viên <b>#"+data.id+"</b> thất bại."
         }, {
           type: 'danger',
           timer: 3000,

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Role;
 use App\Permission;
+use Auth;
 
 class RoleController extends Controller
 {
@@ -29,7 +30,7 @@ class RoleController extends Controller
     {
         $query = $request->q;
 
-        $orderBy = 'id';
+        $orderBy = 'created_at';
         if($request->orderBy != null){
             $orderBy = $request->orderBy;
         }
@@ -49,11 +50,19 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $item = new Role();
-        $item->ten = $request->name;
-        $item->slug = $request->slug;
-        $item->save();
-        return response($item, 201);
+        $user = Auth::guard('admin')->user();
+        if($user->hasPermission('quan-ly-chuc-vu')){
+
+            $item = new Role();
+            $item->ten = $request->name;
+            $item->slug = $request->slug;
+            $item->save();
+            return response($item, 201);
+        } 
+        
+        return response([
+            'message' => 'Bạn không có quyền thêm chức vụ!' 
+        ], 401);
     }
 
     /**
@@ -65,15 +74,24 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user = Auth::guard('admin')->user();
+        if($user->hasPermission('quan-ly-chuc-vu')){
+            $item = Role::findOrFail($id);
+            $item->ten = $request->name;
+            $item->save();
 
-        $item = Role::findOrFail($id);
-        $item->ten = $request->name;
-        $item->save();
-
-        $permissions = Permission::whereIn('id', json_decode($request->permissions))->get();
-        $item->permissions()->detach();
-        $item->permissions()->attach($permissions);
-        return response()->json($item->with(['permissions', 'admins'])->where('id', $id)->first());
+            if($user->hasPermission('phan-quyen')){
+                $permissions = Permission::whereIn('id', json_decode($request->permissions))->get();
+                $item->permissions()->detach();
+                $item->permissions()->attach($permissions);
+            }
+            
+            return response()->json($item->with(['permissions', 'admins'])->where('id', $id)->first());
+        } 
+        
+        return response([
+            'message' => 'Bạn không có quyền sửa chức vụ!' 
+        ], 401);
     }
 
     /**
@@ -84,10 +102,18 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        $item = Role::findOrFail($id);
-        $item->trangthai = 1;
-        $item->save();
-        return response($item, 200);
+        $user = Auth::guard('admin')->user();
+        if($user->hasPermission('quan-ly-chuc-vu')){
+
+            $item = Role::findOrFail($id);
+            $item->trangthai = 1;
+            $item->save();
+            return response($item, 200);
+        } 
+        
+        return response([
+            'message' => 'Bạn không có quyền xoá chức vụ!' 
+        ], 401);
     }
 
     public function getRoles()
