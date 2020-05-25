@@ -1,71 +1,66 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
-<table style="width:100%">
-    <tr>
-        <td class="img-login text-center" style="width: 50%;">
-            <a class="top-img" href="{{route('home')}}"><strong>Cars</strong></a>
-            <a class="bottom-img" href="{{route('register')}}">Tạo tài khoản</a>
-        </td>
-        <td class="form" style="width: 50%;">
-            <h1><strong>Đăng nhập Admin</strong></h1>
-
-            <form method="POST" action="{{ route('admin.login.submit') }}">
-                @csrf
-
-                <div class="my-4">
-                    <input type="email" id="email" class="form-control @error('email') is-invalid @enderror" name="email"
-                        value="{{ old('email') }}" required autocomplete="email" autofocus />
+<nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
+  <div class="container-fluid">
+    <div class="navbar-wrapper">
+      <a class="navbar-brand" href="{{route('home')}}">Trang chủ</a>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
+      aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-bar navbar-kebab"></span>
+      <span class="navbar-toggler-bar navbar-kebab"></span>
+      <span class="navbar-toggler-bar navbar-kebab"></span>
+    </button>
+  </div>
+</nav>
+<div class="wrapper wrapper-full-page ">
+  <div class="full-page login-page section-image">
+    <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
+    <div class="content">
+      <div class="container">
+        <div class="col-md-4 ml-auto mr-auto">
+          <form method="POST" action="{{ route('admin.login.submit') }}">
+            @csrf
+            <div class="card card-login card-plain">
+              <div class="card-header ">
+                <div class="logo-container">
+                  Đăng nhập Admin
                 </div>
-
-                @error('email')
-                <div class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
+              </div>
+              <div class="card-body ">
+                <div class="input-group no-border form-control-lg">
+                  <span class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="now-ui-icons users_circle-08"></i>
+                    </div>
+                  </span>
+                  <input type="email" id="email" class="form-control @error('email') is-invalid @enderror" name="email"
+                    value="{{ old('email') }}" required autocomplete="email" autofocus />
                 </div>
-                @enderror
-
-                <div class="my-4">
-                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password"
-                        required autocomplete="current-password">
+                <div class="input-group no-border form-control-lg">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="now-ui-icons text_caps-small"></i>
+                    </div>
+                  </div>
+                  <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password"
+                    required autocomplete="current-password">
                 </div>
-
-                @error('password')
-                <div class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
+              </div>
+              <div class="card-footer ">
+                <button type="submit" class="btn btn-primary btn-round btn-lg btn-block mb-3">Đăng nhập</button>
+                {{-- <div class="pull-left">
+                  
+                </div> --}}
+                <div class="text-center">
+                  <h6><a href="{{ route('admin.password.request') }}" class="link footer-link">Quên mật khẩu?</a></h6>
                 </div>
-                @enderror
-
-                <div class="form-check my-4">
-                    <input class="form-check-input" type="checkbox" name="remember" id="remember"
-                        {{ old('remember') ? 'checked' : '' }}>
-
-                    <label class="form-check-label" for="remember">
-                        {{ __('Ghi nhớ đăng nhập') }}
-                    </label>
-                </div>
-
-                <div class="my-4">
-                    <button type="submit" class="btn btn-primary">
-                        {{ __('Đăng nhập') }}
-                    </button>
-
-                    @if (Route::has('password.request'))
-                    <a class="btn btn-link" href="{{ route('admin.password.request') }}">
-                        {{ __('Quên mật khẩu?') }}
-                    </a>
-                    @endif
-                </div>
-            </form>
-        </td>
-    </tr>
-</table>
-@endsection
-
-@section('script')
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#email").jqxInput({placeHolder: "Email", height: 40, width: 350, minLength: 1, theme: 'material'});
-            $("#password").jqxInput({placeHolder: "Mật khẩu", height: 40, width: 350, minLength: 1, theme: 'material'});
-        });
-    </script>
-@endsection
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="full-page-background" style="background-image: url(../img/background/login.jpg) "></div>
+    @endsection

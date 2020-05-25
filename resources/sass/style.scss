@@ -333,3 +333,67 @@ a:hover {
     }
   }
 }
+
+//Admin
+.full-page .full-page-background {
+    z-index: -1;
+    background-size: cover;
+    background-position: 50%;
+}
+.full-page .full-page-background {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: block;
+    top: 0;
+    left: 0;
+}
+.section-image:after {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: block;
+    left: 0;
+    top: 0;
+    content: "";
+    background-color: rgba(0,0,0,.7);
+}
+.full-page>.content, .full-page>.footer {
+    position: relative;
+    z-index: 4;
+}
+.full-page>.content {
+    padding-bottom: 150px;
+    padding-top: 150px;
+    width: 100%;
+}
+.login-page .card-login .logo-container {
+    text-align: center;
+    margin-bottom: 55px;
+    color: white;
+    font-weight: bold;
+    font-size: 30px;
+}
+.login-page .link {
+    font-size: 10px;
+    color: #fff;
+    text-decoration: none;
+}
+.login-page .card-login.card-plain .form-control {
+    border-color: hsla(0,0%,100%,.5);
+    color: #fff;
+}
+.login-page .card-login.card-plain .form-group.no-border .form-control, .login-page .card-login.card-plain .input-group.no-border .form-control {
+    background-color: hsla(0,0%,100%,.1);
+    color: #fff;
+    &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: #fff;
+      opacity: 1; /* Firefox */
+    }
+}
+.login-page .card-login.card-plain .form-group.no-border .input-group-append .input-group-text, .login-page .card-login.card-plain .form-group.no-border .input-group-prepend .input-group-text, .login-page .card-login.card-plain .input-group.no-border .input-group-append .input-group-text, .login-page .card-login.card-plain .input-group.no-border .input-group-prepend .input-group-text {
+    background-color: hsla(0,0%,100%,.1);
+    border: none;
+    color: #fff;
+}

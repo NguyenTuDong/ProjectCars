@@ -3,8 +3,6 @@
 
 <head>
   <meta charset="utf-8" />
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="author" content="Nguyen Tu Dong">
@@ -16,10 +14,6 @@
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-  <!-- CSS Files -->
-  {{-- <link href="css/now-ui-dashboard.css?v=1.5.0" rel="stylesheet" /> --}}
-  <!-- CSS Just for demo purpose, don't include it in your project -->
-  <!-- <link href="../assets/demo/demo.css" rel="stylesheet" /> -->
   <link rel="stylesheet" href="{{asset('css/app.css')}}" type="text/css">
   <link rel="stylesheet" href="{{asset('css/admin.css')}}" type="text/css">
 </head>
@@ -42,6 +36,7 @@
   <script src="js/admin/plugins/chartjs.min.js"></script>
   <!--  Notifications Plugin    -->
   <script src="js/admin/plugins/bootstrap-notify.js"></script>
+  <script src="js/admin/now-ui-dashboard.js"></script>
 
 </body>
 
