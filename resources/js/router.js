@@ -19,182 +19,192 @@ import Role from './components/role/Role'
 import Employee from './components/employee/Employee'
 import EmployeeDetail from './components/employee/EmployeeDetail'
 import EmployeeEdit from './components/employee/EmployeeEdit'
+import Report from './components/report/Report'
 
 import {store} from './store/store';
 
 Vue.use(VueRouter);
 
 const routes = [
-  { 
-    path: '/admin/', 
-    name: 'dashboard',
-    component: Dashboard,
-    meta: {
-      title: 'Admin | Dashboard',
+    {
+        path: "/admin/",
+        name: "dashboard",
+        component: Dashboard,
+        meta: {
+            title: "Admin | Dashboard"
+        }
+    },
+    {
+        path: "/admin/brand",
+        name: "brand",
+        component: Brand,
+        meta: {
+            title: "Admin | Thương hiệu",
+            requiredPermissions: ["quan-ly-danh-muc"]
+        }
+    },
+    {
+        path: "/admin/type",
+        name: "type",
+        component: Type,
+        meta: {
+            title: "Admin | Dòng xe",
+            requiredPermissions: ["quan-ly-danh-muc"]
+        }
+    },
+    {
+        path: "/admin/color",
+        name: "color",
+        component: Color,
+        meta: {
+            title: "Admin | Màu xe",
+            requiredPermissions: ["quan-ly-danh-muc"]
+        }
+    },
+    {
+        path: "/admin/condition",
+        name: "condition",
+        component: Condition,
+        meta: {
+            title: "Admin | Tình trạng",
+            requiredPermissions: ["quan-ly-danh-muc"]
+        }
+    },
+    {
+        path: "/admin/origin",
+        name: "origin",
+        component: Origin,
+        meta: {
+            title: "Admin | Nguồn gốc",
+            requiredPermissions: ["quan-ly-danh-muc"]
+        }
+    },
+    {
+        path: "/admin/fuel",
+        name: "fuel",
+        component: Fuel,
+        meta: {
+            title: "Admin | Nhiên liệu",
+            requiredPermissions: ["quan-ly-danh-muc"]
+        }
+    },
+    {
+        path: "/admin/transmission",
+        name: "transmission",
+        component: Transmission,
+        meta: {
+            title: "Admin | Hộp số",
+            requiredPermissions: ["quan-ly-danh-muc"]
+        }
+    },
+    {
+        path: "/admin/style",
+        name: "style",
+        component: Style,
+        meta: {
+            title: "Admin | Kiểu dáng",
+            requiredPermissions: ["quan-ly-danh-muc"]
+        }
+    },
+    {
+        path: "/admin/convenient",
+        name: "convenient",
+        component: Convenient,
+        meta: {
+            title: "Admin | Tiện nghi",
+            requiredPermissions: ["quan-ly-danh-muc"]
+        }
+    },
+    {
+        path: "/admin/car",
+        name: "car",
+        component: Car,
+        meta: {
+            title: "Admin | Mẫu tin",
+            requiredPermissions: ["xem-tin", "duyet-tin", "xoa-tin"]
+        }
+    },
+    {
+        path: "/admin/car/:id",
+        name: "car-detail",
+        component: CarDetail,
+        meta: {
+            title: "Admin | Chi tiết mâu tin",
+            requiredPermissions: ["xem-tin", "duyet-tin", "xoa-tin"]
+        }
+    },
+    {
+        path: "/admin/user",
+        name: "user",
+        component: User,
+        meta: {
+            title: "Admin | Người dùng",
+            requiredPermissions: ["xem-khach-hang"]
+        }
+    },
+    {
+        path: "/admin/user/:id",
+        name: "user-detail",
+        component: UserDetail,
+        meta: {
+            title: "Admin | Chi tiết người dùng",
+            requiredPermissions: ["xem-khach-hang"]
+        }
+    },
+    {
+        path: "/admin/contact",
+        name: "contact",
+        component: Contact,
+        meta: {
+            title: "Admin | Liên hệ",
+            requiredPermissions: ["xem-lien-he"]
+        }
+    },
+    {
+        path: "/admin/role",
+        name: "role",
+        component: Role,
+        meta: {
+            title: "Admin | Chức vụ",
+            requiredPermissions: ["quan-ly-chuc-vu"]
+        }
+    },
+    {
+        path: "/admin/employee",
+        name: "employee",
+        component: Employee,
+        meta: {
+            title: "Admin | Nhân viên",
+            requiredPermissions: ["xem-nhan-vien"]
+        }
+    },
+    {
+        path: "/admin/employee/edit",
+        name: "employee-edit",
+        component: EmployeeEdit,
+        meta: {
+            title: "Admin | Chỉnh sửa thông tin"
+        }
+    },
+    {
+        path: "/admin/employee/:id",
+        name: "employee-detail",
+        component: EmployeeDetail,
+        meta: {
+            title: "Admin | Chi tiết nhân viên",
+            requiredPermissions: ["xem-nhan-vien"]
+        }
+    },
+    {
+        path: "/admin/report",
+        name: "report",
+        component: Report,
+        meta: {
+            title: "Admin | Báo cáo",
+            requiredPermissions: ["bao-cao"]
+        }
     }
-  },
-  { 
-    path: '/admin/brand', 
-    name: 'brand',
-    component: Brand,
-    meta: {
-      title: 'Admin | Thương hiệu',
-      requiredPermissions: ['quan-ly-danh-muc'],
-    }
-  },
-  { 
-    path: '/admin/type', 
-    name: 'type',
-    component: Type,
-    meta: {
-      title: 'Admin | Dòng xe',
-      requiredPermissions: ['quan-ly-danh-muc'],
-    }
-  },
-  { 
-    path: '/admin/color', 
-    name: 'color',
-    component: Color,
-    meta: {
-      title: 'Admin | Màu xe',
-      requiredPermissions: ['quan-ly-danh-muc'],
-    }
-  },
-  { 
-    path: '/admin/condition', 
-    name: 'condition',
-    component: Condition,
-    meta: {
-      title: 'Admin | Tình trạng',
-      requiredPermissions: ['quan-ly-danh-muc'],
-    }
-  },
-  { 
-    path: '/admin/origin', 
-    name: 'origin',
-    component: Origin,
-    meta: {
-      title: 'Admin | Nguồn gốc',
-      requiredPermissions: ['quan-ly-danh-muc'],
-    }
-  },
-  { 
-    path: '/admin/fuel', 
-    name: 'fuel',
-    component: Fuel,
-    meta: {
-      title: 'Admin | Nhiên liệu',
-      requiredPermissions: ['quan-ly-danh-muc'],
-    }
-  },
-  { 
-    path: '/admin/transmission', 
-    name: 'transmission',
-    component: Transmission,
-    meta: {
-      title: 'Admin | Hộp số',
-      requiredPermissions: ['quan-ly-danh-muc'],
-    }
-  },
-  { 
-    path: '/admin/style', 
-    name: 'style',
-    component: Style,
-    meta: {
-      title: 'Admin | Kiểu dáng',
-      requiredPermissions: ['quan-ly-danh-muc'],
-    }
-  },
-  { 
-    path: '/admin/convenient', 
-    name: 'convenient',
-    component: Convenient,
-    meta: {
-      title: 'Admin | Tiện nghi',
-      requiredPermissions: ['quan-ly-danh-muc'],
-    }
-  },
-  { 
-    path: '/admin/car', 
-    name: 'car',
-    component: Car,
-    meta: {
-      title: 'Admin | Mẫu tin',
-      requiredPermissions: ['xem-tin', 'duyet-tin', 'xoa-tin'],
-    }
-  },
-  {
-    path: '/admin/car/:id',
-    name: 'car-detail',
-    component: CarDetail,
-    meta: {
-      title: 'Admin | Chi tiết mâu tin',
-      requiredPermissions: ['xem-tin', 'duyet-tin', 'xoa-tin'],
-    }
-  },
-  { 
-    path: '/admin/user', 
-    name: 'user',
-    component: User,
-    meta: {
-      title: 'Admin | Người dùng',
-      requiredPermissions: ['xem-khach-hang'],
-    }
-  },
-  {
-    path: '/admin/user/:id',
-    name: 'user-detail',
-    component: UserDetail,
-    meta: {
-      title: 'Admin | Chi tiết người dùng',
-      requiredPermissions: ['xem-khach-hang'],
-    }
-  },
-  { 
-    path: '/admin/contact', 
-    name: 'contact',
-    component: Contact,
-    meta: {
-      title: 'Admin | Liên hệ',
-      requiredPermissions: ['xem-lien-he'],
-    }
-  },
-  { 
-    path: '/admin/role', 
-    name: 'role',
-    component: Role,
-    meta: {
-      title: 'Admin | Chức vụ',
-      requiredPermissions: ['quan-ly-chuc-vu'],
-    }
-  },
-  { 
-    path: '/admin/employee', 
-    name: 'employee',
-    component: Employee,
-    meta: {
-      title: 'Admin | Nhân viên',
-      requiredPermissions: ['xem-nhan-vien'],
-    }
-  },
-  {
-    path: '/admin/employee/edit',
-    name: 'employee-edit',
-    component: EmployeeEdit,
-    meta: {
-      title: 'Admin | Chỉnh sửa thông tin',
-    }
-  },
-  {
-    path: '/admin/employee/:id',
-    name: 'employee-detail',
-    component: EmployeeDetail,
-    meta: {
-      title: 'Admin | Chi tiết nhân viên',
-      requiredPermissions: ['xem-nhan-vien'],
-    }
-  },
-]
+];
 
 const router = new VueRouter({
   mode: 'history',

@@ -110,7 +110,7 @@ class HomeController extends Controller
         if (!empty($request->condition)) {
             $search->whereIn('conditions_id', $request->condition);
         }
-        $cars = $search->get();
+        $cars = $search->paginate(10);
         $conditions = Condition::get();
         return view('welcome', compact('cars', 'conditions'))->withName($request->name)->withLocation($request->location)->withBrand($request->brand)->withType($request->type)->withNamsxS($request->namsx_s)->withNamsxE($request->namsx_e)->withGiaS($request->gia_s)->withGiaE($request->gia_e)->withTinhtrang($request->condition);
     }

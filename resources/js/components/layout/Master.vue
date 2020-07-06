@@ -107,6 +107,12 @@
               <p>Nhân viên</p>
             </a>
           </router-link>
+          <router-link tag="li" :to="{name: 'report'}" :class="{ 'is-disable': !$root.userCan('bao-cao') }">
+            <a href="#">
+              <i class="now-ui-icons ui-2_like"></i>
+              <p>Báo cáo</p>
+            </a>
+          </router-link>
         </ul>
       </div>
     </div>

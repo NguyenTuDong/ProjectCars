@@ -25,12 +25,7 @@
   
   <script src="{{asset('js/app.js')}}"></script>
   <script type="text/javascript" src="{{asset('js/scripts/jquery-1.11.1.min.js')}}"></script>
-  <script type="text/javascript" src="{{asset('js/jqwidgets/jqxcore.js')}}"></script>
-  <script type="text/javascript" src="{{asset('js/jqwidgets/jqxinput.js')}}"></script>
-  <script type="text/javascript" src="{{asset('js/jqwidgets/jqxpasswordinput.js')}}"></script>
-  <script type="text/javascript" src="{{asset('js/jqwidgets/jqxtooltip.js')}}"></script>
-  <script type="text/javascript" src="{{asset('js/jqwidgets/jqxvalidator.js')}}"></script>
-  <script type="text/javascript" src="{{asset('js/jqwidgets/jqxmaskedinput.js')}}"></script>
+  <script type="text/javascript" src="{{asset('js/jqwidgets/jqx-all.js')}}"></script>
 </head>
 
 <body>
