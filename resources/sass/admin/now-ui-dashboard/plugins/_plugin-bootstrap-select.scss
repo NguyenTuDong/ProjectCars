@@ -1,0 +1,45 @@
+.bootstrap-select>.dropdown-toggle {
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    text-align: right;
+    white-space: nowrap;
+    margin: 0;
+    display: block;
+}
+.bootstrap-select .dropdown-toggle:before {
+    content: "";
+    display: inline-block;
+}
+.bootstrap-select .dropdown-toggle:focus, .bootstrap-select>select.mobile-device:focus+.dropdown-toggle {
+    outline: 0!important;
+    outline-offset: 0;
+}
+.bootstrap-select .dropdown-toggle .filter-option {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-top: inherit;
+    padding-right: inherit;
+    padding-bottom: inherit;
+    padding-left: inherit;
+    height: 100%;
+    width: 100%;
+    text-align: left;
+    outline: none;
+}
+.bootstrap-select .dropdown-toggle .filter-option-inner {
+    padding-right: inherit;
+}
+.bootstrap-select>.dropdown-menu {
+    overflow: visible!important;
+}
+.bootstrap-select .dropdown-menu.inner li a.disabled, .bootstrap-select .dropdown-menu.inner li a:disabled, .dropdown-menu .dropdown-item.disabled, .dropdown-menu .dropdown-item:disabled {
+    color: hsla(0,0%,71%,.6);
+}
+.bootstrap-select .dropdown-menu li.disabled a {
+    cursor: not-allowed;
+}
+.bootstrap-select .dropdown-item.active, .bootstrap-select .dropdown-item:active {
+    background-color: inherit;
+}

@@ -333,6 +333,65 @@ Copyright (c) 2015 Daniel Eden
   }
 }
 
+.bootstrap-select > .dropdown-toggle {
+  position: relative;
+  width: 100%;
+  z-index: 1;
+  text-align: right;
+  white-space: nowrap;
+  margin: 0;
+  display: block;
+}
+
+.bootstrap-select .dropdown-toggle:before {
+  content: "";
+  display: inline-block;
+}
+
+.bootstrap-select .dropdown-toggle:focus,
+.bootstrap-select > select.mobile-device:focus + .dropdown-toggle {
+  outline: 0 !important;
+  outline-offset: 0;
+}
+
+.bootstrap-select .dropdown-toggle .filter-option {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding-top: inherit;
+  padding-right: inherit;
+  padding-bottom: inherit;
+  padding-left: inherit;
+  height: 100%;
+  width: 100%;
+  text-align: left;
+  outline: none;
+}
+
+.bootstrap-select .dropdown-toggle .filter-option-inner {
+  padding-right: inherit;
+}
+
+.bootstrap-select > .dropdown-menu {
+  overflow: visible !important;
+}
+
+.bootstrap-select .dropdown-menu.inner li a.disabled,
+.bootstrap-select .dropdown-menu.inner li a:disabled,
+.dropdown-menu .dropdown-item.disabled,
+.dropdown-menu .dropdown-item:disabled {
+  color: rgba(181, 181, 181, 0.6);
+}
+
+.bootstrap-select .dropdown-menu li.disabled a {
+  cursor: not-allowed;
+}
+
+.bootstrap-select .dropdown-item.active,
+.bootstrap-select .dropdown-item:active {
+  background-color: inherit;
+}
+
 .btn,
 .navbar .navbar-nav > a.btn {
   border-width: 2px;
@@ -2518,6 +2577,46 @@ a[data-toggle=collapse][aria-expanded=true] .caret,
   background-color: #FFFFFF !important;
 }
 
+.nav-pills .nav-item .nav-link {
+  padding: 0 15.5px;
+  text-align: center;
+  padding: 11px 23px;
+  min-width: 100px;
+  font-weight: 400;
+  color: #444;
+}
+
+.nav-pills .nav-item .nav-link,
+.nav-pills .nav-item .nav-link:hover {
+  background-color: rgba(222, 222, 222, 0.3);
+}
+
+.nav-pills .nav-item .nav-link.active,
+.nav-pills .nav-item .nav-link.active:focus,
+.nav-pills .nav-item .nav-link.active:hover {
+  background-color: #9a9a9a;
+  color: #fff;
+  box-shadow: 0 5px 35px 0 rgba(0, 0, 0, 0.3);
+}
+
+.nav-pills:not(.nav-pills-icons):not(.nav-pills-just-icons) .nav-item .nav-link {
+  border-radius: 30px;
+}
+
+.nav-pills.nav-pills-primary .nav-item .nav-link.active,
+.nav-pills.nav-pills-primary .nav-item .nav-link.active:focus,
+.nav-pills.nav-pills-primary .nav-item .nav-link.active:hover {
+  background-color: #f96332;
+}
+
+.nav-pills.nav-pills:not(.flex-column) .nav-item:not(:last-child) .nav-link {
+  margin-right: 19px;
+}
+
+.tab-space {
+  padding: 20px 0 50px;
+}
+
 .page-header {
   min-height: 100vh;
   max-height: 999px;
@@ -2694,9 +2793,9 @@ a[data-toggle=collapse][aria-expanded=true] .caret,
 .dropdown-menu .dropdown-item,
 .bootstrap-select .dropdown-menu.inner li a {
   font-size: 0.8571em;
-  padding-top: 0.6rem;
-  padding-bottom: 0.6rem;
-  margin-top: 5px;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+  margin-top: 3px;
   -webkit-transition: all 150ms linear;
   transition: all 150ms linear;
 }

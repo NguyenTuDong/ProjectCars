@@ -89,9 +89,9 @@
     .dropdown-item,
     .bootstrap-select &.inner li a{
         font-size: $font-size-small;
-        padding-top: .6rem;
-        padding-bottom: .6rem;
-        margin-top: 5px;
+        padding-top: .3rem;
+        padding-bottom: .3rem;
+        margin-top: 3px;
         @include transition($fast-transition-time, $transition-linear);
 
         &:hover,

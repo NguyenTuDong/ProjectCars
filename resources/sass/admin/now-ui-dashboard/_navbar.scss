@@ -279,3 +279,38 @@
 .bg-white{
     background-color: $white-color !important;
 }
+
+.nav-pills .nav-item .nav-link {
+    padding: 0 15.5px;
+    text-align: center;
+    padding: 11px 23px;
+    min-width: 100px;
+    font-weight: 400;
+    color: #444;
+}
+
+.nav-pills .nav-item .nav-link, .nav-pills .nav-item .nav-link:hover {
+    background-color: hsla(0,0%,87%,.3);
+}
+
+.nav-pills .nav-item .nav-link.active, .nav-pills .nav-item .nav-link.active:focus, .nav-pills .nav-item .nav-link.active:hover {
+    background-color: #9a9a9a;
+    color: #fff;
+    box-shadow: 0 5px 35px 0 rgba(0,0,0,.3);
+}
+
+.nav-pills:not(.nav-pills-icons):not(.nav-pills-just-icons) .nav-item .nav-link {
+    border-radius: 30px;
+}
+
+.nav-pills.nav-pills-primary .nav-item .nav-link.active, .nav-pills.nav-pills-primary .nav-item .nav-link.active:focus, .nav-pills.nav-pills-primary .nav-item .nav-link.active:hover {
+    background-color: #f96332;
+}
+
+.nav-pills.nav-pills:not(.flex-column) .nav-item:not(:last-child) .nav-link {
+    margin-right: 19px;
+}
+
+.tab-space {
+    padding: 20px 0 50px;
+}
