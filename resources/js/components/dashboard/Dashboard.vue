@@ -179,8 +179,8 @@
 </template>
 
 <script>
-import BigChart from "./BigChart";
-import SmallChart from "./SmallChart";
+import BigChart from "../BigChart";
+import SmallChart from "../SmallChart";
 import { mapGetters } from 'vuex';
 
 export default {

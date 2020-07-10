@@ -134,6 +134,9 @@ Route::prefix('admin')->group(function() {
     Route::post('/employee/{employee}', 'Admin\EmployeeController@update');
     Route::get('/employee/{id}', 'Admin\EmployeeController@show');
     Route::post('/employee/delete/{id}', 'Admin\EmployeeController@destroy');
+
+    //Report
+    Route::get('/report/cost', 'Admin\ReportController@countCost');
   });
 });
 

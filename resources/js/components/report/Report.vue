@@ -45,9 +45,18 @@
               </div>
               <div class="tab-content tab-space">
                 <div class="tab-pane active" id="link1">
-                  Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits.
-                  <br />
-                  <br />Dramatically visualize customer directed convergence without revolutionary ROI.
+                  <div class="chart-report">
+                    <small-chart
+                      :canvas="'cost'"
+                      :label="'Doanh số'"
+                      :color="'#18ce0f'"
+                      :yAxes="true"
+                      :xAxes="true"
+                      :bgColor="'rgba(24, 206, 15, 0.4)'"
+                      :pointRadius="0"
+                      :data="cost"
+                    ></small-chart>
+                  </div>
                 </div>
                 <div class="tab-pane" id="link2">
                   Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas.
@@ -69,20 +78,33 @@
 </template>
 
 <script>
+import SmallChart from "../SmallChart";
+import { mapGetters } from 'vuex';
+
 export default {
   name: "Report",
+  components: {
+    SmallChart
+  },
   data() {
     return {
       date: 'week',
     };
   },
   created() {
+    this.$store.dispatch("getCostReport", this.date);
     $(document).ready(function() {
       $('.selectpicker').selectpicker();
     })
   },
+  computed: {
+    ...mapGetters({
+      cost: 'costReport',
+    }),
+  },
   methods: {
     onDateChange(event) {
+      this.$store.dispatch("getCostReport", this.date);
       if(event.target.value === 'fixed') alert('fixed');
     }
   }
@@ -90,4 +112,7 @@ export default {
 </script>
 
 <style>
+.chart-report{
+  height: 300px;
+}
 </style>
