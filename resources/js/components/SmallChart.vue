@@ -143,6 +143,7 @@ export default {
   },
   computed: {
     months() {
+      console.log(this.data);
       return this.data.map((data) => data.date);
     },
     counts() {

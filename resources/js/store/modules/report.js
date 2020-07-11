@@ -1,30 +1,37 @@
 import router from '../../router'
 
 const state = {
-  costReport: [],
+    revenue: {
+        chartData: [],
+        records: []
+    }
 };
 
 const getters = {
-  costReport(state) {
-      return state.costReport;
-  }
+    revenueChart(state) {
+        return state.revenue.chartData;
+    },
+    revenueRecords(state) {
+        return state.revenue.records;
+    }
 };
 
 const mutations = {
-  costReport(state, data) {
-      state.costReport = data;
+  revenueReport(state, data) {
+      state.revenue = data;
   }
 };
 
 const actions = {
-  getCostReport({commit}, data) {
+  getRevenueReport({commit}, data) {
     $.ajax({
-      url : '/admin/api/report/cost?date='+data,
+      url : '/admin/api/report/revenue?start='+data.start+'&end='+data.end,
       type : "GET",
       dataType : "json",
       success:function(data)
       {
-        commit("costReport", data);
+        commit("revenueReport", data);
+        console.log(data);
       },
       error: function (errors) {
         console.log(errors);

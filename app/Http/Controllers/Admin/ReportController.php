@@ -21,163 +21,93 @@ class ReportController extends Controller
         $this->middleware('auth:admin');
     }
 
-    public function countCost(Request $request)
+    public function revenue(Request $request)
     {
         $user = Auth::guard('admin')->user();
         if($user->hasPermission('bao-cao')){
 
             $chartDatas = array();
-            $date = 'week';
-            if($request->date != null){
-                $date = $request->date;
+            $end = Carbon::today();
+            $start = $end->copy()->subDays(6);
+            if($request->end != null){
+                $end = Carbon::createFromFormat('Y/m/d', $request->end);
             }
-            $today = Carbon::today();
-
-            switch ($date) {
-                case '4_weeks':
-                    for ($i=27; $i >=0; $i--) {
-                        $day = $today->copy()->subDays($i);
-
-                        $count = DB::table('cars')->select([
-                            DB::raw('SUM(phi) AS count'),
-                        ])
-                        ->whereDate('created_at', $day)
-                        ->where('trangthai', '=', 2)
-                        ->first();
-
-                        if($count->count == null){
-                            $count->count = 0;
-                        }
-
-                        $obj = new ChartData($day->toDateString(), $count->count);
-                        array_push($chartDatas, $obj);
-                    }
-                    break;
-                case 'quarter':
-                    for ($i=89; $i >=0; $i--) {
-                        $day = $today->copy()->subDays($i);
-
-                        $count = DB::table('cars')->select([
-                            DB::raw('SUM(phi) AS count'),
-                        ])
-                        ->whereDate('created_at', $day)
-                        ->where('trangthai', '=', 2)
-                        ->first();
-
-                        if($count->count == null){
-                            $count->count = 0;
-                        }
-
-                        $obj = new ChartData($day->toDateString(), $count->count);
-                        array_push($chartDatas, $obj);
-                    }
-                    break;
-                case 'year':
-                    for ($i=364; $i >=0; $i--) {
-                        $day = $today->copy()->subDays($i);
-
-                        $count = DB::table('cars')->select([
-                            DB::raw('SUM(phi) AS count'),
-                        ])
-                        ->whereDate('created_at', $day)
-                        ->where('trangthai', '=', 2)
-                        ->first();
-
-                        if($count->count == null){
-                            $count->count = 0;
-                        }
-
-                        $obj = new ChartData($day->toDateString(), $count->count);
-                        array_push($chartDatas, $obj);
-                    }
-                    break;
-                case 'lifetime':
-                    for ($i=364; $i >=0; $i--) {
-                        $day = $today->copy()->subDays($i);
-
-                        $count = DB::table('cars')->select([
-                            DB::raw('SUM(phi) AS count'),
-                        ])
-                        ->whereDate('created_at', $day)
-                        ->where('trangthai', '=', 2)
-                        ->first();
-
-                        if($count->count == null){
-                            $count->count = 0;
-                        }
-
-                        $obj = new ChartData($day->toDateString(), $count->count);
-                        array_push($chartDatas, $obj);
-                    }
-                    break;
-                default:
-                    for ($i=6; $i >=0; $i--) {
-                        $day = $today->copy()->subDays($i);
-
-                        $count = DB::table('cars')->select([
-                            DB::raw('SUM(phi) AS count'),
-                        ])
-                        ->whereDate('created_at', $day)
-                        ->where('trangthai', '=', 2)
-                        ->first();
-
-                        if($count->count == null){
-                            $count->count = 0;
-                        }
-
-                        $obj = new ChartData($day->toDateString(), $count->count);
-                        array_push($chartDatas, $obj);
-                    }
-                    break;
+            if($request->start != null){
+                $start = Carbon::createFromFormat('Y/m/d', $request->start);
             }
 
-            return response()->json($chartDatas);
-        } 
-        
-        return response([
-            'message' => 'Bạn không có quyền này!' 
-        ], 401);
-    }
-
-    public function countActivePerMonth()
-    {
-        $user = Auth::guard('admin')->user();
-        if($user->hasPermission('xem-dashboard')){
-
-            $first_day = Carbon::today()->startOfMonth();
-            $chartDatas = array();
-            for ($i=11; $i >=0; $i--) {
-                $f = $first_day->copy()->subMonth($i);
-                $l = $f->copy()->endOfMonth();
-
+            $diff = $start->diff($end)->days;
+            
+            for ($i=$diff; $i >=0; $i--) {
+                $day = $end->copy()->subDays($i);
                 $count = DB::table('cars')->select([
-                    DB::raw('COUNT(id) AS count'),
+                    DB::raw('SUM(phi) AS count'),
                 ])
-                ->where('ngaydang', '>', $f)
-                ->where('ngayketthuc', '<', $l)
+                ->whereDate('created_at', $day)
+                ->where('trangthai', '=', 2)
                 ->first();
 
-                $obj = new ChartData($f->format('Y-m'), $count->count);
+                if($count->count == null){
+                    $count->count = 0;
+                }
+                $obj = new \stdClass();
+                $obj->date = $day->toDateString();
+                $obj->count = $count->count;
                 array_push($chartDatas, $obj);
             }
-            return response()->json($chartDatas);
+
+            $records = Car::where('trangthai', '=', 2)->whereBetween('created_at', [$start, $end])->orderBy('phi', 'DESC')->with([
+                'users', 
+                'types.brands', 
+                'colors', 
+                'furnitures', 
+                'conditions', 
+                'fuels', 
+                'locations', 
+                'origins', 
+                'styles', 
+                'transmissions',
+                'convenientcars.convenients',
+                ])->limit(10)->get();
+
+            $data = new \stdClass();
+            $data->chartData = $chartDatas;
+            $data->records = $records;
+
+            return response()->json($data);
         } 
         
         return response([
             'message' => 'Bạn không có quyền này!' 
         ], 401);
     }
-}
 
-class ChartData { 
-      
-    /* Member variables */
-    var $date; 
-    var $count; 
-      
-    function __construct( $par1, $par2 )  
-    { 
-        $this->date = $par1; 
-        $this->count = $par2; 
-    } 
+    // public function countActivePerMonth()
+    // {
+    //     $user = Auth::guard('admin')->user();
+    //     if($user->hasPermission('xem-dashboard')){
+
+    //         $first_day = Carbon::today()->startOfMonth();
+    //         $chartDatas = array();
+    //         for ($i=11; $i >=0; $i--) {
+    //             $f = $first_day->copy()->subMonth($i);
+    //             $l = $f->copy()->endOfMonth();
+
+    //             $count = DB::table('cars')->select([
+    //                 DB::raw('COUNT(id) AS count'),
+    //             ])
+    //             ->where('ngaydang', '>', $f)
+    //             ->where('ngayketthuc', '<', $l)
+    //             ->first();
+
+    //             $obj = new ChartData($f->format('Y-m'), $count->count);
+    //             array_push($chartDatas, $obj);
+    //         }
+    //         return response()->json($chartDatas);
+    //     } 
+        
+    //     return response([
+    //         'message' => 'Bạn không có quyền này!' 
+    //     ], 401);
+    // }
 }
