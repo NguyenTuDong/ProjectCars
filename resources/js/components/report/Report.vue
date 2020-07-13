@@ -7,6 +7,7 @@
           <div class="card">
             <div class="d-flex card-header">
               <h4 class="card-title">Báo cáo</h4>
+              <a :href="'/admin/api/report/revenue/pdf?start='+start+'&end='+ end" target="_blank" class="btn btn-primary ml-auto" ><i class="fas fa-file-pdf mr-2"></i> Xuất PDF</a>
             </div>
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center">
@@ -131,7 +132,8 @@ export default {
   },
   data() {
     return {
-      
+      start: null,
+      end: null,
     };
   },
   created() {
@@ -143,9 +145,11 @@ export default {
 
       function cb(start, end) {
           $('#reportrange span').html(start.format('DD MMMM, YYYY') + ' - ' + end.format('DD MMMM, YYYY'));
+          self.start = start.format('YYYY/MM/DD');
+          self.end = end.format('YYYY/MM/DD');
           var data = {
-            start: start.format('YYYY/MM/DD'),
-            end: end.format('YYYY/MM/DD')
+            start: self.start,
+            end: self.end
           }
           self.$store.dispatch("getRevenueReport", data);
       }

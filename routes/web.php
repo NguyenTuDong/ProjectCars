@@ -137,6 +137,7 @@ Route::prefix('admin')->group(function() {
 
     //Report
     Route::get('/report/revenue', 'Admin\ReportController@revenue');
+    Route::get('/report/revenue/pdf', 'Admin\ReportController@revenueReport');
   });
 });
 

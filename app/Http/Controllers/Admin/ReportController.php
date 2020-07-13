@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Car;
 use Auth;
+use PdfReport;
 
 class ReportController extends Controller
 {
@@ -24,30 +25,30 @@ class ReportController extends Controller
     public function revenue(Request $request)
     {
         $user = Auth::guard('admin')->user();
-        if($user->hasPermission('bao-cao')){
+        if ($user->hasPermission('bao-cao')) {
 
             $chartDatas = array();
             $end = Carbon::today();
             $start = $end->copy()->subDays(6);
-            if($request->end != null){
+            if ($request->end != null) {
                 $end = Carbon::createFromFormat('Y/m/d', $request->end);
             }
-            if($request->start != null){
+            if ($request->start != null) {
                 $start = Carbon::createFromFormat('Y/m/d', $request->start);
             }
 
             $diff = $start->diff($end)->days;
-            
-            for ($i=$diff; $i >=0; $i--) {
+
+            for ($i = $diff; $i >= 0; $i--) {
                 $day = $end->copy()->subDays($i);
                 $count = DB::table('cars')->select([
                     DB::raw('SUM(phi) AS count'),
                 ])
-                ->whereDate('created_at', $day)
-                ->where('trangthai', '=', 2)
-                ->first();
+                    ->whereDate('created_at', $day)
+                    ->where('trangthai', '=', 2)
+                    ->first();
 
-                if($count->count == null){
+                if ($count->count == null) {
                     $count->count = 0;
                 }
                 $obj = new \stdClass();
@@ -57,57 +58,85 @@ class ReportController extends Controller
             }
 
             $records = Car::where('trangthai', '=', 2)->whereBetween('created_at', [$start, $end])->orderBy('phi', 'DESC')->with([
-                'users', 
-                'types.brands', 
-                'colors', 
-                'furnitures', 
-                'conditions', 
-                'fuels', 
-                'locations', 
-                'origins', 
-                'styles', 
+                'users',
+                'types.brands',
+                'colors',
+                'furnitures',
+                'conditions',
+                'fuels',
+                'locations',
+                'origins',
+                'styles',
                 'transmissions',
                 'convenientcars.convenients',
-                ])->limit(10)->get();
+            ])->limit(10)->get();
 
             $data = new \stdClass();
             $data->chartData = $chartDatas;
             $data->records = $records;
 
             return response()->json($data);
-        } 
-        
+        }
+
         return response([
-            'message' => 'Bạn không có quyền này!' 
+            'message' => 'Bạn không có quyền này!'
         ], 401);
     }
 
-    // public function countActivePerMonth()
-    // {
-    //     $user = Auth::guard('admin')->user();
-    //     if($user->hasPermission('xem-dashboard')){
+    public function revenueReport(Request $request)
+    {
+        $user = Auth::guard('admin')->user();
+        if ($user->hasPermission('bao-cao')) {
 
-    //         $first_day = Carbon::today()->startOfMonth();
-    //         $chartDatas = array();
-    //         for ($i=11; $i >=0; $i--) {
-    //             $f = $first_day->copy()->subMonth($i);
-    //             $l = $f->copy()->endOfMonth();
+            $toDate = Carbon::today();
+            $fromDate = $toDate->copy()->subDays(6);
+            if ($request->end != null) {
+                $toDate = Carbon::createFromFormat('Y/m/d', $request->end);
+            }
+            if ($request->start != null) {
+                $fromDate = Carbon::createFromFormat('Y/m/d', $request->start);
+            }
 
-    //             $count = DB::table('cars')->select([
-    //                 DB::raw('COUNT(id) AS count'),
-    //             ])
-    //             ->where('ngaydang', '>', $f)
-    //             ->where('ngayketthuc', '<', $l)
-    //             ->first();
+            $title = 'BÁO CÁO DOANH THU'; // Report title
 
-    //             $obj = new ChartData($f->format('Y-m'), $count->count);
-    //             array_push($chartDatas, $obj);
-    //         }
-    //         return response()->json($chartDatas);
-    //     } 
-        
-    //     return response([
-    //         'message' => 'Bạn không có quyền này!' 
-    //     ], 401);
-    // }
+            $meta = [ // For displaying filters description on header
+                'Thời gian' => $fromDate->format('d/m/Y') . ' đến ' . $toDate->format('d/m/Y')
+            ];
+
+            $queryBuilder = Car::select(['ten', 'phi', 'created_at']) // Do some querying..
+                ->whereBetween('created_at', [$fromDate, $toDate])
+                ->where('trangthai', '=', 2)
+                ->orderBy('created_at');
+
+            $columns = [ // Set Column to be displayed
+                'Tiêu đề' => 'ten',
+                'Phí' => 'phi',
+                'Ngày tạo', // if no column_name specified, this will automatically seach for snake_case of column name (will be registered_at) column from query result
+            ];
+
+            // Generate Report with flexibility to manipulate column class even manipulate column value (using Carbon, etc).
+            return PdfReport::of($title, $meta, $queryBuilder, $columns)
+                ->setPaper('a4')
+                ->editColumn('Ngày tạo', [ // Change column class or manipulate its data for displaying to report
+                    'displayAs' => function ($result) {
+                        return $result->created_at->format('d/m/Y');
+                    },
+                    'class' => 'right'
+                ])
+                ->editColumn('Phí', [ // Mass edit column
+                    'class' => 'right bold',
+                    'displayAs' => function($result) {
+                        return number_format($result->phi);
+                    }
+                ])
+                ->showTotal([ // Used to sum all value on specified column on the last table (except using groupBy method). 'point' is a type for displaying total with a thousand separator
+                    'Phí' => 'VND' // if you want to show dollar sign ($) then use 'Total Balance' => '$'
+                ])
+                ->stream(); // other available method: download('filename') to download pdf / make() that will producing DomPDF / SnappyPdf instance so you could do any other DomPDF / snappyPdf method such as stream() or download()
+        }
+
+        return response([
+            'message' => 'Bạn không có quyền này!'
+        ], 401);
+    }
 }
