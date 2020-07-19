@@ -10,7 +10,7 @@
             type="button"
             rel="tooltip"
             title
-            class="btn btn-neutral"
+            class="btn btn-neutral btn-icon"
             data-original-title="Remove"
           >
             <i class="now-ui-icons ui-1_simple-remove"></i>
@@ -18,7 +18,7 @@
         </div>
         <div id="form-valid" class="pop-up-body">
           <div class="row">
-            <label class="col-md-3 col-form-label">Username</label>
+            <label class="col-md-3 col-form-label">Tên nhân viên</label>
             <div class="col-md-9">
               <div class="form-group valid">
                 <input type="text" class="form-control" v-model="newName"/>
@@ -34,7 +34,7 @@
             </div>
           </div>
           <div class="row">
-            <label class="col-md-3 col-form-label">Password</label>
+            <label class="col-md-3 col-form-label">Mật khẩu</label>
             <div class="col-md-9">
               <div class="form-group valid">
                 <input id="registerPassword" type="password" class="form-control" v-model="newPassword" minlength="8"/>
@@ -42,7 +42,7 @@
             </div>
           </div>
           <div class="row">
-            <label class="col-md-3 col-form-label">Confirm Password</label>
+            <label class="col-md-3 col-form-label">Xác nhận mật khẩu</label>
             <div class="col-md-9">
               <div class="form-group valid">
                 <input id="registerPasswordConfirmation" type="password" class="form-control" v-model="confirmation" equalTo="#registerPassword"/>

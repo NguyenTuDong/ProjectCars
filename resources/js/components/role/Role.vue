@@ -57,10 +57,9 @@
                       </td>
                       <td>{{slug}}</td>
                       <td></td>
-                      <td></td>
-                      <td class="td-actions text-right">
-                        <button @click="createRole" class="btn btn-primary">Thêm chức vụ</button>
-                        <button @click="isAdd = false" class="btn btn-danger">Hủy</button>
+                      <td colspan="2" class="td-actions text-right">
+                        <button @click="createRole" class="btn btn-primary my-1">Thêm chức vụ</button>
+                        <button @click="isAdd = false" class="btn btn-danger my-1">Hủy</button>
                       </td>
                     </tr>
                   </tbody>
@@ -232,9 +231,9 @@ export default {
   width: 45%;
 }
 .table-roles-admins{
-  width: 20%;
+  width: 10%;
 }
 .table-roles-actions{
-  width: 10%;
+  width: 20%;
 }
 </style>

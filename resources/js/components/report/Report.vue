@@ -20,12 +20,6 @@
                       role="tablist"
                     >Tổng quan</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#link2" role="tablist">Phân loại</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#link3" role="tablist">Thành viên</a>
-                  </li>
                 </ul>
                 <div id="reportrange" class="date-picker">
                     <span></span> <i class="fa fa-caret-down"></i>
@@ -101,16 +95,6 @@
                       </tbody>
                     </table>
                   </div>
-                </div>
-                <div class="tab-pane" id="link2">
-                  Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas.
-                  <br />
-                  <br />Dramatically maintain clicks-and-mortar solutions without functional solutions.
-                </div>
-                <div class="tab-pane" id="link3">
-                  Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas.
-                  <br />
-                  <br />Dynamically innovate resource-leveling customer service for state of the art customer service.
                 </div>
               </div>
             </div>
